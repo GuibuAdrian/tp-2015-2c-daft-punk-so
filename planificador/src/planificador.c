@@ -65,7 +65,7 @@ int main()
 
 	int socketCPU = aceptarLlamada(listenningSocket);
 
-	printf("CPU conectado, vieja! \n");
+	printf("¡CPU conectado! \n");
 
 
 
