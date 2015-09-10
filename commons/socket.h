@@ -3,7 +3,7 @@
 
 int conectarse(char * IP, char * PUERTO_SERVIDOR);
 
-int recibirLlamada(char * IP, char * PUERTO_ESCUCHA);
+int recibirLlamada(char * PUERTO_ESCUCHA);
 
 int aceptarLlamada(int listenningSocket);
 

@@ -21,7 +21,7 @@ int conectarse(char * IP, char * PUERTO_SERVIDOR)
 	hints.ai_socktype = SOCK_STREAM;
 
 
-	getaddrinfo(NULL, PUERTO_SERVIDOR, &hints, &serverInfo);
+	getaddrinfo(IP, PUERTO_SERVIDOR, &hints, &serverInfo);
 
 
 	int socket_servidor;
@@ -36,7 +36,7 @@ int conectarse(char * IP, char * PUERTO_SERVIDOR)
 
 
 
-int recibirLlamada(char * IP, char * PUERTO_ESCUCHA)
+int recibirLlamada(char * PUERTO_ESCUCHA)
 {
 	struct addrinfo hints;
 	struct addrinfo *serverInfo;
