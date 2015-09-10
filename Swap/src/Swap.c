@@ -19,7 +19,7 @@
 #include <commons/config.h>
 
 #define PACKAGESIZE 1024	// Define cual va a ser el size maximo del paquete a enviar
-
+#define LOCALHOST "127.0.0.1"
 void procesar(int socket_recv)
 {
 	char mensaje[PACKAGESIZE];
@@ -39,7 +39,7 @@ int main()
 	config = config_create("/home/utnso/git/tp-2015-2c-daft-punk-so/Swap/config.cfg");
 
 	char * PUERTO_ESCUCHA = config_get_string_value(config, "PUERTO_ESCUCHA");
-	char * IP = "192.168.1.40";
+	char * IP = LOCALHOST;
 
 	int listenningSocket = recibirLlamada(IP,PUERTO_ESCUCHA);
 
