@@ -39,9 +39,8 @@ int main()
 	config = config_create("/home/utnso/git/tp-2015-2c-daft-punk-so/Swap/config.cfg");
 
 	char * PUERTO_ESCUCHA = config_get_string_value(config, "PUERTO_ESCUCHA");
-	char * IP = LOCALHOST;
 
-	int listenningSocket = recibirLlamada(IP,PUERTO_ESCUCHA);
+	int listenningSocket = recibirLlamada(PUERTO_ESCUCHA);
 
 	printf("Esperando llamada! \n");
 

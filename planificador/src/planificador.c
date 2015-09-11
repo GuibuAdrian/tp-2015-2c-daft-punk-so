@@ -46,26 +46,24 @@ int main()
 	printf("----PLANIFICADOR----\n\n");
 
 
-
-
 	t_config* config;
 
-	config = config_create("/home/utnso/github/tp-2015-2c-daft-punk-so/Planificador/config.cfg");
+	config = config_create("/home/utnso/github/tp-2015-2c-daft-punk-so/planificador/config.cfg");
 
 	char * PUERTO_ESCUCHA = config_get_string_value(config, "PUERTO_ESCUCHA");
-	char * IP = "192.168.1.40";
 
 
 
 
 
-	int listenningSocket = recibirLlamada(IP,PUERTO_ESCUCHA);
+	int listenningSocket = recibirLlamada(PUERTO_ESCUCHA);
 
 	printf("Esperando llamada! \n");
 
 	int socketCPU = aceptarLlamada(listenningSocket);
 
 	printf("¡CPU conectado! \n");
+
 
 
 
