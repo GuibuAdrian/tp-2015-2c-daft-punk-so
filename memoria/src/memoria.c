@@ -1,10 +1,10 @@
 /*
  ============================================================================
- Name        : memoria.c
- Author      : Daiana
+ Name        : Memoria.c
+ Author      :
  Version     :
- Copyright   :
- Description :
+ Copyright   : Your copyright notice
+ Description : Hello World in C, Ansi-style
  ============================================================================
  */
 
@@ -45,20 +45,20 @@ int main()
 
 
 
-
+	char * IP;
 
 	t_config* config;
 
-	config = config_create("/home/utnso/github/tp-2015-2c-daft-punk-so/Memoria/config.cfg");
+	config = config_create("/home/utnso/github/tp-2015-2c-daft-punk-so/memoria/config.cfg");
 
 	char * PUERTO_CPU = config_get_string_value(config, "PUERTO_CPU");
-	char * IP = "192.168.1.40";
 
 
 
 
 
-	int listenningSocket = recibirLlamada(IP,PUERTO_CPU);
+
+	int listenningSocket = recibirLlamada(PUERTO_CPU);
 
 	printf("Esperando llamada! \n");
 
