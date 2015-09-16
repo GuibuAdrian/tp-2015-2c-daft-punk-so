@@ -16,6 +16,7 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #include <unistd.h>
+#include <pthread.h>
 
 #include <commons/socket.h>
 #include <commons/config.h>
@@ -24,6 +25,12 @@
 #define PACKAGESIZE 1024	// Define cual va a ser el size maximo del paquete a enviar
 
 
+
+typedef struct
+{
+	int planificador;
+	int memoria;
+} t_socket;
 
 
 
@@ -35,8 +42,8 @@ void procesar(int socket_recv, int socket_send)
 	printf("%s\n",mensaje);
 
 	send(socket_send, mensaje, strlen(mensaje) + 1, 0);
-
 }
+
 
 
 int main()
@@ -46,46 +53,47 @@ int main()
 
 
 
+	char ruta[PACKAGESIZE];
 
+	t_socket socket;
 
 	t_config* config;
 
+
+	//ABRO ARCH DE CONF
 	config = config_create("/home/utnso/github/tp-2015-2c-daft-punk-so/CPU/config.cfg");
+
 
 	char * IP = config_get_string_value(config, "IP_PLANIFICADOR");
 	char * PUERTO_PLANIFICADOR = config_get_string_value(config, "PUERTO_PLANIFICADOR");
 
-
-
-
-
-	int socketPlanificador = conectarse(IP,PUERTO_PLANIFICADOR);
-
-	printf("Conectado al Planificador, urra!\n");
-
-
+	//Me conecto al PLANIFICADOR
+	socket.planificador = conectarse(IP,PUERTO_PLANIFICADOR);
 
 
 
 	IP = config_get_string_value(config, "IP_MEMORIA");
 	char * PUERTO_MEMORIA = config_get_string_value(config, "PUERTO_MEMORIA");
 
-
-
-	int socketMemoria = conectarse(IP,PUERTO_MEMORIA);
-
-	printf("Conectado a Memoria, wachin!\n");
+	//Me conecto a MEMORIA
+	socket.memoria = conectarse(IP,PUERTO_MEMORIA);
 
 
 
 
-	procesar(socketPlanificador, socketMemoria);
+	int cant_hilos = config_get_int_value(config, "CANTIDAD_HILOS");
 
 
+/*
+	pthread_t unHilo;
+	pthread_create(&unHilo,NULL,(void*) procesar, (void*)&socket);
+*/
+	procesar(socket.planificador,socket.memoria);
 
-	close(socketPlanificador);
 
-	close(socketMemoria);
+	close(socket.planificador);
+
+	close(socket.memoria);
 
     config_destroy(config);
 
