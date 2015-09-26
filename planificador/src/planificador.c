@@ -22,7 +22,7 @@
 #include <commons/socket.h>
 #include <commons/config.h>
 #include <commons/collections/list.h>
-
+#include <commons/txt.h>
 
 #define BACKLOG 5			// Define cuantas conexiones vamos a mantener pendientes al mismo tiempo
 #define PACKAGESIZE 1024	// Define cual va a ser el size maximo del paquete a enviar
@@ -38,7 +38,7 @@ typedef struct
 typedef struct
 {
     int pid;
-    char *path;
+    char * path;
     int puntero;
     int estado;  // 0 = Listo,  1 = Ejecutando,  2 = Bloqueado
 }PCB;
@@ -49,6 +49,13 @@ typedef struct
     int pid;
 
 }t_ready;
+
+typedef struct
+{
+    int pathSize;
+    int puntero;
+    char * path;
+}t_mensaje;
 
 sem_t x;
 t_list *listaCPUs;
@@ -81,12 +88,12 @@ int tamanioHiloCPU(t_hiloCPU mensaje)
     return sizeof(mensaje.disponible)+sizeof(mensaje.idHilo)+sizeof(mensaje.socketCliente);
 
 };
-static PCB *PCB_create(int pid, char *path)
+static PCB *PCB_create(int pid, char * path, int puntero)
 {
 	 PCB *new = malloc(sizeof(PCB));
 	 new->path = strdup(path);
 	 new->pid = pid;
-	 new->puntero = 0;
+	 new->puntero = puntero;
 	 new->estado = 0;
 
 	 return new;
@@ -116,12 +123,41 @@ int tamanioready(t_ready mensaje)
     return sizeof(mensaje.pid);
 
 };
+int tamanioEstructuraAEnviar(t_mensaje unaPersona)
+{
+	return (sizeof(unaPersona.puntero)+sizeof(unaPersona.pathSize)+unaPersona.pathSize);
+};
 
 void recibirConexiones(char * PUERTO);
 int cargaListaCPU(int socketCliente, t_list * listaCPUs);
 void cerrarConexiones();
 void consola();
 void planificador();
+void enviarPath(int socketCliente, PCB* pcb, int puntero)
+{
+	t_mensaje unaPersona;
+
+	void* package = malloc(tamanioEstructuraAEnviar(unaPersona));
+
+	unaPersona.puntero = puntero+1;
+	unaPersona.pathSize=strlen(pcb->path)+ 1;
+	unaPersona.path = strdup(pcb->path);
+
+	printf("Path: %s\n",unaPersona.path);
+	printf("PathSize: %d\n",unaPersona.pathSize);
+	printf("Puntero: %d\n",unaPersona.puntero);
+
+	memcpy(package,&unaPersona.puntero,sizeof(unaPersona.puntero));
+	memcpy(package+sizeof(unaPersona.puntero), &unaPersona.pathSize, sizeof(unaPersona.pathSize));
+	memcpy(package+sizeof(unaPersona.puntero)+sizeof(unaPersona.pathSize), unaPersona.path, unaPersona.pathSize);//en vez de strlen una persona mensaje podria haberle mandado tranquilamente el valor de longitud, no el sizeof de longitud, sino el valor de longitud
+
+	send(socketCliente,package, tamanioEstructuraAEnviar(unaPersona),0);
+
+	free(package);
+
+
+
+}
 
 void verListaCPUs();
 void correrPath(char * pch);
@@ -275,13 +311,13 @@ void consola()
 
 	    	char * pch;
 
-	        pch = strtok(comando," ");
+	        pch = strtok(comando," \n");
 
 	        if (strncmp(pch,"cr", 3) == 0)
 	        {
 	        	//Correr PATH
 
-	        	pch = strtok(NULL," ");
+	        	pch = strtok(NULL," \n");
 
 	        	correrPath(pch);
 
@@ -355,21 +391,16 @@ void correrPath(char * pch)
 {
 	printf("Correr PATH\n");
 
-	char * ch = malloc(PACKAGESIZE);
-
 	pid++;
 
 	//Agrego un proceso al PCB
-	list_add(listaPCB, PCB_create(pid, pch));
+	list_add(listaPCB, PCB_create(pid, pch, 0));
 	//Agrego un proceso a ready
 	list_add(listaReady, ready_create(pid));
 
 	printf("%s\n", pch);
 
 	sem_post(&x);
-
-	free(ch);
-
 
 	printf("\n");
 }
@@ -472,7 +503,23 @@ void FIFO()
 
 	PCB* aux2 = list_find(listaPCB, (void*) compararPorIdentificador2);
 
-	send(aux->socketCliente, aux2->path, strlen(aux2->path) + 1, 0);
+
+	FILE* file = txt_open_for_read(aux2->path);
+
+	int totalLineas = txt_total_lines(file);
+
+	txt_close_file(file);
+
+	int i = 0;
+
+	printf("Total Lineas: %d\n", totalLineas);
+
+	enviarPath(aux->socketCliente, aux2, 1);
+
+	i++;
+
+	list_replace(listaPCB, 0, PCB_create(aux2->pid, aux2->path, i));
+
 
 	list_remove(listaReady, 0);
 
