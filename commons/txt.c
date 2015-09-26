@@ -17,7 +17,8 @@
 #include "txt.h"
 
 #include <stdio.h>
-
+#include <string.h>
+#include <stdlib.h>
 
 FILE* txt_open_for_append(char* path) {
 	return fopen(path, "a");
@@ -35,4 +36,47 @@ void txt_write_in_stdout(char* string) {
 
 void txt_close_file(FILE* file) {
 	fclose(file);
+}
+
+FILE* txt_open_for_read(char* path) {
+	return fopen(path, "r");
+}
+
+int txt_total_lines(FILE * file){
+	char * line = NULL;
+	size_t len = 0;
+	ssize_t read;
+
+	int sz = 0;
+
+	while((read = getline(&line, &len, file)) != -1)
+	{
+		sz++;
+	}
+
+	fseek(file, 0L, SEEK_SET);
+
+	return sz;
+}
+
+
+void read_line(FILE * file, int puntero){
+	char * line = NULL;
+	size_t len = 0;
+	ssize_t read;
+
+	int i = 0;
+
+	while ( ((read = getline(&line, &len, file)) != -1) && (i<puntero))
+	{
+		i++;
+
+		if(i==puntero)
+		{
+			printf("Retrieved line of length %zu :\n", read);
+			printf("%s", line);
+		}
+	}
+	if (line)
+		free(line);
 }

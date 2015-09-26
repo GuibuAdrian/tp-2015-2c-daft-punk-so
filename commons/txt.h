@@ -18,6 +18,8 @@
 #define TXT_H_
 
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 /**
 * @NAME: txt_open_for_append
@@ -42,5 +44,11 @@ void txt_write_in_stdout(char* string);
 * @DESC: Cierra el archivo
 */
 void txt_close_file(FILE* file);
+
+FILE* txt_open_for_read(char* path);
+
+int txt_total_lines(FILE * file);
+
+void read_line(FILE * file, int puntero);
 
 #endif /* TXT_H_ */
