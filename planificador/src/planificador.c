@@ -27,6 +27,11 @@
 #define BACKLOG 5			// Define cuantas conexiones vamos a mantener pendientes al mismo tiempo
 #define PACKAGESIZE 1024	// Define cual va a ser el size maximo del paquete a enviar
 
+typedef struct
+{
+    int idHilo;
+    int cantHilos;
+}t_mensaje1;
 
 typedef struct
 {
@@ -43,7 +48,6 @@ typedef struct
     int estado;  // 0 = Listo,  1 = Ejecutando,  2 = Bloqueado
 }PCB;
 
-
 typedef struct
 {
     int pid;
@@ -52,131 +56,53 @@ typedef struct
 
 typedef struct
 {
-    int pathSize;
     int puntero;
+    int pathSize;
     char * path;
-}t_mensaje;
+}t_mensaje2;
 
-sem_t x;
 t_list *listaCPUs;
 t_list *listaPCB;
 t_list *listaReady;
-int pid = 0;
 char *ALGORITMO_PLANIFICACION;
+int pid=2;
+sem_t x;
 
+int tamanioMensaje1(t_mensaje1 mensaje);
+int tamanioHiloCPU(t_hiloCPU mensaje);
+static t_hiloCPU *hiloCPU_create(int idNodo, int socket, int disponible);
+static void hiloCPU_destroy(t_hiloCPU *self);
+static PCB *PCB_create(int pid, char * path, int puntero, int estado);
+static void PCB_destroy(PCB *self);
+int tamanioPCB(PCB mensaje);
+static t_ready *ready_create(int pid);
+static void ready_destroy(t_ready *self);
+int tamanioready(t_ready mensaje);
+int tamanioEstructuraAEnviar(t_mensaje2 unaPersona);
 
-int tamanioMensaje1(t_hiloCPU mensaje)
-{
-    return sizeof(int)+sizeof(int);
+t_hiloCPU* buscarCPUDisponible();
+PCB* buscarReadyEnPCB(t_ready* unReady);
+int encontrarPosicionEnReady(int pid);
+int encontrarPosicionEnPCB(int pid);
+int encontrarPosicionHiloCPU(int idHilo);
+void mostrarCPU();
+void mostrarPCB();
 
-};
-static t_hiloCPU *mensaje_create(int idNodo, int socket)
-{
-    t_hiloCPU *new = malloc(sizeof(t_hiloCPU));
-    new->idHilo = idNodo;
-    new->socketCliente = socket;
-    new->disponible = 1;
-
-    return new;
-}
-static void hilosCPU_destroy(t_hiloCPU *self)
-{
-    free(self);
-}
-int tamanioHiloCPU(t_hiloCPU mensaje)
-{
-    return sizeof(mensaje.disponible)+sizeof(mensaje.idHilo)+sizeof(mensaje.socketCliente);
-
-};
-static PCB *PCB_create(int pid, char * path, int puntero)
-{
-	 PCB *new = malloc(sizeof(PCB));
-	 new->path = strdup(path);
-	 new->pid = pid;
-	 new->puntero = puntero;
-	 new->estado = 0;
-
-	 return new;
-}
-static void PCB_destroy(PCB *self)
-{
-    free(self);
-}
-int tamanioPCB(PCB mensaje)
-{
-    return sizeof(mensaje.estado)+sizeof(mensaje.pid)+sizeof(mensaje.puntero)+PACKAGESIZE;
-
-};
-static t_ready *ready_create(int pid)
-{
-	t_ready *new = malloc(sizeof(t_ready));
-	new->pid = pid;
-
-	return new;
-}
-static void ready_destroy(t_ready *self)
-{
-    free(self);
-}
-int tamanioready(t_ready mensaje)
-{
-    return sizeof(mensaje.pid);
-
-};
-int tamanioEstructuraAEnviar(t_mensaje unaPersona)
-{
-	return (sizeof(unaPersona.puntero)+sizeof(unaPersona.pathSize)+unaPersona.pathSize);
-};
-
-void recibirConexiones(char * PUERTO);
-int cargaListaCPU(int socketCliente, t_list * listaCPUs);
-void cerrarConexiones();
 void consola();
+void recibirConexiones(char * PUERTO);
+void cerrarConexiones();
+void ROUND_ROBIN();
+void FIFO();
 void planificador();
-void enviarPath(int socketCliente, PCB* pcb, int puntero)
-{
-	t_mensaje unaPersona;
-
-	void* package = malloc(tamanioEstructuraAEnviar(unaPersona));
-
-	unaPersona.puntero = puntero+1;
-	unaPersona.pathSize=strlen(pcb->path)+ 1;
-	unaPersona.path = strdup(pcb->path);
-
-	printf("Path: %s\n",unaPersona.path);
-	printf("PathSize: %d\n",unaPersona.pathSize);
-	printf("Puntero: %d\n",unaPersona.puntero);
-
-	memcpy(package,&unaPersona.puntero,sizeof(unaPersona.puntero));
-	memcpy(package+sizeof(unaPersona.puntero), &unaPersona.pathSize, sizeof(unaPersona.pathSize));
-	memcpy(package+sizeof(unaPersona.puntero)+sizeof(unaPersona.pathSize), unaPersona.path, unaPersona.pathSize);//en vez de strlen una persona mensaje podria haberle mandado tranquilamente el valor de longitud, no el sizeof de longitud, sino el valor de longitud
-
-	send(socketCliente,package, tamanioEstructuraAEnviar(unaPersona),0);
-
-	free(package);
-
-
-
-}
-
-void verListaCPUs();
-void correrPath(char * pch);
-void PS();
-
-
-
-
 
 int main()
 {
 	printf("\n");
 	printf("----PLANIFICADOR----\n\n");
 
-
 	listaCPUs = list_create();
 	listaPCB = list_create();
 	listaReady = list_create();
-
 
 	sem_init(&x, 0, 0);
 
@@ -189,48 +115,41 @@ int main()
 
 
 
-	//Recibo las conexiones de (hilos) CPU y las cargo a la listaCPUs
 	recibirConexiones(PUERTO_ESCUCHA);
+
 
 
 	pthread_t unHilo;
 	pthread_create(&unHilo,NULL,(void*) planificador, NULL);
 
 
-
-
-	//Consola!!!!!!!! :DD
 	consola();
-
-
-
-
-	cerrarConexiones();
 
 
 
 
 	pthread_join(unHilo, NULL);
 
-	list_destroy_and_destroy_elements(listaCPUs,(void*) hilosCPU_destroy);
-    list_destroy_and_destroy_elements(listaPCB, (void*) PCB_destroy);
-    list_destroy_and_destroy_elements(listaReady, (void*) ready_destroy);
+	cerrarConexiones();
 
+	free(ALGORITMO_PLANIFICACION);
+	free(PUERTO_ESCUCHA);
+
+	list_destroy_and_destroy_elements(listaCPUs,(void*) hiloCPU_destroy);
+	list_destroy_and_destroy_elements(listaPCB,(void*) PCB_destroy);
+	list_destroy_and_destroy_elements(listaReady,(void*) ready_destroy);
 	config_destroy(config);
-
 
 	return 0;
 }
 
 
 
-
-
-int cargaListaCPU(int socketCliente, t_list * listaCPUs)
+int cargaListaCPU(int socketCliente)
 {
 	int cantHilos;
 
-	t_hiloCPU mensaje;
+	t_mensaje1 mensaje;
 
 	void* package=malloc(tamanioMensaje1(mensaje));
 
@@ -241,7 +160,7 @@ int cargaListaCPU(int socketCliente, t_list * listaCPUs)
 
 
 	//Cargo la lista con los sockets CPU
-	list_add(listaCPUs, mensaje_create(mensaje.idHilo,socketCliente));
+	list_add(listaCPUs, hiloCPU_create(mensaje.idHilo,socketCliente, 1));
 
 	free(package);
 
@@ -281,7 +200,7 @@ void recibirConexiones(char * PUERTO)
 				}
 
 				//Identifico el Nodo
-				cantHilos = cargaListaCPU(socketCliente, listaCPUs);
+				cantHilos = cargaListaCPU(socketCliente);
 
 
 				i++;
@@ -296,9 +215,135 @@ void recibirConexiones(char * PUERTO)
 	close(listenningSocket);
 }
 
+void ROUND_ROBIN()
+{
+	printf("BATMAN y <ROUND_>ROBIN\n");
+}
+void enviarPath(int socketCliente, char * path, int punteroProx)
+{
+	t_mensaje2 unaPersona;
+	unaPersona.puntero = punteroProx;
+	unaPersona.pathSize=strlen(path);
+	unaPersona.path = strdup(path);
+
+	void* package = malloc(tamanioEstructuraAEnviar(unaPersona));
+
+	memcpy(package,&unaPersona.puntero,sizeof(unaPersona.puntero));
+	memcpy(package+sizeof(unaPersona.puntero), &unaPersona.pathSize, sizeof(unaPersona.pathSize));
+	memcpy(package+sizeof(unaPersona.puntero)+sizeof(unaPersona.pathSize), unaPersona.path, unaPersona.pathSize);
+
+	send(socketCliente,package, tamanioEstructuraAEnviar(unaPersona),0);
 
 
+	free(package);
+}
 
+void FIFO()
+{
+	t_ready *unReady;
+
+	unReady = list_get(listaReady, 0);
+
+
+	//Busco algun CPU que este disponible
+	t_hiloCPU* hiloCPU = buscarCPUDisponible();
+
+	//Busco posicion del CPU disponible
+	int posCPU = encontrarPosicionHiloCPU(hiloCPU->idHilo);
+
+	//Pongo al CPU en ocupado (0)
+	t_hiloCPU* aux = list_replace(listaCPUs, posCPU, hiloCPU_create(hiloCPU->idHilo,hiloCPU->socketCliente, 0));
+
+
+	PCB* pcbReady = buscarReadyEnPCB(unReady);
+
+	int posPCB =  encontrarPosicionEnPCB(pcbReady->pid);
+
+	FILE* file = txt_open_for_read(pcbReady->path);
+
+	int totalLineas = txt_total_lines(file);
+
+	txt_close_file(file);
+
+	int i = pcbReady->puntero-1;
+
+	while( i<=(totalLineas) )
+	{
+		enviarPath(hiloCPU->socketCliente, pcbReady->path, i+1);
+
+		list_replace(listaPCB, posPCB, PCB_create(pcbReady->pid,pcbReady->path, (pcbReady->puntero+1), 1));
+
+		i++;
+
+	}
+
+
+	list_replace_and_destroy_element(listaCPUs, posCPU, hiloCPU_create(hiloCPU->idHilo, hiloCPU->socketCliente, 1), (void*) hiloCPU_destroy);
+	list_remove_and_destroy_element(listaPCB, posPCB, (void*) PCB_destroy);
+	list_remove_and_destroy_element(listaReady, 0, (void*) ready_destroy);
+}
+void planificador()
+{
+	while(list_size(listaCPUs) != 0)
+	{
+		sem_wait(&x);
+
+		if (strncmp(ALGORITMO_PLANIFICACION,"FIFO", 4) == 0)
+		{
+			FIFO();
+		}
+		else
+		{
+			ROUND_ROBIN();
+		}
+	}
+}
+
+void correrPath(char * pch)
+{
+	printf("Correr PATH\n");
+
+	pid++;
+
+	//Agrego un proceso al PCB
+	list_add(listaPCB, PCB_create(pid, pch, 2, 0));
+	//Agrego un proceso a ready
+	list_add(listaReady, ready_create(pid));
+
+	printf("%s\n", pch);
+
+	sem_post(&x);
+
+	printf("\n");
+}
+void PS()
+{
+	PCB *new;
+
+	int i;
+
+	for (i = 0; i < list_size(listaPCB); i++)
+	{
+		new = list_get(listaPCB, i);
+		printf("mProc %d: %s -> ", new->pid, new->path);
+
+		if(new->estado==0)
+		{
+			printf("Listo\n");
+		}
+		else if(new->estado==1)
+		{
+			printf("Ejecutando\n");
+		}
+		else
+		{
+			printf("Bloqueado\n");
+		}
+
+	};
+
+	printf("\n");
+}
 void consola()
 {
 	 char comando[PACKAGESIZE];
@@ -323,148 +368,187 @@ void consola()
 
 	        	continue;
 	        }
-	    else
-        {
-            if (strncmp(pch, "fz", 2) == 0)
-            {
-                printf("Finalizar PID \n");
+	        else
+	        {
+	        	if (strncmp(pch, "fz", 2) == 0)
+	        	{
+	        		printf("Finalizar PID \n");
 
-                continue;
-            }
-        else
-        {
-            if (strncmp(pch, "ps", 2) == 0)
-            {
-                //PS
+	        		continue;
+	        	}
+	        else
+	        {
+	        	if (strncmp(pch, "ps", 2) == 0)
+	        	{
+	        		printf("Correr PS\n");
 
-                PS();
+	        		PS();
 
-                continue;
-            }
-        else
-        {
-            if (strncmp(pch, "cpu", 2) == 0)
-            {
-                printf("CPU \n");
+	        		continue;
+	        	}
+	        else
+	        {
+	        	if (strncmp(pch, "cpu", 2) == 0)
+	        	{
+	        		printf("CPU \n");
 
-                continue;
-            }
-        else
-        {
-            if (strncmp(pch, "man", 2) == 0)
-            {
-                printf("--------------COMANDOS-------------- \n");
-                printf("cr: CorreR PATH \n");
-                printf("fz: FinaliZar PID \n");
-                printf("ps: PS \n");
-                printf("cpu: CPU \n");
-                printf("fin: Finaliza la consola \n");
-                printf("\n");
-                continue;
-            }
-        else
-        {
-            if (strncmp(pch, "fin", 3) ==0)
-            {
-                printf("Chau! (al estilo Nivel X)\n");
 
-                break;
-            }
-        else
-        {
-            printf("Error Comando \n");
+	        		continue;
+	        	}
+	        else
+	        {
+	        	if (strncmp(pch, "man", 2) == 0)
+	        	{
+	        		printf("--------------COMANDOS-------------- \n");
+	        		printf("cr: CorreR PATH \n");
+	        		printf("fz: FinaliZar PID \n");
+	        		printf("ps: PS \n");
+	        		printf("cpu: CPU \n");
+	        		printf("fin: Finaliza la consola \n");
+	        		printf("\n");
 
-            continue;
-        }
-        }//Fin fin
-        }//Fin man
-        }//Fin cpu
-        }//Fin ps
-        }//Fin fz
+
+	        		continue;
+	        	}
+	        else
+	        {
+	        	if (strncmp(pch, "fin", 3) ==0)
+	        	{
+	        		printf("Chau! (al estilo Nivel X)\n");
+
+
+	        		break;
+	        	}
+	        else
+	        {
+	        	printf("Error Comando \n");
+
+
+	        	continue;
+	        }//Fin error comando
+	        }//Fin fin
+	        }//Fin man
+	        }//Fin cpu
+	        }//Fin ps
+	        }//Fin fz
+
+
+	        free(pch);
+
     }//Fin while
 }//Fin main
-
-
-
-
-void correrPath(char * pch)
+void cerrarConexiones()
 {
-	printf("Correr PATH\n");
-
-	pid++;
-
-	//Agrego un proceso al PCB
-	list_add(listaPCB, PCB_create(pid, pch, 0));
-	//Agrego un proceso a ready
-	list_add(listaReady, ready_create(pid));
-
-	printf("%s\n", pch);
-
-	sem_post(&x);
-
-	printf("\n");
-}
-void PS()
-{
-	PCB mensaje;
-	PCB *new = malloc(tamanioPCB(mensaje));
+	printf("\n Cerrando conexiones! \n");
 
 	int i;
-
-	for (i = 0; i < list_size(listaPCB); i++)
-	{
-		new = list_get(listaPCB, i);
-		printf("mProc %d: %s -> ", new->pid, new->path);
-
-
-
-		if(new->estado==0)
-		{
-			printf("Listo\n");
-		}
-		else if(new->estado==1)
-		{
-			printf("Ejecutando\n");
-		}
-		else
-		{
-			printf("Bloqueado\n");
-		}
-
-	};
-
-	printf("\n");
-
-	free(new);
-}
-void verListaCPUs()
-{
-	t_hiloCPU *new = malloc(sizeof(t_hiloCPU));
-
-	int i;
+	t_hiloCPU *unHilo;
 
 	for (i = 0; i < list_size(listaCPUs); i++)
 	{
-		new = list_get(listaCPUs, i);
-		printf("Id: %d\n", new->idHilo);
-		printf("Socket: %d\n", new->socketCliente);
+		unHilo = list_get(listaCPUs, i);
 
-		if(new->disponible==1)
-		{
-			printf("Disponible: SI\n");
-		}
-		else
-		{
-			printf("Disponible: NO\n");
-		}
-
+		close(unHilo->socketCliente);
 	};
 
-	free(new);
 }
 
+void mostrarPCB()
+{
+	PCB* new2;
 
-t_hiloCPU* buscarDisponible()
+		int i;
+
+		for(i=0;i<list_size(listaPCB);i++)
+		{
+			new2 = list_get(listaPCB,i);
+
+			printf("Estado %d\n",new2->estado);
+			printf("Path %s\n",new2->path);
+			printf("PID %d\n",new2->pid);
+
+		}
+}
+void mostrarCPU()
+{
+	t_hiloCPU* new2;
+
+	int i;
+
+	for(i=0;i<list_size(listaCPUs);i++)
+	{
+		new2 = list_get(listaCPUs,i);
+
+		printf("Disponible %d\n",new2->disponible);
+		printf("Socket %d\n",new2->socketCliente);
+		printf("PID %d\n",new2->idHilo);
+
+	}
+}
+int tamanioMensaje1(t_mensaje1 mensaje)
+{
+	return sizeof(mensaje.idHilo)+sizeof(mensaje.cantHilos);
+}
+int tamanioHiloCPU(t_hiloCPU mensaje)
+{
+    return sizeof(mensaje.idHilo)+sizeof(mensaje.socketCliente)+sizeof(mensaje.disponible);
+
+};
+static t_hiloCPU *hiloCPU_create(int idNodo, int socket, int disponible)
+{
+    t_hiloCPU *new = malloc(sizeof(t_hiloCPU));
+    new->idHilo = idNodo;
+    new->socketCliente = socket;
+    new->disponible = disponible;
+
+    return new;
+}
+static void hiloCPU_destroy(t_hiloCPU *self)
+{
+    free(self);
+}
+static PCB *PCB_create(int pid, char * path, int puntero, int estado)
+{
+	 PCB *new = malloc(sizeof(PCB));
+	 new->path = strdup(path);
+	 new->pid = pid;
+	 new->puntero = puntero;
+	 new->estado = estado;
+
+	 return new;
+}
+static void PCB_destroy(PCB *self)
+{
+	free(self->path);
+    free(self);
+}
+int tamanioPCB(PCB mensaje)
+{
+    return sizeof(mensaje.estado)+sizeof(mensaje.pid)+sizeof(mensaje.puntero)+PACKAGESIZE;
+
+};
+static t_ready *ready_create(int pid)
+{
+	t_ready *new = malloc(sizeof(t_ready));
+	new->pid = pid;
+
+	return new;
+}
+static void ready_destroy(t_ready *self)
+{
+    free(self);
+}
+int tamanioready(t_ready mensaje)
+{
+    return sizeof(mensaje.pid);
+
+};
+int tamanioEstructuraAEnviar(t_mensaje2 unaPersona)
+{
+	return (sizeof(unaPersona.puntero)+sizeof(unaPersona.pathSize)+strlen(unaPersona.path));
+};
+
+t_hiloCPU* buscarCPUDisponible()
 {
 	bool compararPorIdentificador(t_hiloCPU *unaCaja)
 	{
@@ -478,19 +562,8 @@ t_hiloCPU* buscarDisponible()
 
 	return (list_find(listaCPUs, (void*) compararPorIdentificador));
 }
-
-
-
-void FIFO()
+PCB* buscarReadyEnPCB(t_ready* unReady)
 {
-	t_ready mensaje;
-	t_ready *unReady = malloc(tamanioready(mensaje));
-
-	unReady = list_get(listaReady, 0);
-
-	t_hiloCPU* aux = buscarDisponible();
-
-
 	bool compararPorIdentificador2(PCB *unaCaja)
 	{
 		if (unaCaja->pid == unReady->pid)
@@ -501,65 +574,78 @@ void FIFO()
 		return 0;
 	}
 
-	PCB* aux2 = list_find(listaPCB, (void*) compararPorIdentificador2);
-
-
-	FILE* file = txt_open_for_read(aux2->path);
-
-	int totalLineas = txt_total_lines(file);
-
-	txt_close_file(file);
-
-	int i = 0;
-
-	printf("Total Lineas: %d\n", totalLineas);
-
-	enviarPath(aux->socketCliente, aux2, 1);
-
-	i++;
-
-	list_replace(listaPCB, 0, PCB_create(aux2->pid, aux2->path, i));
-
-
-	list_remove(listaReady, 0);
-
-	list_remove_by_condition(listaReady, (void*) compararPorIdentificador2);
-
-	free(unReady);
+	return list_find(listaPCB, (void*) compararPorIdentificador2);
 }
-void planificador()
+int encontrarPosicionEnReady(int pid)
 {
-	while(list_size(listaCPUs) != 0)
+	t_ready* new;
+
+	int i=0;
+	int encontrado = 1;
+
+	while( (i<list_size(listaReady)) && encontrado!=0)
 	{
-		sem_wait(&x);
+		new = list_get(listaReady,i);
 
-
-		if (strncmp(ALGORITMO_PLANIFICACION,"FIFO", 4) == 0)
+		if(new->pid == pid)
 		{
-			FIFO();
+			encontrado = 0;
+		}
+		else
+		{
+			i++;
 		}
 
 	}
 
+	return i;
 }
-
-
-
-
-void cerrarConexiones()
+int encontrarPosicionEnPCB(int pid)
 {
-	printf("\n Cerrando conexiones! \n");
+	PCB* new;
 
-	int i;
-	t_hiloCPU mensaje;
-	t_hiloCPU *new2 = malloc(tamanioHiloCPU(mensaje));
+	int i=0;
+	int encontrado = 1;
 
-	for (i = 0; i < list_size(listaCPUs); i++)
+	while( (i<list_size(listaPCB)) && encontrado!=0)
 	{
-		new2 = list_get(listaCPUs, i);
+		new = list_get(listaPCB,i);
 
-		close(new2->socketCliente);
-	};
+		if(new->pid == pid)
+		{
+			encontrado = 0;
+		}
+		else
+		{
+			i++;
+		}
 
-	free(new2);
+	}
+
+	return i;
+}
+int encontrarPosicionHiloCPU(int idHilo)
+{
+	t_hiloCPU* new;
+
+	int i=0;
+	int encontrado = 1;
+
+	while( (i<list_size(listaCPUs)) && encontrado!=0)
+	{
+		new = list_get(listaCPUs,i);
+
+		if(new->idHilo == idHilo)
+		{
+			encontrado = 0;
+		}
+		else
+		{
+			i++;
+		}
+
+	}
+
+	return i;
+
 }
