@@ -17,8 +17,7 @@
 #include "txt.h"
 
 #include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+
 
 FILE* txt_open_for_append(char* path) {
 	return fopen(path, "a");
@@ -56,27 +55,31 @@ int txt_total_lines(FILE * file){
 
 	fseek(file, 0L, SEEK_SET);
 
+	free(line);
+
 	return sz;
 }
 
 
-void read_line(FILE * file, int puntero){
+char * read_line(FILE * file, int puntero){
 	char * line = NULL;
 	size_t len = 0;
 	ssize_t read;
 
-	int i = 0;
+	int i = 1;
 
-	while ( ((read = getline(&line, &len, file)) != -1) && (i<puntero))
+	while ( (read = getline(&line, &len, file)) != -1 )
 	{
-		i++;
-
 		if(i==puntero)
 		{
-			printf("Retrieved line of length %zu :\n", read);
-			printf("%s", line);
+			break;
 		}
+		i++;
+
+
 	}
-	if (line)
-		free(line);
+
+	fseek(file, 0L, SEEK_SET);
+
+	return line;
 }

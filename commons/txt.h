@@ -49,6 +49,6 @@ FILE* txt_open_for_read(char* path);
 
 int txt_total_lines(FILE * file);
 
-void read_line(FILE * file, int puntero);
+char* read_line(FILE * file, int puntero);
 
 #endif /* TXT_H_ */
