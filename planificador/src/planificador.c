@@ -61,6 +61,12 @@ typedef struct
     char * path;
 }t_mensaje2;
 
+typedef struct
+{
+	int respuestaSize;
+	char respuesta[PACKAGESIZE];
+}t_respuesta;
+
 t_list *listaCPUs;
 t_list *listaPCB;
 t_list *listaReady;
@@ -79,6 +85,10 @@ static t_ready *ready_create(int pid);
 static void ready_destroy(t_ready *self);
 int tamanioready(t_ready mensaje);
 int tamanioEstructuraAEnviar(t_mensaje2 unaPersona);
+int tamanioRespuesta(t_respuesta unaRespuesta)
+{
+	return (unaRespuesta.respuestaSize);
+};
 
 t_hiloCPU* buscarCPUDisponible();
 PCB* buscarReadyEnPCB(t_ready* unReady);
@@ -215,6 +225,28 @@ void recibirConexiones(char * PUERTO)
 	close(listenningSocket);
 }
 
+
+void recibirRespuesta(int socket)
+{
+	t_respuesta respuesta;
+
+	void* package = malloc(sizeof(respuesta.respuestaSize));
+
+	recv(socket,(void*)package, sizeof(respuesta.respuestaSize), 0);
+	memcpy(&respuesta.respuestaSize,package,sizeof(respuesta.respuestaSize));
+
+	void* package2=malloc(tamanioRespuesta(respuesta));
+
+	recv(socket,(void*) package2, respuesta.respuestaSize, 0);
+	memcpy(&respuesta.respuesta, package2, respuesta.respuestaSize);
+
+	//printf("%s\n", respuesta.respuesta);
+
+	free(package);
+	free(package2);
+
+}
+
 void ROUND_ROBIN()
 {
 	printf("BATMAN y <ROUND_>ROBIN\n");
@@ -233,6 +265,8 @@ void enviarPath(int socketCliente, char * path, int punteroProx)
 	memcpy(package+sizeof(unaPersona.puntero)+sizeof(unaPersona.pathSize), unaPersona.path, unaPersona.pathSize);
 
 	send(socketCliente,package, tamanioEstructuraAEnviar(unaPersona),0);
+
+	recibirRespuesta(socketCliente);
 
 	free(unaPersona.path);
 
