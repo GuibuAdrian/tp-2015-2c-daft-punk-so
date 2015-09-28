@@ -268,7 +268,6 @@ void FIFO()
 		//Pongo al CPU en ocupado (0)
 		t_hiloCPU* aux = list_replace(listaCPUs, posCPU, hiloCPU_create(hiloCPU->idHilo,hiloCPU->socketCliente, 0));
 
-		hiloCPU_destroy(aux);
 		int totalLineas = txt_total_lines(file);
 		txt_close_file(file);
 
@@ -288,6 +287,8 @@ void FIFO()
 		list_replace_and_destroy_element(listaCPUs, posCPU, hiloCPU_create(hiloCPU->idHilo, hiloCPU->socketCliente, 1), (void*) hiloCPU_destroy);	//Pongo en Disponible al CPU q usaba
 		list_remove_and_destroy_element(listaPCB, posPCB, (void*) PCB_destroy);
 		list_remove_and_destroy_element(listaReady, 0, (void*) ready_destroy);
+
+		hiloCPU_destroy(aux);
 	}
 
 
