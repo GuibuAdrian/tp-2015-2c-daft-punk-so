@@ -234,6 +234,7 @@ void enviarPath(int socketCliente, char * path, int punteroProx)
 
 	send(socketCliente,package, tamanioEstructuraAEnviar(unaPersona),0);
 
+	free(unaPersona.path);
 
 	free(package);
 }
@@ -241,52 +242,65 @@ void enviarPath(int socketCliente, char * path, int punteroProx)
 void FIFO()
 {
 	t_ready *unReady;
+	unReady = list_get(listaReady, 0);	//Busco al primer ready
 
-	unReady = list_get(listaReady, 0);
+	PCB* pcbReady = buscarReadyEnPCB(unReady);	//Busco al ready en el PCB
 
-
-	//Busco algun CPU que este disponible
-	t_hiloCPU* hiloCPU = buscarCPUDisponible();
-
-	//Busco posicion del CPU disponible
-	int posCPU = encontrarPosicionHiloCPU(hiloCPU->idHilo);
-
-	//Pongo al CPU en ocupado (0)
-	t_hiloCPU* aux = list_replace(listaCPUs, posCPU, hiloCPU_create(hiloCPU->idHilo,hiloCPU->socketCliente, 0));
-
-
-	PCB* pcbReady = buscarReadyEnPCB(unReady);
-
-	int posPCB =  encontrarPosicionEnPCB(pcbReady->pid);
+	int posPCB =  encontrarPosicionEnPCB(pcbReady->pid);	//Encontrar pos en listaPCB
 
 	FILE* file = txt_open_for_read(pcbReady->path);
 
-	int totalLineas = txt_total_lines(file);
-
-	txt_close_file(file);
-
-	int i = pcbReady->puntero-1;
-
-	while( i<=(totalLineas) )
+	if (file == NULL)
 	{
-		enviarPath(hiloCPU->socketCliente, pcbReady->path, i+1);
+		list_remove_and_destroy_element(listaPCB, posPCB, (void*) PCB_destroy);
+		list_remove_and_destroy_element(listaReady, 0, (void*) ready_destroy);
 
-		list_replace(listaPCB, posPCB, PCB_create(pcbReady->pid,pcbReady->path, (pcbReady->puntero+1), 1));
+		return;
+	}
+	else
+	{
+		//Busco algun CPU que este disponible
+		t_hiloCPU* hiloCPU = buscarCPUDisponible();
 
-		i++;
+		//Busco posicion del CPU disponible
+		int posCPU = encontrarPosicionHiloCPU(hiloCPU->idHilo);
 
+		//Pongo al CPU en ocupado (0)
+		t_hiloCPU* aux = list_replace(listaCPUs, posCPU, hiloCPU_create(hiloCPU->idHilo,hiloCPU->socketCliente, 0));
+
+		hiloCPU_destroy(aux);
+		int totalLineas = txt_total_lines(file);
+		txt_close_file(file);
+
+		int i = pcbReady->puntero-1;
+
+		while( i<=(totalLineas) )
+		{
+			enviarPath(hiloCPU->socketCliente, pcbReady->path, i+1);
+
+			list_replace(listaPCB, posPCB, PCB_create(pcbReady->pid,pcbReady->path, (pcbReady->puntero+1), 1));
+
+			i++;
+
+		}
+
+
+		list_replace_and_destroy_element(listaCPUs, posCPU, hiloCPU_create(hiloCPU->idHilo, hiloCPU->socketCliente, 1), (void*) hiloCPU_destroy);	//Pongo en Disponible al CPU q usaba
+		list_remove_and_destroy_element(listaPCB, posPCB, (void*) PCB_destroy);
+		list_remove_and_destroy_element(listaReady, 0, (void*) ready_destroy);
 	}
 
 
-	list_replace_and_destroy_element(listaCPUs, posCPU, hiloCPU_create(hiloCPU->idHilo, hiloCPU->socketCliente, 1), (void*) hiloCPU_destroy);
-	list_remove_and_destroy_element(listaPCB, posPCB, (void*) PCB_destroy);
-	list_remove_and_destroy_element(listaReady, 0, (void*) ready_destroy);
 }
 void planificador()
 {
-	while(list_size(listaCPUs) != 0)
+	while(1)
 	{
 		sem_wait(&x);
+		if(list_size(listaCPUs) == 0)
+		{
+			break;
+		}
 
 		if (strncmp(ALGORITMO_PLANIFICACION,"FIFO", 4) == 0)
 		{
@@ -416,7 +430,15 @@ void consola()
 	        	{
 	        		printf("Chau! (al estilo Nivel X)\n");
 
+	        		int j;
 
+	        		for(j=0;j<=list_size(listaCPUs);j++)
+	        		{
+	        			list_remove_and_destroy_element(listaCPUs, j, (void*) hiloCPU_destroy);
+	        		}
+
+
+	        		sem_post(&x);
 	        		break;
 	        	}
 	        else
