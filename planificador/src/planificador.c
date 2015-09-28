@@ -350,7 +350,7 @@ void planificador()
 
 void correrPath(char * pch)
 {
-	printf("Correr PATH\n");
+	//printf("Correr PATH\n");
 
 	pid++;
 
@@ -359,7 +359,7 @@ void correrPath(char * pch)
 	//Agrego un proceso a ready
 	list_add(listaReady, ready_create(pid));
 
-	printf("%s\n", pch);
+	//printf("%s\n", pch);
 
 	sem_post(&x);
 
@@ -367,6 +367,8 @@ void correrPath(char * pch)
 }
 void PS()
 {
+	printf("Correr PS\n");
+
 	PCB *new;
 
 	int i;
@@ -429,7 +431,7 @@ void consola()
 	        {
 	        	if (strncmp(pch, "ps", 2) == 0)
 	        	{
-	        		printf("Correr PS\n");
+	        		//Correr PS
 
 	        		PS();
 
