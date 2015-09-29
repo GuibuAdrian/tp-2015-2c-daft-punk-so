@@ -37,7 +37,12 @@ int main()
 	t_config* config;
 
 	config = config_create("/home/utnso/git/tp-2015-2c-daft-punk-so/Swap/config.cfg");
-
+	FILE *swap = fopen(config_get_string_value( config, "NOMBRE_SWAP"),"w");
+	if(swap == NULL){
+		printf("no se pudo abrir el archivo de swap \n");
+		return -1;
+	}
+	//el tamaño de pagina debe coincidir tanto en Swap como en memoria.
 	char * PUERTO_ESCUCHA = config_get_string_value(config, "PUERTO_ESCUCHA");
 
 	int listenningSocket = recibirLlamada(PUERTO_ESCUCHA);
