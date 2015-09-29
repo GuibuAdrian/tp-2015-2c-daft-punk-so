@@ -37,11 +37,10 @@ int main()
 	t_config* config;
 
 	config = config_create("/home/utnso/git/tp-2015-2c-daft-punk-so/Swap/config.cfg");
-	FILE *swap = fopen(config_get_string_value( config, "NOMBRE_SWAP"),"w");
-	if(swap == NULL){
-		printf("no se pudo abrir el archivo de swap \n");
-		return -1;
-	}
+	char *nombreSwap = config_get_string_value( config, "NOMBRE_SWAP");
+	long tamanioSwap = config_get_int_value( config, "CANTIDAD_PAGINAS")*config_get_int_value( config, "TAMANIO_PAGINA");
+
+	system("dd if=/dev/zero |pv|dd of=%s bs=%d count=%d", nombreSwap, tamanioSwap, tamanioSwap); // Genera el espacio de swap totalmente vacio.
 	//el tamaño de pagina debe coincidir tanto en Swap como en memoria.
 	char * PUERTO_ESCUCHA = config_get_string_value(config, "PUERTO_ESCUCHA");
 
