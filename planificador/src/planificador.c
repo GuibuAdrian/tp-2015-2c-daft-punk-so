@@ -72,7 +72,8 @@ t_list *listaPCB;
 t_list *listaReady;
 char *ALGORITMO_PLANIFICACION;
 int pid=2;
-sem_t x;
+sem_t semPlani;
+sem_t semFZ;
 
 int tamanioMensaje1(t_mensaje1 mensaje);
 int tamanioHiloCPU(t_hiloCPU mensaje);
@@ -92,10 +93,10 @@ int tamanioRespuesta(t_respuesta unaRespuesta)
 
 t_hiloCPU* buscarCPUDisponible();
 PCB* buscarReadyEnPCB(t_ready* unReady);
+PCB* buscarPCB(int pidF);
 int encontrarPosicionEnReady(int pid);
 int encontrarPosicionEnPCB(int pid);
 int encontrarPosicionHiloCPU(int idHilo);
-void mostrarCPU();
 void mostrarPCB();
 
 void consola();
@@ -114,7 +115,8 @@ int main()
 	listaPCB = list_create();
 	listaReady = list_create();
 
-	sem_init(&x, 0, 0);
+	sem_init(&semPlani, 0, 0);
+	sem_init(&semFZ, 0, 1);
 
 	t_config* config;
 
@@ -305,18 +307,20 @@ void FIFO()
 		int totalLineas = txt_total_lines(file);
 		txt_close_file(file);
 
-		int i = pcbReady->puntero-1;
+		int i = pcbReady->puntero;
 
-		while( i<=(totalLineas) )
+		while( (i)<=(totalLineas+1) )
 		{
-			enviarPath(hiloCPU->socketCliente, pcbReady->path, i+1);
+			sem_wait(&semFZ);
+			pcbReady = buscarReadyEnPCB(unReady);
+
+			enviarPath(hiloCPU->socketCliente, pcbReady->path, pcbReady->puntero);
+
+			i=pcbReady->puntero+1;
 
 			list_replace(listaPCB, posPCB, PCB_create(pcbReady->pid,pcbReady->path, (pcbReady->puntero+1), 1));
-
-			i++;
-
+			sem_post(&semFZ);
 		}
-
 
 		list_replace_and_destroy_element(listaCPUs, posCPU, hiloCPU_create(hiloCPU->idHilo, hiloCPU->socketCliente, 1), (void*) hiloCPU_destroy);	//Pongo en Disponible al CPU q usaba
 		list_remove_and_destroy_element(listaPCB, posPCB, (void*) PCB_destroy);
@@ -331,7 +335,7 @@ void planificador()
 {
 	while(1)
 	{
-		sem_wait(&x);
+		sem_wait(&semPlani);
 		if(list_size(listaCPUs) == 0)
 		{
 			break;
@@ -361,7 +365,7 @@ void correrPath(char * pch)
 
 	//printf("%s\n", pch);
 
-	sem_post(&x);
+	sem_post(&semPlani);
 
 	printf("\n");
 }
@@ -395,6 +399,52 @@ void PS()
 
 	printf("\n");
 }
+void CPU()
+{
+	//printf("CPU \n");
+
+	t_hiloCPU* new2;
+
+	int i;
+
+	for(i=0;i<list_size(listaCPUs);i++)
+	{
+		new2 = list_get(listaCPUs,i);
+
+		printf("Disponible %d\n",new2->disponible);
+		printf("Socket %d\n",new2->socketCliente);
+		printf("PID %d\n",new2->idHilo);
+
+	}
+}
+void finalizarPID(int pidF)
+{
+	printf("Finalizar PID \n");
+
+	int posPCB =  encontrarPosicionEnPCB(pidF);	//Encontrar pos en listaPCB
+	PCB* unPCB = buscarPCB(pidF);
+
+	FILE* file = txt_open_for_read(unPCB->path);
+
+	if (file == NULL)
+	{
+		printf("No se encontro PID\n");
+
+		return;
+	}
+	else
+	{
+		int totalLineas = txt_total_lines(file);
+
+		sem_wait(&semFZ);
+		list_replace(listaPCB, posPCB, PCB_create(unPCB->pid,unPCB->path, totalLineas+1, 1));
+		sem_post(&semFZ);
+
+		txt_close_file(file);
+
+	}
+
+}
 void consola()
 {
 	 char comando[PACKAGESIZE];
@@ -423,7 +473,10 @@ void consola()
 	        {
 	        	if (strncmp(pch, "fz", 2) == 0)
 	        	{
-	        		printf("Finalizar PID \n");
+	        		pch = strtok(NULL," \n");
+	        		int ret = strtol(pch, NULL, 10);
+
+	        		finalizarPID(ret);
 
 	        		continue;
 	        	}
@@ -441,8 +494,9 @@ void consola()
 	        {
 	        	if (strncmp(pch, "cpu", 2) == 0)
 	        	{
-	        		printf("CPU \n");
 
+
+	        		CPU();
 
 	        		continue;
 	        	}
@@ -475,7 +529,7 @@ void consola()
 	        		}
 
 
-	        		sem_post(&x);
+	        		sem_post(&semPlani);
 	        		break;
 	        	}
 	        else
@@ -528,22 +582,7 @@ void mostrarPCB()
 
 		}
 }
-void mostrarCPU()
-{
-	t_hiloCPU* new2;
 
-	int i;
-
-	for(i=0;i<list_size(listaCPUs);i++)
-	{
-		new2 = list_get(listaCPUs,i);
-
-		printf("Disponible %d\n",new2->disponible);
-		printf("Socket %d\n",new2->socketCliente);
-		printf("PID %d\n",new2->idHilo);
-
-	}
-}
 int tamanioMensaje1(t_mensaje1 mensaje)
 {
 	return sizeof(mensaje.idHilo)+sizeof(mensaje.cantHilos);
@@ -635,6 +674,21 @@ PCB* buscarReadyEnPCB(t_ready* unReady)
 
 	return list_find(listaPCB, (void*) compararPorIdentificador2);
 }
+PCB* buscarPCB(int pidF)
+{
+	bool compararPorIdentificador2(PCB *unaCaja)
+	{
+		if (unaCaja->pid == pidF)
+		{
+			return 1;
+		}
+
+		return 0;
+	}
+
+	return list_find(listaPCB, (void*) compararPorIdentificador2);
+}
+
 int encontrarPosicionEnReady(int pid)
 {
 	t_ready* new;
