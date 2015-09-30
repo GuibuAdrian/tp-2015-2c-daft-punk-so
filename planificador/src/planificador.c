@@ -236,13 +236,15 @@ void recibirRespuesta(int socket)
 
 	recv(socket,(void*)package, sizeof(respuesta.respuestaSize), 0);
 	memcpy(&respuesta.respuestaSize,package,sizeof(respuesta.respuestaSize));
+	//printf("RespuestaSize %d\n", respuesta.respuestaSize);
+
 
 	void* package2=malloc(tamanioRespuesta(respuesta));
 
 	recv(socket,(void*) package2, respuesta.respuestaSize, 0);
 	memcpy(&respuesta.respuesta, package2, respuesta.respuestaSize);
 
-	//printf("%s\n", respuesta.respuesta);
+	//printf("Respuesta %s\n", respuesta.respuesta);
 
 	free(package);
 	free(package2);
@@ -267,6 +269,7 @@ void enviarPath(int socketCliente, char * path, int punteroProx)
 	memcpy(package+sizeof(unaPersona.puntero)+sizeof(unaPersona.pathSize), unaPersona.path, unaPersona.pathSize);
 
 	send(socketCliente,package, tamanioEstructuraAEnviar(unaPersona),0);
+
 
 	recibirRespuesta(socketCliente);
 
@@ -309,14 +312,16 @@ void FIFO()
 
 		int i = pcbReady->puntero;
 
-		while( (i)<=(totalLineas+1) )
+		while( (i-1)<=(totalLineas) )
 		{
 			sem_wait(&semFZ);
 			pcbReady = buscarReadyEnPCB(unReady);
 
+
 			enviarPath(hiloCPU->socketCliente, pcbReady->path, pcbReady->puntero);
 
 			i=pcbReady->puntero+1;
+
 
 			list_replace(listaPCB, posPCB, PCB_create(pcbReady->pid,pcbReady->path, (pcbReady->puntero+1), 1));
 			sem_post(&semFZ);
