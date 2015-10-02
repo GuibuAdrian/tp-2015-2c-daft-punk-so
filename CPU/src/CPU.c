@@ -75,7 +75,7 @@ typedef struct {
 typedef struct {
 	int finalizacionSize;
 	t_estructuraDeFinalizacion estructuraDeFinalizacion;
-} t_mensajeDeInicio;
+} t_mensajeDeFinalizacion;
 
 int id1 = 5;
 int RETARDO, socketMemoria;
@@ -155,21 +155,15 @@ void recibirPath(int serverSocket) {
 		if (status == 0) {
 			break;
 		} else {
-			memcpy(&pathDeMensaje.puntero, package,
-					sizeof(pathDeMensaje.puntero));
-			recv(serverSocket,
-					(void*) (package + sizeof(pathDeMensaje.puntero)),
-					sizeof(pathDeMensaje.pathSize), 0);
-			memcpy(&pathDeMensaje.pathSize,
-					package + sizeof(pathDeMensaje.puntero),
-					sizeof(pathDeMensaje.pathSize)); //--
+			memcpy(&pathDeMensaje.puntero, package,sizeof(pathDeMensaje.puntero));
+			recv(serverSocket,(void*) (package + sizeof(pathDeMensaje.puntero)),sizeof(pathDeMensaje.pathSize), 0);
+			memcpy(&pathDeMensaje.pathSize,package + sizeof(pathDeMensaje.puntero),sizeof(pathDeMensaje.pathSize)); //--
 
 			void* package2 = malloc(pathDeMensaje.pathSize);
 
 			recv(serverSocket, (void*) package2, pathDeMensaje.pathSize, 0);
 			memcpy(&pathDeMensaje.path, package2, pathDeMensaje.pathSize);
-			char * linea = obtenerLinea(pathDeMensaje.path,
-					pathDeMensaje.puntero);
+			char * linea = obtenerLinea(pathDeMensaje.path,pathDeMensaje.puntero);
 
 			enviarAMemoria(linea);
 			enviarRespuesta(serverSocket);
@@ -220,17 +214,6 @@ void enviarAMemoria(char * linea) {
 	//TODO interpretar la respuesta no pasar directamente la linea a la memoria :S
 	interprete(linea); // aca se va a enviar mensaje a la memoria dependiendo de la
 					   // instruccion que leamos del mCod
-
-//	respuesta.respuestaSize = strlen(respuesta.respuesta) + 1;
-//	void* respPackage = malloc(tamanioRespuesta(respuesta));
-//
-//	memcpy(respPackage, &respuesta.respuestaSize,
-//			sizeof(respuesta.respuestaSize));
-//	memcpy(respPackage + sizeof(respuesta.respuestaSize), respuesta.respuesta,
-//			respuesta.respuestaSize);
-//
-//	send(socketMemoria, respPackage, tamanioRespuesta(respuesta), 0);
-//	free(respPackage);
 }
 
 int tamanioEstructura2(t_pathMensaje pathDeMensaje) {
@@ -252,18 +235,18 @@ void interprete(char *linea) {
 	if (instruccion == "iniciar") {
 		estructuraDeInicio.idProceso;
 		estructuraDeInicio.numeroPaginas = valorAsociado(linea);
-		//TODO mensaje de inicio
+
 		iniciarProceso(estructuraDeInicio);
 	} else {
 		if (instruccion == "leer") {
 			estructuraDeLectura.idProceso;
 			estructuraDeLectura.numeroDePagina = valorAsociado(linea);
-			//TODO mensaje de lectura
+
 			leerPagina(estructuraDeLectura);
 		} else {
 			if (instruccion == "finalizar") {
 				estructuraDeFinzalizacion.idProceso;
-				//TODO mensaje de finalizacion
+
 				finalizarProceso(estructuraDeFinzalizacion);
 			}
 		}
@@ -291,6 +274,7 @@ int valorAsociado(char *linea) {
 	while (linea[i] != 32) {
 		i++;
 	}
+	i++;
 	while (linea[i] != 32) {
 		valorString[j] = linea[i];
 		j++;
@@ -311,6 +295,7 @@ char *obtenerTexto(char *linea) {
 			cantidadEspacios++;
 		i++;
 	}
+	i++;
 	while (linea != "\0") {
 		texto[j] = linea[i];
 		j++;
@@ -320,7 +305,7 @@ char *obtenerTexto(char *linea) {
 	texto[j + 1] = "\0";
 	return texto;
 }
-//TODO similar para Leer y Finalizar
+//INSTRUCCION DE INICIO
 void iniciarProceso(t_estructuraDeInicio estructuraDeInicio) {
 	t_mensajeDeInicio mensajeDeInicio;
 	mensajeDeInicio.inicioSize = tamanioEstructuraDeInicio(estructuraDeInicio);
@@ -337,10 +322,50 @@ void iniciarProceso(t_estructuraDeInicio estructuraDeInicio) {
 int tamanioMensajeDeInicio(t_mensajeDeInicio mensajeDeInicio){
 	return sizeof(mensajeDeInicio.inicioSize) + tamanioEstructuraDeInicio(mensajeDeInicio.estructuraDeInicio);
 }
+
 int tamanioEstructuraDeInicio(t_estructuraDeInicio estructuraDeInicio){
 	return strlen(estructuraDeInicio.idProceso) + sizeof(estructuraDeInicio.numeroPaginas);
 }
 
+//INSTRUCCION DE LECTURA
+void leerPagina(t_estructuraDeFinalizacion estructuraDeFinalizacion) {
+	t_mensajeDeLectura mensajeDeLectura;
+	mensajeDeLectura.lecturaSize = tamanioEstructuraDeLectura(estructuraDeFinalizacion);
+	mensajeDeLectura.estructuraDeLectura = estructuraDeFinalizacion;
+	void* respPackage = malloc(tamanioMensajeDeInicio(mensajeDeLectura));
 
+	memcpy(respPackage, &mensajeDeLectura.lecturaSize,sizeof(mensajeDeLectura.lecturaSize));
+	memcpy(respPackage + sizeof(mensajeDeLectura.lecturaSize), mensajeDeLectura.estructuraDeLectura, mensajeDeLectura.lecturaSize);
 
+	send(socketMemoria, respPackage, tamanioMensajeDeLectura(mensajeDeLectura), 0);
+	free(respPackage);
+}
 
+int tamanioMensajeDeLectura(t_mensajeDeLectura mensajeDeLectura){
+	return sizeof(mensajeDeLectura.lecturaSize) + tamanioEstructuraDeLectura(mensajeDeLectura.estructuraDeLectura);
+}
+
+int tamanioEstructuraDeLectura(t_estructuraDeLectura estructuraDeLectura){
+	return strlen(estructuraDeLectura.idProceso) + sizeof(estructuraDeLectura.numeroDePagina);
+}
+//INSTRUCCION DE FINALIZACION
+void finalizarProceso(t_estructuraDeFinalizacion estructuraDeFinalizacion) {
+	t_mensajeDeFinalizacion mensajeDeFinalizacion;
+	mensajeDeFinalizacion.finalizacionSize = tamanioEstructuraDeLectura(estructuraDeFinalizacion);
+	mensajeDeFinalizacion.estructuraDeFinalizacion = estructuraDeFinalizacion;
+	void* respPackage = malloc(tamanioMensajeDeInicio(mensajeDeFinalizacion));
+
+	memcpy(respPackage, &mensajeDeFinalizacion.finalizacionSize,sizeof(mensajeDeFinalizacion.finalizacionSize));
+	memcpy(respPackage + sizeof(mensajeDeFinalizacion.finalizacionSize), mensajeDeFinalizacion.estructuraDeFinalizacion, mensajeDeFinalizacion.finalizacionSize);
+
+	send(socketMemoria, respPackage, tamanioMensajeDeFinalizacion(mensajeDeFinalizacion), 0);
+	free(respPackage);
+}
+
+int tamanioMensajeDeFinalizacion(t_mensajeDeFinalizacion mensajeDeFinalizacion){
+	return sizeof(mensajeDeFinalizacion.finalizacionSize) + tamanioEstructuraDeFinalizacion(mensajeDeFinalizacion.estructuraDeFinalizacion);
+}
+
+int tamanioEstructuraDeFinalizacion(t_estructuraDeFinalizacion estructuraDeFinalizacion){
+	return strlen(estructuraDeFinalizacion.idProceso);
+}
