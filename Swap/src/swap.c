@@ -69,12 +69,12 @@ int main()
 	printf("----SWAP----\n\n");
 
 
-	logger = log_create("/home/utnso/github/tp-2015-2c-daft-punk-so/Swap/logsTP", "SWAP", true, LOG_LEVEL_INFO);
+	logger = log_create("logsTP", "SWAP", true, LOG_LEVEL_INFO);
 
 
 	t_config* config;
 
-	config = config_create("/home/utnso/github/tp-2015-2c-daft-punk-so/Swap/config.cfg");
+	config = config_create("config.cfg");
 	char *nombreSwap = config_get_string_value( config, "NOMBRE_SWAP");
 	cantPagSwap = config_get_int_value( config, "CANTIDAD_PAGINAS");
 	tamanioPagSwap = config_get_int_value( config, "TAMANIO_PAGINA");
