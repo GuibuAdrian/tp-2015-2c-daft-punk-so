@@ -216,8 +216,6 @@ void procesar(t_orden_memoria mensaje, int socketCPU)
 	memcpy(ordenPackage+sizeof(mensaje.pid),&mensaje.orden,sizeof(mensaje.orden));
 	memcpy(ordenPackage+sizeof(mensaje.pid)+sizeof(mensaje.pagina), &mensaje.pagina, sizeof(mensaje.pagina));
 
-
-
 	send(socketSwap, ordenPackage, sizeof(int)+sizeof(int)+sizeof(int),0);
 
 	log_info(logger, "Orden enviada");
@@ -227,7 +225,9 @@ void procesar(t_orden_memoria mensaje, int socketCPU)
 	free(ordenPackage);
 
 }
-
+//TODO revisar si se puede desserializar el package y armarlo como una estructura y pasarselo a CPU
+// a travez de la funcion EnviarREspuestaCPU, ya que me da la sensacion de que se queda esperando
+// la respuesta por parte de CPU por eso en realidad se queda en Memoria la respuesta.
 void recibirRespuestaSwap(int socketCPU)
 {
 	log_info(logger, "Esperando resultado");
@@ -248,9 +248,13 @@ void recibirRespuestaSwap(int socketCPU)
 	EnviarRespuestaCPU(package, respuesta, socketCPU);
 
 	free(package);
-
+//	Posible "codigo"
+//	desserializar(package,estructuraDeRespuesta);
+//	free(package);
+//	EnviarRespuestaCPU(respuesta, socketCPU);
 }
-
+// otras posibles soluciones a esto son que se genere de cierta forma hilos de mensaje con el CPU
+// para evitar que se queden los mensajes en memoria, o bien armar un handshake entre memoria y CPU.
 void EnviarRespuestaCPU(void* respuestaPackage, t_respuesta_CPU respuestaMemoria, int socketCPU)
 {
 	memcpy(respuestaPackage,&respuestaMemoria.pid,sizeof(respuestaMemoria.pid));
