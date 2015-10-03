@@ -34,17 +34,24 @@ typedef struct
 	int pagina;
 }t_orden_memoria;
 
+typedef struct
+{
+	int pid;
+	int paginas;
+	int mensajeSize;
+}t_respuesta_CPU;
+
 int socketSwap;
 t_log* logger;
 
-int tamanioEstructura(t_orden_memoria unaPersona){
-
-return    (sizeof(unaPersona.orden)+sizeof(unaPersona.pagina));
-
-};
+int tamanioEstructura(t_orden_memoria unaPersona);
+int tamanioRespuestaCPU(t_respuesta_CPU unaPersona);
 
 void recibirConexiones(char * PUERTO_CPU);
-void procesar(t_orden_memoria mensaje);
+void procesar(t_orden_memoria mensaje, int socketCPU);
+void recibirRespuestaSwap(int SocketCPU);
+void EnviarRespuestaCPU(void* respuestaPackage, t_respuesta_CPU respuestaMemoria, int socketCPU);
+int tamanioRespuestaMemoria(t_respuesta_CPU unaPersona);
 
 int main()
 {
@@ -66,8 +73,7 @@ int main()
 
 	socketSwap = conectarse(IP,PUERTO_SWAP);
 
-
-	printf("Conectado a Swap :D\n");
+	log_info(logger, "Conectado a Swap :D");
 
 
 	char * PUERTO_CPU = config_get_string_value(config, "PUERTO_CPU");
@@ -142,6 +148,8 @@ void recibirConexiones(char * PUERTO_CPU)
 			  if (FD_ISSET(j, &tempset))
 			  {
 
+				  log_info(logger, "Esperando orden");
+
 				  do
 				  {
 					  result = recv(socketCPU, (void*)package, sizeof(mensaje.pid), 0);
@@ -160,7 +168,12 @@ void recibirConexiones(char * PUERTO_CPU)
 
 					  memcpy(&mensaje.pagina, package+sizeof(mensaje.pid)+sizeof(mensaje.orden),sizeof(mensaje.pagina));
 
-					  procesar(mensaje);
+
+					  log_info(logger, "mProc: %d.", mensaje.pid);
+					  log_info(logger, "%d paginas", mensaje.pagina);
+					  log_info(logger, "Orden %d", mensaje.orden);
+
+					  procesar(mensaje, socketCPU);
 
 				   }
 
@@ -174,8 +187,15 @@ void recibirConexiones(char * PUERTO_CPU)
 					  log_error(logger, "Error in recv(): %s", strerror(errno));
 
 				  }
+
 			  }      // end if (FD_ISSET(j, &tempset))
 			  }      // end for (j=0;...)
+
+		  if (result==0)
+		  {
+			  break;
+		  }
+
 		  }      // end else if (result > 0)
 	   } while (1);
 
@@ -187,7 +207,7 @@ void recibirConexiones(char * PUERTO_CPU)
 }
 
 
-void procesar(t_orden_memoria mensaje)
+void procesar(t_orden_memoria mensaje, int socketCPU)
 {
 
 	void* ordenPackage = malloc( (sizeof(int)+sizeof(int)+sizeof(int)) );
@@ -197,8 +217,61 @@ void procesar(t_orden_memoria mensaje)
 	memcpy(ordenPackage+sizeof(mensaje.pid)+sizeof(mensaje.pagina), &mensaje.pagina, sizeof(mensaje.pagina));
 
 
+
 	send(socketSwap, ordenPackage, sizeof(int)+sizeof(int)+sizeof(int),0);
+
+	log_info(logger, "Orden enviada");
+
+	recibirRespuestaSwap(socketCPU);
 
 	free(ordenPackage);
 
 }
+
+void recibirRespuestaSwap(int socketCPU)
+{
+	log_info(logger, "Esperando resultado");
+
+	t_respuesta_CPU respuesta;
+
+	void* package = malloc(sizeof(respuesta.pid)+sizeof(respuesta.paginas)+sizeof(respuesta.mensajeSize));
+
+	recv(socketSwap,(void*)package, sizeof(respuesta.pid), 0);
+	memcpy(&respuesta.pid,package,sizeof(respuesta.pid));
+
+	recv(socketSwap,(void*) (package+sizeof(respuesta.pid)), sizeof(respuesta.paginas), 0);
+	memcpy(&respuesta.paginas, package+sizeof(respuesta.pid),sizeof(respuesta.paginas));
+
+	recv(socketSwap,(void*) (package+sizeof(respuesta.pid)+sizeof(respuesta.paginas)), sizeof(respuesta.mensajeSize), 0);
+	memcpy(&respuesta.mensajeSize, package+sizeof(respuesta.pid)+sizeof(respuesta.paginas),sizeof(respuesta.mensajeSize));
+
+	EnviarRespuestaCPU(package, respuesta, socketCPU);
+
+	free(package);
+
+}
+
+void EnviarRespuestaCPU(void* respuestaPackage, t_respuesta_CPU respuestaMemoria, int socketCPU)
+{
+	memcpy(respuestaPackage,&respuestaMemoria.pid,sizeof(respuestaMemoria.pid));
+	memcpy(respuestaPackage+sizeof(respuestaMemoria.pid),&respuestaMemoria.paginas,sizeof(respuestaMemoria.paginas));
+	memcpy(respuestaPackage+sizeof(respuestaMemoria.pid)+sizeof(respuestaMemoria.paginas), &respuestaMemoria.mensajeSize, sizeof(respuestaMemoria.mensajeSize));
+
+	send(socketCPU, respuestaPackage, tamanioRespuestaMemoria(respuestaMemoria),0);
+
+}
+int tamanioRespuestaCPU(t_respuesta_CPU unaPersona)
+{
+	return (sizeof(unaPersona.pid)+sizeof(unaPersona.paginas)+sizeof(unaPersona.mensajeSize));
+};
+
+int tamanioEstructura(t_orden_memoria unaPersona){
+
+return    (sizeof(unaPersona.orden)+sizeof(unaPersona.pagina));
+
+};
+
+int tamanioRespuestaMemoria(t_respuesta_CPU unaPersona)
+{
+	return (sizeof(unaPersona.pid)+sizeof(unaPersona.paginas)+sizeof(unaPersona.mensajeSize));
+};
