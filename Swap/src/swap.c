@@ -41,8 +41,8 @@ typedef struct
 {
 	int pid;
 	int paginas;
-	int mensajeSize; //0=Fallo 1=Iniciado 2=Finalizar
-}t_respuesta_memoria;
+	int mensajeSize;
+} t_respuesta_memoria;
 
 t_log* logger;
 t_list *listaLibres;
@@ -61,6 +61,7 @@ char* mapearArchivo();
 void crearArchivoSwap(char * nombreSwap, int tamanioSwap, int cantSwap);
 void procesar(t_orden_memoria ordenMemoria);
 void mostrarListas();
+t_espacioOcupado* buscarPID(int pid);
 
 int main()
 {
@@ -68,12 +69,12 @@ int main()
 	printf("----SWAP----\n\n");
 
 
-	logger = log_create("logsTP", "SWAP", true, LOG_LEVEL_INFO);
+	logger = log_create("/home/utnso/github/tp-2015-2c-daft-punk-so/Swap/logsTP", "SWAP", true, LOG_LEVEL_INFO);
 
 
 	t_config* config;
 
-	config = config_create("config.cfg");
+	config = config_create("/home/utnso/github/tp-2015-2c-daft-punk-so/Swap/config.cfg");
 	char *nombreSwap = config_get_string_value( config, "NOMBRE_SWAP");
 	cantPagSwap = config_get_int_value( config, "CANTIDAD_PAGINAS");
 	tamanioPagSwap = config_get_int_value( config, "TAMANIO_PAGINA");
@@ -85,7 +86,8 @@ int main()
 
 
 	crearArchivoSwap(nombreSwap, tamanioPagSwap, cantPagSwap);
-
+	printf("\n");
+	log_info(logger, "Archivo %s creado ", nombreSwap);
 
 	char* mapeo = mapearArchivo();
 
@@ -97,6 +99,7 @@ int main()
 	socket_memoria = aceptarLlamada(listenningSocket);
 
 	log_info(logger, "Conectado a Memoria, urra!");
+	//printf("Memoria conectado\n\n");
 
 	t_orden_memoria ordenMemoria;
 	void* package = malloc(sizeof(int)*3);
@@ -105,8 +108,7 @@ int main()
 
 	while(result)
 	{
-		log_info(logger, "Esperando orden");
-
+		//printf("Orden recibida\n");
 		result = recv(socket_memoria, (void*)package, sizeof(ordenMemoria.pid), 0);
 		memcpy(&ordenMemoria.pid,package,sizeof(ordenMemoria.pid));
 
@@ -116,14 +118,12 @@ int main()
 		recv(socket_memoria,(void*) (package+sizeof(ordenMemoria.pid)+sizeof(ordenMemoria.orden)), sizeof(ordenMemoria.paginas), 0);
 		memcpy(&ordenMemoria.paginas, package+sizeof(ordenMemoria.pid)+sizeof(ordenMemoria.orden),sizeof(ordenMemoria.paginas));
 
-		log_info(logger, "Orden recibida");
 
 		procesar(ordenMemoria);
 	}
 
 
 	//mostrarListas();
-
 
 	log_info(logger, "-------------------------------------------------");
 
@@ -134,7 +134,8 @@ int main()
 	list_destroy_and_destroy_elements(listaLibres,(void*) libre_destroy);
 
 	config_destroy(config);
-    log_destroy(logger);
+	log_destroy(logger);
+
 
 	close(listenningSocket);
 	close(socket_memoria);
@@ -142,7 +143,6 @@ int main()
 
     return 0;
 }
-
 
 void respuestaMemoria(int pid, int paginas, int mensaje)
 {
@@ -160,11 +160,13 @@ void respuestaMemoria(int pid, int paginas, int mensaje)
 
 	send(socket_memoria, respuestaPackage, tamanioRespuestaMemoria(respuestaMemoria),0);
 
-	log_info(logger, "Resultado enviado");
+	//printf( "Respuesta enviada\n");
 
 	free(respuestaPackage);
 
 }
+
+
 int encontrarPosicionEnPCB(char* inicioHueco)
 {
 	t_espacioLibre* new;
@@ -235,6 +237,8 @@ void procesar(t_orden_memoria ordenMemoria)
 		if (respuesta)
 		{
 			log_info(logger, "mProc asignado: %d. De %d paginas", ordenMemoria.pid, ordenMemoria.paginas);
+
+		//	printf("mProc asignado: %d. De %d paginas\n", ordenMemoria.pid, ordenMemoria.paginas);
 			respuestaMemoria(ordenMemoria.pid, ordenMemoria.paginas, 1);
 		}
 		else
@@ -249,16 +253,26 @@ void procesar(t_orden_memoria ordenMemoria)
 	{
 		if (ordenMemoria.orden == 1)
 		{
-			log_info(logger, "Lectura mProc: %d. Pagina: %d.", ordenMemoria.pid, ordenMemoria.paginas);
-			respuestaMemoria(ordenMemoria.pid, ordenMemoria.paginas, 2);
+			t_espacioOcupado* pidOcup = buscarPID(ordenMemoria.pid);
+			char * pagContent = malloc(4);
 
+			strncpy(pagContent,pidOcup->inicioSwap+(ordenMemoria.paginas*4),4);
+			//printf("Contenido: %s\n",pagContent);
+			log_info(logger, "Lectura mProc: %d. Contenido: %s.", ordenMemoria.pid, pagContent);
+
+			respuestaMemoria(ordenMemoria.pid, ordenMemoria.paginas, 2);
+			strncpy(pagContent,"",4);
+
+			free(pagContent);
 		}
 	else
 	{
 		if (ordenMemoria.orden == 3)
 		{
+		//	printf("mProc liberado: %d\n", ordenMemoria.pid);
 			log_info(logger, "mProc liberado: %d", ordenMemoria.pid);
-			respuestaMemoria(ordenMemoria.pid, -1, 2);
+
+			respuestaMemoria(ordenMemoria.pid, ordenMemoria.paginas, 3);
 		}
 	} //else finalizar
 	} //else leer
@@ -272,7 +286,8 @@ char* mapearArchivo()
 	int mapper;
 	char* mapeo;
 
-	char* nombre_archivo = "/home/utnso/test.txt";
+	char* nombre_archivo = "/home/utnso/Escritorio/tp-2015-2c-daft-punk-so/Swap/Debug/swap.data";
+	//char* nombre_archivo = "/home/utnso/arch.txt";
 
 	if(( mapper = open (nombre_archivo, O_RDWR) ) == -1)
 	{
@@ -393,8 +408,21 @@ void mostrarListas()
 		printf("%s\n", string);
 		printf("CantPags: %d\n", newO->cantPag);
 
-
 	}
 
 	free(string);
+}
+t_espacioOcupado* buscarPID(int pid)
+{
+	bool compararPorIdentificador2(t_espacioOcupado *unaCaja)
+	{
+		if (unaCaja->pid == pid)
+		{
+			return 1;
+		}
+
+		return 0;
+	}
+
+	return list_find(listaOcupados, (void*) compararPorIdentificador2);
 }
