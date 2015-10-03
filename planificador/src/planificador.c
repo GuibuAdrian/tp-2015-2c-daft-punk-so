@@ -117,7 +117,7 @@ int main()
 
 
 
-	logger = log_create("/home/utnso/github/tp-2015-2c-daft-punk-so/planificador/logsTP", "PLANIFICADOR",true, LOG_LEVEL_INFO);
+	logger = log_create("/home/utnso/git/tp-2015-2c-daft-punk-so/planificador/logsTP", "PLANIFICADOR",true, LOG_LEVEL_INFO);
 
 
 	listaCPUs = list_create();
@@ -131,7 +131,7 @@ int main()
 
 	t_config* config;
 
-	config = config_create("/home/utnso/github/tp-2015-2c-daft-punk-so/planificador/config.cfg");
+	config = config_create("/home/utnso/git/tp-2015-2c-daft-punk-so/planificador/config.cfg");
 
 	char * PUERTO_ESCUCHA = config_get_string_value(config, "PUERTO_ESCUCHA");
 	ALGORITMO_PLANIFICACION = config_get_string_value(config, "ALGORITMO_PLANIFICACION");
