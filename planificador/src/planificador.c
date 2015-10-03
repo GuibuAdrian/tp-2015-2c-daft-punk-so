@@ -66,8 +66,8 @@ typedef struct
 typedef struct
 {
 	int pid;
-	int respuestaSize;
-	char respuesta[PACKAGESIZE];
+	int paginas;
+	int mensajeSize;
 }t_respuesta;
 
 t_list *listaCPUs;
@@ -78,6 +78,7 @@ int pid=2;
 sem_t semPlani;
 sem_t semFZ;
 t_log* logger;
+int totalLineas;
 
 int tamanioMensaje1(t_mensaje1 mensaje);
 int tamanioHiloCPU(t_hiloCPU mensaje);
@@ -92,7 +93,7 @@ int tamanioready(t_ready mensaje);
 int tamanioEstructuraAEnviar(t_pathMensaje unaPersona);
 int tamanioRespuesta(t_respuesta unaRespuesta)
 {
-	return (unaRespuesta.respuestaSize);
+	return (sizeof(unaRespuesta.pid)+sizeof(unaRespuesta.paginas)+sizeof(unaRespuesta.mensajeSize));
 };
 
 t_hiloCPU* buscarCPUDisponible();
@@ -103,6 +104,10 @@ int encontrarPosicionEnPCB(int pid);
 int encontrarPosicionHiloCPU(int idHilo);
 void mostrarPCB();
 
+void correrPath(char * pch);
+void PS();
+void CPU();
+void finalizarPID(int pidF);
 void consola();
 void recibirConexiones(char * PUERTO);
 void cerrarConexiones();
@@ -116,8 +121,7 @@ int main()
 	printf("----PLANIFICADOR----\n\n");
 
 
-
-	logger = log_create("/home/utnso/git/tp-2015-2c-daft-punk-so/planificador/logsTP", "PLANIFICADOR",true, LOG_LEVEL_INFO);
+	logger = log_create("/home/utnso/github/tp-2015-2c-daft-punk-so/planificador/logsTP", "PLANIFICADOR", true, LOG_LEVEL_INFO);
 
 
 	listaCPUs = list_create();
@@ -131,7 +135,7 @@ int main()
 
 	t_config* config;
 
-	config = config_create("/home/utnso/git/tp-2015-2c-daft-punk-so/planificador/config.cfg");
+	config = config_create("/home/utnso/github/tp-2015-2c-daft-punk-so/planificador/config.cfg");
 
 	char * PUERTO_ESCUCHA = config_get_string_value(config, "PUERTO_ESCUCHA");
 	ALGORITMO_PLANIFICACION = config_get_string_value(config, "ALGORITMO_PLANIFICACION");
@@ -161,7 +165,7 @@ int main()
 	list_destroy_and_destroy_elements(listaReady,(void*) ready_destroy);
 
 	config_destroy(config);
-    log_destroy(logger);
+	log_destroy(logger);
 
 	return 0;
 }
@@ -181,7 +185,7 @@ int cargaListaCPU(int socketCliente)
 	recv(socketCliente,package+sizeof(int),sizeof(int),0);
 	memcpy(&cantHilos,package+sizeof(int),sizeof(int));
 
-	log_info(logger, "Id CPU: %d conectado", mensaje.idHilo);
+	log_info(logger, "CPU: %d Conectado", mensaje.idHilo);
 
 	//Cargo la lista con los sockets CPU
 	list_add(listaCPUs, hiloCPU_create(mensaje.idHilo,socketCliente, 1));
@@ -199,8 +203,6 @@ void recibirConexiones(char * PUERTO)
 
 	listenningSocket = recibirLlamada(PUERTO);
 
-	log_info(logger, "Llamada recibida %s", "INFO");
-
 	FD_ZERO(&readset);
 	FD_SET(listenningSocket, &readset);
 
@@ -212,7 +214,7 @@ void recibirConexiones(char * PUERTO)
 
 		if (result < 0)
 		{
-			log_error(logger, "Error in select(): %s", strerror(errno));
+			printf("Error in select(): %s", strerror(errno));
 		}
 		else if (result > 0)
 		{
@@ -220,11 +222,9 @@ void recibirConexiones(char * PUERTO)
 			{
 				socketCliente = aceptarLlamada(listenningSocket);
 
-				log_info(logger, "CPU conectado %s", "INFO");
-
 				if (socketCliente < 0)
 				{
-					log_error(logger, "Error in accept(): %s", strerror(errno));
+					printf( "Error in accept(): %s", strerror(errno));
 				}
 
 				//Identifico el Nodo
@@ -246,30 +246,52 @@ void recibirConexiones(char * PUERTO)
 
 void recibirRespuesta(int socket)
 {
-	log_info(logger, "Rafaja CPU terminada");
-
+	//printf("Esperando respuesta\n");
 	t_respuesta respuesta;
 
-	void* package = malloc(sizeof(respuesta.respuestaSize)+sizeof(respuesta.pid));
+	void* package = malloc(tamanioRespuesta(respuesta));
 
-	recv(socket,(void*)package, sizeof(respuesta.respuestaSize), 0);
-	memcpy(&respuesta.respuestaSize,package,sizeof(respuesta.respuestaSize));
-	recv(socket,(void*)package+sizeof(respuesta.respuestaSize), sizeof(respuesta.pid), 0);
-	memcpy(&respuesta.pid,package+sizeof(respuesta.respuestaSize),sizeof(respuesta.pid));
+	recv(socket,(void*)package, sizeof(respuesta.pid), 0);
+	memcpy(&respuesta.pid,package,sizeof(respuesta.pid));
 
-	log_info(logger, "mProc %d recibido", respuesta.pid);
+	recv(socket,(void*) (package+sizeof(respuesta.pid)), sizeof(respuesta.paginas), 0);
+	memcpy(&respuesta.paginas, package+sizeof(respuesta.pid),sizeof(respuesta.paginas));
+
+	recv(socket,(void*) (package+sizeof(respuesta.pid)+sizeof(respuesta.paginas)), sizeof(respuesta.mensajeSize), 0);
+	memcpy(&respuesta.mensajeSize, package+sizeof(respuesta.pid)+sizeof(respuesta.paginas),sizeof(respuesta.mensajeSize));
 
 
-	void* package2=malloc(tamanioRespuesta(respuesta));
+	//printf("Respuesta: %d\n", respuesta.mensajeSize);
 
-	recv(socket,(void*) package2, respuesta.respuestaSize, 0);
-	memcpy(&respuesta.respuesta, package2, respuesta.respuestaSize);
+	if(respuesta.mensajeSize==1)
+	{
+		//printf("mProc %d - Iniciado\n", respuesta.pid);
 
-	log_info(logger, "%s", respuesta.respuesta);
+		log_info(logger, "mProc %d - Iniciado\n", respuesta.pid);
+
+	}
+	else if(respuesta.mensajeSize==0)
+	{
+		//printf("mProc %d - Fallo\n", respuesta.pid);
+		log_info(logger, "mProc %d - Fallo\n", respuesta.pid);
+
+		sem_post(&semFZ);
+		finalizarPID(respuesta.pid);
+		sem_wait(&semFZ);
+
+	}
+	else if(respuesta.mensajeSize==2)
+	{
+		//printf("mProc %d - Pagina %d Leida\n", respuesta.pid, respuesta.paginas);
+		log_info(logger, "mProc %d - Pagina %d Leida\n", respuesta.pid, respuesta.paginas);
+	}
+	else if(respuesta.mensajeSize==3)
+	{
+		//printf("mProc %d finalizado\n", respuesta.pid);
+		log_info(logger, "mProc %d finalizado\n", respuesta.pid);
+	}
 
 	free(package);
-	free(package2);
-
 }
 
 void ROUND_ROBIN()
@@ -278,7 +300,6 @@ void ROUND_ROBIN()
 }
 void enviarPath(int socketCliente, int pid, char * path, int punteroProx)
 {
-
 	t_pathMensaje unaPersona;
 	unaPersona.pid = pid;
 	unaPersona.pathSize=strlen(path);
@@ -292,12 +313,11 @@ void enviarPath(int socketCliente, int pid, char * path, int punteroProx)
 	memcpy(package+sizeof(unaPersona.pid)+sizeof(unaPersona.puntero), &unaPersona.pathSize, sizeof(unaPersona.pathSize));
 	memcpy(package+sizeof(unaPersona.pid)+sizeof(unaPersona.puntero)+sizeof(unaPersona.pathSize), unaPersona.path, unaPersona.pathSize);
 
-	log_info(logger, "Enviando mProc %d",unaPersona.pid);
-
 	send(socketCliente,package, tamanioEstructuraAEnviar(unaPersona),0);
 
 
 	recibirRespuesta(socketCliente);
+
 
 	free(unaPersona.path);
 
@@ -306,7 +326,7 @@ void enviarPath(int socketCliente, int pid, char * path, int punteroProx)
 
 void FIFO()
 {
-	log_info(logger, "Ejecutando %s", "FIFO");
+	log_info(logger, "FIFO");
 
 	while(1)
 	{
@@ -322,7 +342,6 @@ void FIFO()
 
 		PCB* pcbReady = buscarReadyEnPCB(unReady);	//Busco al ready en el PCB
 
-		log_info(logger, "mProc seleccionado: %d", pcbReady->pid);
 
 		int posPCB =  encontrarPosicionEnPCB(pcbReady->pid);	//Encontrar pos en listaPCB
 
@@ -332,9 +351,6 @@ void FIFO()
 		{
 			list_remove_and_destroy_element(listaPCB, posPCB, (void*) PCB_destroy);
 			list_remove_and_destroy_element(listaReady, 0, (void*) ready_destroy);
-
-			log_error(logger, "%s: No existe el archivo ", "ERROR");
-			printf("No exite el archivo :O\n\n");
 
 			continue;
 		}
@@ -354,8 +370,6 @@ void FIFO()
 
 			int i = pcbReady->puntero;
 
-			log_info(logger, "Comienzo mProc: %d %s", unReady->pid, pcbReady->path);
-
 
 			while( (i-1)<=(totalLineas) )
 			{
@@ -364,17 +378,22 @@ void FIFO()
 
 				enviarPath(hiloCPU->socketCliente, unReady->pid, pcbReady->path, pcbReady->puntero);
 
+				log_info(logger, "Rafaga CPU finalizada. mProc: %d", unReady->pid);
+
+				pcbReady = buscarReadyEnPCB(unReady);
+
 				i=pcbReady->puntero+1;
 
 				list_replace(listaPCB, posPCB, PCB_create(pcbReady->pid,pcbReady->path, (pcbReady->puntero+1), 1));
 				sem_post(&semFZ);
 			}
 
+			log_info(logger, "Fin mProc: %d", unReady->pid);
+
 			list_replace_and_destroy_element(listaCPUs, posCPU, hiloCPU_create(hiloCPU->idHilo, hiloCPU->socketCliente, 1), (void*) hiloCPU_destroy);	//Pongo en Disponible al CPU q usaba
 			list_remove_and_destroy_element(listaPCB, posPCB, (void*) PCB_destroy);
 			list_remove_and_destroy_element(listaReady, 0, (void*) ready_destroy);
 
-			log_info(logger, "Fin mProc: %d", unReady->pid);
 
 			hiloCPU_destroy(aux);
 		}
@@ -470,13 +489,12 @@ void finalizarPID(int pidF)
 
 	if (file == NULL)
 	{
-		log_error(logger, "No se encontro PID: %d ", pidF);
 
 		return;
 	}
 	else
 	{
-		int totalLineas = txt_total_lines(file);
+		totalLineas = txt_total_lines(file);
 
 		sem_wait(&semFZ);
 		list_replace(listaPCB, posPCB, PCB_create(unPCB->pid,unPCB->path, totalLineas+1, 1));
@@ -594,8 +612,6 @@ void consola()
 }//Fin main
 void cerrarConexiones()
 {
-	log_info(logger, "Cerrando conexiones!");
-
 	int i;
 	t_hiloCPU *unHilo;
 
