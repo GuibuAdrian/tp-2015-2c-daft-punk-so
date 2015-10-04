@@ -213,9 +213,13 @@ int reservarEspacio(int pid, int paginas)	// 1=Exito  0=Fracaso
 	{
 		int posLibre = encontrarPosicionEnPCB(libreAux->inicioHueco);
 
-		list_replace(listaLibres, posLibre, libre_create(libreAux->inicioHueco+(paginas*tamanioPagSwap), libreAux->cantPag-paginas));
+		t_espacioLibre* espLibreViejo = list_replace(listaLibres, posLibre, libre_create(libreAux->inicioHueco+(paginas*tamanioPagSwap), libreAux->cantPag-paginas));
+
+		//list_replace_and_destroy_element(listaLibres, posLibre, libre_create(libreAux->inicioHueco+(paginas*tamanioPagSwap), libreAux->cantPag-paginas), (void*) libre_destroy);
 
 		list_add(listaOcupados, ocupado_create(pid, libreAux->inicioHueco, paginas));
+
+		libre_destroy(espLibreViejo);
 
 		return 1;
 	}
@@ -312,8 +316,8 @@ char* mapearArchivo()
 
 void crearArchivoSwap(char * nombreSwap, int tamanioSwap, int cantSwap)
 {
-	char strB[8];
-	char strC[10];
+	char strB[20];
+	char strC[20];
 
 	char strA[40] = " of=";
 	char * strD = nombreSwap;
@@ -342,7 +346,7 @@ void crearArchivoSwap(char * nombreSwap, int tamanioSwap, int cantSwap)
 static t_espacioLibre *libre_create(char* inicioHueco, int cantPag)
 {
 	t_espacioLibre *new = malloc(sizeof(t_espacioLibre));
-	new->inicioHueco = strdup(inicioHueco);
+	new->inicioHueco = inicioHueco;
 	new->cantPag = cantPag;
 
 	return new;
@@ -355,7 +359,7 @@ static t_espacioOcupado *ocupado_create(int pid, char* inicioSwap, int cantPag)
 {
 	t_espacioOcupado *new = malloc(sizeof(t_espacioOcupado));
 	new->pid = pid;
-	new->inicioSwap = strdup(inicioSwap);
+	new->inicioSwap = inicioSwap;
 	new->cantPag = cantPag;
 
 	return new;
@@ -395,7 +399,7 @@ void mostrarListas()
 
 	t_espacioOcupado* newO;
 
-	char* string = malloc(30);
+	char string[30];
 	for(i=0; i<list_size(listaOcupados);i++)
 	{
 		newO = list_get(listaOcupados,i);
@@ -410,7 +414,6 @@ void mostrarListas()
 
 	}
 
-	free(string);
 }
 t_espacioOcupado* buscarPID(int pid)
 {
