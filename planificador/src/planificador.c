@@ -157,8 +157,6 @@ int main()
 
 	cerrarConexiones();
 
-	free(ALGORITMO_PLANIFICACION);
-	free(PUERTO_ESCUCHA);
 
 	list_destroy_and_destroy_elements(listaCPUs,(void*) hiloCPU_destroy);
 	list_destroy_and_destroy_elements(listaPCB,(void*) PCB_destroy);
@@ -384,7 +382,7 @@ void FIFO()
 
 				i=pcbReady->puntero+1;
 
-				list_replace(listaPCB, posPCB, PCB_create(pcbReady->pid,pcbReady->path, (pcbReady->puntero+1), 1));
+				list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcbReady->pid,pcbReady->path, (pcbReady->puntero+1), 1), (void*)PCB_destroy);
 				sem_post(&semFZ);
 			}
 
