@@ -191,6 +191,8 @@ void recibirPath(int serverSocket) {
 
 			char * linea = obtenerLinea(unaPersona.path, unaPersona.puntero);
 
+			strncpy(unaPersona.path, " ", strlen(unaPersona.path));
+
 			interpretarInstruccion(serverSocket, unaPersona, linea);
 
 			sleep(RETARDO);
