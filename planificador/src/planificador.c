@@ -494,9 +494,9 @@ void finalizarPID(int pidF)
 	{
 		totalLineas = txt_total_lines(file);
 
-		sem_wait(&semFZ);
-		list_replace(listaPCB, posPCB, PCB_create(unPCB->pid,unPCB->path, totalLineas+1, 1));
 		sem_post(&semFZ);
+		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(unPCB->pid,unPCB->path, totalLineas, 1), (void*) PCB_destroy);
+		sem_wait(&semFZ);
 
 		txt_close_file(file);
 
