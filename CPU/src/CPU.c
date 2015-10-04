@@ -191,7 +191,7 @@ void recibirPath(int serverSocket) {
 
 			char * linea = obtenerLinea(unaPersona.path, unaPersona.puntero);
 
-			strncpy(unaPersona.path, " ", strlen(unaPersona.path));
+			strncpy(unaPersona.path, " ", PACKAGESIZE);
 
 			interpretarInstruccion(serverSocket, unaPersona, linea);
 
@@ -312,7 +312,7 @@ void interpretarInstruccion(int serverSocket, t_pathMensaje unaPersona,
 
 int tamanioEstructura2(t_pathMensaje unaPersona) {
 	return (sizeof(unaPersona.puntero) + sizeof(unaPersona.pathSize)
-			+ strlen(unaPersona.path));
+			+ sizeof(unaPersona.pid));
 };
 
 int tamanioRespuesta(t_respuesta_Swap unaRespuesta) {
