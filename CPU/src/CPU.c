@@ -21,6 +21,7 @@
 #include <commons/config.h>
 #include <commons/txt.h>
 #include <commons/log.h>
+#include <commons/collections/list.h>
 
 #define BACKLOG 5			// Define cuantas conexiones vamos a mantener pendientes al mismo tiempo
 #define PACKAGESIZE 1024	// Define cual va a ser el size maximo del paquete a enviar
@@ -97,18 +98,28 @@ int main() {
 	RETARDO = config_get_int_value(config, "RETARDO");
 
 	int i = 1;
-
+	t_list *listaDeHilos = list_create();
 	while (i <= spaghetti.numeroHilos) {
 		pthread_t unHilo;
-		pthread_create(&unHilo, NULL, (void*) conectarHilos, &spaghetti);
-
-		pthread_join(unHilo, NULL);
-
+		if(pthread_create(&unHilo, NULL, (void*) conectarHilos, &spaghetti)==0){
+			list_add(listaDeHilos,&unHilo);
+		}
 		i++;
 	}
 
 	log_info(logger, "-------------------------------------------------");
 
+	i=1;
+
+	while (i <= spaghetti.numeroHilos) {
+		int unHilo;
+		unHilo = list_get(listaDeHilos,i);
+		pthread_join(unHilo, NULL);
+		i++;
+	}
+
+	list_clean(listaDeHilos);
+	list_destroy(listaDeHilos);
 	close(socketMemoria);
 	log_destroy(logger);
 	config_destroy(config);
@@ -302,7 +313,8 @@ void interpretarInstruccion(int serverSocket, t_pathMensaje unaPersona,
 			enviarAMemoria(1, pagina, unaPersona.pid);
 		} else {
 			if (strncmp(pch, "finalizar", 9) == 0) {
-				enviarAMemoria(3, 0, unaPersona.pid);			}
+				enviarAMemoria(3, 0, unaPersona.pid);
+			}
 		}
 	}
 
@@ -313,10 +325,12 @@ void interpretarInstruccion(int serverSocket, t_pathMensaje unaPersona,
 int tamanioEstructura2(t_pathMensaje unaPersona) {
 	return (sizeof(unaPersona.puntero) + sizeof(unaPersona.pathSize)
 			+ sizeof(unaPersona.pid));
-};
+}
+;
 
 int tamanioRespuesta(t_respuesta_Swap unaRespuesta) {
 	return (sizeof(unaRespuesta.pid) + sizeof(unaRespuesta.paginas)
 			+ sizeof(unaRespuesta.mensajeSize));
-};
+}
+;
 
