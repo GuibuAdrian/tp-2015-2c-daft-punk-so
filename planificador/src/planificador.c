@@ -294,6 +294,7 @@ void recibirRespuesta(int socketCliente)
 	}
 
 	free(package);
+	free(package2);
 }
 
 void ROUND_ROBIN(void* args)
