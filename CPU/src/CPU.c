@@ -1,7 +1,7 @@
 /*
  ============================================================================
  Name        : CPU.c
- Author      : 
+ Author      :
  Version     :
  Copyright   : Your copyright notice
  Description : Hello World in C, Ansi-style
@@ -17,11 +17,11 @@
 #include <unistd.h>
 #include <pthread.h>
 
+#include <commons/collections/list.h>
 #include <commons/socket.h>
 #include <commons/config.h>
 #include <commons/txt.h>
 #include <commons/log.h>
-#include <commons/collections/list.h>
 
 #define BACKLOG 5			// Define cuantas conexiones vamos a mantener pendientes al mismo tiempo
 #define PACKAGESIZE 1024	// Define cual va a ser el size maximo del paquete a enviar
@@ -32,240 +32,301 @@ typedef struct {
 } t_idHilo;
 
 typedef struct {
-	char *ipPlanificador;
-	char *puertoPlanificador;
-	char *ipMemoria;
-	char *puertoMemoria;
-	int numeroHilos;
-} tspaghetti;
-
-typedef struct {
 	int pid;
 	int pathSize;
 	char path[PACKAGESIZE];
 	int puntero;
 } t_pathMensaje;
 
-typedef struct {
+typedef struct
+{
 	int pid;
 	int orden;	// 0=Iniciar, 1=Leer, 2=Escribir, 3=Finalizar
 	int pagina;
-} t_orden_memoria;
+	int contentSize;
+	char content[PACKAGESIZE];
+}t_orden_CPU;
 
-typedef struct {
-	int pid;
-	int paginas;
-	int mensajeSize;
-} t_respuesta_Swap;
+typedef struct
+{
+	pthread_t unHilo;
+} t_hilos;
 
-int id1 = 5;
-int RETARDO, socketMemoria;
+typedef struct
+{
+	int pathSize;
+	char path[PACKAGESIZE];
+} t_mensaje;
+
 t_log* logger;
+t_list *listaHilos;
+char *ipPlanificador, *puertoPlanificador, *ipMemoria, *puertoMemoria;
+int id = 5, RETARDO, numeroHilos;
 
+static t_hilos *hilo_create(pthread_t unHilo);
+static void hilo_destroy(t_hilos *self);
+int tamanioEstructura1(t_pathMensaje unaPersona);
 int tamanioEstructura2(t_pathMensaje unaPersona);
-int tamanioRespuesta(t_respuesta_Swap unaRespuesta);
-
-void conectarHilos();
-void recibirPath(int serverSocket);
+int tamanioMensajeMemo(t_orden_CPU mensajeMemo);
+void conectarHilos1();
+void recibirPath1(int serverSocket);
 char * obtenerLinea(char path[PACKAGESIZE], int puntero);
-void enviarRespuesta(int socketPlanificador, t_respuesta_Swap respuestaMemoria);
-void enviarAMemoria(int orden, int pagina, int pid);
-void interpretarInstruccion(int serverSocket, t_pathMensaje unaPersona,
-		char * linea);
-void recibirRespuestaSwap(int serverSocket);
+void interpretarLinea(int socketPlanificador, char* linea, int pid);
+char * obtenerLinea(char path[PACKAGESIZE], int puntero);
+t_orden_CPU enviarOrdenAMemoria(int pid, int orden, int paginas, char *content);
 
-int main() {
+int main()
+{
 	printf("\n");
-	printf("----CPU----\n\n");
+	printf("~~~~~~~~~~CPU~~~~~~~~~~\n\n");
 
-	logger = log_create("/home/utnso/github/tp-2015-2c-daft-punk-so/CPU/logsTP",
-			"CPU", true, LOG_LEVEL_INFO);
+
+	listaHilos = list_create();
+
+
+	logger = log_create("/home/utnso/github/tp-2015-2c-daft-punk-so/CPU/logsTP", "CPU", true, LOG_LEVEL_INFO);
 
 	t_config* config;
 
-	config = config_create(
-			"/home/utnso/github/tp-2015-2c-daft-punk-so/CPU/config.cfg");
+	config = config_create("/home/utnso/github/tp-2015-2c-daft-punk-so/CPU/config.cfg");
 
-	tspaghetti spaghetti;
-
-	spaghetti.ipPlanificador = config_get_string_value(config,
-			"IP_PLANIFICADOR");
-	spaghetti.puertoPlanificador = config_get_string_value(config,
-			"PUERTO_PLANIFICADOR");
-	spaghetti.ipMemoria = config_get_string_value(config, "IP_MEMORIA");
-	spaghetti.puertoMemoria = config_get_string_value(config, "PUERTO_MEMORIA");
-	spaghetti.numeroHilos = config_get_int_value(config, "CANTIDAD_HILOS");
+	ipPlanificador = config_get_string_value(config, "IP_PLANIFICADOR");
+	puertoPlanificador = config_get_string_value(config, "PUERTO_PLANIFICADOR");
+	ipMemoria = config_get_string_value(config, "IP_MEMORIA");
+	puertoMemoria = config_get_string_value(config, "PUERTO_MEMORIA");
+	numeroHilos = config_get_int_value(config, "CANTIDAD_HILOS");
 	RETARDO = config_get_int_value(config, "RETARDO");
 
+
 	int i = 1;
-	t_list *listaDeHilos = list_create();
-	while (i <= spaghetti.numeroHilos) {
-		pthread_t unHilo;
-		if(pthread_create(&unHilo, NULL, (void*) conectarHilos, &spaghetti)==0){
-			list_add(listaDeHilos,&unHilo);
-		}
+	pthread_t unHilo;
+
+	while (i <= numeroHilos)
+	{
+		pthread_create(&unHilo, NULL, (void*) conectarHilos1, NULL);
+
+		list_add(listaHilos,hilo_create(unHilo));
+
 		i++;
 	}
 
-	log_info(logger, "-------------------------------------------------");
+	int j;
+	t_hilos* new;
 
-	i=1;
+	for(j=0; j<list_size(listaHilos); j++)
+	{
+		new = list_get(listaHilos,j);
 
-	while (i <= spaghetti.numeroHilos) {
-		int unHilo;
-		unHilo = list_get(listaDeHilos,i);
-		pthread_join(unHilo, NULL);
-		i++;
+		pthread_join(new->unHilo, NULL);
 	}
 
-	list_clean(listaDeHilos);
-	list_destroy(listaDeHilos);
-	close(socketMemoria);
+	list_destroy_and_destroy_elements(listaHilos,(void*) hilo_destroy);
+
+	log_info(logger, "---------------------FIN---------------------");
+
 	log_destroy(logger);
 	config_destroy(config);
 
 	return 0;
 }
 
-void conectarHilos(void *context) {
-	tspaghetti *spaghetti = context;
-
+void conectarHilos1(void *context)
+{
 	int serverSocket;
-	serverSocket = conectarse(spaghetti->ipPlanificador,
-			spaghetti->puertoPlanificador);
+	serverSocket = conectarse(ipPlanificador, puertoPlanificador);
 
-	log_info(logger, "Conectado a planificador!\n\n");
-
-	socketMemoria = conectarse(spaghetti->ipMemoria, spaghetti->puertoMemoria);
-
-	log_info(logger, "Conectado a memoria!");
+	log_info(logger,"Planificador: %d conectado, viva!!", serverSocket);
 
 	t_idHilo mensaje;
 
-	id1++;
-
-	log_info(logger, "CPU %d creado", id1);
-
-	mensaje.idNodo = id1;
-	mensaje.cantHilos = spaghetti->numeroHilos;
+	mensaje.idNodo = serverSocket;
+	mensaje.cantHilos = numeroHilos;
 
 	//Envio id y aviso la cantidad de conexiones
 	void* package = malloc(sizeof(t_idHilo));
 
 	memcpy(package, &mensaje.idNodo, sizeof(mensaje.idNodo));
-	memcpy(package + sizeof(mensaje.idNodo), &mensaje.cantHilos,
-			sizeof(mensaje.cantHilos));
+	memcpy(package + sizeof(mensaje.idNodo), &mensaje.cantHilos, sizeof(mensaje.cantHilos));
 
 	send(serverSocket, package, sizeof(t_idHilo), 0);
 
 	free(package);
 
-	recibirPath(serverSocket);
+	recibirPath1(serverSocket);
 
 	close(serverSocket);
 
 }
 
-void recibirPath(int serverSocket) {
+void recibirPath1(int serverSocket) {
 	int status = 1;
 
 	t_pathMensaje unaPersona;
 
 	void* package = malloc(tamanioEstructura2(unaPersona));
 
-	while (status) {
+	while (status)
+	{
 		status = recv(serverSocket, (void*) package, sizeof(unaPersona.pid), 0);
 
-		if (status == 0) {
+		if (status == 0)
+		{
 			break;
-		} else {
+		}
+		else
+		{
 			memcpy(&unaPersona.pid, package, sizeof(unaPersona.pid));
-			recv(serverSocket, (void*) (package + sizeof(unaPersona.pid)),
-					sizeof(unaPersona.puntero), 0);
-			memcpy(&unaPersona.puntero, package + sizeof(unaPersona.pid),
-					sizeof(unaPersona.puntero));	//--
-			recv(serverSocket,
-					(void*) (package + sizeof(unaPersona.pid)
-							+ sizeof(unaPersona.puntero)),
-					sizeof(unaPersona.pathSize), 0);
-			memcpy(&unaPersona.pathSize,
-					package + sizeof(unaPersona.pid)
-							+ sizeof(unaPersona.puntero),
-					sizeof(unaPersona.pathSize));	//--
+			recv(serverSocket, (void*) (package + sizeof(unaPersona.pid)), sizeof(unaPersona.puntero), 0);
+			memcpy(&unaPersona.puntero, package + sizeof(unaPersona.pid), sizeof(unaPersona.puntero));	//--
+			recv(serverSocket, (void*) (package + sizeof(unaPersona.pid) + sizeof(unaPersona.puntero)), sizeof(unaPersona.pathSize), 0);
+			memcpy(&unaPersona.pathSize, package + sizeof(unaPersona.pid) + sizeof(unaPersona.puntero), sizeof(unaPersona.pathSize));	//--
 
 			void* package2 = malloc(unaPersona.pathSize);
 
 			recv(serverSocket, (void*) package2, unaPersona.pathSize, 0);
 			memcpy(&unaPersona.path, package2, unaPersona.pathSize);
 
-			log_info(logger, "Contexto %s", unaPersona.path);
-
 			char * linea = obtenerLinea(unaPersona.path, unaPersona.puntero);
+
+			log_info(logger,"~~~~~~~~~~~~~~~~~~~Socket: %d...mProc: %d~~~~~~~~~~~~~~~~~~~", serverSocket, unaPersona.pid);
 
 			strncpy(unaPersona.path, " ", PACKAGESIZE);
 
-			interpretarInstruccion(serverSocket, unaPersona, linea);
+			interpretarLinea(serverSocket,linea, unaPersona.pid);
 
 			sleep(RETARDO);
 
 			free(linea);
 			free(package2);
 		}
-
 	}
 
 	free(package);
 }
 
-void recibirRespuestaSwap(int serverSocket) {
-	t_respuesta_Swap respuesta;
 
-	void* package = malloc(
-			sizeof(respuesta.pid) + sizeof(respuesta.paginas)
-					+ sizeof(respuesta.mensajeSize));
+t_orden_CPU recibirRespuestaSwap(int socketMemoria)
+{
+	t_orden_CPU mensajeSwap;
 
-	recv(socketMemoria, (void*) package, sizeof(respuesta.pid), 0);
-	memcpy(&respuesta.pid, package, sizeof(respuesta.pid));
+	void* package = malloc(	sizeof(mensajeSwap.pid) + sizeof(mensajeSwap.orden) + sizeof(mensajeSwap.pagina) + sizeof(mensajeSwap.contentSize));
 
-	recv(socketMemoria, (void*) (package + sizeof(respuesta.pid)),
-			sizeof(respuesta.paginas), 0);
-	memcpy(&respuesta.paginas, package + sizeof(respuesta.pid),
-			sizeof(respuesta.paginas));
+	recv(socketMemoria, (void*) package, sizeof(mensajeSwap.pid), 0);
+	memcpy(&mensajeSwap.pid, package, sizeof(mensajeSwap.pid));
+	recv(socketMemoria, (void*) (package + sizeof(mensajeSwap.pid)), sizeof(mensajeSwap.orden), 0);
+	memcpy(&mensajeSwap.orden, package + sizeof(mensajeSwap.pid), sizeof(mensajeSwap.orden));	//--
+	recv(socketMemoria, (void*) (package + sizeof(mensajeSwap.pid) + sizeof(mensajeSwap.orden)), sizeof(mensajeSwap.pagina), 0);
+	memcpy(&mensajeSwap.pagina, package + sizeof(mensajeSwap.pid) + sizeof(mensajeSwap.orden), sizeof(mensajeSwap.pagina));	//--
+	recv(socketMemoria,(void*) (package + sizeof(mensajeSwap.pid) + sizeof(mensajeSwap.orden) + sizeof(mensajeSwap.pagina)), sizeof(mensajeSwap.contentSize), 0);//--
+	memcpy(&mensajeSwap.contentSize,(void*) package + sizeof(mensajeSwap.pid) + sizeof(mensajeSwap.orden) + sizeof(mensajeSwap.pagina), sizeof(mensajeSwap.contentSize));
 
-	recv(socketMemoria,
-			(void*) (package + sizeof(respuesta.pid) + sizeof(respuesta.paginas)),
-			sizeof(respuesta.mensajeSize), 0);
-	memcpy(&respuesta.mensajeSize,
-			package + sizeof(respuesta.pid) + sizeof(respuesta.paginas),
-			sizeof(respuesta.mensajeSize));
+	void* package2=malloc(mensajeSwap.contentSize);
 
-	log_info(logger, "Instruccion Ejecutada. mProc: %d. Parametros: %d",
-			respuesta.pid, respuesta.paginas);
-
-	enviarRespuesta(serverSocket, respuesta);
+	recv(socketMemoria, (void*) package2, mensajeSwap.contentSize, 0);//campo longitud(NO SIZEOF DE LONGITUD)
+	memcpy(&mensajeSwap.content, package2, mensajeSwap.contentSize);
 
 	free(package);
+	free(package2);
 
+	return mensajeSwap;
 }
 
-void enviarRespuesta(int socketPlanificador, t_respuesta_Swap respuestaMemoria) {
-	void* respuestaPackage = malloc(tamanioRespuesta(respuestaMemoria));
+void enviarRespuestaPlanificador(int socketPlanificador, int pid, int orden, int pagina, char *content)
+{
+	t_orden_CPU respuestaPlan;
+	respuestaPlan.pid = pid;
+	respuestaPlan.orden = orden;
+	respuestaPlan.pagina = pagina;
+	respuestaPlan.contentSize = strlen(content)+1;
+	strcpy(respuestaPlan.content, content);
 
-	memcpy(respuestaPackage, &respuestaMemoria.pid,
-			sizeof(respuestaMemoria.pid));
-	memcpy(respuestaPackage + sizeof(respuestaMemoria.pid),
-			&respuestaMemoria.paginas, sizeof(respuestaMemoria.paginas));
-	memcpy(
-			respuestaPackage + sizeof(respuestaMemoria.pid)
-					+ sizeof(respuestaMemoria.paginas),
-			&respuestaMemoria.mensajeSize,
-			sizeof(respuestaMemoria.mensajeSize));
+	void* respuestaPackage = malloc(tamanioMensajeMemo(respuestaPlan));
 
-	send(socketPlanificador, respuestaPackage,
-			tamanioRespuesta(respuestaMemoria), 0);
-	log_info(logger, "Rafaga concluida. mProc: %d.", respuestaMemoria.pid);
+	memcpy(respuestaPackage, &respuestaPlan.pid, sizeof(respuestaPlan.pid));
+	memcpy(respuestaPackage+sizeof(respuestaPlan.pid), &respuestaPlan.orden, sizeof(respuestaPlan.orden));
+	memcpy(respuestaPackage+sizeof(respuestaPlan.pid)+sizeof(respuestaPlan.orden), &respuestaPlan.pagina, sizeof(respuestaPlan.pagina));
+	memcpy(respuestaPackage+sizeof(respuestaPlan.pid)+sizeof(respuestaPlan.orden)+sizeof(respuestaPlan.pagina), &respuestaPlan.contentSize, sizeof(respuestaPlan.contentSize));
+	memcpy(respuestaPackage+sizeof(respuestaPlan.pid)+sizeof(respuestaPlan.orden)+sizeof(respuestaPlan.pagina)+sizeof(respuestaPlan.contentSize), &respuestaPlan.content, respuestaPlan.contentSize);
+
+	log_info(logger, "Respuesta %d", respuestaPlan.orden);
+
+	send(socketPlanificador, respuestaPackage, tamanioMensajeMemo(respuestaPlan), 0);
 
 	free(respuestaPackage);
+}
+
+t_orden_CPU enviarOrdenAMemoria(int pid, int orden, int paginas, char *content)
+{
+	t_orden_CPU mensajeMemoria;
+
+	mensajeMemoria.pid = pid;
+	mensajeMemoria.orden = orden;
+	mensajeMemoria.pagina = paginas;
+	mensajeMemoria.contentSize = strlen(content)+1;
+	strcpy(mensajeMemoria.content,content);
+
+	int socketMemoria = conectarse(ipMemoria, puertoMemoria);
+
+	void* mensajeMemoPackage = malloc(tamanioMensajeMemo(mensajeMemoria));
+
+	memcpy(mensajeMemoPackage, &mensajeMemoria.pid, sizeof(mensajeMemoria.pid));
+	memcpy(mensajeMemoPackage+sizeof(mensajeMemoria.pid), &mensajeMemoria.orden, sizeof(mensajeMemoria.orden));
+	memcpy(mensajeMemoPackage+sizeof(mensajeMemoria.pid)+sizeof(mensajeMemoria.orden), &mensajeMemoria.pagina, sizeof(mensajeMemoria.pagina));
+	memcpy(mensajeMemoPackage+sizeof(mensajeMemoria.pid)+sizeof(mensajeMemoria.orden)+sizeof(mensajeMemoria.pagina), &mensajeMemoria.contentSize, sizeof(mensajeMemoria.contentSize));
+	memcpy(mensajeMemoPackage+sizeof(mensajeMemoria.pid)+sizeof(mensajeMemoria.orden)+sizeof(mensajeMemoria.pagina)+sizeof(mensajeMemoria.contentSize), &mensajeMemoria.content, mensajeMemoria.contentSize);
+
+	send(socketMemoria, mensajeMemoPackage, tamanioMensajeMemo(mensajeMemoria), 0);
+
+	free(mensajeMemoPackage);
+
+	return recibirRespuestaSwap(socketMemoria);
+}
+
+void interpretarLinea(int socketPlanificador, char* linea, int pid)
+{
+	char * pch = strtok(linea, " \n");
+	int pagina;
+	t_orden_CPU mensaje;
+
+	if (strncmp(pch, "iniciar", 7) == 0)
+	{
+		pch = strtok(NULL, " \n");
+		pagina = strtol(pch, NULL, 10);
+
+		mensaje = enviarOrdenAMemoria(pid, 0, pagina, "/");
+	}
+	else
+	{
+		if (strncmp(pch, "leer", 5) == 0)
+		{
+			pch = strtok(NULL, " \n");
+			pagina = strtol(pch, NULL, 10);
+
+			mensaje = enviarOrdenAMemoria(pid, 1, pagina, "/");
+
+			printf("Mensaje: %s\n", mensaje.content);
+		}
+		else
+		{
+			if (strncmp(pch, "finalizar", 9) == 0)
+			{
+				mensaje = enviarOrdenAMemoria(pid, 3, 0, "/");
+			}
+			else
+			{
+				if (strncmp(pch, "escribir", 9) == 0)
+				{
+					pch = strtok(NULL, " \n");
+					pagina = strtol(pch, NULL, 10);
+
+					pch = strtok(NULL, " \n");
+
+					mensaje = enviarOrdenAMemoria(pid, 2, pagina, pch);
+				}
+			}
+		}
+	}
+	enviarRespuestaPlanificador(socketPlanificador, mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content);
 }
 
 char * obtenerLinea(char path[PACKAGESIZE], int puntero) {
@@ -277,60 +338,29 @@ char * obtenerLinea(char path[PACKAGESIZE], int puntero) {
 
 	return linea;
 }
-void enviarAMemoria(int orden, int pagina, int pid) {
-	t_orden_memoria orden_memoria;
 
-	void* ordenPackage = malloc((sizeof(int) + sizeof(int) + sizeof(int)));
+int tamanioEstructura1(t_pathMensaje unaPersona) {
+	return (sizeof(unaPersona.puntero) + sizeof(unaPersona.pathSize)
+			+ sizeof(unaPersona.pid));
+};
 
-	orden_memoria.pid = pid;
-	orden_memoria.orden = orden;
-	orden_memoria.pagina = pagina;
-
-	memcpy(ordenPackage, &orden_memoria.pid, sizeof(orden_memoria.pid));
-	memcpy(ordenPackage + sizeof(pid), &orden_memoria.orden,
-			sizeof(orden_memoria.orden));
-	memcpy(ordenPackage + sizeof(pid) + sizeof(pagina), &orden_memoria.pagina,
-			sizeof(orden_memoria.pagina));
-
-	send(socketMemoria, ordenPackage, sizeof(int) + sizeof(int) + sizeof(int),
-			0);
-
-	free(ordenPackage);
-}
-void interpretarInstruccion(int serverSocket, t_pathMensaje unaPersona,
-		char * linea) {
-	char * pch = strtok(linea, " \n");
-	int pagina;
-
-	if (strncmp(pch, "iniciar", 7) == 0) {
-		pch = strtok(NULL, " \n");
-		pagina = strtol(pch, NULL, 10);
-		enviarAMemoria(0, pagina, unaPersona.pid);
-	} else {
-		if (strncmp(pch, "leer", 4) == 0) {
-			pch = strtok(NULL, " \n");
-			pagina = strtol(pch, NULL, 10);
-			enviarAMemoria(1, pagina, unaPersona.pid);
-		} else {
-			if (strncmp(pch, "finalizar", 9) == 0) {
-				enviarAMemoria(3, 0, unaPersona.pid);
-			}
-		}
-	}
-
-	recibirRespuestaSwap(serverSocket);
-
-}
-
+int tamanioMensajeMemo(t_orden_CPU mensajeMemo)
+{
+	return (sizeof(mensajeMemo.pid)+sizeof(mensajeMemo.pagina)+sizeof(mensajeMemo.orden)+sizeof(mensajeMemo.contentSize)+mensajeMemo.contentSize);
+};
 int tamanioEstructura2(t_pathMensaje unaPersona) {
 	return (sizeof(unaPersona.puntero) + sizeof(unaPersona.pathSize)
 			+ sizeof(unaPersona.pid));
-}
-;
+};
+static t_hilos *hilo_create(pthread_t unHilo)
+{
+	 t_hilos *new = malloc(sizeof(t_hilos));
 
-int tamanioRespuesta(t_respuesta_Swap unaRespuesta) {
-	return (sizeof(unaRespuesta.pid) + sizeof(unaRespuesta.paginas)
-			+ sizeof(unaRespuesta.mensajeSize));
-}
-;
+	 new->unHilo=unHilo;
 
+	 return new;
+}
+static void hilo_destroy(t_hilos *self)
+{
+    free(self);
+}

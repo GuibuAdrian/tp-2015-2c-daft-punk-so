@@ -1,11 +1,8 @@
 /*
- ============================================================================
- Name        : Memoria.c
- Author      :
- Version     :
- Copyright   : Your copyright notice
- Description : Hello World in C, Ansi-style
- ============================================================================
+ * servidorM.c
+ *
+ *  Created on: 12/10/2015
+ *      Author: utnso
  */
 
 #include <stdio.h>
@@ -32,80 +29,65 @@ typedef struct
 	int pid;
 	int orden;	// 0=Iniciar, 1=Leer, 2=Escribir, 3=Finalizar
 	int pagina;
-}t_orden_memoria;
+	int contentSize;
+	char content[PACKAGESIZE];
+}t_orden_CPU;
 
-typedef struct
-{
-	int pid;
-	int paginas;
-	int mensajeSize;
-}t_respuesta_CPU;
-
-int socketSwap;
 t_log* logger;
+int socketSwap;
 
-int tamanioEstructura(t_orden_memoria unaPersona);
-int tamanioRespuestaCPU(t_respuesta_CPU unaPersona);
-
-void recibirConexiones(char * PUERTO_CPU);
-void procesar(t_orden_memoria mensaje, int socketCPU);
-void recibirRespuestaSwap(int SocketCPU);
-void EnviarRespuestaCPU(void* respuestaPackage, t_respuesta_CPU respuestaMemoria, int socketCPU);
-int tamanioRespuestaMemoria(t_respuesta_CPU unaPersona);
+int tamanioOrdenCPU(t_orden_CPU mensaje);
+void recibirConexiones1(char * PUERTO_CPU);
+t_orden_CPU enviarOrdenASwap(int pid, int orden, int paginas, char *content);
+void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU);
 
 int main()
 {
 	printf("\n");
-	printf("----MEMORIA----\n\n");
+	printf("~~~~~~~~~~MEMORIA~~~~~~~~~~\n\n");
 
 
-	logger = log_create("/home/utnso/github/tp-2015-2c-daft-punk-so/memoria/logsTP", "MEMORIA",true, LOG_LEVEL_INFO);
-
-
-	char * IP;
+	logger = log_create("/home/utnso/github/tp-2015-2c-daft-punk-so/memoria/logsTP", "Memoria", true, LOG_LEVEL_INFO);
 
 	t_config* config;
 
 	config = config_create("/home/utnso/github/tp-2015-2c-daft-punk-so/memoria/config.cfg");
 
-	IP = config_get_string_value(config, "IP_SWAP");
+	char *IP = config_get_string_value(config, "IP_SWAP");
 	char * PUERTO_SWAP = config_get_string_value(config, "PUERTO_SWAP");
-
 	socketSwap = conectarse(IP,PUERTO_SWAP);
-
-	log_info(logger, "Conectado a Swap :D");
 
 
 	char * PUERTO_CPU = config_get_string_value(config, "PUERTO_CPU");
 
-	recibirConexiones(PUERTO_CPU);
 
+	recibirConexiones1(PUERTO_CPU);
 
-	log_info(logger, "-------------------------------------------------");
+	log_info(logger, "---------------------FIN---------------------");
+
 
 	close(socketSwap);
 
+	log_destroy(logger);
 	config_destroy(config);
-    log_destroy(logger);
 
 	return 0;
 }
 
-void recibirConexiones(char * PUERTO_CPU)
+void recibirConexiones1(char * PUERTO_CPU)
 {
 	fd_set readset, tempset;
 	int maxfd;
 	int socketCPU, j, result;
 
-	t_orden_memoria mensaje;
-	void* package = malloc(tamanioEstructura(mensaje));
+	t_orden_CPU mensaje;
+	void* package = malloc(tamanioOrdenCPU(mensaje));
 
 	int listenningSocket = recibirLlamada(PUERTO_CPU);
 
 	FD_ZERO(&readset);
 	FD_SET(listenningSocket, &readset);
 	maxfd = listenningSocket;
-
 
 	do
 	{
@@ -114,11 +96,11 @@ void recibirConexiones(char * PUERTO_CPU)
 
 	   if (result == 0)
 	   {
-		  log_error(logger, "Error in select() timed out!");
+		   log_error(logger,"select() timed out!\n");
 	   }
 	   else if (result < 0 && errno != EINTR)
 	   {
-		   log_error(logger, "Error in select(): %s", strerror(errno));
+		   log_error(logger,"Error in select(): %s\n", strerror(errno));
 	   }
 	   else if (result > 0)
 	   {
@@ -127,12 +109,12 @@ void recibirConexiones(char * PUERTO_CPU)
 		  {
 			  socketCPU = aceptarLlamada(listenningSocket);
 
-			  log_info(logger, "Conectado al CPU, urra!");
+			  log_info(logger,"Conectado al CPU, urra!");
 
 
 			  if (socketCPU < 0)
 			  {
-				  log_error(logger, "Error in accept(): %s", strerror(errno));
+				  log_error(logger, "Error in accept(): %s\n", strerror(errno));
 			  }
 			  else
 			  {
@@ -147,36 +129,38 @@ void recibirConexiones(char * PUERTO_CPU)
 		  {
 			  if (FD_ISSET(j, &tempset))
 			  {
-
-				  log_info(logger, "Esperando orden");
-
-				  do
-				  {
-					  result = recv(socketCPU, (void*)package, sizeof(mensaje.pid), 0);
-
-				  }while (result == -1 && errno == EINTR);
+				  result = recv(socketCPU, (void*)package, sizeof(mensaje.pid), 0);
 
 				  if (result > 0)
 				  {
 					  memcpy(&mensaje.pid,package,sizeof(mensaje.pid));
 
 					  recv(socketCPU,(void*) (package+sizeof(mensaje.pid)), sizeof(mensaje.pagina), 0);
-
 					  memcpy(&mensaje.orden, package+sizeof(mensaje.pid),sizeof(mensaje.orden));
 
 					  recv(socketCPU,(void*) (package+sizeof(mensaje.pid)+sizeof(mensaje.orden)), sizeof(mensaje.pagina), 0);
-
 					  memcpy(&mensaje.pagina, package+sizeof(mensaje.pid)+sizeof(mensaje.orden),sizeof(mensaje.pagina));
+					  recv(socketCPU,(void*) (package+sizeof(mensaje.pid)+sizeof(mensaje.orden)+sizeof(mensaje.pagina)), sizeof(mensaje.contentSize), 0);
+					  memcpy(&mensaje.contentSize, package+sizeof(mensaje.pid)+sizeof(mensaje.orden)+sizeof(mensaje.pagina), sizeof(mensaje.contentSize));
 
 
-					  log_info(logger, "mProc: %d.", mensaje.pid);
-					  log_info(logger, "%d paginas", mensaje.pagina);
+					  void* package2=malloc(mensaje.contentSize);
+
+					  recv(socketCPU,(void*) package2, mensaje.contentSize, 0);//campo longitud(NO SIZEOF DE LONGITUD)
+					  memcpy(&mensaje.content, package2, mensaje.contentSize);
+
+
+					  log_info(logger, "PID %d", mensaje.pid);
 					  log_info(logger, "Orden %d", mensaje.orden);
+					  log_info(logger, "Paginas %d", mensaje.pagina);
 
-					  procesar(mensaje, socketCPU);
+					  mensaje = enviarOrdenASwap(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content);
+
+					  enviarRespuestaCPU(mensaje, socketCPU);
+
+					  free(package2);
 
 				   }
-
 				  else if (result == 0)
 				  {
 					  close(j);
@@ -184,98 +168,101 @@ void recibirConexiones(char * PUERTO_CPU)
 				  }
 				  else
 				  {
-					  log_error(logger, "Error in recv(): %s", strerror(errno));
-
+					  log_error(logger,"Error in recv(): %s\n", strerror(errno));
 				  }
 
-			  }      // end if (FD_ISSET(j, &tempset))
+			    }      // end if (FD_ISSET(j, &tempset))
 			  }      // end for (j=0;...)
 
 		  if (result==0)
 		  {
 			  break;
 		  }
-
-		  }      // end else if (result > 0)
-	   } while (1);
+	   }      // end else if (result > 0)
+	} while (1);
 
 	free(package);
 
 	close(socketCPU);
-
 	close(listenningSocket);
 }
 
-
-void procesar(t_orden_memoria mensaje, int socketCPU)
+void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU)
 {
+	t_orden_CPU mensajeSwap;
 
-	void* ordenPackage = malloc( (sizeof(int)+sizeof(int)+sizeof(int)) );
+	mensajeSwap.pid = respuestaMemoria.pid;
+	mensajeSwap.orden = respuestaMemoria.orden;
+	mensajeSwap.pagina = respuestaMemoria.pagina;
+	mensajeSwap.contentSize = strlen(respuestaMemoria.content)+1;
+	strcpy(mensajeSwap.content,respuestaMemoria.content);
 
-	memcpy(ordenPackage,&mensaje.pid,sizeof(mensaje.pid));
-	memcpy(ordenPackage+sizeof(mensaje.pid),&mensaje.orden,sizeof(mensaje.orden));
-	memcpy(ordenPackage+sizeof(mensaje.pid)+sizeof(mensaje.pagina), &mensaje.pagina, sizeof(mensaje.pagina));
+	void* mensajeSwapPackage = malloc(tamanioOrdenCPU(mensajeSwap));
 
-	send(socketSwap, ordenPackage, sizeof(int)+sizeof(int)+sizeof(int),0);
+	memcpy(mensajeSwapPackage, &mensajeSwap.pid, sizeof(mensajeSwap.pid));
+	memcpy(mensajeSwapPackage+sizeof(mensajeSwap.pid), &mensajeSwap.orden, sizeof(mensajeSwap.orden));
+	memcpy(mensajeSwapPackage+sizeof(mensajeSwap.pid)+sizeof(mensajeSwap.orden), &mensajeSwap.pagina, sizeof(mensajeSwap.pagina));
+	memcpy(mensajeSwapPackage+sizeof(mensajeSwap.pid)+sizeof(mensajeSwap.orden)+sizeof(mensajeSwap.pagina), &mensajeSwap.contentSize, sizeof(mensajeSwap.contentSize));
+	memcpy(mensajeSwapPackage+sizeof(mensajeSwap.pid)+sizeof(mensajeSwap.orden)+sizeof(mensajeSwap.pagina)+sizeof(mensajeSwap.contentSize), &mensajeSwap.content, mensajeSwap.contentSize);
 
-	log_info(logger, "Orden enviada");
+	send(socketCPU, mensajeSwapPackage, tamanioOrdenCPU(mensajeSwap), 0);
 
-	recibirRespuestaSwap(socketCPU);
-
-	free(ordenPackage);
-
+	free(mensajeSwapPackage);
 }
-//TODO revisar si se puede desserializar el package y armarlo como una estructura y pasarselo a CPU
-// a travez de la funcion EnviarREspuestaCPU, ya que me da la sensacion de que se queda esperando
-// la respuesta por parte de CPU por eso en realidad se queda en Memoria la respuesta.
-void recibirRespuestaSwap(int socketCPU)
+
+t_orden_CPU recibirRespuestaSwap(int socketMemoria)
 {
-	log_info(logger, "Esperando resultado");
+	t_orden_CPU mensajeSwap;
 
-	t_respuesta_CPU respuesta;
+	void* package = malloc(	sizeof(mensajeSwap.pid) + sizeof(mensajeSwap.orden) + sizeof(mensajeSwap.pagina) + sizeof(mensajeSwap.contentSize));
 
-	void* package = malloc(sizeof(respuesta.pid)+sizeof(respuesta.paginas)+sizeof(respuesta.mensajeSize));
+	recv(socketMemoria, (void*) package, sizeof(mensajeSwap.pid), 0);
+	memcpy(&mensajeSwap.pid, package, sizeof(mensajeSwap.pid));
+	recv(socketMemoria, (void*) (package + sizeof(mensajeSwap.pid)), sizeof(mensajeSwap.orden), 0);
+	memcpy(&mensajeSwap.orden, package + sizeof(mensajeSwap.pid), sizeof(mensajeSwap.orden));	//--
+	recv(socketMemoria, (void*) (package + sizeof(mensajeSwap.pid) + sizeof(mensajeSwap.orden)), sizeof(mensajeSwap.pagina), 0);
+	memcpy(&mensajeSwap.pagina, package + sizeof(mensajeSwap.pid) + sizeof(mensajeSwap.orden), sizeof(mensajeSwap.pagina));	//--
+	recv(socketMemoria,(void*) (package + sizeof(mensajeSwap.pid) + sizeof(mensajeSwap.orden) + sizeof(mensajeSwap.pagina)), sizeof(mensajeSwap.contentSize), 0);//--
+	memcpy(&mensajeSwap.contentSize,(void*) package + sizeof(mensajeSwap.pid) + sizeof(mensajeSwap.orden) + sizeof(mensajeSwap.pagina), sizeof(mensajeSwap.contentSize));
 
-	recv(socketSwap,(void*)package, sizeof(respuesta.pid), 0);
-	memcpy(&respuesta.pid,package,sizeof(respuesta.pid));
+	void* package2=malloc(mensajeSwap.contentSize);
 
-	recv(socketSwap,(void*) (package+sizeof(respuesta.pid)), sizeof(respuesta.paginas), 0);
-	memcpy(&respuesta.paginas, package+sizeof(respuesta.pid),sizeof(respuesta.paginas));
-
-	recv(socketSwap,(void*) (package+sizeof(respuesta.pid)+sizeof(respuesta.paginas)), sizeof(respuesta.mensajeSize), 0);
-	memcpy(&respuesta.mensajeSize, package+sizeof(respuesta.pid)+sizeof(respuesta.paginas),sizeof(respuesta.mensajeSize));
-
-	EnviarRespuestaCPU(package, respuesta, socketCPU);
+	recv(socketMemoria, (void*) package2, mensajeSwap.contentSize, 0);//campo longitud(NO SIZEOF DE LONGITUD)
+	memcpy(&mensajeSwap.content, package2, mensajeSwap.contentSize);
 
 	free(package);
-//	Posible "codigo"
-//	desserializar(package,estructuraDeRespuesta);
-//	free(package);
-//	EnviarRespuestaCPU(respuesta, socketCPU);
+	free(package2);
+
+	return mensajeSwap;
 }
-// otras posibles soluciones a esto son que se genere de cierta forma hilos de mensaje con el CPU
-// para evitar que se queden los mensajes en memoria, o bien armar un handshake entre memoria y CPU.
-void EnviarRespuestaCPU(void* respuestaPackage, t_respuesta_CPU respuestaMemoria, int socketCPU)
+
+t_orden_CPU enviarOrdenASwap(int pid, int orden, int paginas, char *content)
 {
-	memcpy(respuestaPackage,&respuestaMemoria.pid,sizeof(respuestaMemoria.pid));
-	memcpy(respuestaPackage+sizeof(respuestaMemoria.pid),&respuestaMemoria.paginas,sizeof(respuestaMemoria.paginas));
-	memcpy(respuestaPackage+sizeof(respuestaMemoria.pid)+sizeof(respuestaMemoria.paginas), &respuestaMemoria.mensajeSize, sizeof(respuestaMemoria.mensajeSize));
+	t_orden_CPU mensajeSwap;
 
-	send(socketCPU, respuestaPackage, tamanioRespuestaMemoria(respuestaMemoria),0);
+	mensajeSwap.pid = pid;
+	mensajeSwap.orden = orden;
+	mensajeSwap.pagina = paginas;
+	mensajeSwap.contentSize = strlen(content)+1;
+	strcpy(mensajeSwap.content,content);
 
+	void* mensajeSwapPackage = malloc(tamanioOrdenCPU(mensajeSwap)+mensajeSwap.contentSize);
+
+	memcpy(mensajeSwapPackage, &mensajeSwap.pid, sizeof(mensajeSwap.pid));
+	memcpy(mensajeSwapPackage+sizeof(mensajeSwap.pid), &mensajeSwap.orden, sizeof(mensajeSwap.orden));
+	memcpy(mensajeSwapPackage+sizeof(mensajeSwap.pid)+sizeof(mensajeSwap.orden), &mensajeSwap.pagina, sizeof(mensajeSwap.pagina));
+	memcpy(mensajeSwapPackage+sizeof(mensajeSwap.pid)+sizeof(mensajeSwap.orden)+sizeof(mensajeSwap.pagina), &mensajeSwap.contentSize, sizeof(mensajeSwap.contentSize));
+	memcpy(mensajeSwapPackage+sizeof(mensajeSwap.pid)+sizeof(mensajeSwap.orden)+sizeof(mensajeSwap.pagina)+sizeof(mensajeSwap.contentSize), &mensajeSwap.content, mensajeSwap.contentSize);
+
+	send(socketSwap, mensajeSwapPackage, tamanioOrdenCPU(mensajeSwap), 0);
+
+	free(mensajeSwapPackage);
+
+	return recibirRespuestaSwap(socketSwap);
 }
-int tamanioRespuestaCPU(t_respuesta_CPU unaPersona)
+
+
+int tamanioOrdenCPU(t_orden_CPU mensaje)
 {
-	return (sizeof(unaPersona.pid)+sizeof(unaPersona.paginas)+sizeof(unaPersona.mensajeSize));
-};
-
-int tamanioEstructura(t_orden_memoria unaPersona){
-
-return    (sizeof(unaPersona.orden)+sizeof(unaPersona.pagina));
-
-};
-
-int tamanioRespuestaMemoria(t_respuesta_CPU unaPersona)
-{
-	return (sizeof(unaPersona.pid)+sizeof(unaPersona.paginas)+sizeof(unaPersona.mensajeSize));
+	return (sizeof(mensaje.pid)+sizeof(mensaje.pagina)+sizeof(mensaje.orden)+sizeof(mensaje.contentSize)+mensaje.contentSize);
 };
