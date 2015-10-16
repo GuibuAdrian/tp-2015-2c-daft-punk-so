@@ -55,7 +55,9 @@ char* mapearArchivo();
 void crearArchivoSwap(char * nombreSwap, int tamanioSwap, int cantSwap);
 void procesarOrden(t_orden_memoria ordenMemoria);
 void mostrarListas();
+int encontrarPosicionEspacioLibre(char* inicioHueco);
 t_espacioOcupado* buscarPIDEnOcupados(int pid);
+t_espacioLibre* buscarEspacioAOcupar(int cantPags);
 
 int main()
 {
@@ -212,7 +214,7 @@ void procesarOrden(t_orden_memoria ordenMemoria)
 		{
 
 			t_espacioOcupado* pidOcup = buscarPIDEnOcupados(ordenMemoria.pid);
-			char * pagContent = malloc(4);
+			char * pagContent = malloc(20);
 
 			strncpy(pagContent,pidOcup->inicioSwap+(ordenMemoria.paginas*4),4);
 
@@ -373,20 +375,6 @@ void mostrarListas()
 
 }
 
-t_espacioOcupado* buscarPIDEnOcupados(int pid)
-{
-	bool compararPorIdentificador2(t_espacioOcupado *unaCaja)
-	{
-		if (unaCaja->pid == pid)
-		{
-			return 1;
-		}
-
-		return 0;
-	}
-
-	return list_find(listaOcupados, (void*) compararPorIdentificador2);
-}
 int encontrarPosicionEspacioLibre(char* inicioHueco)
 {
 	t_espacioLibre* new;
@@ -409,6 +397,21 @@ int encontrarPosicionEspacioLibre(char* inicioHueco)
 	}
 
 	return i;
+}
+
+t_espacioOcupado* buscarPIDEnOcupados(int pid)
+{
+	bool compararPorIdentificador2(t_espacioOcupado *unaCaja)
+	{
+		if (unaCaja->pid == pid)
+		{
+			return 1;
+		}
+
+		return 0;
+	}
+
+	return list_find(listaOcupados, (void*) compararPorIdentificador2);
 }
 t_espacioLibre* buscarEspacioAOcupar(int cantPags)
 {
