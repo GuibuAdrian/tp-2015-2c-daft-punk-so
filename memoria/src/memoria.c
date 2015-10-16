@@ -37,6 +37,7 @@ t_log* logger;
 int socketSwap;
 
 int tamanioOrdenCPU(t_orden_CPU mensaje);
+int tamanioOrdenCPU1(t_orden_CPU mensaje);
 void recibirConexiones1(char * PUERTO_CPU);
 t_orden_CPU enviarOrdenASwap(int pid, int orden, int paginas, char *content);
 void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU);
@@ -63,6 +64,7 @@ int main()
 
 	recibirConexiones1(PUERTO_CPU);
 
+
 	log_info(logger, "---------------------FIN---------------------");
 
 
@@ -81,7 +83,7 @@ void recibirConexiones1(char * PUERTO_CPU)
 	int socketCPU, j, result;
 
 	t_orden_CPU mensaje;
-	void* package = malloc(tamanioOrdenCPU(mensaje));
+	void* package = malloc(tamanioOrdenCPU1(mensaje));
 
 	int listenningSocket = recibirLlamada(PUERTO_CPU);
 
@@ -261,6 +263,10 @@ t_orden_CPU enviarOrdenASwap(int pid, int orden, int paginas, char *content)
 	return recibirRespuestaSwap(socketSwap);
 }
 
+int tamanioOrdenCPU1(t_orden_CPU mensaje)
+{
+	return (sizeof(mensaje.pid)+sizeof(mensaje.pagina)+sizeof(mensaje.orden)+sizeof(mensaje.contentSize));
+};
 
 int tamanioOrdenCPU(t_orden_CPU mensaje)
 {
