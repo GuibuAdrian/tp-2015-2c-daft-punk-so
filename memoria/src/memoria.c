@@ -15,6 +15,7 @@
 #include <sys/time.h>
 #include <errno.h>
 
+#include <commons/collections/list.h>
 #include <commons/socket.h>
 #include <commons/config.h>
 #include <commons/log.h>
@@ -23,6 +24,12 @@
 #define BACKLOG 5			// Define cuantas conexiones vamos a mantener pendientes al mismo tiempo
 #define PACKAGESIZE 1024	// Define cual va a ser el size maximo del paquete a enviar
 
+typedef struct
+{
+    int pid;
+    int pagina;
+    int marco;
+}t_TLB;
 
 typedef struct
 {
@@ -34,10 +41,17 @@ typedef struct
 }t_orden_CPU;
 
 t_log* logger;
+t_list *listaTLB;
 int socketSwap;
+char *TLBHabil;
+int maxMarcos, cantMarcos, tamMarcos, entradasTLB, retardoMem;
+void* TLB;
 
+static t_TLB *TLB_create(int pid, int pagina, int marco);
+static void TLB_destroy(t_TLB *self);
 int tamanioOrdenCPU(t_orden_CPU mensaje);
 int tamanioOrdenCPU1(t_orden_CPU mensaje);
+
 void recibirConexiones1(char * PUERTO_CPU);
 t_orden_CPU enviarOrdenASwap(int pid, int orden, int paginas, char *content);
 void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU);
@@ -56,22 +70,33 @@ int main()
 
 	char *IP = config_get_string_value(config, "IP_SWAP");
 	char * PUERTO_SWAP = config_get_string_value(config, "PUERTO_SWAP");
+	maxMarcos = config_get_int_value(config, "MAXIMO_MARCOS_POR_PROCESO");
+	cantMarcos = config_get_int_value(config, "CANTIDAD_MARCOS");
+	tamMarcos = config_get_int_value(config, "TAMANIO_MARCO");
+	entradasTLB = config_get_int_value(config, "ENTRADAS_TLB");
+	retardoMem = config_get_int_value(config, "RETARDO_MEMORIA");
+	TLBHabil = config_get_string_value(config, "TLB_HABILITADA");
+
 	socketSwap = conectarse(IP,PUERTO_SWAP);
 
-
 	char * PUERTO_CPU = config_get_string_value(config, "PUERTO_CPU");
+
+
+	TLB=malloc(cantMarcos*tamMarcos);
+	listaTLB = list_create();
 
 
 	recibirConexiones1(PUERTO_CPU);
 
 
-	log_info(logger, "---------------------FIN---------------------");
-
+	list_destroy_and_destroy_elements(listaTLB,(void*) TLB_destroy);
 
 	close(socketSwap);
+	free(TLB);
 
-	log_destroy(logger);
 	config_destroy(config);
+	log_info(logger, "---------------------FIN---------------------");
+	log_destroy(logger);
 
 	return 0;
 }
@@ -106,7 +131,6 @@ void recibirConexiones1(char * PUERTO_CPU)
 	   }
 	   else if (result > 0)
 	   {
-
 		  if (FD_ISSET(listenningSocket, &tempset))
 		  {
 			  socketCPU = aceptarLlamada(listenningSocket);
@@ -125,7 +149,6 @@ void recibirConexiones1(char * PUERTO_CPU)
 			  }
 
 			  FD_CLR(listenningSocket, &tempset);
-
 		  }
 		  for (j=0; j<maxfd+1; j++)
 		  {
@@ -156,12 +179,18 @@ void recibirConexiones1(char * PUERTO_CPU)
 					  log_info(logger, "Orden %d", mensaje.orden);
 					  log_info(logger, "Paginas %d", mensaje.pagina);
 
-					  mensaje = enviarOrdenASwap(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content);
+					  if (strncmp(TLBHabil, "NO", 2) == 0)
+  					  {
+						  mensaje = enviarOrdenASwap(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content);
 
-					  enviarRespuestaCPU(mensaje, socketCPU);
+						  enviarRespuestaCPU(mensaje, socketCPU);
+					  }
+					  else
+					  {
+						  printf("TLB Habilitada :D\n");
+					  }
 
 					  free(package2);
-
 				   }
 				  else if (result == 0)
 				  {
@@ -172,10 +201,8 @@ void recibirConexiones1(char * PUERTO_CPU)
 				  {
 					  log_error(logger,"Error in recv(): %s\n", strerror(errno));
 				  }
-
 			    }      // end if (FD_ISSET(j, &tempset))
 			  }      // end for (j=0;...)
-
 		  if (result==0)
 		  {
 			  break;
@@ -263,11 +290,24 @@ t_orden_CPU enviarOrdenASwap(int pid, int orden, int paginas, char *content)
 	return recibirRespuestaSwap(socketSwap);
 }
 
+static t_TLB *TLB_create(int pid, int pagina, int marco)
+{
+	t_TLB *new = malloc(sizeof(t_TLB));
+	 new->pid = pid;
+	 new->pagina = pagina;
+	 new->marco = marco;
+
+	 return new;
+}
+static void TLB_destroy(t_TLB *self)
+{
+    free(self);
+}
+
 int tamanioOrdenCPU1(t_orden_CPU mensaje)
 {
 	return (sizeof(mensaje.pid)+sizeof(mensaje.pagina)+sizeof(mensaje.orden)+sizeof(mensaje.contentSize));
 };
-
 int tamanioOrdenCPU(t_orden_CPU mensaje)
 {
 	return (sizeof(mensaje.pid)+sizeof(mensaje.pagina)+sizeof(mensaje.orden)+sizeof(mensaje.contentSize)+mensaje.contentSize);
