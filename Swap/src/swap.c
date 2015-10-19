@@ -129,17 +129,17 @@ int main()
 		free(package2);
 	}
 
-	log_info(logger, "---------------------FIN---------------------");
 
 	list_destroy_and_destroy_elements(listaOcupados,(void*) ocupado_destroy);
 	list_destroy_and_destroy_elements(listaLibres,(void*) libre_destroy);
 
-	log_destroy(logger);
-	config_destroy(config);
-
 	close(listenningSocket);
 	close(socket_memoria);
     munmap( mapeo, tamanio );
+
+    config_destroy(config);
+    log_info(logger, "---------------------FIN---------------------");
+    log_destroy(logger);
 
     return 0;
 }
@@ -258,8 +258,8 @@ char* mapearArchivo()
 	int mapper;
 	char* mapeo;
 
-	char* nombre_archivo = "/home/utnso/github/tp-2015-2c-daft-punk-so/Swap/Debug/swap.data";
-	//char* nombre_archivo = "/home/utnso/arch.txt";
+	//char* nombre_archivo = "/home/utnso/github/tp-2015-2c-daft-punk-so/Swap/Debug/swap.data";
+	char* nombre_archivo = "/home/utnso/arch.txt";
 
 	if(( mapper = open (nombre_archivo, O_RDWR) ) == -1)
 	{
@@ -350,7 +350,6 @@ void mostrarListas()
 
 		printf("%s\n", newL->inicioHueco);
 		printf("CantPags: %d\n", newL->cantPag);
-
 	}
 
 	printf("\n");
