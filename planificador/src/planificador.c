@@ -159,13 +159,12 @@ int main()
 
 	pthread_join(unHilo, NULL);
 
-	log_info(logger, "---------------------FIN---------------------");
-
 
 	list_destroy_and_destroy_elements(listaPCB,(void*) PCB_destroy);
 	list_destroy(listaCPUs);
 
 	config_destroy(config);
+	log_info(logger, "---------------------FIN---------------------");
 	log_destroy(logger);
 
 	return 0;
