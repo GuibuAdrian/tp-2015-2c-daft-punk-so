@@ -120,12 +120,12 @@ int main()
 		pthread_join(new->unHilo, NULL);
 	}
 
+
 	list_destroy_and_destroy_elements(listaHilos,(void*) hilo_destroy);
 
-	log_info(logger, "---------------------FIN---------------------");
-
-	log_destroy(logger);
 	config_destroy(config);
+	log_info(logger, "---------------------FIN---------------------");
+	log_destroy(logger);
 
 	return 0;
 }
