@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include <sys/time.h>
 #include <errno.h>
+#include <signal.h>
 
 #include <commons/collections/list.h>
 #include <commons/socket.h>
@@ -46,6 +47,7 @@ int socketSwap;
 char *TLBHabil;
 int maxMarcos, cantMarcos, tamMarcos, entradasTLB, retardoMem;
 void* TLB;
+t_list *espacioDeMemoria;
 
 static t_TLB *TLB_create(int pid, int pagina, int marco);
 static void TLB_destroy(t_TLB *self);
@@ -68,6 +70,7 @@ int main()
 
 	config = config_create("/home/utnso/github/tp-2015-2c-daft-punk-so/memoria/config.cfg");
 
+
 	char *IP = config_get_string_value(config, "IP_SWAP");
 	char * PUERTO_SWAP = config_get_string_value(config, "PUERTO_SWAP");
 	maxMarcos = config_get_int_value(config, "MAXIMO_MARCOS_POR_PROCESO");
@@ -82,8 +85,15 @@ int main()
 	char * PUERTO_CPU = config_get_string_value(config, "PUERTO_CPU");
 
 
-	TLB=malloc(cantMarcos*tamMarcos);
+	TLB=malloc(cantMarcos*tamMarcos);//esto suena a que es el tamaño de la memoria no de la TLB
+	//TLB = malloc (entradasTLB*tamMarcos); me parece que es esto la TLB en realidad
 	listaTLB = list_create();
+	if((espacioDeMemoria = malloc(cantMarcos*tamMarcos)) == NULL){
+		log_error(logger,"There is no enough space in memory for the stucture \n");
+	}
+	else{
+		espacioDeMemoria = list_create();
+	}
 
 
 	recibirConexiones1(PUERTO_CPU);
@@ -242,6 +252,10 @@ void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU)
 t_orden_CPU recibirRespuestaSwap(int socketMemoria)
 {
 	t_orden_CPU mensajeSwap;
+	//supongo que aca es donde se reciben las ordenes y las señales de parte del CPU
+	signal(SIGUSR1,rutinaDeSeniales);
+	signal(SIGUSR2,rutinaDeSeniales);
+	signal(SIGPOLL,rutinaDeSeniales);
 
 	void* package = malloc(	sizeof(mensajeSwap.pid) + sizeof(mensajeSwap.orden) + sizeof(mensajeSwap.pagina) + sizeof(mensajeSwap.contentSize));
 
@@ -312,3 +326,42 @@ int tamanioOrdenCPU(t_orden_CPU mensaje)
 {
 	return (sizeof(mensaje.pid)+sizeof(mensaje.pagina)+sizeof(mensaje.orden)+sizeof(mensaje.contentSize)+mensaje.contentSize);
 };
+void rutinaDeSeniales(int senial){
+    pthread_t hiloFlushTLB;
+    pthread_t hiloLimpiezaMemoriaPrincipal;
+    void vacio;
+    long pid;
+
+	switch (senial) {
+        case SIGUSR1:
+            printf("Flush de TLB \n");
+            pthread_create(&hiloFlushTLB,NULL,TLB_destroy,&TLB);//Calculo que Flush TLB es un destroy.
+        break;
+        case SIGUSR2:
+            printf("Limpiar la Memoria Principal \n");
+            pthread_create(&hiloLimpiezaMemoriaPrincipal,NULL,limpiarMemoriaPrincipal,vacio);
+        break;
+        case SIGPOLL:
+        	printf("Dump de la memoria principal \n");
+        	//Se sugiere un fork D:
+        	if( fork()==0){
+        		//Dumpeamos la memoria
+        		dumpMemory();
+        		exit(0);
+        	}
+        	else{
+        		wait(pid);
+        		exit(0);
+        	}
+        break;
+    }
+}
+
+void limpiarMemoriaPrincipal(void){
+	list_destroy(espacioDeMemoria);
+	free(espacioDeMemoria);
+}
+
+void dumpMemory(){
+	//Hay que recorrer la lista de espacioDeMemoria y levantando marcos y logearlos e ir liberando la memoria.
+}
