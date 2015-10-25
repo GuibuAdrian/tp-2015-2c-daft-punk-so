@@ -55,6 +55,7 @@ char* mapearArchivo();
 void crearArchivoSwap(char * nombreSwap, int tamanioSwap, int cantSwap);
 void procesarOrden(t_orden_memoria ordenMemoria);
 void mostrarListas();
+int encontrarPosicionOcupado(int pid);
 int encontrarPosicionEspacioLibre(char* inicioHueco);
 t_espacioOcupado* buscarPIDEnOcupados(int pid);
 t_espacioLibre* buscarEspacioAOcupar(int cantPags);
@@ -167,6 +168,23 @@ void respuestaMemoria(int pid, int paginas, int mensaje, char pagContent[PACKAGE
 	free(respuestaPackage);
 }
 
+void finalizarProceso(int pid, int pag)
+{
+	log_info(logger, "Finalizando mProc: %d", pid);
+
+	respuestaMemoria(pid, pag, 3, "/");
+
+	int posOcupado = encontrarPosicionOcupado(pid);
+
+	if(posOcupado != -1)	//Pregunto si lo encontre
+	{
+		t_espacioOcupado *ocupadoAux = list_remove(listaOcupados, posOcupado);
+
+		list_add(listaLibres, libre_create(ocupadoAux->inicioSwap, ocupadoAux->cantPag));
+	}
+
+}
+
 int reservarEspacio(int pid, int paginas)	// 0=Exito  1=Fracaso
 {
 	t_espacioLibre* libreAux = buscarEspacioAOcupar(paginas);
@@ -230,9 +248,8 @@ void procesarOrden(t_orden_memoria ordenMemoria)
 		{
 			if (ordenMemoria.orden == 3) // 3=Finalizar
 			{
-				log_info(logger, "Finalizando mProc: %d", ordenMemoria.pid);
 
-				respuestaMemoria(ordenMemoria.pid, ordenMemoria.paginas, 3, "/");
+				finalizarProceso(ordenMemoria.pid, ordenMemoria.paginas);
 			}
 			else
 			{
@@ -372,6 +389,34 @@ void mostrarListas()
 
 	}
 
+}
+int encontrarPosicionOcupado(int pid)
+{
+	t_espacioOcupado* new;
+
+	int i=0;
+	int encontrado = -1;
+
+	while( (i<list_size(listaOcupados)) && encontrado!=0)
+	{
+		new = list_get(listaOcupados,i);
+
+		if(new->pid == pid)
+		{
+			encontrado = 0;
+		}
+		else
+		{
+			i++;
+		}
+	}
+
+	if(encontrado == 0)
+	{
+		return i;
+	}
+
+	return encontrado;
 }
 
 int encontrarPosicionEspacioLibre(char* inicioHueco)
