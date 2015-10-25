@@ -30,6 +30,14 @@ typedef struct
     int pid;
     int pagina;
     int marco;
+    int bitPresencia;
+}t_tablaPags;
+
+typedef struct
+{
+    int pid;
+    int pagina;
+    int marco;
 }t_TLB;
 
 typedef struct
@@ -42,15 +50,16 @@ typedef struct
 }t_orden_CPU;
 
 t_log* logger;
-t_list *listaTLB;
+t_list *listaTablaPags;
 int socketSwap;
 char *TLBHabil;
 int maxMarcos, cantMarcos, tamMarcos, entradasTLB, retardoMem;
-void* TLB;
+void* memoriaPrincipal;
 t_list *espacioDeMemoria;
+t_TLB *TLB;
 
-static t_TLB *TLB_create(int pid, int pagina, int marco);
-static void TLB_destroy(t_TLB *self);
+static t_tablaPags *tablaPag_create(int pid, int pagina, int marco);
+static void tablaPag_destroy(t_tablaPags *self);
 int tamanioOrdenCPU(t_orden_CPU mensaje);
 int tamanioOrdenCPU1(t_orden_CPU mensaje);
 
@@ -85,9 +94,11 @@ int main()
 	char * PUERTO_CPU = config_get_string_value(config, "PUERTO_CPU");
 
 
-	TLB=malloc(cantMarcos*tamMarcos);//esto suena a que es el tamaño de la memoria no de la TLB
-	//TLB = malloc (entradasTLB*tamMarcos); me parece que es esto la TLB en realidad
-	listaTLB = list_create();
+	memoriaPrincipal = malloc(cantMarcos*tamMarcos);
+	TLB = malloc(sizeof(TLB) * entradasTLB);
+
+	listaTablaPags = list_create();
+
 	if((espacioDeMemoria = malloc(cantMarcos*tamMarcos)) == NULL){
 		log_error(logger,"There is no enough space in memory for the stucture \n");
 	}
@@ -98,10 +109,10 @@ int main()
 
 	recibirConexiones1(PUERTO_CPU);
 
-
-	list_destroy_and_destroy_elements(listaTLB,(void*) TLB_destroy);
+	list_destroy_and_destroy_elements(listaTablaPags,(void*) tablaPag_destroy);
 
 	close(socketSwap);
+	free(memoriaPrincipal);
 	free(TLB);
 
 	config_destroy(config);
@@ -253,6 +264,7 @@ t_orden_CPU recibirRespuestaSwap(int socketMemoria)
 {
 	t_orden_CPU mensajeSwap;
 	//supongo que aca es donde se reciben las ordenes y las señales de parte del CPU
+
 	signal(SIGUSR1,rutinaDeSeniales);
 	signal(SIGUSR2,rutinaDeSeniales);
 	signal(SIGPOLL,rutinaDeSeniales);
@@ -304,16 +316,16 @@ t_orden_CPU enviarOrdenASwap(int pid, int orden, int paginas, char *content)
 	return recibirRespuestaSwap(socketSwap);
 }
 
-static t_TLB *TLB_create(int pid, int pagina, int marco)
+static t_tablaPags *tablaPag_create(int pid, int pagina, int marco)
 {
-	t_TLB *new = malloc(sizeof(t_TLB));
+	t_tablaPags *new = malloc(sizeof(t_tablaPags));
 	 new->pid = pid;
 	 new->pagina = pagina;
 	 new->marco = marco;
 
 	 return new;
 }
-static void TLB_destroy(t_TLB *self)
+static void tablaPag_destroy(t_tablaPags *self)
 {
     free(self);
 }
@@ -326,6 +338,7 @@ int tamanioOrdenCPU(t_orden_CPU mensaje)
 {
 	return (sizeof(mensaje.pid)+sizeof(mensaje.pagina)+sizeof(mensaje.orden)+sizeof(mensaje.contentSize)+mensaje.contentSize);
 };
+
 void rutinaDeSeniales(int senial){
     pthread_t hiloFlushTLB;
     pthread_t hiloLimpiezaMemoriaPrincipal;
@@ -335,7 +348,7 @@ void rutinaDeSeniales(int senial){
 	switch (senial) {
         case SIGUSR1:
             printf("Flush de TLB \n");
-            pthread_create(&hiloFlushTLB,NULL,TLB_destroy,&TLB);//Calculo que Flush TLB es un destroy.
+            pthread_create(&hiloFlushTLB,NULL,tablaPag_destroy,&TLB);//Calculo que Flush TLB es un destroy.
         break;
         case SIGUSR2:
             printf("Limpiar la Memoria Principal \n");
@@ -365,3 +378,4 @@ void limpiarMemoriaPrincipal(void){
 void dumpMemory(){
 	//Hay que recorrer la lista de espacioDeMemoria y levantando marcos y logearlos e ir liberando la memoria.
 }
+
