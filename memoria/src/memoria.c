@@ -25,12 +25,17 @@
 #define BACKLOG 5			// Define cuantas conexiones vamos a mantener pendientes al mismo tiempo
 #define PACKAGESIZE 1024	// Define cual va a ser el size maximo del paquete a enviar
 
+//a cada PID se le asocia una tabla de paginas luego se puede hacer lecturas o modificaciones
 typedef struct {
-	int pid;
 	int pagina;
 	int marco;
 	char bitPresencia;
 } t_tablaPags;
+
+typedef struct {
+	int pid;
+	t_queue tablaDePaginas;
+} t_tablaDeProcesos;
 
 typedef struct {
 	int pid;
@@ -47,7 +52,8 @@ typedef struct {
 } t_orden_CPU;
 
 t_log* logger;
-t_queue *listaTablaPags;
+//t_queue *listaTablaPags; esto ya no ese global ya que depende de cada PID
+t_list *tablaDeProcesos;
 int socketSwap;
 char *TLBHabil;
 int maxMarcos, cantMarcos, tamMarcos, entradasTLB, retardoMem;
@@ -55,7 +61,9 @@ void* memoriaPrincipal;
 t_list *espacioDeMemoria;
 t_TLB *TLB;
 
-static t_tablaPags *tablaPag_create(int pid, int pagina, int marco);
+static t_tablaDeProcesos *tablaProc_create(int pid, int pagina, int marco);
+static void tablaProc_destroy(t_tablaDeProcesos *self);
+static t_tablaPags *tablaPag_create(int pagina, int marco);
 static void tablaPag_destroy(t_tablaPags *self);
 int tamanioOrdenCPU(t_orden_CPU mensaje);
 int tamanioOrdenCPU1(t_orden_CPU mensaje);
@@ -67,6 +75,10 @@ void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU);
 int main() {
 	printf("\n");
 	printf("~~~~~~~~~~MEMORIA~~~~~~~~~~\n\n");
+
+	signal(SIGUSR1, rutinaDeSeniales);
+	signal(SIGUSR2, rutinaDeSeniales);
+	signal(SIGPOLL, rutinaDeSeniales);
 
 	logger = log_create(
 			"/home/utnso/github/tp-2015-2c-daft-punk-so/memoria/logsTP",
@@ -85,6 +97,8 @@ int main() {
 	entradasTLB = config_get_int_value(config, "ENTRADAS_TLB");
 	retardoMem = config_get_int_value(config, "RETARDO_MEMORIA");
 	TLBHabil = config_get_string_value(config, "TLB_HABILITADA");
+	char *politicaDeReemplazo = config_get_string_value(config,
+			"POLITICA_DE_REEMPLAZO");
 
 	socketSwap = conectarse(IP, PUERTO_SWAP);
 
@@ -93,7 +107,8 @@ int main() {
 	memoriaPrincipal = malloc(cantMarcos * tamMarcos);
 	TLB = malloc(sizeof(TLB) * entradasTLB);
 
-	listaTablaPags = queue_create();
+	//listaTablaPags = queue_create();
+	tablaDeProcesos = list_create();
 
 	if ((espacioDeMemoria = malloc(cantMarcos * tamMarcos)) == NULL) {
 		log_error(logger,
@@ -102,10 +117,10 @@ int main() {
 		espacioDeMemoria = list_create();
 	}
 
-	recibirConexiones1(PUERTO_CPU);
+	recibirConexiones1(PUERTO_CPU, politicaDeReemplazo);
 
-	list_destroy_and_destroy_elements(listaTablaPags, (void*) tablaPag_destroy);
-
+	list_destroy_and_destroy_elements(tablaDeProcesos,
+			(void*) tablaProc_destroy);
 	close(socketSwap);
 	free(memoriaPrincipal);
 	free(TLB);
@@ -117,7 +132,13 @@ int main() {
 	return 0;
 }
 
-void recibirConexiones1(char * PUERTO_CPU) {
+static void tablaProc_destroy(t_tablaDeProcesos *self) {
+	queue_clean_and_destroy_elements(tablaDeProcesos->head,
+			(void*) tablaPag_destroy);
+	free(self);
+}
+
+void recibirConexiones1(char * PUERTO_CPU, char *politica) {
 	fd_set readset, tempset;
 	int maxfd;
 	int socketCPU, j, result;
@@ -197,11 +218,18 @@ void recibirConexiones1(char * PUERTO_CPU) {
 						log_info(logger, "Orden %d", mensaje.orden);
 						log_info(logger, "Paginas %d", mensaje.pagina);
 
+						if (tablaDeProcesos == NULL) {
+							//no se de donde o como obtener el marco =S
+							tablaProc_create(mensaje.pid, mensaje.pagina,
+									malloc(sizeof(int)));
+						} else {
+							buscarPID(mensaje.pid, mensaje.pagina, politica);
+						}
+
 						if (strncmp(TLBHabil, "NO", 2) == 0) {
 							mensaje = enviarOrdenASwap(mensaje.pid,
 									mensaje.orden, mensaje.pagina,
 									mensaje.content);
-
 							enviarRespuestaCPU(mensaje, socketCPU);
 						} else {
 							printf("TLB Habilitada :D\n");
@@ -227,6 +255,42 @@ void recibirConexiones1(char * PUERTO_CPU) {
 
 	close(socketCPU);
 	close(listenningSocket);
+}
+
+void buscarPID(int pid, int pagina, char *politica) {
+	t_list copiaTablaDeProcesos = tablaDeProcesos;
+
+	t_tablaDeProcesos estructuraDeProceso = copiaTablaDeProcesos->head->data;
+	int pidCopia = estructuraDeProceso.pid;
+	while (pidCopia != pid) {
+		estructuraDeProceso = copiaTablaDeProcesos.head->next->data;
+		copiaTablaDeProcesos = copiaTablaDeProcesos.head->next;
+		pidCopia = copiaTablaDeProcesos.head.data;
+	}
+	if (pidCopia != pid) {
+		//sumamos un pid a la lista de procesos
+		estructuraDeProceso.pid = pid;
+		estructuraDeProceso.tablaDePaginas = tablaPag_create(pagina,
+				malloc(sizeof(int)));
+		list_add(tablaDeProcesos, estructuraDeProceso);
+	} else {
+		//aplicamos la politica correspondiente
+		t_tablaPags paginaAActualizar;
+		paginaAActualizar.pagina = pagina;
+		paginaAActualizar.marco = malloc(sizeof(int));
+		paginaAActualizar.bitPresencia = 1;
+		if (politica == "FIFO") {
+			reemplazoFIFO(paginaAActualizar,
+					estructuraDeProceso.tablaDePaginas);
+		} else if (politica == "LRU") {
+			reemplazoLRU(paginaAActualizar, estructuraDeProceso.tablaDePaginas);
+		} else if (politica == "CLOCK_MEJORADO") {
+			//TODO diseñar el algoritmo de CLOCK MEJORADO
+			reemplazoCLOCKMEJORADO(paginaAActualizar,
+					estructuraDeProceso.tablaDePaginas);
+		}
+
+	}
 }
 
 void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU) {
@@ -264,11 +328,6 @@ void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU) {
 
 t_orden_CPU recibirRespuestaSwap(int socketMemoria) {
 	t_orden_CPU mensajeSwap;
-	//supongo que aca es donde se reciben las ordenes y las señales de parte del CPU
-
-	signal(SIGUSR1, rutinaDeSeniales);
-	signal(SIGUSR2, rutinaDeSeniales);
-	signal(SIGPOLL, rutinaDeSeniales);
 
 	void* package = malloc(
 			sizeof(mensajeSwap.pid) + sizeof(mensajeSwap.orden)
@@ -344,14 +403,22 @@ t_orden_CPU enviarOrdenASwap(int pid, int orden, int paginas, char *content) {
 	return recibirRespuestaSwap(socketSwap);
 }
 
-static t_tablaPags *tablaPag_create(int pid, int pagina, int marco) {
+static t_tablaPags *tablaPag_create(int pagina, int marco) {
 	t_tablaPags *new = malloc(sizeof(t_tablaPags));
-	new->pid = pid;
 	new->pagina = pagina;
 	new->marco = marco;
 
 	return new;
 }
+
+static t_tablaDeProcesos *tablaProc_create(int pid, int pagina, int marco) {
+	t_tablaDeProcesos *new = malloc(sizeof(t_tablaDeProcesos));
+	new->pid = pid;
+	new->tablaDePaginas = tablaPag_create(pagina, marco);
+
+	return new;
+}
+
 static void tablaPag_destroy(t_tablaPags *self) {
 	free(self);
 }
@@ -407,20 +474,21 @@ void dumpMemory() {
 	//Hay que recorrer la lista de espacioDeMemoria y levantando marcos y logearlos e ir liberando la memoria.
 }
 
-void reemplazoFIFO(t_tablaPags paginaAReemplazar) {
+void reemplazoFIFO(t_tablaPags paginaAReemplazar, t_queue listaTablaPags) {
 	t_queue copiaListaTablaPags = listaTablaPags;
 
 	while (copiaListaTablaPags.elements->head->data != paginaAReemplazar) {
 		copiaListaTablaPags = copiaListaTablaPags.elements->head->next;
 	}
 
-	if (copiaListaTablaPags.elements->head->data != paginaAReemplazar&& copiaListaTablaPags.elements->head->next == NULL) {
+	if (copiaListaTablaPags.elements->head->data
+			!= paginaAReemplazar&& copiaListaTablaPags.elements->head->next == NULL) {
 		queue_pop(listaTablaPags);
 		queue_push(listaTablaPags, paginaAReemplazar);
 	}
 }
 
-void reemplazoLRU(t_tablaPags paginaAReemplazar) {
+void reemplazoLRU(t_tablaPags paginaAReemplazar, t_queue listaTablaPags) {
 	t_queue copiaListaTablaPags = listaTablaPags;
 
 	while (copiaListaTablaPags.elements->head->data != paginaAReemplazar) {
@@ -429,7 +497,8 @@ void reemplazoLRU(t_tablaPags paginaAReemplazar) {
 	//hay que borrarlo de esta posicion y ponerlo al final de la cola
 	//sino eliminamos el primero de la cola y agregamos la pagina al final
 	if (copiaListaTablaPags.elements->head->data == paginaAReemplazar) {
-		copiaListaTablaPags.elements->head->next = copiaListaTablaPags.elements->head->next->next;
+		copiaListaTablaPags.elements->head->next =
+				copiaListaTablaPags.elements->head->next->next;
 		queue_push(listaTablaPags, paginaAReemplazar);
 	} else {
 		queue_pop(listaTablaPags);
