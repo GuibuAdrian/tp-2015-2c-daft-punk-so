@@ -181,7 +181,7 @@ void recibirConexiones1(char * PUERTO_CPU, char *politica) {
 					result = recv(socketCPU, (void*) package,
 							sizeof(mensaje.pid), 0);
 
-					if (result > 0) {
+					if (result > 0) {// aqui se reciben las ordenes?
 						memcpy(&mensaje.pid, package, sizeof(mensaje.pid));
 
 						recv(socketCPU, (void*) (package + sizeof(mensaje.pid)),
@@ -218,6 +218,42 @@ void recibirConexiones1(char * PUERTO_CPU, char *politica) {
 						log_info(logger, "Orden %d", mensaje.orden);
 						log_info(logger, "Paginas %d", mensaje.pagina);
 
+						if (strncmp(TLBHabil, "NO", 2) == 0) {
+							mensaje = enviarOrdenASwap(mensaje.pid,
+									mensaje.orden, mensaje.pagina,
+									mensaje.content);
+							if (mensaje.orden == 0){// aca se interprentan las ordenes de CPU
+								//inicia un proceso
+								list_add(tablaDeProcesos,tablaProc_create(mensaje.pid,mensaje.pagina,malloc(sizeof(int))));
+							}else if (mensaje.orden == 1){
+								// leer pagina de un proceso
+								enviarRespuestaCPU(mensaje, socketCPU);
+							}else if (mensaje.orden == 2){
+								// escribe pagina de un proceso
+								enviarRespuestaCPU(mensaje, socketCPU);
+							}else{
+								// finaliza el proceso
+								// aca solo lo elimina de la tabla de procesos hay que pedirle al swap que lo elimine tambien.
+								list_remove(tablaDeProcesos,getIndice(tablaDeProcesos,mensaje.pid));							}
+								enviarRespuestaCPU(mensaje, socketCPU);
+						} else {
+							printf("TLB Habilitada :D\n");// aqui hay que almacenar las operaciones mas recientes
+							if (mensaje.orden == 0){// aca se interprentan las ordenes de CPU
+								//inicia un proceso
+								list_add(tablaDeProcesos,tablaProc_create(mensaje.pid,mensaje.pagina,malloc(sizeof(int))));
+							}else if (mensaje.orden == 1){
+								// leer pagina de un proceso
+								enviarRespuestaCPU(mensaje, socketCPU);
+							}else if (mensaje.orden == 2){
+								// escribe pagina de un proceso
+								enviarRespuestaCPU(mensaje, socketCPU);
+							}else{
+								// finaliza el proceso
+								// aca solo lo elimina de la tabla de procesos hay que pedirle al swap que lo elimine tambien.
+								list_remove(tablaDeProcesos,getIndice(tablaDeProcesos,mensaje.pid));							}
+								enviarRespuestaCPU(mensaje, socketCPU);
+						}
+
 						if (tablaDeProcesos == NULL) {
 							//no se de donde o como obtener el marco =S
 							tablaProc_create(mensaje.pid, mensaje.pagina,
@@ -226,14 +262,7 @@ void recibirConexiones1(char * PUERTO_CPU, char *politica) {
 							buscarPID(mensaje.pid, mensaje.pagina, politica);
 						}
 
-						if (strncmp(TLBHabil, "NO", 2) == 0) {
-							mensaje = enviarOrdenASwap(mensaje.pid,
-									mensaje.orden, mensaje.pagina,
-									mensaje.content);
-							enviarRespuestaCPU(mensaje, socketCPU);
-						} else {
-							printf("TLB Habilitada :D\n");
-						}
+
 
 						free(package2);
 					} else if (result == 0) {
@@ -255,6 +284,19 @@ void recibirConexiones1(char * PUERTO_CPU, char *politica) {
 
 	close(socketCPU);
 	close(listenningSocket);
+}
+
+int getIndice(t_list tablaDeProcesos,int pid){
+	int index=0;
+	t_list tablaCopia = tablaDeProcesos;
+	t_tablaDeProcesos elemento = tablaCopia.head->data;
+
+	while( elemento.pid != pid && index < tablaCopia.elements_count){
+		index++;
+		tablaCopia = tablaCopia.head->next;
+	}
+
+	return index;
 }
 
 void buscarPID(int pid, int pagina, char *politica) {
@@ -427,12 +469,11 @@ int tamanioOrdenCPU1(t_orden_CPU mensaje) {
 	return (sizeof(mensaje.pid) + sizeof(mensaje.pagina) + sizeof(mensaje.orden)
 			+ sizeof(mensaje.contentSize));
 }
-;
+
 int tamanioOrdenCPU(t_orden_CPU mensaje) {
 	return (sizeof(mensaje.pid) + sizeof(mensaje.pagina) + sizeof(mensaje.orden)
 			+ sizeof(mensaje.contentSize) + mensaje.contentSize);
 }
-;
 
 void rutinaDeSeniales(int senial) {
 	pthread_t hiloFlushTLB;
