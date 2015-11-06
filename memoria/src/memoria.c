@@ -29,12 +29,12 @@
 typedef struct {
 	int pagina;
 	int marco;
-	char bitPresencia;
 } t_tablaPags;
 
 typedef struct {
 	int pid;
-	t_queue tablaDePaginas;
+	int paginas;
+	t_queue *tablaDePaginas;
 } t_tablaDeProcesos;
 
 typedef struct {
@@ -52,34 +52,41 @@ typedef struct {
 } t_orden_CPU;
 
 t_log* logger;
-//t_queue *listaTablaPags; esto ya no ese global ya que depende de cada PID
 t_list *tablaDeProcesos;
 int socketSwap;
 char *TLBHabil;
 int maxMarcos, cantMarcos, tamMarcos, entradasTLB, retardoMem;
 void* memoriaPrincipal;
+char *politicaDeReemplazo;
 t_list *espacioDeMemoria;
 t_TLB *TLB;
 
-static t_tablaDeProcesos *tablaProc_create(int pid, int pagina, int marco);
+static t_tablaDeProcesos *tablaProc_create(int pid, int pagina);
 static void tablaProc_destroy(t_tablaDeProcesos *self);
 static t_tablaPags *tablaPag_create(int pagina, int marco);
 static void tablaPag_destroy(t_tablaPags *self);
 int tamanioOrdenCPU(t_orden_CPU mensaje);
 int tamanioOrdenCPU1(t_orden_CPU mensaje);
 
+t_tablaPags* encontrarPagEnMemoriaPpal(int pid, int pagina);
+t_tablaPags* buscarPagEnTablaDePags(int pagina, t_tablaDeProcesos* new);
+t_tablaDeProcesos* buscarPID(int pid);
+
 void recibirConexiones1(char * PUERTO_CPU);
 t_orden_CPU enviarOrdenASwap(int pid, int orden, int paginas, char *content);
 void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU);
+void procesarOrden(t_orden_CPU mensaje, int socketCPU);
+void fifo(t_queue *listaTablaPags, int pag, int marco);
+void liberarTablaDePags();
 
 int main() {
 	printf("\n");
 	printf("~~~~~~~~~~MEMORIA~~~~~~~~~~\n\n");
-
+/*
 	signal(SIGUSR1, rutinaDeSeniales);
 	signal(SIGUSR2, rutinaDeSeniales);
 	signal(SIGPOLL, rutinaDeSeniales);
-
+*/
 	logger = log_create(
 			"/home/utnso/github/tp-2015-2c-daft-punk-so/memoria/logsTP",
 			"Memoria", true, LOG_LEVEL_INFO);
@@ -97,7 +104,7 @@ int main() {
 	entradasTLB = config_get_int_value(config, "ENTRADAS_TLB");
 	retardoMem = config_get_int_value(config, "RETARDO_MEMORIA");
 	TLBHabil = config_get_string_value(config, "TLB_HABILITADA");
-	char *politicaDeReemplazo = config_get_string_value(config,
+	politicaDeReemplazo = config_get_string_value(config,
 			"POLITICA_DE_REEMPLAZO");
 
 	socketSwap = conectarse(IP, PUERTO_SWAP);
@@ -117,10 +124,10 @@ int main() {
 		espacioDeMemoria = list_create();
 	}
 
-	recibirConexiones1(PUERTO_CPU, politicaDeReemplazo);
+	recibirConexiones1(PUERTO_CPU);
 
-	list_destroy_and_destroy_elements(tablaDeProcesos,
-			(void*) tablaProc_destroy);
+	liberarTablaDePags();
+	list_destroy_and_destroy_elements(tablaDeProcesos,(void*) tablaProc_destroy);
 	close(socketSwap);
 	free(memoriaPrincipal);
 	free(TLB);
@@ -132,13 +139,7 @@ int main() {
 	return 0;
 }
 
-static void tablaProc_destroy(t_tablaDeProcesos *self) {
-	queue_clean_and_destroy_elements(tablaDeProcesos->head,
-			(void*) tablaPag_destroy);
-	free(self);
-}
-
-void recibirConexiones1(char * PUERTO_CPU, char *politica) {
+void recibirConexiones1(char * PUERTO_CPU) {
 	fd_set readset, tempset;
 	int maxfd;
 	int socketCPU, j, result;
@@ -218,26 +219,14 @@ void recibirConexiones1(char * PUERTO_CPU, char *politica) {
 						log_info(logger, "Orden %d", mensaje.orden);
 						log_info(logger, "Paginas %d", mensaje.pagina);
 
-						if (strncmp(TLBHabil, "NO", 2) == 0) {
-							mensaje = enviarOrdenASwap(mensaje.pid,
-									mensaje.orden, mensaje.pagina,
-									mensaje.content);
-							if (mensaje.orden == 0){// aca se interprentan las ordenes de CPU
-								//inicia un proceso
-								list_add(tablaDeProcesos,tablaProc_create(mensaje.pid,mensaje.pagina,malloc(sizeof(int))));
-							}else if (mensaje.orden == 1){
-								// leer pagina de un proceso
-								enviarRespuestaCPU(mensaje, socketCPU);
-							}else if (mensaje.orden == 2){
-								// escribe pagina de un proceso
-								enviarRespuestaCPU(mensaje, socketCPU);
-							}else{
-								// finaliza el proceso
-								// aca solo lo elimina de la tabla de procesos hay que pedirle al swap que lo elimine tambien.
-								list_remove(tablaDeProcesos,getIndice(tablaDeProcesos,mensaje.pid));							}
-								enviarRespuestaCPU(mensaje, socketCPU);
-						} else {
+						if (strncmp(TLBHabil, "NO", 2) == 0)
+						{
+							procesarOrden(mensaje, socketCPU);
+						} else
+						{
+							/*
 							printf("TLB Habilitada :D\n");// aqui hay que almacenar las operaciones mas recientes
+
 							if (mensaje.orden == 0){// aca se interprentan las ordenes de CPU
 								//inicia un proceso
 								list_add(tablaDeProcesos,tablaProc_create(mensaje.pid,mensaje.pagina,malloc(sizeof(int))));
@@ -252,8 +241,9 @@ void recibirConexiones1(char * PUERTO_CPU, char *politica) {
 								// aca solo lo elimina de la tabla de procesos hay que pedirle al swap que lo elimine tambien.
 								list_remove(tablaDeProcesos,getIndice(tablaDeProcesos,mensaje.pid));							}
 								enviarRespuestaCPU(mensaje, socketCPU);
+							*/
 						}
-
+/*
 						if (tablaDeProcesos == NULL) {
 							//no se de donde o como obtener el marco =S
 							tablaProc_create(mensaje.pid, mensaje.pagina,
@@ -261,7 +251,7 @@ void recibirConexiones1(char * PUERTO_CPU, char *politica) {
 						} else {
 							buscarPID(mensaje.pid, mensaje.pagina, politica);
 						}
-
+*/
 
 
 						free(package2);
@@ -286,6 +276,256 @@ void recibirConexiones1(char * PUERTO_CPU, char *politica) {
 	close(listenningSocket);
 }
 
+void reemplazarPag(t_tablaDeProcesos* new, int pag, int marco)
+{
+	//if(strncmp(algoritmoReemplazo, "FIFO",4))
+
+	log_info(logger,"FIFO");
+	fifo(new->tablaDePaginas, pag, marco);
+}
+
+void actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag, int marco)
+{
+	int totalPag = queue_size(new->tablaDePaginas);
+
+	if(totalPag==maxMarcos) //Si la cantidad de marcos ocupados es MAX entonces empiezo a reemplazar
+	{
+		log_info(logger,"Reemplazando");
+
+		reemplazarPag(new, pag, marco);
+	}
+	else
+	{
+		queue_push(new->tablaDePaginas, tablaPag_create(pag, marco));
+	}
+}
+int buscarMarcoEnTablaDePags(int marco, t_tablaDeProcesos* new)
+{
+	int i = 0, encontrado=0;
+	t_tablaPags* new2;
+
+	while( (i<queue_size(new->tablaDePaginas)) && (encontrado==0) )
+	{
+		new2 = queue_pop(new->tablaDePaginas);
+
+		queue_push(	new->tablaDePaginas, new2);
+
+		if(new2->marco==i)
+		{
+			encontrado = 1;
+		}
+
+		i++;
+	}
+
+	return encontrado;
+}
+
+int	asignarMarco()
+{
+	int i, marcoAsignado = -1, encontrado = 1;
+	t_tablaDeProcesos* new;
+
+	while( (i<list_size(tablaDeProcesos)) && (encontrado == 1) )
+	{
+		new = list_get(tablaDeProcesos, i);
+
+		encontrado = buscarMarcoEnTablaDePags(i, new);
+
+		if(encontrado==0)
+		{
+			marcoAsignado = i;
+		}
+
+		i++;
+	}
+
+	return marcoAsignado;
+}
+
+void iniciarProceso(int pid, int paginas)
+{
+	list_add(tablaDeProcesos,tablaProc_create(pid,paginas));
+
+	log_info(logger,"Proceso %d iniciado de %d pags", pid, paginas);
+}
+
+void finalizarProceso(int pid)
+{
+	int i;
+	t_tablaDeProcesos* new;
+
+	for(i = 0; i < list_size(tablaDeProcesos); i++) //Borro al pid de la tabla de pags
+	{
+		new = list_get(tablaDeProcesos, i);
+
+		if(new->pid==pid)
+		{
+			queue_destroy_and_destroy_elements(new->tablaDePaginas, (void*)tablaPag_destroy);
+
+			list_remove_and_destroy_element(tablaDeProcesos, i, (void*) tablaProc_destroy);
+
+			i--;
+		}
+	}
+
+	for(i=0; i<entradasTLB; i++) //Borro al pid de la TLB
+	{
+		if (TLB[i].pid==pid)
+		{
+			TLB[i].pid = -1;
+		}
+	}
+
+	log_info(logger,"Proceso %d finalizado", pid);
+}
+
+void procesarOrden(t_orden_CPU mensaje, int socketCPU)
+{
+	t_tablaDeProcesos* new;
+	t_tablaPags* new2;
+	t_orden_CPU respuestaSwap;
+
+	if (mensaje.orden == 0)
+	{
+		iniciarProceso(mensaje.pid, mensaje.pagina);
+
+		respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content);
+
+		enviarRespuestaCPU(respuestaSwap, socketCPU);
+	}
+	else
+		if(mensaje.orden==3)
+		{
+			finalizarProceso(mensaje.pid);	//Borro al pid de la TLB y la tabla de pags
+
+			respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content);
+
+			enviarRespuestaCPU(respuestaSwap, socketCPU);
+		}
+	else
+	{
+		new2 = encontrarPagEnMemoriaPpal(mensaje.pid, mensaje.pagina);
+
+		if(new2 != NULL) //Si esta en Memoria Principal
+		{
+			log_info(logger, "Esta en memoria principal");
+
+			if (mensaje.orden == 1)	// leer pagina de un proceso
+			{
+				respuestaSwap.pid = mensaje.pid;
+				respuestaSwap.pagina = mensaje.pagina;
+				respuestaSwap.orden = 2;
+				strncpy(respuestaSwap.content, memoriaPrincipal+new2->marco*tamMarcos, tamMarcos);
+				respuestaSwap.contentSize = strlen(respuestaSwap.content)+1;
+
+				log_info(logger,"Proceso %d leyendo pag: %d. Contenido: %s", respuestaSwap.pid, respuestaSwap.pagina, respuestaSwap.content);
+
+				enviarRespuestaCPU(respuestaSwap, socketCPU);//Le devuelvo el contenido del marco al CPU
+
+				//Actualizo TLB
+				enviarRespuestaCPU(mensaje, socketCPU);
+			}
+			else
+				if (mensaje.orden == 2)// escribe pagina de un proceso
+				{
+					respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, new2->pagina, mensaje.content); //Le aviso al SWAP del nuevo contenido//Le aviso al SWAP del nuevo contenido
+					strncpy(memoriaPrincipal+new2->marco*tamMarcos, respuestaSwap.content, tamMarcos);//Actualizo la memo ppal
+
+					log_info(logger,"Proceso %d Escribiendo: %s en pag: %d", mensaje.pid, memoriaPrincipal+new2->marco*tamMarcos, mensaje.pagina);
+
+					enviarRespuestaCPU(respuestaSwap, socketCPU);//Le devuelvo el contenido del marco al CPU
+
+					//Actualizo TLB
+					enviarRespuestaCPU(mensaje, socketCPU);
+				}
+		}
+		else  //No esta en Memoria Principal. La traigo desde SWAP
+		{
+			log_info(logger, "No esta en memoria principal");
+
+			int marco = asignarMarco();
+
+			log_info(logger,"mProc: %d, Pag: %d, Marco asignado: %d",mensaje.pid, mensaje.pagina, marco);
+
+			new = buscarPID(mensaje.pid);
+
+			actualizarMemoriaPpal(new, mensaje.pagina, marco);
+
+			if (mensaje.orden == 1)	// leer pagina de un proceso
+			{
+				respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content);
+
+				strncpy(memoriaPrincipal+marco*tamMarcos, respuestaSwap.content, tamMarcos);
+				respuestaSwap.contentSize = strlen(respuestaSwap.content)+1;
+
+				log_info(logger,"Proceso %d leyendo pag: %d, contenido: %s", mensaje.pid, mensaje.pagina, respuestaSwap.content);
+
+				enviarRespuestaCPU(respuestaSwap, socketCPU);
+			}
+			else
+				if (mensaje.orden == 2)  // escribe pagina de un proceso
+				{
+					log_info(logger,"Solicitando mProc: %d Pag: %d a SWAP", mensaje.pid, mensaje.pagina);
+
+					respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content); //Le aviso al SWAP del nuevo contenido
+					strncpy(memoriaPrincipal+marco*tamMarcos, mensaje.content, tamMarcos);//Actualizo la memo ppal
+
+					log_info(logger,"Proceso %d Escribiendo: %s en pag: %d", mensaje.pid, mensaje.content, mensaje.pagina);
+
+					enviarRespuestaCPU(mensaje, socketCPU);
+				}
+		}
+	}
+
+	enviarRespuestaCPU(mensaje, socketCPU);
+}
+
+t_tablaPags* encontrarPagEnMemoriaPpal(int pid, int pagina)
+{
+	t_tablaDeProcesos* new = buscarPID(pid);
+	t_tablaPags* new2;
+
+	new2 = buscarPagEnTablaDePags(pagina, new);
+
+	return new2;
+}
+
+t_tablaPags* buscarPagEnTablaDePags(int pagina, t_tablaDeProcesos* new)
+{
+	int i;
+
+	t_tablaPags* new2;
+
+	for(i=0; i<maxMarcos; i++)
+	{
+		new2 = queue_pop(new->tablaDePaginas);
+
+		if(new2->pagina == pagina)
+		{
+			queue_push(new->tablaDePaginas,new2);
+
+			return new2;
+		}
+	}
+
+	return new2;
+}
+
+t_tablaDeProcesos* buscarPID(int pid)
+{
+	bool compararPorIdentificador2(t_tablaDeProcesos *unaCaja)
+	{
+		if (unaCaja->pid == pid)
+		{
+			return 1;
+		}
+
+		return 0;
+	}
+	return list_find(tablaDeProcesos, (void*) compararPorIdentificador2);
+}
+/*
 int getIndice(t_list tablaDeProcesos,int pid){
 	int index=0;
 	t_list tablaCopia = tablaDeProcesos;
@@ -334,7 +574,7 @@ void buscarPID(int pid, int pagina, char *politica) {
 
 	}
 }
-
+*/
 void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU) {
 	t_orden_CPU mensajeSwap;
 
@@ -444,37 +684,7 @@ t_orden_CPU enviarOrdenASwap(int pid, int orden, int paginas, char *content) {
 
 	return recibirRespuestaSwap(socketSwap);
 }
-
-static t_tablaPags *tablaPag_create(int pagina, int marco) {
-	t_tablaPags *new = malloc(sizeof(t_tablaPags));
-	new->pagina = pagina;
-	new->marco = marco;
-
-	return new;
-}
-
-static t_tablaDeProcesos *tablaProc_create(int pid, int pagina, int marco) {
-	t_tablaDeProcesos *new = malloc(sizeof(t_tablaDeProcesos));
-	new->pid = pid;
-	new->tablaDePaginas = tablaPag_create(pagina, marco);
-
-	return new;
-}
-
-static void tablaPag_destroy(t_tablaPags *self) {
-	free(self);
-}
-
-int tamanioOrdenCPU1(t_orden_CPU mensaje) {
-	return (sizeof(mensaje.pid) + sizeof(mensaje.pagina) + sizeof(mensaje.orden)
-			+ sizeof(mensaje.contentSize));
-}
-
-int tamanioOrdenCPU(t_orden_CPU mensaje) {
-	return (sizeof(mensaje.pid) + sizeof(mensaje.pagina) + sizeof(mensaje.orden)
-			+ sizeof(mensaje.contentSize) + mensaje.contentSize);
-}
-
+/*
 void rutinaDeSeniales(int senial) {
 	pthread_t hiloFlushTLB;
 	pthread_t hiloLimpiezaMemoriaPrincipal;
@@ -514,21 +724,13 @@ void limpiarMemoriaPrincipal(void) {
 void dumpMemory() {
 	//Hay que recorrer la lista de espacioDeMemoria y levantando marcos y logearlos e ir liberando la memoria.
 }
-
-void reemplazoFIFO(t_tablaPags paginaAReemplazar, t_queue listaTablaPags) {
-	t_queue copiaListaTablaPags = listaTablaPags;
-
-	while (copiaListaTablaPags.elements->head->data != paginaAReemplazar) {
-		copiaListaTablaPags = copiaListaTablaPags.elements->head->next;
-	}
-
-	if (copiaListaTablaPags.elements->head->data
-			!= paginaAReemplazar&& copiaListaTablaPags.elements->head->next == NULL) {
-		queue_pop(listaTablaPags);
-		queue_push(listaTablaPags, paginaAReemplazar);
-	}
+*/
+void fifo(t_queue *listaTablaPags, int pag, int marco)
+{
+	queue_pop(listaTablaPags);
+	queue_push(listaTablaPags, tablaPag_create(pag, marco));
 }
-
+/*
 void reemplazoLRU(t_tablaPags paginaAReemplazar, t_queue listaTablaPags) {
 	t_queue copiaListaTablaPags = listaTablaPags;
 
@@ -545,4 +747,55 @@ void reemplazoLRU(t_tablaPags paginaAReemplazar, t_queue listaTablaPags) {
 		queue_pop(listaTablaPags);
 		queue_push(listaTablaPags, paginaAReemplazar);
 	}
+}
+*/
+static t_tablaPags *tablaPag_create(int pagina, int marco) {
+	t_tablaPags *new = malloc(sizeof(t_tablaPags));
+	new->pagina = pagina;
+	new->marco = marco;
+
+	return new;
+}
+static void tablaPag_destroy(t_tablaPags *self)
+{
+	free(self);
+}
+
+static t_tablaDeProcesos *tablaProc_create(int pid, int pagina) {
+	t_tablaDeProcesos *new = malloc(sizeof(t_tablaDeProcesos));
+	new->pid = pid;
+	new->paginas = pagina;
+	new->tablaDePaginas = queue_create();
+
+	return new;
+}
+static void tablaProc_destroy(t_tablaDeProcesos *self)
+{
+	free(self);
+}
+
+void liberarTablaDePags()
+{
+	int i;
+	t_tablaDeProcesos *new;
+
+	for(i=0; i<list_size(tablaDeProcesos); i++)
+	{
+		new = list_get(tablaDeProcesos, i);
+
+		queue_destroy_and_destroy_elements(new->tablaDePaginas, (void*) tablaPag_destroy);
+
+	}
+}
+
+
+
+int tamanioOrdenCPU1(t_orden_CPU mensaje) {
+	return (sizeof(mensaje.pid) + sizeof(mensaje.pagina) + sizeof(mensaje.orden)
+			+ sizeof(mensaje.contentSize));
+}
+
+int tamanioOrdenCPU(t_orden_CPU mensaje) {
+	return (sizeof(mensaje.pid) + sizeof(mensaje.pagina) + sizeof(mensaje.orden)
+			+ sizeof(mensaje.contentSize) + mensaje.contentSize);
 }
