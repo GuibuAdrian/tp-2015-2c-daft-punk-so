@@ -85,15 +85,15 @@ pthread_mutex_t mutex, mutex2, mutex3, mutex4;
 char *ALGORITMO_PLANIFICACION;
 int pid=2, totalLineas, cantHilos, QUANTUM;
 
+int tamanioMensaje1(t_mensaje1 mensaje);
+int tamanioHiloCPU(t_hiloCPU mensaje);
 static t_hiloCPU *hiloCPU_create(int idNodo, int socket, int disponible);
 static void hiloCPU_destroy(t_hiloCPU *self);
 static PCB *PCB_create(int pid, char * path, int puntero, int estado, int totalLineas);
 static void PCB_destroy(PCB *self);
+int tamanioPCB(PCB mensaje);
 static t_ready *ready_create(int pid);
 static void ready_destroy(t_ready *self);
-int tamanioMensaje1(t_mensaje1 mensaje);
-int tamanioHiloCPU(t_hiloCPU mensaje);
-int tamanioPCB(PCB mensaje);
 int tamanioready(t_ready mensaje);
 int tamanioEstructuraAEnviar(t_pathMensaje unaPersona);
 int tamanioRespuesta(t_respuesta unaRespuesta);
@@ -341,6 +341,7 @@ void ROUND_ROBIN(void* args)
 		i=puntero+1;
 
 		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pid, path, (puntero+1), 1, totalLineas), (void*)PCB_destroy);
+
 		sem_post(&semFZ);
 
 		Q++;
@@ -356,7 +357,8 @@ void ROUND_ROBIN(void* args)
 	{
 		pthread_mutex_lock(&mutex4);
 		list_add(listaReady, ready_create(pid));
-		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pid, path, i, 0, totalLineas), (void*)PCB_destroy);		pthread_mutex_unlock(&mutex4);
+		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pid, path, i, 0, totalLineas), (void*)PCB_destroy);
+		pthread_mutex_unlock(&mutex4);
 
 		sem_post(&semPlani);
 	}
@@ -387,12 +389,14 @@ void FIFO(void *args)
 	list_replace_and_destroy_element(listaCPUs, posCPU, hiloCPU_create(idHiloCPU, socketCliente, 0), (void*) hiloCPU_destroy); //Pongo al CPU en ocupado (0)
 	pthread_mutex_unlock(&mutex);
 
-	totalLineas = mensaje->file;
+
 
 	int puntero = pcbReady->puntero;
 	int i = pcbReady->puntero;
 	int pid = pcbReady->pid;
 	char* path = strdup(pcbReady->path);
+
+	totalLineas = mensaje->file;
 
 	while( (i-1)<=(totalLineas) )
 	{
@@ -410,6 +414,7 @@ void FIFO(void *args)
 		i=puntero+1;
 
 		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pid, path, (puntero+1), 1, totalLineas), (void*)PCB_destroy);
+
 		sem_post(&semFZ);
 	}
 
@@ -445,34 +450,25 @@ void planificador()
 		int posPCB =  encontrarPosicionEnPCB(pidReady);	//Encontrar pos en listaPCB
 		pthread_mutex_unlock(&mutex3);
 
-		FILE* file = txt_open_for_read(pcbReady->path);
 
 		pthread_t hilo;
 
-		if (file == NULL)
-		{
-			log_warning(logger, "Path: %s Incorrecto :/", pcbReady->path);
+		t_enviarProceso *unaPersona;	//Creo la estructura a enviar
 
-			list_remove_and_destroy_element(listaPCB, posPCB, (void*) PCB_destroy);
+		unaPersona = (t_enviarProceso *)malloc(sizeof(t_enviarProceso));
+		unaPersona->file = pcbReady->totalLineas;
+		unaPersona->pcbReady = pcbReady;
+		unaPersona->posPCB = posPCB;
+
+		if (strncmp(ALGORITMO_PLANIFICACION,"FIFO", 4) == 0)
+		{
+			pthread_create(&hilo, NULL, (void*) FIFO, (void*) unaPersona);
 		}
 		else
 		{
-			t_enviarProceso *unaPersona;	//Creo la estructura a enviar
-
-			unaPersona = (t_enviarProceso *)malloc(sizeof(t_enviarProceso));
-			unaPersona->file = pcbReady->totalLineas;
-			unaPersona->pcbReady = pcbReady;
-			unaPersona->posPCB = posPCB;
-
-			if (strncmp(ALGORITMO_PLANIFICACION,"FIFO", 4) == 0)
-			{
-				pthread_create(&hilo, NULL, (void*) FIFO, (void*) unaPersona);
-			}
-			else
-			{
-				pthread_create(&hilo, NULL, (void*) ROUND_ROBIN, (void*) unaPersona);
-			}
+			pthread_create(&hilo, NULL, (void*) ROUND_ROBIN, (void*) unaPersona);
 		}
+
 	}
 }
 
@@ -513,7 +509,8 @@ void correrPath(char * pch)
 		pthread_mutex_lock(&mutex4);
 		list_add(listaReady, ready_create(pid)); //Agrego el proceso NUEVO a Ready
 
-		list_add(listaPCB, PCB_create(pid, pch, 2, 0, totalLineas));	//Agrego el proceso NUEVO al PCB		pthread_mutex_unlock(&mutex4);
+		list_add(listaPCB, PCB_create(pid, pch, 2, 0, totalLineas));	//Agrego el proceso NUEVO al PCB
+		pthread_mutex_unlock(&mutex4);
 
 		sem_post(&semPlani);
 
@@ -586,7 +583,8 @@ void finalizarPID(int pidF)
 		totalLineas = txt_total_lines(file);
 
 		sem_post(&semFZ);
-		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(unPCB->pid,unPCB->path, totalLineas, 1, unPCB->totalLineas), (void*) PCB_destroy);		sem_wait(&semFZ);
+		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(unPCB->pid,unPCB->path, totalLineas, 1, unPCB->totalLineas), (void*) PCB_destroy);
+		sem_wait(&semFZ);
 
 		txt_close_file(file);
 	}
@@ -718,7 +716,8 @@ static void hiloCPU_destroy(t_hiloCPU *self)
 {
     free(self);
 }
-static PCB *PCB_create(int pid, char * path, int puntero, int estado, int totalLineas){
+static PCB *PCB_create(int pid, char * path, int puntero, int estado, int totalLineas)
+{
 	 PCB *new = malloc(sizeof(PCB));
 	 new->path = strdup(path);
 	 new->pid = pid;
