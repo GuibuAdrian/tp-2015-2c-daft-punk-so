@@ -16,6 +16,10 @@
 #include <commons/log.h>
 
 #define PACKAGESIZE 1024	// Define cual va a ser el size maximo del paquete a enviar
+#define MAXCHARCOMMAND 50
+#define MAXCHARPARAMETERS 200
+#define NETWORKMODE 0
+#define CONSOLEMODE 1
 
 typedef struct
 {
@@ -41,9 +45,12 @@ typedef struct
 
 t_log* logger;
 t_list *listaLibres, *listaOcupados;
-int tamanio, cantPagSwap, tamanioPagSwap;
+int tamanio, cantPagSwap, tamanioPagSwap, consoleMode;
 int socket_memoria;
 
+int recvall(int s, void *toReceive, int size, int flags); // Función segura para recibir datos, se asegura de que recvall() reciba TODO (hay casos en los que, por detalles de bajo nivel, recvall() no recibe todo lo que debía recibir, es por eso que devuelve la cantidad de bytes recibidos)
+void parseConsoleCommand(char *commandLine,char *command,char *arguments);
+void simularPedidoMemoria(char * arguments);
 static t_espacioLibre *libre_create(char* inicioHueco, int cantPag);
 static void libre_destroy(t_espacioLibre *self);
 static t_espacioOcupado *ocupado_create(int pid, char* inicioSwap, int cantPag);
@@ -53,12 +60,13 @@ int tamanioRespuestaMemoria(t_orden_memoria unaPersona);
 
 char* mapearArchivo();
 void crearArchivoSwap(char * nombreSwap, int tamanioSwap, int cantSwap);
-void procesarOrden(t_orden_memoria ordenMemoria);
+void procesarOrden(t_orden_memoria ordenMemoria, int consoleMode);
 void mostrarListas();
 int encontrarPosicionOcupado(int pid);
 int encontrarPosicionEspacioLibre(char* inicioHueco);
 t_espacioOcupado* buscarPIDEnOcupados(int pid);
 t_espacioLibre* buscarEspacioAOcupar(int cantPags);
+
 
 int main()
 {
@@ -66,15 +74,16 @@ int main()
 	printf("~~~~~~~~~~SWAP~~~~~~~~~~\n\n");
 
 
-	logger = log_create("/home/utnso/github/tp-2015-2c-daft-punk-so/Swap/logsTP", "Swap", true, LOG_LEVEL_INFO);
+	logger = log_create("logsTP", "Swap", true, LOG_LEVEL_INFO);
 
 	t_config* config;
 
-	config = config_create("/home/utnso/github/tp-2015-2c-daft-punk-so/Swap/config.cfg");
+	config = config_create("config.cfg");
 	char *nombreSwap = config_get_string_value( config, "NOMBRE_SWAP");
 	cantPagSwap = config_get_int_value( config, "CANTIDAD_PAGINAS");
 	tamanioPagSwap = config_get_int_value( config, "TAMANIO_PAGINA");
 	char * PUERTO_ESCUCHA = config_get_string_value(config, "PUERTO_ESCUCHA");
+	consoleMode = config_get_int_value(config, "CONSOLE_MODE");
 
 
 	listaLibres = list_create();
@@ -90,52 +99,101 @@ int main()
 	list_add(listaLibres, libre_create(mapeo, cantPagSwap));
 
 
-	int listenningSocket = recibirLlamada(PUERTO_ESCUCHA);
-	socket_memoria = aceptarLlamada(listenningSocket);
+	if(consoleMode == 0) {	// Recibo comandos desde Memoria desde la red
+
+		int listenningSocket = recibirLlamada(PUERTO_ESCUCHA);
+		socket_memoria = aceptarLlamada(listenningSocket);
 
 
-	log_info(logger, "Memoria conectado, ehhhh!!");
+		log_info(logger, "Memoria conectado");
 
 
-	int result = 1;
+		int result = 1;
 
-	while(result)
-	{
-		t_orden_memoria ordenMemoria;
-		void* package = malloc(sizeof(int)*4);
-
-		result = recv(socket_memoria, (void*)package, sizeof(ordenMemoria.pid), 0);
-		if(result < 0)
+		while(result)
 		{
-			break;
+			t_orden_memoria ordenMemoria;
+			void* package = malloc(sizeof(int)*4);
+
+			result = recvall(socket_memoria, (void*)package, sizeof(ordenMemoria.pid), 0);
+			if(result < 0)
+			{
+				break;
+			}
+			memcpy(&ordenMemoria.pid,package,sizeof(ordenMemoria.pid));
+			recvall(socket_memoria,(void*) (package+sizeof(ordenMemoria.pid)), sizeof(ordenMemoria.paginas), 0);
+			memcpy(&ordenMemoria.orden, package+sizeof(ordenMemoria.pid),sizeof(ordenMemoria.orden));
+			recvall(socket_memoria,(void*) (package+sizeof(ordenMemoria.pid)+sizeof(ordenMemoria.orden)), sizeof(ordenMemoria.paginas), 0);
+			memcpy(&ordenMemoria.paginas, package+sizeof(ordenMemoria.pid)+sizeof(ordenMemoria.orden),sizeof(ordenMemoria.paginas));
+			recvall(socket_memoria,(void*) (package+sizeof(ordenMemoria.pid)+sizeof(ordenMemoria.orden)+sizeof(ordenMemoria.paginas)), sizeof(ordenMemoria.contentSize), 0);
+			memcpy(&ordenMemoria.contentSize, package+sizeof(ordenMemoria.pid)+sizeof(ordenMemoria.orden)+sizeof(ordenMemoria.paginas), sizeof(ordenMemoria.contentSize));
+
+
+			void* package2=malloc(ordenMemoria.contentSize);
+
+			recvall(socket_memoria,(void*) package2, ordenMemoria.contentSize, 0); //campo longitud(NO SIZEOF DE LONGITUD)
+			memcpy(&ordenMemoria.content, package2, ordenMemoria.contentSize);
+
+
+			procesarOrden(ordenMemoria, NETWORKMODE);
+
+			free(package);
+			free(package2);
 		}
-		memcpy(&ordenMemoria.pid,package,sizeof(ordenMemoria.pid));
-		recv(socket_memoria,(void*) (package+sizeof(ordenMemoria.pid)), sizeof(ordenMemoria.paginas), 0);
-		memcpy(&ordenMemoria.orden, package+sizeof(ordenMemoria.pid),sizeof(ordenMemoria.orden));
-		recv(socket_memoria,(void*) (package+sizeof(ordenMemoria.pid)+sizeof(ordenMemoria.orden)), sizeof(ordenMemoria.paginas), 0);
-		memcpy(&ordenMemoria.paginas, package+sizeof(ordenMemoria.pid)+sizeof(ordenMemoria.orden),sizeof(ordenMemoria.paginas));
-		recv(socket_memoria,(void*) (package+sizeof(ordenMemoria.pid)+sizeof(ordenMemoria.orden)+sizeof(ordenMemoria.paginas)), sizeof(ordenMemoria.contentSize), 0);
-		memcpy(&ordenMemoria.contentSize, package+sizeof(ordenMemoria.pid)+sizeof(ordenMemoria.orden)+sizeof(ordenMemoria.paginas), sizeof(ordenMemoria.contentSize));
+		close(listenningSocket);
+		close(socket_memoria);
 
+	} else {
+			// Empieza el comportamiento de la consola
 
-		void* package2=malloc(ordenMemoria.contentSize);
+			char *commandLine = malloc(MAXCHARCOMMAND + MAXCHARPARAMETERS);
+			char *command = malloc(MAXCHARCOMMAND);
+			char *arguments = malloc(MAXCHARPARAMETERS);
 
-		recv(socket_memoria,(void*) package2, ordenMemoria.contentSize, 0);//campo longitud(NO SIZEOF DE LONGITUD)
-		memcpy(&ordenMemoria.content, package2, ordenMemoria.contentSize);
+			printf("=================================CONSOLA=================================\n\nComandos soportados: \n--------------------\n\nsimularPedidoMemoria(pid,orden,paginas,paquete)\ndumpSwap()\nshowConfig()\nsalir()\n\nNOTA: Recordar que las ordenes disponibles son  0=Iniciar, 1=Leer, 2=Escribir, 3=Finalizar\nNOTA: En el caso de la simulacion, el paquete termina con \\0 ya que se simula usando un string\n\nEsperando comandos\n");
 
+			// Espera un comando por siempre
 
-		procesarOrden(ordenMemoria);
+			while (1) {
 
-		free(package);
-		free(package2);
+				//Parsea el comando recibido:
+
+				parseConsoleCommand(commandLine,command,arguments);
+				printf("--------------------------------------\n\n");
+
+				// Para cada comando, se asigna una acción
+
+				if( strncmp( command , "simularPedidoMemoria", MAXCHARCOMMAND) == 0) {
+
+					simularPedidoMemoria(arguments);
+
+				} else
+
+				if( strncmp( command , "dumpSwap", MAXCHARCOMMAND) == 0) {
+					printf(" Recibi %s", command);
+				} else
+
+				if( strncmp( command , "showConfig", MAXCHARCOMMAND) == 0) {
+					printf(" Recibi %s", command);
+				} else
+
+				if( strncmp( command , "salir", MAXCHARCOMMAND) == 0) {
+					break;
+				} else
+
+				{
+					printf("Comando no reconocido\n");
+				}
+				printf("--------------------------------------\n");
+
+			}
 	}
 
 
 	list_destroy_and_destroy_elements(listaOcupados,(void*) ocupado_destroy);
 	list_destroy_and_destroy_elements(listaLibres,(void*) libre_destroy);
 
-	close(listenningSocket);
-	close(socket_memoria);
+
     munmap( mapeo, tamanio );
 
     config_destroy(config);
@@ -143,6 +201,91 @@ int main()
     log_destroy(logger);
 
     return 0;
+}
+
+void simularPedidoMemoria(char * arguments) {
+
+	t_orden_memoria ordenMemoria;
+	char caracterParametro[PACKAGESIZE];
+
+	int argumentCounter = 0;
+	int i=0;
+	int j=0;
+
+	//PID
+	while((arguments[i] != ',') && (arguments[i] != '\0')) {
+		caracterParametro[j] = arguments[i];
+		j++;
+		i++;
+	}
+	caracterParametro[j] = '\0';
+	ordenMemoria.pid = atoi(caracterParametro);
+	i++;
+	j=0;
+
+	//ORDEN
+	while((arguments[i] != ',') && (arguments[i] != '\0')) {
+		caracterParametro[j] = arguments[i];
+		j++;
+		i++;
+	}
+	caracterParametro[j] = '\0';
+	ordenMemoria.orden = atoi(caracterParametro);
+	i++;
+	j=0;
+
+	//PAGINAS
+	while((arguments[i] != ',') && (arguments[i] != '\0')) {
+		caracterParametro[j] = arguments[i];
+		j++;
+		i++;
+	}
+	caracterParametro[j] = '\0';
+	ordenMemoria.paginas = atoi(caracterParametro);
+	i++;
+	j=0;
+
+	//payload
+	while((arguments[i] != ',') && (arguments[i] != '\0')) {
+		caracterParametro[j] = arguments[i];
+		j++;
+		i++;
+	}
+	caracterParametro[j] = '\0';
+	strcpy(ordenMemoria.content, caracterParametro);
+	i++;
+	j=0;
+
+	ordenMemoria.contentSize = strlen(ordenMemoria.content);
+
+	//printf("el pid es %d, el orden es %d, las paginas son %d, el length es %d, y el payload es %s\n\n", ordenMemoria.pid , ordenMemoria.orden, ordenMemoria.paginas, ordenMemoria.contentSize, ordenMemoria.content);
+	procesarOrden(ordenMemoria, CONSOLEMODE);
+
+}
+
+void parseConsoleCommand(char *commandLine,char *command,char *arguments) {
+            int i = 0;
+            int j = 0;
+
+            scanf("%s",commandLine); // hacerTalCosa(param1,param2,param3)
+
+            while ( commandLine[i] != '(' && commandLine[i]!='\0') {
+                    command[i] = commandLine[i];
+                    i++;
+            }
+            command[i] = '\0';
+            if(commandLine[i] !='\0'){
+
+                    i++;
+                    while ( commandLine[i] != ')' && commandLine[i] !='\0' ) {
+                            arguments[j] = commandLine[i];
+                            i++;
+                            j++;
+                    }
+            }
+            //printf("Comando: (%s). Parametro: (%s)\n", command, arguments);
+            arguments[j] = '\0';
+
 }
 
 void respuestaMemoria(int pid, int paginas, int mensaje, char pagContent[PACKAGESIZE])
@@ -207,7 +350,7 @@ int reservarEspacio(int pid, int paginas)	// 0=Exito  1=Fracaso
 	}
 }
 
-void procesarOrden(t_orden_memoria ordenMemoria)
+void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 {
 	int respuesta;
 
@@ -217,14 +360,21 @@ void procesarOrden(t_orden_memoria ordenMemoria)
 
 		respuesta = reservarEspacio(ordenMemoria.pid, ordenMemoria.paginas);
 
-		if (respuesta)  // 0 = Exito, 1 = Fallo
-		{
-			respuestaMemoria(ordenMemoria.pid, ordenMemoria.paginas, 1, "/");
+		if(mode == CONSOLEMODE) {
+
+			respuesta?printf("Fallo inicio PID %d", ordenMemoria.pid):printf("Inicio exitoso PID %d", ordenMemoria.pid);
+
+		} else {
+			if (respuesta)  // 0 = Exito, 1 = Fallo
+			{
+				respuestaMemoria(ordenMemoria.pid, ordenMemoria.paginas, 1, "/");
+			}
+			else
+			{
+				respuestaMemoria(ordenMemoria.pid, ordenMemoria.paginas, 0, "/");
+			}
 		}
-		else
-		{
-			respuestaMemoria(ordenMemoria.pid, ordenMemoria.paginas, 0, "/");
-		}
+
 	}
 	else
 	{
@@ -276,7 +426,7 @@ char* mapearArchivo()
 	char* mapeo;
 
 	//char* nombre_archivo = "/home/utnso/github/tp-2015-2c-daft-punk-so/Swap/Debug/swap.data";
-	char* nombre_archivo = "/home/utnso/arch.txt";
+	char* nombre_archivo = "swap.data";
 
 	if(( mapper = open (nombre_archivo, O_RDWR) ) == -1)
 	{
@@ -297,28 +447,11 @@ char* mapearArchivo()
 	return mapeo;
 }
 
-void crearArchivoSwap(char * nombreSwap, int tamanioSwap, int cantSwap)
+void crearArchivoSwap(char * nombreDelArchivo, int tamanioPagina, int cantidadDePaginas)
 {
-	char strB[20];
-	char strC[20];
-
-	char strA[40] = " of=";
-	char * strD = nombreSwap;
-	sprintf(strB, " bs=%d", tamanioSwap);
-	sprintf(strC, " count=%d", cantSwap);
-	strcat(strB,strC);
-
-	strcat(strA,strD);
-
-	strcat(strA,strB);
-
-	char strE[70] = "dd if=/dev/zero";
-
-	strcat(strE,strA);
-
-	printf("\n");
-
-	system(strE);
+  char buffer[255];
+  sprintf (buffer,"dd if=/dev/zero of=%s bs=%d count=%d", nombreDelArchivo, tamanioPagina, cantidadDePaginas);
+  system(buffer);
 }
 
 static t_espacioLibre *libre_create(char* inicioHueco, int cantPag)
@@ -457,6 +590,7 @@ t_espacioOcupado* buscarPIDEnOcupados(int pid)
 
 	return list_find(listaOcupados, (void*) compararPorIdentificador2);
 }
+
 t_espacioLibre* buscarEspacioAOcupar(int cantPags)
 {
 	bool compararPorIdentificador2(t_espacioLibre *unaCaja)
@@ -470,4 +604,20 @@ t_espacioLibre* buscarEspacioAOcupar(int cantPags)
 	}
 
 	return list_find(listaLibres, (void*) compararPorIdentificador2);
+}
+
+int recvall(int s, void *toReceive, int size, int flags) {
+	unsigned char *buffer = (unsigned char*) toReceive;
+    int ret;
+	int bytesleft = size;
+
+	// Cicla hasta que reciba TODO
+    while(bytesleft>0) {
+        ret = recv(s,buffer,bytesleft,flags);
+        if ((ret == -1) || (ret == 0)) { return ret; }
+		buffer += ret;
+        bytesleft -= ret;
+    }
+
+    return size;
 }
