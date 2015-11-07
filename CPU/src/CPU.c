@@ -84,11 +84,11 @@ int main()
 	listaHilos = list_create();
 
 
-	logger = log_create("/home/utnso/github/tp-2015-2c-daft-punk-so/CPU/logsTP", "CPU", true, LOG_LEVEL_INFO);
+	logger = log_create("logsTP", "CPU", true, LOG_LEVEL_INFO);
 
 	t_config* config;
 
-	config = config_create("/home/utnso/github/tp-2015-2c-daft-punk-so/CPU/config.cfg");
+	config = config_create("config.cfg");
 
 	ipPlanificador = config_get_string_value(config, "IP_PLANIFICADOR");
 	puertoPlanificador = config_get_string_value(config, "PUERTO_PLANIFICADOR");
