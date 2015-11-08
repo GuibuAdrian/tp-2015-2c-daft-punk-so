@@ -94,13 +94,13 @@ int main() {
 	signal(SIGPOLL, dumpMemoriaPrincipal);
 
 	logger = log_create(
-			"/home/utnso/github/tp-2015-2c-daft-punk-so/memoria/logsTP",
+			"logsTP",
 			"Memoria", true, LOG_LEVEL_INFO);
 
 	t_config* config;
 
 	config = config_create(
-			"/home/utnso/github/tp-2015-2c-daft-punk-so/memoria/config.cfg");
+			"config.cfg");
 
 	char *IP = config_get_string_value(config, "IP_SWAP");
 	char * PUERTO_SWAP = config_get_string_value(config, "PUERTO_SWAP");
@@ -288,35 +288,23 @@ int seEncuentraEnTLB(t_orden_CPU mensaje){
 
 void fifo(t_queue *listaTablaPags, int pag, int marco)
 {
-	queue_pop(listaTablaPags);
-	queue_push(listaTablaPags, tablaPag_create(pag, marco));
+	t_tablaPags* new2;
+
+	new2 = queue_pop(listaTablaPags);
+	queue_push(listaTablaPags, tablaPag_create(pag, new2->marco));
 }
 
-void reemplazarPag(t_tablaDeProcesos* new, int pag, int marco)
+t_tablaPags* reemplazarPag(t_tablaDeProcesos* new, int pag)
 {
 	//if(strncmp(algoritmoReemplazo, "FIFO",4))
+	t_tablaPags* new2;
 
 	log_info(logger,"FIFO");
-	fifo(new->tablaDePaginas, pag, marco);
-}
 
-void actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag, int marco)
-{
-	int totalPag = queue_size(new->tablaDePaginas);
+	new2 = queue_pop(new->tablaDePaginas);
+	queue_push(new->tablaDePaginas, tablaPag_create(pag, new2->marco));
 
-	if(totalPag==maxMarcos) //Si la cantidad de marcos ocupados es MAX entonces empiezo a reemplazar
-	{
-		log_info(logger,"Reemplazando");
-
-		reemplazarPag(new, pag, marco);
-	}
-	else
-	{
-		queue_push(new->tablaDePaginas, tablaPag_create(pag, marco));
-	}
-
-	mostrarTablaDePags(new->pid);
-
+	return new2;
 }
 
 int buscarMarcoEnTablaDePags(t_tablaDeProcesos* new, int marcoBuscado)
@@ -385,6 +373,36 @@ int	asignarMarco()
 		}
 
 	}
+}
+
+int actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag)
+{
+	t_tablaPags* new2;
+	int totalPag = queue_size(new->tablaDePaginas);
+	int marco;
+
+	if(totalPag==maxMarcos) //Si la cantidad de marcos ocupados es MAX entonces empiezo a reemplazar
+	{
+		log_info(logger,"Reemplazando");
+
+		new2 = reemplazarPag(new, pag);
+
+		marco = new2->marco;
+	}
+	else
+	{
+		marco = asignarMarco(); //-1 No puedo asignarle marcos
+
+		if(marco==-1)
+		{
+			return marco;
+		}
+		queue_push(new->tablaDePaginas, tablaPag_create(pag, marco));
+	}
+
+	mostrarTablaDePags(new->pid);
+
+	return marco;
 }
 
 void iniciarProceso(int pid, int paginas)
@@ -473,11 +491,11 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU)
 			else
 				if (mensaje.orden == 2)// escribe pagina de un proceso
 				{
-					respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, new2->pagina, mensaje.content); //Le aviso al SWAP del nuevo contenido//Le aviso al SWAP del nuevo contenido
 					strncpy(memoriaPrincipal+new2->marco*tamMarcos, respuestaSwap.content, tamMarcos);//Actualizo la memo ppal
 
 					log_info(logger,"Proceso %d Escribiendo: %s en pag: %d", mensaje.pid, memoriaPrincipal+new2->marco*tamMarcos, mensaje.pagina);
 
+					respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, new2->pagina, mensaje.content); //Le aviso al SWAP del nuevo contenido//Le aviso al SWAP del nuevo contenido
 					enviarRespuestaCPU(respuestaSwap, socketCPU);//Le devuelvo el contenido del marco al CPU
 
 					//Actualizo TLB
@@ -488,43 +506,49 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU)
 		{
 			log_info(logger, "No esta en memoria principal");
 
-			int marco = asignarMarco();
-
-			log_info(logger,"mProc: %d, Pag: %d, Marco asignado: %d",mensaje.pid, mensaje.pagina, marco);
-
 			new = buscarPID(mensaje.pid);
 
-			actualizarMemoriaPpal(new, mensaje.pagina, marco);
+			int marco = actualizarMemoriaPpal(new, mensaje.pagina);
 
-			if (mensaje.orden == 1)	// leer pagina de un proceso
+			if(marco == -1)
 			{
-				log_info(logger,"Solicitando mProc: %d Pag: %d a SWAP", mensaje.pid, mensaje.pagina);
-
-				respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content);
-
-				strncpy(memoriaPrincipal+marco*tamMarcos, respuestaSwap.content, tamMarcos);
-				respuestaSwap.contentSize = strlen(respuestaSwap.content)+1;
-
-				log_info(logger,"Proceso %d leyendo pag: %d, contenido: %s", mensaje.pid, mensaje.pagina, respuestaSwap.content);
-
-				enviarRespuestaCPU(respuestaSwap, socketCPU);
+				mensaje.orden=1;
+				enviarRespuestaCPU(mensaje, socketCPU);
 			}
 			else
-				if (mensaje.orden == 2)  // escribe pagina de un proceso
+			{
+				log_info(logger,"mProc: %d, Pag: %d, Marco asignado: %d",mensaje.pid, mensaje.pagina, marco);
+
+				if (mensaje.orden == 1)	// leer pagina de un proceso
 				{
 					log_info(logger,"Solicitando mProc: %d Pag: %d a SWAP", mensaje.pid, mensaje.pagina);
 
-					respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content); //Le aviso al SWAP del nuevo contenido
-					strncpy(memoriaPrincipal+marco*tamMarcos, mensaje.content, tamMarcos);//Actualizo la memo ppal
+					respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content);
 
-					log_info(logger,"Proceso %d Escribiendo: %s en pag: %d", mensaje.pid, mensaje.content, mensaje.pagina);
+					strncpy(memoriaPrincipal+marco*tamMarcos, respuestaSwap.content, tamMarcos);
+					respuestaSwap.contentSize = strlen(respuestaSwap.content)+1;
 
-					enviarRespuestaCPU(mensaje, socketCPU);
+					log_info(logger,"Proceso %d leyendo pag: %d, contenido: %s", mensaje.pid, mensaje.pagina, respuestaSwap.content);
+
+					enviarRespuestaCPU(respuestaSwap, socketCPU);
 				}
-		}
-	}
+				else
+				{
+					if (mensaje.orden == 2)  // escribe pagina de un proceso
+					{
+						log_info(logger,"Solicitando mProc: %d Pag: %d a SWAP", mensaje.pid, mensaje.pagina);
 
-	enviarRespuestaCPU(mensaje, socketCPU);
+						respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content); //Le aviso al SWAP del nuevo contenido
+						strncpy(memoriaPrincipal+marco*tamMarcos, mensaje.content, tamMarcos);//Actualizo la memo ppal
+
+						log_info(logger,"Proceso %d Escribiendo: %s en pag: %d", mensaje.pid, mensaje.content, mensaje.pagina);
+
+						enviarRespuestaCPU(respuestaSwap, socketCPU);
+					}
+				}//else escribir
+			}//else fallo asignando marco
+		}//else no esta en memoria
+	}//else orden de incio/fin
 }
 
 
