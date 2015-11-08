@@ -1,0 +1,10 @@
+[INFO] 14:57:58:851 Swap/(3804:3804): Memoria conectado
+[INFO] 15:07:03:498 Swap/(3921:3921): Memoria conectado
+[INFO] 15:11:18:988 Swap/(3979:3979): Memoria conectado
+[INFO] 15:13:31:260 Swap/(3979:3979): Iniciando mProc: 3 de 2 paginas
+[INFO] 15:13:32:261 Swap/(3979:3979): Leyendo mProc: 3. Pagina 0: aaaa 
+[INFO] 15:13:33:262 Swap/(3979:3979): Leyendo mProc: 3. Pagina 1: aaaa 
+[INFO] 15:13:34:263 Swap/(3979:3979): Finalizando mProc: 3
+[INFO] 15:13:39:609 Swap/(3979:3979): Finalizando mProc: 154223232
+[INFO] 15:13:39:609 Swap/(3979:3979): ---------------------FIN---------------------
+[INFO] 15:13:45:576 Swap/(4122:4122): Memoria conectado

@@ -53,14 +53,15 @@ typedef struct {
 
 t_log* logger;
 t_list *tablaDeProcesos;
-int socketSwap;
+int socketSwap = 0;
 char *TLBHabil;
-int maxMarcos, cantMarcos, tamMarcos, entradasTLB, retardoMem;
+int maxMarcos = 0, cantMarcos = 0, tamMarcos = 0, entradasTLB = 0, retardoMem = 0;
 void* memoriaPrincipal;
 char *politicaDeReemplazo;
 t_list *espacioDeMemoria;
 t_TLB *TLB;
 t_queue* colaAux;
+t_queue* colaTLB;
 
 static t_tablaDeProcesos *tablaProc_create(int pid, int pagina);
 static void tablaProc_destroy(t_tablaDeProcesos *self);
@@ -79,15 +80,19 @@ void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU);
 void procesarOrden(t_orden_CPU mensaje, int socketCPU);
 void liberarTablaDePags();
 void mostrarTablaDePags(int pid);
+void rutinaFlushTLB();
+void limpiarMemoriaPrincipal();
+void dumpMemoriaPrincipal();
+void dumpMemory();
 
 int main() {
 	printf("\n");
 	printf("~~~~~~~~~~MEMORIA~~~~~~~~~~\n\n");
-/*
-	signal(SIGUSR1, rutinaDeSeniales);
-	signal(SIGUSR2, rutinaDeSeniales);
-	signal(SIGPOLL, rutinaDeSeniales);
-*/
+
+	signal(SIGUSR1, rutinaFlushTLB);
+	signal(SIGUSR2, limpiarMemoriaPrincipal);
+	signal(SIGPOLL, dumpMemoriaPrincipal);
+
 	logger = log_create(
 			"/home/utnso/github/tp-2015-2c-daft-punk-so/memoria/logsTP",
 			"Memoria", true, LOG_LEVEL_INFO);
@@ -222,24 +227,14 @@ void recibirConexiones1(char * PUERTO_CPU) {
 						}
 						else
 						{
-							/*
 							printf("TLB Habilitada :D\n");// aqui hay que almacenar las operaciones mas recientes
+							if(seEncuentraEnTLB(mensaje)==1){
+								operarConTLB(mensaje, socketCPU);
+							}
+							else{
+								procesarOrden(mensaje, socketCPU);
+							}
 
-							if (mensaje.orden == 0){// aca se interprentan las ordenes de CPU
-								//inicia un proceso
-								list_add(tablaDeProcesos,tablaProc_create(mensaje.pid,mensaje.pagina,malloc(sizeof(int))));
-							}else if (mensaje.orden == 1){
-								// leer pagina de un proceso
-								enviarRespuestaCPU(mensaje, socketCPU);
-							}else if (mensaje.orden == 2){
-								// escribe pagina de un proceso
-								enviarRespuestaCPU(mensaje, socketCPU);
-							}else{
-								// finaliza el proceso
-								// aca solo lo elimina de la tabla de procesos hay que pedirle al swap que lo elimine tambien.
-								list_remove(tablaDeProcesos,getIndice(tablaDeProcesos,mensaje.pid));							}
-								enviarRespuestaCPU(mensaje, socketCPU);
-							*/
 						}
 /*
 						if (tablaDeProcesos == NULL) {
@@ -272,6 +267,23 @@ void recibirConexiones1(char * PUERTO_CPU) {
 
 	close(socketCPU);
 	close(listenningSocket);
+}
+//TODO reparar 'invalid initializer' en colaAuxiliar y en elementoDeTLB
+int seEncuentraEnTLB(t_orden_CPU mensaje){
+	t_queue colaAuxiliar = colaTLB;
+	t_TLB elementoDeTLB = colaTLB->elements->head;
+
+	while(mensaje.pid != elementoDeTLB.pid && mensaje.pagina != elementoDeTLB.pagina){
+		elementoDeTLB = colaAuxiliar.elements->head->next;
+		colaAuxiliar.elements->head->next = colaAuxiliar.elements->head->next->next;
+	}
+
+	if(mensaje.pid == elementoDeTLB.pid && mensaje.pagina == elementoDeTLB.pagina){
+		return 1;
+	}
+	else{
+		return 0;
+	}
 }
 
 void fifo(t_queue *listaTablaPags, int pag, int marco)
@@ -733,47 +745,45 @@ t_tablaDeProcesos* buscarPID(int pid)
 	return list_find(tablaDeProcesos, (void*) compararPorIdentificador2);
 }
 
-/*
-void rutinaDeSeniales(int senial) {
+void rutinaFlushTLB(){
 	pthread_t hiloFlushTLB;
-	pthread_t hiloLimpiezaMemoriaPrincipal;
-	void vacio;
-	long pid;
 
-	switch (senial) {
-	case SIGUSR1:
-		printf("Flush de TLB \n");
-		pthread_create(&hiloFlushTLB, NULL, tablaPag_destroy, &TLB);//Calculo que Flush TLB es un destroy.
-		break;
-	case SIGUSR2:
-		printf("Limpiar la Memoria Principal \n");
-		pthread_create(&hiloLimpiezaMemoriaPrincipal, NULL,
-				limpiarMemoriaPrincipal, vacio);
-		break;
-	case SIGPOLL:
-		printf("Dump de la memoria principal \n");
-		//Se sugiere un fork D:
-		if (fork() == 0) {
-			//Dumpeamos la memoria
-			dumpMemory();
-			exit(0);
-		} else {
-			wait(pid);
-			exit(0);
-		}
-		break;
-	}
+	printf("Flush de TLB \n");
+	pthread_create(&hiloFlushTLB, NULL, tablaPag_destroy, &TLB);
+	pthread_join(hiloFlushTLB,NULL);
 }
 
-void limpiarMemoriaPrincipal(void) {
+void rutinaLimpiarMemoriaPrincipal(){
+	pthread_t hiloLimpiezaMemoriaPrincipal;
+
+	printf("Limpiar la Memoria Principal \n");
+	pthread_create(&hiloLimpiezaMemoriaPrincipal, NULL, limpiarMemoriaPrincipal, NULL);
+	pthread_join(hiloLimpiezaMemoriaPrincipal,NULL);
+}
+
+void limpiarMemoriaPrincipal() {
 	list_destroy(espacioDeMemoria);
 	free(espacioDeMemoria);
 }
 
-void dumpMemory() {
+void dumpMemoriaPrincipal(){
+	long pid = 0;
+
+	printf("Dump de la memoria principal \n");
+	//Se sugiere un fork D:
+	if (fork() == 0) {
+		//Dumpeamos la memoria
+		dumpMemory();
+		exit(0);
+	} else {
+		wait(pid);
+		exit(0);
+	}
+}
+
+void dumpMemory(){
 	//Hay que recorrer la lista de espacioDeMemoria y levantando marcos y logearlos e ir liberando la memoria.
 }
-*/
 
 /*
 void reemplazoLRU(t_tablaPags paginaAReemplazar, t_queue listaTablaPags) {

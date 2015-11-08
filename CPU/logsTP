@@ -1,0 +1,22 @@
+[INFO] 14:58:27:615 CPU/(3868:3870): Planificador: 4 conectado, viva!!
+[INFO] 14:58:27:615 CPU/(3868:3869): Planificador: 5 conectado, viva!!
+[INFO] 14:59:00:40 CPU/(3868:3868): ---------------------FIN---------------------
+[INFO] 15:12:30:4 CPU/(4081:4083): Planificador: 4 conectado, viva!!
+[INFO] 15:12:30:4 CPU/(4081:4082): Planificador: 5 conectado, viva!!
+[INFO] 15:13:31:260 CPU/(4081:4083): ~~~~~~~~~~~~~~~~~~~Socket: 4...mProc: 3~~~~~~~~~~~~~~~~~~~
+[INFO] 15:13:31:260 CPU/(4081:4083): Respuesta 0
+[INFO] 15:13:32:261 CPU/(4081:4083): ~~~~~~~~~~~~~~~~~~~Socket: 4...mProc: 3~~~~~~~~~~~~~~~~~~~
+[INFO] 15:13:32:261 CPU/(4081:4083): Respuesta 2
+[INFO] 15:13:33:262 CPU/(4081:4083): ~~~~~~~~~~~~~~~~~~~Socket: 4...mProc: 3~~~~~~~~~~~~~~~~~~~
+[INFO] 15:13:33:262 CPU/(4081:4083): Respuesta 2
+[INFO] 15:13:34:263 CPU/(4081:4083): ~~~~~~~~~~~~~~~~~~~Socket: 4...mProc: 3~~~~~~~~~~~~~~~~~~~
+[INFO] 15:13:34:264 CPU/(4081:4083): Respuesta 3
+[INFO] 15:13:39:607 CPU/(4081:4081): ---------------------FIN---------------------
+[INFO] 15:33:34:856 CPU/(2405:2407): Planificador: 4 conectado, viva!!
+[INFO] 15:33:34:856 CPU/(2405:2406): Planificador: 5 conectado, viva!!
+[INFO] 15:34:06:583 CPU/(2413:2415): Planificador: 4 conectado, viva!!
+[INFO] 15:34:12:260 CPU/(2417:2419): Planificador: 4 conectado, viva!!
+[INFO] 15:34:14:336 CPU/(2421:2423): Planificador: 4 conectado, viva!!
+[INFO] 15:34:22:368 CPU/(2426:2428): Planificador: 4 conectado, viva!!
+[INFO] 15:34:22:368 CPU/(2426:2427): Planificador: 5 conectado, viva!!
+[INFO] 15:34:56:593 CPU/(2426:2426): ---------------------FIN---------------------
