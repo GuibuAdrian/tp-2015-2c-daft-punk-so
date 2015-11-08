@@ -531,8 +531,6 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU)
 
 						log_info(logger,"Proceso %d Escribiendo: %s en pag: %d", mensaje.pid, mensaje.content, mensaje.pagina);
 
-						printf("Respuesta escritura: %d\n", respuestaSwap.orden);
-
 						enviarRespuestaCPU(respuestaSwap, socketCPU);
 					}
 				}//else escribir
@@ -601,8 +599,6 @@ void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU) {
 	mensajeSwap.pagina = respuestaMemoria.pagina;
 	mensajeSwap.contentSize = strlen(respuestaMemoria.content) + 1;
 	strcpy(mensajeSwap.content, respuestaMemoria.content);
-
-	printf("Mensaje a CPU %d\n", mensajeSwap.orden);
 
 	void* mensajeSwapPackage = malloc(tamanioOrdenCPU(mensajeSwap));
 
