@@ -260,7 +260,7 @@ int recibirRespuesta(int socketCliente)
 
 	if( (respuesta.mensajeSize)==0 )
 	{
-		//log_info(logger, "mProc %d - Iniciado", respuesta.pid);
+		log_info(logger, "mProc %d - Iniciado", respuesta.pid);
 	}
 	else
 	{
@@ -309,7 +309,7 @@ int recibirRespuesta(int socketCliente)
 						pthread_mutex_lock(&mutex2);
 						pcb = buscarReadyEnPCB(respuesta.pid);
 						int posPCB =  encontrarPosicionEnPCB(pcb->pid);	//Encontrar pos en listaPCB
-						list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcb->pid, pcb->path, pcb->puntero+1, 2, pcb->totalLineas), (void*)PCB_destroy);
+						list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcb->pid, pcb->path, pcb->puntero+1, 2, pcb->totalLineas), (void*)PCB_destroy);//Pongo al mProc en bloqueado
 						pthread_mutex_unlock(&mutex2);
 
 						free(package);
