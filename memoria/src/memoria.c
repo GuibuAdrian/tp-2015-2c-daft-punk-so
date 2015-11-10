@@ -60,8 +60,7 @@ void* memoriaPrincipal;
 char *politicaDeReemplazo;
 t_list *espacioDeMemoria;
 t_TLB *TLB;
-t_queue* colaAux;
-t_queue* colaTLB;
+t_list *listaTLB;
 
 static t_tablaDeProcesos *tablaProc_create(int pid, int pagina);
 static void tablaProc_destroy(t_tablaDeProcesos *self);
@@ -119,6 +118,7 @@ int main() {
 
 	memoriaPrincipal = malloc(cantMarcos * tamMarcos);
 	TLB = malloc(sizeof(TLB) * entradasTLB);
+	listaTLB = list_create();
 
 	//listaTablaPags = queue_create();
 	tablaDeProcesos = list_create();
@@ -229,7 +229,7 @@ void recibirConexiones1(char * PUERTO_CPU) {
 						{
 							printf("TLB Habilitada :D\n");// aqui hay que almacenar las operaciones mas recientes
 							if(seEncuentraEnTLB(mensaje)==1){
-								operarConTLB(mensaje, socketCPU);
+							//	operarConTLB(mensaje, socketCPU);
 							}
 							else{
 								procesarOrden(mensaje, socketCPU);
@@ -268,17 +268,17 @@ void recibirConexiones1(char * PUERTO_CPU) {
 	close(socketCPU);
 	close(listenningSocket);
 }
-//TODO reparar 'invalid initializer' en colaAuxiliar y en elementoDeTLB
-int seEncuentraEnTLB(t_orden_CPU mensaje){
-	t_queue colaAuxiliar = colaTLB;
-	t_TLB elementoDeTLB = colaTLB->elements->head;
 
-	while(mensaje.pid != elementoDeTLB.pid && mensaje.pagina != elementoDeTLB.pagina){
-		elementoDeTLB = colaAuxiliar.elements->head->next;
-		colaAuxiliar.elements->head->next = colaAuxiliar.elements->head->next->next;
+int seEncuentraEnTLB(t_orden_CPU mensaje){
+	int i=0;
+	t_TLB *elementoTLB = list_get(listaTLB,i);
+
+	while(mensaje.pid != elementoTLB->pid && mensaje.pagina != elementoTLB->pagina && i <= entradasTLB){
+		elementoTLB = list_get(listaTLB,i);
+		i++;
 	}
 
-	if(mensaje.pid == elementoDeTLB.pid && mensaje.pagina == elementoDeTLB.pagina){
+	if(mensaje.pid == elementoTLB->pid && mensaje.pagina == elementoTLB->pagina){
 		return 1;
 	}
 	else{
@@ -778,7 +778,11 @@ void rutinaFlushTLB(){
 }
 
 void rutinaLimpiarMemoriaPrincipal(){
-	pthread_t hiloLimpiezaMemoriaPrincipal;
+	pthread_t hiloLimpiezaMemoriaPrincipal;	t_queue *colaCopiaTLB;
+
+	t_list *listaDeTLB ;
+	listaDeTLB = queue_pop(colaCopiaTLB);
+	t_TLB *elementoTLB = list_get(listaDeTLB,0);
 
 	printf("Limpiar la Memoria Principal \n");
 	pthread_create(&hiloLimpiezaMemoriaPrincipal, NULL, limpiarMemoriaPrincipal, NULL);
