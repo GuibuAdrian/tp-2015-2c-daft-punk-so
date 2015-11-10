@@ -388,6 +388,13 @@ void ROUND_ROBIN(void* args)
 		Q++;
 	}
 
+	pthread_mutex_lock(&mutex);
+	posCPU = encontrarPosicionHiloCPU(idHiloCPU); //Busco posicion del CPU disponible
+	list_replace_and_destroy_element(listaCPUs, posCPU, hiloCPU_create(idHiloCPU, socketCliente, 1), (void*) hiloCPU_destroy);	//Pongo en Disponible al CPU q usaba
+	printf("CPU %d disponible\n", idHiloCPU);
+	pthread_mutex_unlock(&mutex);
+	sem_post(&semCPU);
+
 	if( (i-1)>(totalLineas) )
 	{
 		pthread_mutex_lock(&mutex2);
@@ -412,12 +419,10 @@ void ROUND_ROBIN(void* args)
 		pcbReady = buscarReadyEnPCB(pid);
 		posPCB =  encontrarPosicionEnPCB(pid);	//Encontrar pos en listaPCB
 		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcbReady->pid, pcbReady->path, pcbReady->puntero, 0, pcbReady->totalLineas), (void*)PCB_destroy);
-		printf("mProc: %d a Ready\n", pid);
+		log_info(logger, "CPU %d disponible\n", idHiloCPU);
 		pthread_mutex_unlock(&mutex4);
 		sem_post(&semPlani);
 	}
-	list_replace_and_destroy_element(listaCPUs, posCPU, hiloCPU_create(idHiloCPU, socketCliente, 1), (void*) hiloCPU_destroy);	//Pongo en Disponible al CPU q usaba
-	sem_post(&semCPU);
 
 	free(path);
 	free(args);
@@ -484,7 +489,7 @@ void FIFO(void *args)
 	pthread_mutex_lock(&mutex);
 	posCPU = encontrarPosicionHiloCPU(idHiloCPU); //Busco posicion del CPU disponible
 	list_replace_and_destroy_element(listaCPUs, posCPU, hiloCPU_create(idHiloCPU, socketCliente, 1), (void*) hiloCPU_destroy);	//Pongo en Disponible al CPU q usaba
-	printf("CPU %d disponible\n", idHiloCPU);
+	log_info(logger, "CPU %d disponible\n", idHiloCPU);
 	pthread_mutex_unlock(&mutex);
 	sem_post(&semCPU);
 
