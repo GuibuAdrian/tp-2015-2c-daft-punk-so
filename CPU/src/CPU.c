@@ -323,6 +323,16 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid)
 
 					mensaje = enviarOrdenAMemoria(pid, 2, pagina, pch);
 				}
+				else
+				{
+					pch = strtok(NULL, " \n");
+					pagina = strtol(pch, NULL, 10);
+
+					mensaje.pid = pid;
+					mensaje.pagina = pagina;
+					mensaje.orden = 5;
+					strcpy(mensaje.content,"/");
+				}
 			}
 		}
 	}
