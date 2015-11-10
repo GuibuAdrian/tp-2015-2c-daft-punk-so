@@ -59,7 +59,6 @@ int maxMarcos = 0, cantMarcos = 0, tamMarcos = 0, entradasTLB = 0, retardoMem = 
 void* memoriaPrincipal;
 char *politicaDeReemplazo;
 t_list *espacioDeMemoria;
-t_TLB *TLB;
 t_list *listaTLB;
 
 static t_tablaDeProcesos *tablaProc_create(int pid, int pagina);
@@ -117,7 +116,6 @@ int main() {
 	char * PUERTO_CPU = config_get_string_value(config, "PUERTO_CPU");
 
 	memoriaPrincipal = malloc(cantMarcos * tamMarcos);
-	TLB = malloc(sizeof(TLB) * entradasTLB);
 	listaTLB = list_create();
 
 	//listaTablaPags = queue_create();
@@ -136,7 +134,6 @@ int main() {
 	list_destroy_and_destroy_elements(tablaDeProcesos,(void*) tablaProc_destroy);
 	close(socketSwap);
 	free(memoriaPrincipal);
-	free(TLB);
 
 	config_destroy(config);
 	log_info(logger, "---------------------FIN---------------------");
@@ -431,13 +428,7 @@ void finalizarProceso(int pid)
 		}
 	}
 
-	for(i=0; i<entradasTLB; i++) //Borro al pid de la TLB
-	{
-		if (TLB[i].pid==pid)
-		{
-			TLB[i].pid = -1;
-		}
-	}
+	//Borrar TLB
 
 	log_info(logger,"Proceso %d finalizado", pid);
 }
@@ -773,7 +764,7 @@ void rutinaFlushTLB(){
 	pthread_t hiloFlushTLB;
 
 	printf("Flush de TLB \n");
-	pthread_create(&hiloFlushTLB, NULL, tablaPag_destroy, &TLB);
+	//pthread_create(&hiloFlushTLB, NULL, tablaPag_destroy, );
 	pthread_join(hiloFlushTLB,NULL);
 }
 
