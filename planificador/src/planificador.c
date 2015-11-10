@@ -83,7 +83,7 @@ t_list *listaCPUs, *listaPCB, *listaReady;
 sem_t semPlani,semFZ, semCPU;
 pthread_mutex_t mutex, mutex2, mutex3, mutex4;
 char *ALGORITMO_PLANIFICACION;
-int pid=2, totalLineas, cantHilos, QUANTUM;
+int pid=2, cantHilos, QUANTUM;
 
 int tamanioMensaje1(t_mensaje1 mensaje);
 int tamanioHiloCPU(t_hiloCPU mensaje);
@@ -98,6 +98,7 @@ int tamanioready(t_ready mensaje);
 int tamanioEstructuraAEnviar(t_pathMensaje unaPersona);
 int tamanioRespuesta(t_respuesta unaRespuesta);
 
+t_hiloCPU* buscarCPU(int cpu);
 t_hiloCPU* buscarCPUDisponible();
 PCB* buscarReadyEnPCB(int pid);
 PCB* buscarPCB(int pidF);
@@ -115,7 +116,7 @@ void recibirConexiones(char * PUERTO);
 void ROUND_ROBIN();
 void FIFO();
 void planificador();
-void enviarPath(int socketCliente, int pid, char * path, int punteroProx);
+int enviarPath(int socketCliente, int pid, char * path, int punteroProx);
 
 int main()
 {
@@ -235,9 +236,10 @@ void recibirConexiones(char * PUERTO)
 	close(listenningSocket);
 }
 
-void recibirRespuesta(int socketCliente)
+int recibirRespuesta(int socketCliente)
 {
 	t_respuesta respuesta;
+	PCB *pcb;
 
 	void* package = malloc(tamanioRespuesta(respuesta));
 
@@ -258,7 +260,7 @@ void recibirRespuesta(int socketCliente)
 
 	if( (respuesta.mensajeSize)==0 )
 	{
-		log_info(logger, "mProc %d - Iniciado", respuesta.pid);
+		//log_info(logger, "mProc %d - Iniciado", respuesta.pid);
 	}
 	else
 	{
@@ -281,12 +283,39 @@ void recibirRespuesta(int socketCliente)
 				if( (respuesta.mensajeSize)==3 )
 				{
 					log_info(logger, "mProc %d finalizado", respuesta.pid);
+					pthread_mutex_lock(&mutex2);
+					int posPCB =  encontrarPosicionEnPCB(respuesta.pid);	//Encontrar pos en listaPCB
+					list_remove_and_destroy_element(listaPCB, posPCB, (void*) PCB_destroy);
+					pthread_mutex_unlock(&mutex2);
+					int i;
+
+					for(i=0;i<list_size(listaReady);i++)
+					{
+						t_ready* new = list_get(listaReady, i);
+						printf("PID READY: %d\n", new->pid);
+					}
 				}
 				else
 				{
 					if( (respuesta.mensajeSize)==4 )
 					{
 						log_info(logger, "mProc %d - Pagina %d escrita: %s", respuesta.pid, respuesta.paginas, respuesta.content);
+					}
+					else
+					{
+						int IO = respuesta.paginas;
+
+						log_info(logger, "mProc %d en entrada-salida de tiempo %d", respuesta.pid, IO);
+						pthread_mutex_lock(&mutex2);
+						pcb = buscarReadyEnPCB(respuesta.pid);
+						int posPCB =  encontrarPosicionEnPCB(pcb->pid);	//Encontrar pos en listaPCB
+						list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcb->pid, pcb->path, pcb->puntero+1, 2, pcb->totalLineas), (void*)PCB_destroy);
+						pthread_mutex_unlock(&mutex2);
+
+						free(package);
+						free(package2);
+
+						return IO;
 					}
 				}
 			}
@@ -295,12 +324,15 @@ void recibirRespuesta(int socketCliente)
 
 	free(package);
 	free(package2);
+
+	return 0;
 }
 
 void ROUND_ROBIN(void* args)
 {
 	t_enviarProceso *mensaje;
 	mensaje = (t_enviarProceso*) args;
+	int IO;
 
 	PCB* pcbReady = mensaje->pcbReady;
 	int posPCB = mensaje->posPCB;
@@ -329,13 +361,22 @@ void ROUND_ROBIN(void* args)
 	{
 		pcbReady = buscarReadyEnPCB(pid);
 
-		enviarPath(socketCliente, pid, pcbReady->path, pcbReady->puntero);
+		IO = enviarPath(socketCliente, pid, pcbReady->path, pcbReady->puntero);
+
+		if(IO>0)
+		{
+			break;
+		}
 
 		pcbReady = buscarReadyEnPCB(pid);
-
+		if(pcbReady == NULL)
+		{
+			break;
+		}
 		posPCB =  encontrarPosicionEnPCB(pid);	//Encontrar pos en listaPCB
 
 		puntero = pcbReady->puntero;
+
 
 		sem_wait(&semFZ);
 		i=puntero+1;
@@ -353,7 +394,7 @@ void ROUND_ROBIN(void* args)
 		list_remove_and_destroy_element(listaPCB, posPCB, (void*) PCB_destroy);
 		pthread_mutex_unlock(&mutex2);
 	}
-	else
+	if(Q>=QUANTUM)
 	{
 		pthread_mutex_lock(&mutex4);
 		list_add(listaReady, ready_create(pid));
@@ -362,7 +403,19 @@ void ROUND_ROBIN(void* args)
 
 		sem_post(&semPlani);
 	}
+	if(IO>0)
+	{
+		sleep(IO);
 
+		pthread_mutex_lock(&mutex4);
+		list_add(listaReady, ready_create(pid)); //Agrego el proceso NUEVO a Ready
+		pcbReady = buscarReadyEnPCB(pid);
+		posPCB =  encontrarPosicionEnPCB(pid);	//Encontrar pos en listaPCB
+		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcbReady->pid, pcbReady->path, pcbReady->puntero, 0, pcbReady->totalLineas), (void*)PCB_destroy);
+		printf("mProc: %d a Ready\n", pid);
+		pthread_mutex_unlock(&mutex4);
+		sem_post(&semPlani);
+	}
 	list_replace_and_destroy_element(listaCPUs, posCPU, hiloCPU_create(idHiloCPU, socketCliente, 1), (void*) hiloCPU_destroy);	//Pongo en Disponible al CPU q usaba
 	sem_post(&semCPU);
 
@@ -374,6 +427,7 @@ void FIFO(void *args)
 {
 	t_enviarProceso *mensaje;
 	mensaje = (t_enviarProceso*) args;
+	int IO;
 
 	PCB* pcbReady = mensaje->pcbReady;
 	int posPCB = mensaje->posPCB;
@@ -393,37 +447,61 @@ void FIFO(void *args)
 
 	int puntero = pcbReady->puntero;
 	int i = pcbReady->puntero;
-	int pid = pcbReady->pid;
+	int pid1 = pcbReady->pid;
 	char* path = strdup(pcbReady->path);
 
-	totalLineas = mensaje->file;
+	int totalLineas = mensaje->file;
 
 	while( (i-1)<=(totalLineas) )
 	{
-		pcbReady = buscarReadyEnPCB(pid);
+		pcbReady = buscarReadyEnPCB(pid1);
 
-		enviarPath(socketCliente, pid, pcbReady->path, pcbReady->puntero);
+		IO = enviarPath(socketCliente, pid1, pcbReady->path, pcbReady->puntero);
 
-		pcbReady = buscarReadyEnPCB(pid);
+		if(IO>0)
+		{
+			break;
+		}
 
-		posPCB =  encontrarPosicionEnPCB(pid);	//Encontrar pos en listaPCB
+		pcbReady = buscarReadyEnPCB(pid1);
+
+		if(pcbReady == NULL)
+		{
+			break;
+		}
+		posPCB =  encontrarPosicionEnPCB(pid1);	//Encontrar pos en listaPCB
 
 		puntero = pcbReady->puntero;
 
 		sem_wait(&semFZ);
 		i=puntero+1;
 
-		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pid, path, (puntero+1), 1, totalLineas), (void*)PCB_destroy);
+		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pid1, path, (puntero+1), 1, totalLineas), (void*)PCB_destroy);
 
 		sem_post(&semFZ);
 	}
 
+	pthread_mutex_lock(&mutex);
+	posCPU = encontrarPosicionHiloCPU(idHiloCPU); //Busco posicion del CPU disponible
 	list_replace_and_destroy_element(listaCPUs, posCPU, hiloCPU_create(idHiloCPU, socketCliente, 1), (void*) hiloCPU_destroy);	//Pongo en Disponible al CPU q usaba
+	printf("CPU %d disponible\n", idHiloCPU);
+	pthread_mutex_unlock(&mutex);
 	sem_post(&semCPU);
 
-	pthread_mutex_lock(&mutex2);
-	list_remove_and_destroy_element(listaPCB, posPCB, (void*) PCB_destroy);
-	pthread_mutex_unlock(&mutex2);
+
+	if(IO>0)
+	{
+		sleep(IO);
+
+		pthread_mutex_lock(&mutex4);
+		list_add(listaReady, ready_create(pid1)); //Agrego el proceso NUEVO a Ready
+		pcbReady = buscarReadyEnPCB(pid1);
+		posPCB =  encontrarPosicionEnPCB(pid1);	//Encontrar pos en listaPCB
+		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcbReady->pid, pcbReady->path, pcbReady->puntero, 0, pcbReady->totalLineas), (void*)PCB_destroy);
+		printf("mProc: %d a Ready\n", pid1);
+		pthread_mutex_unlock(&mutex4);
+		sem_post(&semPlani);
+	}
 
 	free(path);
 	free(args);
@@ -472,10 +550,10 @@ void planificador()
 	}
 }
 
-void enviarPath(int socketCliente, int pid, char * path, int punteroProx)
+int enviarPath(int socketCliente, int pid1, char * path, int punteroProx)
 {
 	t_pathMensaje unaPersona;
-	unaPersona.pid = pid;
+	unaPersona.pid = pid1;
 	unaPersona.pathSize=strlen(path);
 	unaPersona.path = strdup(path);
 	unaPersona.puntero = punteroProx;
@@ -489,11 +567,13 @@ void enviarPath(int socketCliente, int pid, char * path, int punteroProx)
 
 	send(socketCliente,package, tamanioEstructuraAEnviar(unaPersona),0);
 
-	recibirRespuesta(socketCliente);
+	int IO = recibirRespuesta(socketCliente);
 
 	free(unaPersona.path);
 
 	free(package);
+
+	return IO;
 }
 
 void correrPath(char * pch)
@@ -580,7 +660,7 @@ void finalizarPID(int pidF)
 	}
 	else
 	{
-		totalLineas = txt_total_lines(file);
+		int totalLineas = txt_total_lines(file);
 
 		sem_post(&semFZ);
 		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(unPCB->pid,unPCB->path, totalLineas, 1, unPCB->totalLineas), (void*) PCB_destroy);
@@ -759,6 +839,20 @@ int tamanioRespuesta(t_respuesta unaRespuesta)
 {
 	return (sizeof(unaRespuesta.pid)+sizeof(unaRespuesta.paginas)+sizeof(unaRespuesta.mensajeSize)+sizeof(unaRespuesta.contentSize));
 };
+
+t_hiloCPU* buscarCPU(int cpu)
+{
+	bool compararPorIdentificador(t_hiloCPU *unaCaja)
+	{
+		if (unaCaja->idHilo == cpu)
+		{
+			return 1;
+		}
+
+		return 0;
+	}
+	return (list_find(listaCPUs, (void*) compararPorIdentificador));
+}
 
 t_hiloCPU* buscarCPUDisponible()
 {
