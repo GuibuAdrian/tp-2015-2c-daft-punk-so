@@ -54,26 +54,42 @@ typedef struct
 
 typedef struct
 {
+	int idCPU;
+	int cantInst;
+	int socketPan; //Le puse Pan aproposito :P
+} t_cpu;
+
+typedef struct
+{
 	int pathSize;
 	char path[PACKAGESIZE];
 } t_mensaje;
 
 t_log* logger;
-t_list *listaHilos;
+t_list *listaHilos, *listaCPUs;
 char *ipPlanificador, *puertoPlanificador, *ipMemoria, *puertoMemoria;
-int id = 5, RETARDO, numeroHilos;
+int id = 7, RETARDO, numeroHilos, socketPlanCarga;
+pthread_mutex_t mutex;
 
 static t_hilos *hilo_create(pthread_t unHilo);
 static void hilo_destroy(t_hilos *self);
+static t_cpu *cpu_create(int idCPU, int cantInst, int socketPlan);
+static void cpu_destroy(t_cpu *self);
 int tamanioEstructura1(t_pathMensaje unaPersona);
 int tamanioEstructura2(t_pathMensaje unaPersona);
 int tamanioMensajeMemo(t_orden_CPU mensajeMemo);
+
+t_cpu* buscarCPU(int sock);
+int encontrarPosicionCPU(int sock);
+
 void conectarHilos1();
 void recibirPath1(int serverSocket);
 char * obtenerLinea(char path[PACKAGESIZE], int puntero);
 void interpretarLinea(int socketPlanificador, char* linea, int pid);
 char * obtenerLinea(char path[PACKAGESIZE], int puntero);
 t_orden_CPU enviarOrdenAMemoria(int pid, int orden, int paginas, char *content);
+void cargaCPU();
+void recibirSolicitudCarga();
 
 int main()
 {
@@ -82,7 +98,7 @@ int main()
 
 
 	listaHilos = list_create();
-
+	listaCPUs = list_create();
 
 	logger = log_create("logsTP", "CPU", true, LOG_LEVEL_INFO);
 
@@ -99,7 +115,9 @@ int main()
 
 
 	int i = 1;
-	pthread_t unHilo;
+	pthread_t unHilo, otroHilo;
+	socketPlanCarga = conectarse(ipPlanificador, puertoPlanificador);
+
 
 	while (i <= numeroHilos)
 	{
@@ -109,6 +127,8 @@ int main()
 
 		i++;
 	}
+
+	pthread_create(&otroHilo,NULL,(void*) cargaCPU, NULL); //Hilo para recibir solicitud de cargas
 
 	int j;
 	t_hilos* new;
@@ -120,8 +140,9 @@ int main()
 		pthread_join(new->unHilo, NULL);
 	}
 
-
+	pthread_join(otroHilo, NULL);
 	list_destroy_and_destroy_elements(listaHilos,(void*) hilo_destroy);
+	list_destroy_and_destroy_elements(listaCPUs,(void*) cpu_destroy);
 
 	config_destroy(config);
 	log_info(logger, "---------------------FIN---------------------");
@@ -138,8 +159,12 @@ void conectarHilos1(void *context)
 	log_info(logger,"Planificador: %d conectado, viva!!", serverSocket);
 
 	t_idHilo mensaje;
+	pthread_mutex_lock(&mutex);
+	id++;
+	list_add(listaCPUs,cpu_create(id,0,serverSocket));
 
-	mensaje.idNodo = serverSocket;
+	pthread_mutex_unlock(&mutex);
+	mensaje.idNodo = id;
 	mensaje.cantHilos = numeroHilos;
 
 	//Envio id y aviso la cantidad de conexiones
@@ -156,6 +181,45 @@ void conectarHilos1(void *context)
 
 	close(serverSocket);
 
+}
+
+void cargaCPU()
+{
+	log_info(logger,"Conectado CPU %d!!", socketPlanCarga);
+
+	recibirSolicitudCarga(socketPlanCarga);
+
+	close(socketPlanCarga);
+}
+
+void recibirSolicitudCarga(int serverSocket)
+{
+	char package[PACKAGESIZE];
+	int status = 1; // Estructura que manjea el status de los recieve.
+
+	printf("Cliente conectado. Esperando mensajes:\n");
+	int i;
+	t_cpu *new;
+
+	while (status != 0)
+	{
+		status = recv(serverSocket, (void*) package, PACKAGESIZE, 0);
+
+		if (status != 0)
+		{
+			printf("%s", package);
+
+			for(i=0; i<list_size(listaCPUs); i++)
+			{
+				pthread_mutex_lock(&mutex);
+				new = list_get(listaCPUs,i);
+				pthread_mutex_unlock(&mutex);
+
+				printf("CPU %d, cant Inst %d, buscar: %d\n", new->idCPU, new->cantInst, new->socketPan);
+			}
+		}
+
+	};
 }
 
 void recibirPath1(int serverSocket) {
@@ -196,6 +260,14 @@ void recibirPath1(int serverSocket) {
 
 			sleep(RETARDO);
 
+			pthread_mutex_lock(&mutex);
+			int posCPU = encontrarPosicionCPU(serverSocket);
+			t_cpu* new = buscarCPU(serverSocket);
+
+			list_replace_and_destroy_element(listaCPUs, posCPU, cpu_create(new->idCPU, new->cantInst+1, new->socketPan) ,(void*) cpu_destroy);
+
+			pthread_mutex_unlock(&mutex);
+
 			free(linea);
 			free(package2);
 		}
@@ -203,7 +275,6 @@ void recibirPath1(int serverSocket) {
 
 	free(package);
 }
-
 
 t_orden_CPU recibirRespuestaSwap(int socketMemoria)
 {
@@ -349,6 +420,43 @@ char * obtenerLinea(char path[PACKAGESIZE], int puntero) {
 	return linea;
 }
 
+t_cpu* buscarCPU(int sock)
+{
+	bool compararPorIdentificador2(t_cpu *unaCaja)
+	{
+		if (unaCaja->socketPan == sock)
+		{
+			return 1;
+		}
+
+		return 0;
+	}
+	return list_find(listaCPUs, (void*) compararPorIdentificador2);
+}
+
+int encontrarPosicionCPU(int sock)
+{
+	t_cpu* new;
+
+	int i=0;
+	int encontrado = 1;
+
+	while( (i<list_size(listaCPUs)) && encontrado!=0)
+	{
+		new = list_get(listaCPUs,i);
+
+		if(new->socketPan == sock)
+		{
+			encontrado = 0;
+		}
+		else
+		{
+			i++;
+		}
+	}
+	return i;
+}
+
 int tamanioEstructura1(t_pathMensaje unaPersona) {
 	return (sizeof(unaPersona.puntero) + sizeof(unaPersona.pathSize)
 			+ sizeof(unaPersona.pid));
@@ -371,6 +479,21 @@ static t_hilos *hilo_create(pthread_t unHilo)
 	 return new;
 }
 static void hilo_destroy(t_hilos *self)
+{
+    free(self);
+}
+
+static t_cpu *cpu_create(int idCPU, int cantInst, int socketPlan)
+{
+	t_cpu *new = malloc(sizeof(t_cpu));
+
+	 new->idCPU=idCPU;
+	 new->cantInst=cantInst;
+	 new->socketPan = socketPlan;
+
+	 return new;
+}
+static void cpu_destroy(t_cpu *self)
 {
     free(self);
 }
