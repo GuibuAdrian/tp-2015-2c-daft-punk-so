@@ -83,7 +83,7 @@ t_list *listaCPUs, *listaPCB, *listaReady;
 sem_t semPlani,semFZ, semCPU;
 pthread_mutex_t mutex, mutex2, mutex3, mutex4;
 char *ALGORITMO_PLANIFICACION;
-int pid=2, cantHilos, QUANTUM;
+int pid=2, cantHilos, QUANTUM, socketCPUCarga;
 
 int tamanioMensaje1(t_mensaje1 mensaje);
 int tamanioHiloCPU(t_hiloCPU mensaje);
@@ -140,6 +140,7 @@ int main()
 	listaReady = list_create();
 
 
+
 	recibirConexiones(PUERTO_ESCUCHA);
 
 
@@ -162,6 +163,8 @@ int main()
 	pthread_join(unHilo, NULL);
 
 
+	close(socketCPUCarga);
+
 	list_destroy_and_destroy_elements(listaPCB,(void*) PCB_destroy);
 	list_destroy(listaCPUs);
 
@@ -174,6 +177,8 @@ int main()
 
 int cargaListaCPU(int socketCliente)
 {
+	log_info(logger, "Recibiendo CPU");
+
 	int cantHilos;
 
 	t_mensaje1 mensaje;
@@ -195,12 +200,15 @@ int cargaListaCPU(int socketCliente)
 };
 void recibirConexiones(char * PUERTO)
 {
+
 	int i=0;
 	int socketCliente, listenningSocket, result, maxfd;
 
+	listenningSocket = recibirLlamada(PUERTO);
+	socketCPUCarga= aceptarLlamada(listenningSocket);
+
 	fd_set readset;
 
-	listenningSocket = recibirLlamada(PUERTO);
 
 	FD_ZERO(&readset);
 	FD_SET(listenningSocket, &readset);
@@ -229,9 +237,11 @@ void recibirConexiones(char * PUERTO)
 				cantHilos = cargaListaCPU(socketCliente); //Identifico el Nodo
 
 				i++;
+
 			}
 		} //Fin else if  (result > 0)
 	} while (i!=cantHilos);
+
 
 	close(listenningSocket);
 }
@@ -388,13 +398,6 @@ void ROUND_ROBIN(void* args)
 		Q++;
 	}
 
-	pthread_mutex_lock(&mutex);
-	posCPU = encontrarPosicionHiloCPU(idHiloCPU); //Busco posicion del CPU disponible
-	list_replace_and_destroy_element(listaCPUs, posCPU, hiloCPU_create(idHiloCPU, socketCliente, 1), (void*) hiloCPU_destroy);	//Pongo en Disponible al CPU q usaba
-	printf("CPU %d disponible\n", idHiloCPU);
-	pthread_mutex_unlock(&mutex);
-	sem_post(&semCPU);
-
 	if( (i-1)>(totalLineas) )
 	{
 		pthread_mutex_lock(&mutex2);
@@ -419,10 +422,12 @@ void ROUND_ROBIN(void* args)
 		pcbReady = buscarReadyEnPCB(pid);
 		posPCB =  encontrarPosicionEnPCB(pid);	//Encontrar pos en listaPCB
 		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcbReady->pid, pcbReady->path, pcbReady->puntero, 0, pcbReady->totalLineas), (void*)PCB_destroy);
-		log_info(logger, "CPU %d disponible\n", idHiloCPU);
+		printf("mProc: %d a Ready\n", pid);
 		pthread_mutex_unlock(&mutex4);
 		sem_post(&semPlani);
 	}
+	list_replace_and_destroy_element(listaCPUs, posCPU, hiloCPU_create(idHiloCPU, socketCliente, 1), (void*) hiloCPU_destroy);	//Pongo en Disponible al CPU q usaba
+	sem_post(&semCPU);
 
 	free(path);
 	free(args);
@@ -489,7 +494,7 @@ void FIFO(void *args)
 	pthread_mutex_lock(&mutex);
 	posCPU = encontrarPosicionHiloCPU(idHiloCPU); //Busco posicion del CPU disponible
 	list_replace_and_destroy_element(listaCPUs, posCPU, hiloCPU_create(idHiloCPU, socketCliente, 1), (void*) hiloCPU_destroy);	//Pongo en Disponible al CPU q usaba
-	log_info(logger, "CPU %d disponible\n", idHiloCPU);
+	printf("CPU %d disponible\n", idHiloCPU);
 	pthread_mutex_unlock(&mutex);
 	sem_post(&semCPU);
 
@@ -651,6 +656,8 @@ void CPU()
 		printf("Socket %d\n",new2->socketCliente);
 		printf("PID %d\n",new2->idHilo);
 	}
+	char message[PACKAGESIZE]="hola\n";
+	send(socketCPUCarga, message, strlen(message) + 1, 0);
 }
 void finalizarPID(int pidF)
 {
@@ -700,7 +707,7 @@ void consola()
 
 	        pch = strtok(comando," \n");
 
-	        if (strncmp(pch,"cr", 3) == 0) //Correr PATH
+	        if (strncmp(pch,"cr", 2) == 0) //Correr PATH
 	        {
 	        	pch = strtok(NULL," \n");
 
@@ -729,7 +736,7 @@ void consola()
 	        	}
 	        else
 	        {
-	        	if (strncmp(pch, "cpu", 2) == 0)
+	        	if (strncmp(pch, "cpu", 3) == 0)
 	        	{
 	        		CPU();
 
@@ -737,7 +744,7 @@ void consola()
 	        	}
 	        else
 	        {
-	        	if (strncmp(pch, "man", 2) == 0)
+	        	if (strncmp(pch, "man", 3) == 0)
 	        	{
 	        		printf("--------------COMANDOS-------------- \n");
 	        		printf("cr: CorreR PATH \n");
