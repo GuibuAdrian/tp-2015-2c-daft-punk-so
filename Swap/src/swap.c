@@ -58,7 +58,7 @@ static void ocupado_destroy(t_espacioOcupado *self);
 int tamanio_archivo(int fd);
 int tamanioRespuestaMemoria(t_orden_memoria unaPersona);
 
-char* mapearArchivo();
+char* mapearArchivo(char * nombreSwap);
 void crearArchivoSwap(char * nombreSwap, int tamanioSwap, int cantSwap);
 void procesarOrden(t_orden_memoria ordenMemoria, int consoleMode);
 void mostrarListas();
@@ -93,7 +93,7 @@ int main()
 	crearArchivoSwap(nombreSwap, tamanioPagSwap, cantPagSwap);
 	printf("\n");
 
-	char* mapeo = mapearArchivo();
+	char* mapeo = mapearArchivo(nombreSwap);
 
 
 	list_add(listaLibres, libre_create(mapeo, cantPagSwap));
@@ -420,13 +420,12 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 	} //else leer
 }
 
-char* mapearArchivo()
+char* mapearArchivo(char * nombreSwap)
 {
 	int mapper;
 	char* mapeo;
 
-	//char* nombre_archivo = "/home/utnso/github/tp-2015-2c-daft-punk-so/Swap/Debug/swap.data";
-	char* nombre_archivo = "swap.data";
+	char* nombre_archivo = nombreSwap;
 
 	if(( mapper = open (nombre_archivo, O_RDWR) ) == -1)
 	{
