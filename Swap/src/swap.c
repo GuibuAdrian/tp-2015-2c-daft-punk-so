@@ -45,7 +45,7 @@ typedef struct
 
 t_log* logger;
 t_list *listaLibres, *listaOcupados;
-int tamanio, cantPagSwap, tamanioPagSwap, consoleMode;
+int tamanio, cantPagSwap, tamanioPagSwap, consoleMode, retardoSwap, retardoCompactacion;
 int socket_memoria;
 
 int recvall(int s, void *toReceive, int size, int flags); // Función segura para recibir datos, se asegura de que recvall() reciba TODO (hay casos en los que, por detalles de bajo nivel, recvall() no recibe todo lo que debía recibir, es por eso que devuelve la cantidad de bytes recibidos)
@@ -84,6 +84,8 @@ int main()
 	tamanioPagSwap = config_get_int_value( config, "TAMANIO_PAGINA");
 	char * PUERTO_ESCUCHA = config_get_string_value(config, "PUERTO_ESCUCHA");
 	consoleMode = config_get_int_value(config, "CONSOLE_MODE");
+	retardoSwap = config_get_int_value(config, "RETARDO_SWAP");
+	retardoCompactacion = config_get_int_value(config, "RETARDO_COMPACTACION");
 
 
 	listaLibres = list_create();
@@ -386,6 +388,8 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 
 			strncpy(pagContent,pidOcup->inicioSwap+(ordenMemoria.paginas*4),4);
 
+			sleep(retardoSwap);
+
 			respuestaMemoria(ordenMemoria.pid, ordenMemoria.paginas, 2, pagContent);
 
 			log_info(logger, "Leyendo mProc: %d. Pagina %d: %s ", ordenMemoria.pid, ordenMemoria.paginas, pagContent);
@@ -410,6 +414,8 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 					t_espacioOcupado* pidOcup = buscarPIDEnOcupados(ordenMemoria.pid);
 
 					strncpy(pidOcup->inicioSwap+(ordenMemoria.paginas*4), ordenMemoria.content, contentSize);
+
+					sleep(retardoSwap);
 
 					log_info(logger, "Escribiendo mProc: %d. Pagina %d: %s ", ordenMemoria.pid, ordenMemoria.paginas, ordenMemoria.content);
 
