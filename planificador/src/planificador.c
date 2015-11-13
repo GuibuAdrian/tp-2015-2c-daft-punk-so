@@ -645,8 +645,9 @@ void PS()
 void CPU()
 {
 	t_hiloCPU* new2;
+	t_mensaje1 mensaje;
 
-	int i;
+	int i, cpu = 0;
 
 	for(i=0;i<list_size(listaCPUs);i++)
 	{
@@ -658,6 +659,27 @@ void CPU()
 	}
 	char message[PACKAGESIZE]="hola\n";
 	send(socketCPUCarga, message, strlen(message) + 1, 0);
+
+	void* package=malloc(tamanioMensaje1(mensaje));
+
+	while(cpu!=-1)
+	{
+		recv(socketCPUCarga,package,sizeof(int),0);
+		memcpy(&mensaje.idHilo,package,sizeof(int));
+		recv(socketCPUCarga,package+sizeof(int),sizeof(int),0);
+		memcpy(&mensaje.cantHilos,package+sizeof(int),sizeof(int));
+
+		if(mensaje.idHilo==-1)
+		{
+			cpu=-1;
+		}
+		else
+		{
+			log_info(logger, "CPU: %d, Carga: %d", mensaje.idHilo, mensaje.cantHilos);
+		}
+	}
+
+	free(package);
 }
 void finalizarPID(int pidF)
 {
