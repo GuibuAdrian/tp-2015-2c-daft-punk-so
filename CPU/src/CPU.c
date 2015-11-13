@@ -187,12 +187,12 @@ void cargaCPU()
 {
 	log_info(logger,"Conectado CPU %d!!", socketPlanCarga);
 
-	recibirSolicitudCarga(socketPlanCarga);
+	recibirSolicitudCarga();
 
 	close(socketPlanCarga);
 }
 
-void recibirSolicitudCarga(int serverSocket)
+void recibirSolicitudCarga()
 {
 	char package[PACKAGESIZE];
 	int status = 1; // Estructura que manjea el status de los recieve.
@@ -203,19 +203,40 @@ void recibirSolicitudCarga(int serverSocket)
 
 	while (status != 0)
 	{
-		status = recv(serverSocket, (void*) package, PACKAGESIZE, 0);
+		status = recv(socketPlanCarga, (void*) package, PACKAGESIZE, 0);
 
 		if (status != 0)
 		{
 			printf("%s", package);
 
-			for(i=0; i<list_size(listaCPUs); i++)
+			for(i=0; i<list_size(listaCPUs)+1; i++)
 			{
 				pthread_mutex_lock(&mutex);
-				new = list_get(listaCPUs,i);
-				pthread_mutex_unlock(&mutex);
 
-				printf("CPU %d, cant Inst %d, buscar: %d\n", new->idCPU, new->cantInst, new->socketPan);
+				t_idHilo mensaje;
+
+				if(i<list_size(listaCPUs))
+				{
+					new = list_get(listaCPUs,i);
+					mensaje.idNodo = new->idCPU;
+					mensaje.cantHilos = new->cantInst;
+				}
+				else
+				{
+					mensaje.idNodo = -1;
+					mensaje.cantHilos = -1;
+				}
+
+				//Envio id y aviso la cantidad de conexiones
+				void* package = malloc(sizeof(t_idHilo));
+
+				memcpy(package, &mensaje.idNodo, sizeof(mensaje.idNodo));
+				memcpy(package + sizeof(mensaje.idNodo), &mensaje.cantHilos, sizeof(mensaje.cantHilos));
+
+				send(socketPlanCarga, package, sizeof(t_idHilo), 0);
+
+				free(package);
+				pthread_mutex_unlock(&mutex);
 			}
 		}
 
