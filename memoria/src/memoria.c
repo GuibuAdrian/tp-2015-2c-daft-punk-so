@@ -53,10 +53,9 @@ typedef struct {
 
 t_log* logger;
 t_list *tablaDeProcesos;
-int socketSwap = 0;
+int socketSwap;
 char *TLBHabil;
-int maxMarcos = 0, cantMarcos = 0, tamMarcos = 0, entradasTLB = 0, retardoMem =
-		0;
+int maxMarcos, cantMarcos, tamMarcos, entradasTLB, retardoMem;
 void* memoriaPrincipal;
 char *politicaDeReemplazo;
 t_list *espacioDeMemoria;
@@ -66,12 +65,16 @@ static t_tablaDeProcesos *tablaProc_create(int pid, int pagina);
 static void tablaProc_destroy(t_tablaDeProcesos *self);
 static t_tablaPags *tablaPag_create(int pagina, int marco);
 static void tablaPag_destroy(t_tablaPags *self);
+static t_TLB *TLB_create(int pid, int pagina, int marco);
+static void TLB_destroy(t_TLB *self);
 int tamanioOrdenCPU(t_orden_CPU mensaje);
 int tamanioOrdenCPU1(t_orden_CPU mensaje);
 
 t_tablaPags* encontrarPagEnMemoriaPpal(int pid, int pagina);
 t_tablaPags* buscarPagEnTablaDePags(int pagina, t_tablaDeProcesos* new);
 t_tablaDeProcesos* buscarPID(int pid);
+t_TLB* buscarPagEnTLB(int pid, int pag);
+int encontrarPosicionEnTLB(int pid, int pagina);
 
 void recibirConexiones1(char * PUERTO_CPU);
 t_orden_CPU enviarOrdenASwap(int pid, int orden, int paginas, char *content);
@@ -79,11 +82,12 @@ void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU);
 void procesarOrden(t_orden_CPU mensaje, int socketCPU);
 void liberarTablaDePags();
 void mostrarTablaDePags(int pid);
+void mostrarTLB();
 void rutinaFlushTLB();
 void limpiarMemoriaPrincipal();
 void dumpMemoriaPrincipal();
 void dumpMemory();
-void operarConTLB( t_orden_CPU, int);
+void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU);
 int seEncuentraEnTLB( t_orden_CPU);
 
 int main() {
@@ -219,17 +223,25 @@ void recibirConexiones1(char * PUERTO_CPU) {
 								0);	//campo longitud(NO SIZEOF DE LONGITUD)
 						memcpy(&mensaje.content, package2, mensaje.contentSize);
 
-						if (strncmp(TLBHabil, "NO", 2) == 0) {
+						if (strncmp(TLBHabil, "NO", 2) == 0)
+						{
 							procesarOrden(mensaje, socketCPU);
-						} else {
-							printf("TLB Habilitada :D\n");// aqui hay que almacenar las operaciones mas recientes
-							if (seEncuentraEnTLB(mensaje) == 1) {
-								if (mensaje.orden != 0 && mensaje.orden != 3) {
-									operarConTLB(mensaje, socketCPU);
-								} else {
-									procesarOrden(mensaje, socketCPU);
-								}
+						}
+						else
+						{
+							t_TLB* new = buscarPagEnTLB(mensaje.pid, mensaje.pagina);
+
+							if ( (new != NULL) && (mensaje.orden != 0) && (mensaje.orden != 3) )
+							{
+								log_info(logger,"Esta en TLB");
+								mostrarTLB();
+								operarConTLB(new, mensaje, socketCPU);
 							}
+							else
+							{
+								procesarOrden(mensaje, socketCPU);
+							}
+
 						}
 						/*
 						 if (tablaDeProcesos == NULL) {
@@ -263,12 +275,12 @@ void recibirConexiones1(char * PUERTO_CPU) {
 	close(listenningSocket);
 }
 
-int seEncuentraEnTLB(t_orden_CPU mensaje) {
+int seEncuentraEnTLB(t_orden_CPU mensaje)
+{
 	int i = 0;
 	t_TLB *elementoTLB = list_get(listaTLB, i);
 
-	while (mensaje.pid != elementoTLB->pid
-			&& mensaje.pagina != elementoTLB->pagina && i <= entradasTLB) {
+	while (mensaje.pid != elementoTLB->pid	&& mensaje.pagina != elementoTLB->pagina && i <= entradasTLB) {
 		elementoTLB = list_get(listaTLB, i);
 		i++;
 	}
@@ -281,11 +293,23 @@ int seEncuentraEnTLB(t_orden_CPU mensaje) {
 	}
 }
 
+void actualizarTLB(int pid, int pag, int marco)
+{
+	if(list_size(listaTLB)==entradasTLB)
+	{
+		list_remove_and_destroy_element(listaTLB, 0, (void*)TLB_destroy);
+	}
+
+	list_add(listaTLB, TLB_create(pid, pag, marco));
+}
+
 void fifo(t_queue *listaTablaPags, int pag, int marco) {
 	t_tablaPags* new2;
 
 	new2 = queue_pop(listaTablaPags);
 	queue_push(listaTablaPags, tablaPag_create(pag, new2->marco));
+
+	tablaPag_destroy(new2);
 }
 
 t_tablaPags* reemplazarPag(t_tablaDeProcesos* new, int pag) {
@@ -319,13 +343,15 @@ int buscarMarcoEnTablaDePags(t_tablaDeProcesos* new, int marcoBuscado) {
 	return encontrado;
 }
 
-int asignarMarco() {
+int asignarMarco()
+{
 	int i = 0, encontrado = -1, marcoBuscado = 0;
 	t_tablaDeProcesos* new;
 
-	while ((i < list_size(tablaDeProcesos)) && (encontrado == -1)
-			&& (marcoBuscado < cantMarcos)) {
-		while ((i < list_size(tablaDeProcesos)) && (encontrado == -1)) {
+	while ((i < list_size(tablaDeProcesos)) && (encontrado == -1) && (marcoBuscado < cantMarcos))
+	{
+		while ((i < list_size(tablaDeProcesos)) && (encontrado == -1))
+		{
 			new = list_get(tablaDeProcesos, i);
 
 			encontrado = buscarMarcoEnTablaDePags(new, marcoBuscado);
@@ -333,45 +359,70 @@ int asignarMarco() {
 			i++;
 		}
 
-		if (encontrado == 1) {
+		if (encontrado == 1)
+		{
 			i = 0;
 			marcoBuscado++;
 			encontrado = -1;
-		} else {
+		}
+		else
+		{
 			break;
 		}
 	}
 
-	if ((marcoBuscado >= cantMarcos)) {
+	if ((marcoBuscado >= cantMarcos))
+	{
 		return -1;
-	} else {
-		if ((i >= list_size(tablaDeProcesos)) && (encontrado == -1)) {
+	}
+	else
+	{
+		if ((i >= list_size(tablaDeProcesos)) && (encontrado == -1))
+		{
 			return marcoBuscado;
-		} else {
+		}
+		else
+		{
 			return -1;
 		}
-
 	}
 }
 
-int actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag) {
+int actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag)
+{
 	t_tablaPags* new2;
 	int totalPag = queue_size(new->tablaDePaginas);
 	int marco;
 
 	if (totalPag == maxMarcos) //Si la cantidad de marcos ocupados es MAX entonces empiezo a reemplazar
-			{
+	{
 		log_info(logger, "Reemplazando");
 
 		new2 = reemplazarPag(new, pag);
 
-		marco = new2->marco;
-	} else {
-		marco = asignarMarco(); //-1 No puedo asignarle marcos
+		t_TLB* entradaTLB = buscarPagEnTLB(new2->pagina, pag);
 
-		if (marco == -1) {
+		if(entradaTLB!=NULL) //Si la pag q reemplazo en Memoria Princial esta en la TLB
+		{
+			int posTLB = encontrarPosicionEnTLB(new->pid, pag);
+
+			list_remove_and_destroy_element(listaTLB, posTLB, (void*) TLB_destroy);
+		}
+
+		marco = new2->marco;
+
+		actualizarTLB(new->pid, pag, marco);
+		mostrarTLB();
+	}
+	else
+	{
+		marco = asignarMarco(); //Recorro la lista de procesos hasta en contrar algun marco valido (algun marco q no este en la tabla de paginas)
+
+		if (marco == -1)//-1 No puedo asignarle marcos
+		{
 			return marco;
 		}
+
 		queue_push(new->tablaDePaginas, tablaPag_create(pag, marco));
 	}
 
@@ -386,22 +437,34 @@ void iniciarProceso(int pid, int paginas) {
 	log_info(logger, "Proceso %d iniciado de %d pags", pid, paginas);
 }
 
-void finalizarProceso(int pid) {
-	int i;
+void finalizarProceso(int pid)
+{
+	int i,j;
 	t_tablaDeProcesos* new;
+	t_tablaPags *new2;
 
 	for (i = 0; i < list_size(tablaDeProcesos); i++) //Borro al pid de la tabla de pags
-			{
+	{
 		new = list_get(tablaDeProcesos, i);
 
-		if (new->pid == pid) {
-			queue_destroy_and_destroy_elements(new->tablaDePaginas,
-					(void*) tablaPag_destroy);
+		if (new->pid == pid)
+		{
 
-			list_remove_and_destroy_element(tablaDeProcesos, i,
-					(void*) tablaProc_destroy);
+			for(j=0; j<queue_size(new->tablaDePaginas); j++)
+			{
+				new2 = queue_pop(new->tablaDePaginas);
+				t_TLB* entradaTLB = buscarPagEnTLB(new->pid, new2->pagina);
 
-			i--;
+				if(entradaTLB!=NULL) //Si la pag q borro en Memoria Princial esta en la TLB
+				{
+					int posTLB = encontrarPosicionEnTLB(new->pid, new2->pagina);
+
+					list_remove_and_destroy_element(listaTLB, posTLB, (void*) TLB_destroy);
+				}
+
+				tablaPag_destroy(new2);
+			}
+			list_remove_and_destroy_element(tablaDeProcesos, i,	(void*) tablaProc_destroy);
 		}
 	}
 
@@ -415,114 +478,155 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 	t_tablaPags* new2;
 	t_orden_CPU respuestaSwap;
 
-	if (mensaje.orden == 0) {
+	if (mensaje.orden == 0)
+	{
 		iniciarProceso(mensaje.pid, mensaje.pagina);
 
-		respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden,
-				mensaje.pagina, mensaje.content);
+		respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content);
 
 		enviarRespuestaCPU(respuestaSwap, socketCPU);
-	} else if (mensaje.orden == 3) {
-		finalizarProceso(mensaje.pid);//Borro al pid de la TLB y la tabla de pags
+	}
+	else
+		if (mensaje.orden == 3)
+		{
+			finalizarProceso(mensaje.pid);//Borro al pid de la TLB y la tabla de pags
 
-		respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden,
-				mensaje.pagina, mensaje.content);
+			respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content);
 
 		enviarRespuestaCPU(respuestaSwap, socketCPU);
-	} else {
-		new2 = encontrarPagEnMemoriaPpal(mensaje.pid, mensaje.pagina);
-
-		if (new2 != NULL) //Si esta en Memoria Principal
+		}
+		else
 		{
-			log_info(logger, "Esta en memoria principal");
+			new2 = encontrarPagEnMemoriaPpal(mensaje.pid, mensaje.pagina);
 
-			if (mensaje.orden == 1)	// leer pagina de un proceso
-					{
-				respuestaSwap.pid = mensaje.pid;
-				respuestaSwap.pagina = mensaje.pagina;
-				respuestaSwap.orden = 2;
-				strncpy(respuestaSwap.content,
-						memoriaPrincipal + new2->marco * tamMarcos, tamMarcos);
-				respuestaSwap.contentSize = strlen(respuestaSwap.content) + 1;
-
-				log_info(logger, "Proceso %d leyendo pag: %d. Contenido: %s",
-						respuestaSwap.pid, respuestaSwap.pagina,
-						respuestaSwap.content);
-
-				enviarRespuestaCPU(respuestaSwap, socketCPU);//Le devuelvo el contenido del marco al CPU
-
-				//Actualizo TLB
-				enviarRespuestaCPU(mensaje, socketCPU);
-			} else if (mensaje.orden == 2)	// escribe pagina de un proceso
-					{
-				strncpy(memoriaPrincipal + new2->marco * tamMarcos,
-						respuestaSwap.content, tamMarcos);//Actualizo la memo ppal
-
-				log_info(logger, "Proceso %d Escribiendo: %s en pag: %d",
-						mensaje.pid, memoriaPrincipal + new2->marco * tamMarcos,
-						mensaje.pagina);
-
-				respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden,
-						new2->pagina, mensaje.content); //Le aviso al SWAP del nuevo contenido//Le aviso al SWAP del nuevo contenido
-				enviarRespuestaCPU(respuestaSwap, socketCPU); //Le devuelvo el contenido del marco al CPU
-
-				//Actualizo TLB
-				enviarRespuestaCPU(mensaje, socketCPU);
-			}
-		} else  //No esta en Memoria Principal. La traigo desde SWAP
-		{
-			log_info(logger, "No esta en memoria principal");
-
-			new = buscarPID(mensaje.pid);
-
-			int marco = actualizarMemoriaPpal(new, mensaje.pagina);
-
-			if (marco == -1) {
-				mensaje.orden = 1;
-				enviarRespuestaCPU(mensaje, socketCPU);
-			} else {
-				log_info(logger, "mProc: %d, Pag: %d, Marco asignado: %d",
-						mensaje.pid, mensaje.pagina, marco);
+			if (new2 != NULL) //Si esta en Memoria Principal
+			{
+				log_info(logger, "Esta en memoria principal");
 
 				if (mensaje.orden == 1)	// leer pagina de un proceso
-						{
-					log_info(logger, "Solicitando mProc: %d Pag: %d a SWAP",
-							mensaje.pid, mensaje.pagina);
+				{
+					respuestaSwap.pid = mensaje.pid;
+					respuestaSwap.pagina = mensaje.pagina;
+					respuestaSwap.orden = 2;
+					strncpy(respuestaSwap.content,
+							memoriaPrincipal + new2->marco * tamMarcos, tamMarcos);
 
-					respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden,
-							mensaje.pagina, mensaje.content);
+					sleep(retardoMem);
 
-					strncpy(memoriaPrincipal + marco * tamMarcos,
-							respuestaSwap.content, tamMarcos);
-					respuestaSwap.contentSize = strlen(respuestaSwap.content)
-							+ 1;
+					respuestaSwap.contentSize = strlen(respuestaSwap.content) + 1;
 
-					log_info(logger,
-							"Proceso %d leyendo pag: %d, contenido: %s",
-							mensaje.pid, mensaje.pagina, respuestaSwap.content);
+					log_info(logger, "Proceso %d leyendo pag: %d. Contenido: %s",
+							respuestaSwap.pid, respuestaSwap.pagina,
+							respuestaSwap.content);
 
-					enviarRespuestaCPU(respuestaSwap, socketCPU);
-				} else {
-					if (mensaje.orden == 2)  // escribe pagina de un proceso
-							{
-						log_info(logger, "Solicitando mProc: %d Pag: %d a SWAP",
-								mensaje.pid, mensaje.pagina);
+					enviarRespuestaCPU(respuestaSwap, socketCPU);//Le devuelvo el contenido del marco al CPU
 
-						respuestaSwap = enviarOrdenASwap(mensaje.pid,
-								mensaje.orden, mensaje.pagina, mensaje.content); //Le aviso al SWAP del nuevo contenido
-						strncpy(memoriaPrincipal + marco * tamMarcos,
-								mensaje.content, tamMarcos); //Actualizo la memo ppal
+					actualizarTLB(respuestaSwap.pid, respuestaSwap.pagina, new2->marco);
+					mostrarTLB();
+					enviarRespuestaCPU(mensaje, socketCPU);
+				}
+				else
+					if (mensaje.orden == 2)	// escribe pagina de un proceso
+					{
+						strncpy(memoriaPrincipal + new2->marco * tamMarcos,	respuestaSwap.content, tamMarcos);//Actualizo la memo ppal
+						sleep(retardoMem);
 
-						log_info(logger,
-								"Proceso %d Escribiendo: %s en pag: %d",
-								mensaje.pid, mensaje.content, mensaje.pagina);
+						log_info(logger, "Proceso %d Escribiendo: %s en pag: %d", mensaje.pid, memoriaPrincipal + new2->marco * tamMarcos, mensaje.pagina);
+
+						respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, new2->pagina, mensaje.content); //Le aviso al SWAP del nuevo contenido//Le aviso al SWAP del nuevo contenido
+						enviarRespuestaCPU(respuestaSwap, socketCPU); //Le devuelvo el contenido del marco al CPU
+
+						actualizarTLB(respuestaSwap.pid, respuestaSwap.pagina, new2->marco);
+						mostrarTLB();
+						enviarRespuestaCPU(mensaje, socketCPU);
+					}
+			}
+			else  //No esta en Memoria Principal. La traigo desde SWAP
+			{
+				log_info(logger, "No esta en memoria principal");
+
+				new = buscarPID(mensaje.pid);
+
+				int marco = actualizarMemoriaPpal(new, mensaje.pagina);
+
+				if (marco == -1) // Si no se le puede asignar mas marcos FALLO!!!!
+				{
+					mensaje.orden = 1;
+					enviarRespuestaCPU(mensaje, socketCPU);
+				}
+				else
+				{
+					log_info(logger, "mProc: %d, Pag: %d, Marco asignado: %d", mensaje.pid, mensaje.pagina, marco);
+
+					if (mensaje.orden == 1)	// leer pagina de un proceso
+					{
+						log_info(logger, "Solicitando mProc: %d Pag: %d a SWAP", mensaje.pid, mensaje.pagina);
+
+						respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content);
+
+						strncpy(memoriaPrincipal + marco * tamMarcos, respuestaSwap.content, tamMarcos);
+
+						respuestaSwap.contentSize = strlen(respuestaSwap.content) + 1;
+
+						sleep(retardoMem);
+
+						log_info(logger, "Proceso %d leyendo pag: %d, contenido: %s", mensaje.pid, mensaje.pagina, respuestaSwap.content);
 
 						enviarRespuestaCPU(respuestaSwap, socketCPU);
 					}
-				} //else escribir
+					else
+					{
+						if (mensaje.orden == 2)  // escribe pagina de un proceso
+						{
+							log_info(logger, "Solicitando mProc: %d Pag: %d a SWAP", mensaje.pid, mensaje.pagina);
+
+							respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content); //Le aviso al SWAP del nuevo contenido
+							strncpy(memoriaPrincipal + marco * tamMarcos, mensaje.content, tamMarcos); //Actualizo la memo ppal
+
+							sleep(retardoMem);
+
+							log_info(logger, "Proceso %d Escribiendo: %s en pag: %d", mensaje.pid, mensaje.content, mensaje.pagina);
+
+							enviarRespuestaCPU(respuestaSwap, socketCPU);
+						}
+					} //else escribir
 			} //else fallo asignando marco
 		} //else no esta en memoria
 	} //else orden de incio/fin
+}
+
+void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU)
+{
+	t_orden_CPU respuestaSwap;
+
+	if (mensaje.orden == 1)// leer pagina de un proceso
+	{
+		respuestaSwap.pid = entradaTLB->pid;
+		respuestaSwap.pagina = entradaTLB->pagina;
+		respuestaSwap.orden = 2;
+		strncpy(respuestaSwap.content,memoriaPrincipal + entradaTLB->marco * tamMarcos, tamMarcos);
+
+		respuestaSwap.contentSize = strlen(respuestaSwap.content) + 1;
+
+		log_info(logger, "Proceso %d leyendo pag: %d. Contenido: %s", entradaTLB->pid, entradaTLB->pagina, respuestaSwap.content);
+
+		enviarRespuestaCPU(respuestaSwap, socketCPU);//Le devuelvo el contenido del marco al CPU
+		//me parece que solo con el primer enviarRespuestaCPU estaria bien.
+		//enviarRespuestaCPU(mensaje, socketCPU);
+	}
+	else if (mensaje.orden == 2)// escribe pagina de un proceso
+	{
+		respuestaSwap.pid = entradaTLB->pid;
+		respuestaSwap.pagina = entradaTLB->pagina;
+		respuestaSwap.orden = 4;
+		strncpy(memoriaPrincipal + entradaTLB->marco * tamMarcos, respuestaSwap.content, tamMarcos);	//Actualizo la memo ppal
+
+		log_info(logger, "Proceso %d Escribiendo: %s en pag: %d", entradaTLB->pid, memoriaPrincipal + entradaTLB->marco * tamMarcos, entradaTLB->pagina);
+
+		enviarRespuestaCPU(respuestaSwap, socketCPU); //Le devuelvo el contenido del marco al CPU
+
+		respuestaSwap = enviarOrdenASwap(entradaTLB->pid, mensaje.orden, entradaTLB->pagina, mensaje.content); //Le aviso al SWAP del nuevo contenido
+	}
 }
 
 /*
@@ -732,6 +836,43 @@ t_tablaDeProcesos* buscarPID(int pid) {
 	return list_find(tablaDeProcesos, (void*) compararPorIdentificador2);
 }
 
+t_TLB* buscarPagEnTLB(int pid, int pag)
+{
+	bool compararPorIdentificador2(t_TLB *unaCaja)
+	{
+		if( (unaCaja->pid == pid) && (unaCaja->pagina == pag))
+		{
+			return 1;
+		}
+
+		return 0;
+	}
+	return list_find(listaTLB, (void*) compararPorIdentificador2);
+}
+
+int encontrarPosicionEnTLB(int pid, int pagina)
+{
+	t_TLB* new;
+
+	int i=0;
+	int encontrado = 1;
+
+	while( (i<list_size(listaTLB)) && encontrado!=0)
+	{
+		new = list_get(listaTLB,i);
+
+		if( (new->pid == pid) && (new->pagina==pagina) )
+		{
+			encontrado = 0;
+		}
+		else
+		{
+			i++;
+		}
+	}
+	return i;
+}
+
 void rutinaFlushTLB() {
 //	pthread_t hiloFlushTLB;
 
@@ -823,6 +964,21 @@ static void tablaProc_destroy(t_tablaDeProcesos *self) {
 	free(self);
 }
 
+static t_TLB *TLB_create(int pid, int pagina, int marco)
+{
+	t_TLB *new = malloc(sizeof(t_TLB));
+	new->pid = pid;
+	new->pagina = pagina;
+	new->marco = marco;
+
+	return new;
+}
+
+static void TLB_destroy(t_TLB *self)
+{
+	free(self);
+}
+
 void liberarTablaDePags() {
 	int i;
 	t_tablaDeProcesos *new;
@@ -866,51 +1022,17 @@ void mostrarTablaDePags(int pid) {
 	}
 }
 
-void operarConTLB(t_orden_CPU mensaje, int socketCPU) {
-	//t_tablaDeProcesos* new;
-	//t_tablaPags* new2;
-	t_orden_CPU respuestaSwap;
+void mostrarTLB()
+{
+	int i;
 
-	if (mensaje.orden == 1){// leer pagina de un proceso
-			int i = 0;
-			t_TLB *elementoTLB = list_get(listaTLB, i);
+	t_TLB* new;
+	log_info(logger, "TLB");
+	log_info(logger, "Pid  Pagina  Marco");
+	for (i = 0; i < list_size(listaTLB); i++)
+	{
+		new = list_get(listaTLB,i);
 
-			while (mensaje.pid != elementoTLB->pid && mensaje.pagina != elementoTLB->pagina && i <= entradasTLB) {
-				elementoTLB = list_get(listaTLB, i);
-				i++;
-			}
-
-			respuestaSwap.pid = mensaje.pid;
-			respuestaSwap.pagina = mensaje.pagina;
-			respuestaSwap.orden = 1;
-			strncpy(respuestaSwap.content,memoriaPrincipal + elementoTLB->marco * tamMarcos, tamMarcos);
-			respuestaSwap.contentSize = strlen(respuestaSwap.content) + 1;
-		log_info(logger, "Proceso %d leyendo pag: %d. Contenido: %s", elementoTLB->pid, elementoTLB->pagina, elementoTLB->marco);
-
-		enviarRespuestaCPU(respuestaSwap, socketCPU);//Le devuelvo el contenido del marco al CPU
-		//me parece que solo con el primer enviarRespuestaCPU estaria bien.
-		//enviarRespuestaCPU(mensaje, socketCPU);
-	}
-	else if (mensaje.orden == 2){ // escribe pagina de un proceso
-		int i = 0;
-		t_TLB *elementoTLB = list_get(listaTLB, i);
-
-		while (mensaje.pid != elementoTLB->pid && mensaje.pagina != elementoTLB->pagina && i <= entradasTLB) {
-			elementoTLB = list_get(listaTLB, i);
-			i++;
-		}
-
-		respuestaSwap.pid = mensaje.pid;
-		respuestaSwap.pagina = mensaje.pagina;
-		respuestaSwap.orden = 2;
-		strncpy(memoriaPrincipal + elementoTLB->marco * tamMarcos, respuestaSwap.content, tamMarcos);	//Actualizo la memo ppal
-
-		log_info(logger, "Proceso %d Escribiendo: %s en pag: %d", mensaje.pid, memoriaPrincipal + elementoTLB->marco * tamMarcos, mensaje.pagina);
-
-		respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, elementoTLB->pagina, mensaje.content); //Le aviso al SWAP del nuevo contenido
-		enviarRespuestaCPU(respuestaSwap, socketCPU); //Le devuelvo el contenido del marco al CPU
-
-		//enviarRespuestaCPU(mensaje, socketCPU);
+		log_info(logger, " %d  		 %d     	   %d", new->pid, new->pagina, new->marco);
 	}
 }
-
