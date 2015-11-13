@@ -69,7 +69,7 @@ t_log* logger;
 t_list *listaHilos, *listaCPUs;
 char *ipPlanificador, *puertoPlanificador, *ipMemoria, *puertoMemoria;
 int id = 7, RETARDO, numeroHilos, socketPlanCarga;
-pthread_mutex_t mutex;
+pthread_mutex_t mutex, mutex2;
 
 static t_hilos *hilo_create(pthread_t unHilo);
 static void hilo_destroy(t_hilos *self);
@@ -116,6 +116,9 @@ int main()
 
 	int i = 1;
 	pthread_t unHilo, otroHilo;
+	pthread_mutex_init(&mutex, NULL);
+	pthread_mutex_init(&mutex2, NULL);
+
 	socketPlanCarga = conectarse(ipPlanificador, puertoPlanificador);
 
 
@@ -277,7 +280,11 @@ void recibirPath1(int serverSocket) {
 
 			strncpy(unaPersona.path, " ", PACKAGESIZE);
 
+			pthread_mutex_lock(&mutex2);
+
 			interpretarLinea(serverSocket,linea, unaPersona.pid);
+
+			pthread_mutex_unlock(&mutex2);
 
 			sleep(RETARDO);
 
