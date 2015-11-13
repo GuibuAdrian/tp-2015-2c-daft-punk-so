@@ -75,6 +75,7 @@ t_tablaPags* buscarPagEnTablaDePags(int pagina, t_tablaDeProcesos* new);
 t_tablaDeProcesos* buscarPID(int pid);
 t_TLB* buscarPagEnTLB(int pid, int pag);
 int encontrarPosicionEnTLB(int pid, int pagina);
+int encontrarPosicionEnProcesos(int pid);
 
 void recibirConexiones1(char * PUERTO_CPU);
 t_orden_CPU enviarOrdenASwap(int pid, int orden, int paginas, char *content);
@@ -233,7 +234,7 @@ void recibirConexiones1(char * PUERTO_CPU) {
 
 							if ( (new != NULL) && (mensaje.orden != 0) && (mensaje.orden != 3) )
 							{
-								log_info(logger,"Esta en TLB");
+								log_info(logger, "Proc: %d, Pag: %d. Esta en TLB", mensaje.pid, mensaje.pagina);
 								mostrarTLB();
 								operarConTLB(new, mensaje, socketCPU);
 							}
@@ -400,19 +401,16 @@ int actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag)
 
 		new2 = reemplazarPag(new, pag);
 
-		t_TLB* entradaTLB = buscarPagEnTLB(new2->pagina, pag);
+		t_TLB* entradaTLB = buscarPagEnTLB(new->pid, new2->pagina);
 
 		if(entradaTLB!=NULL) //Si la pag q reemplazo en Memoria Princial esta en la TLB
 		{
-			int posTLB = encontrarPosicionEnTLB(new->pid, pag);
+			int posTLB = encontrarPosicionEnTLB(new->pid, new2->pagina);
 
 			list_remove_and_destroy_element(listaTLB, posTLB, (void*) TLB_destroy);
 		}
 
 		marco = new2->marco;
-
-		actualizarTLB(new->pid, pag, marco);
-		mostrarTLB();
 	}
 	else
 	{
@@ -425,6 +423,9 @@ int actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag)
 
 		queue_push(new->tablaDePaginas, tablaPag_create(pag, marco));
 	}
+
+	actualizarTLB(new->pid, pag, marco);
+	mostrarTLB();
 
 	mostrarTablaDePags(new->pid);
 
@@ -439,34 +440,34 @@ void iniciarProceso(int pid, int paginas) {
 
 void finalizarProceso(int pid)
 {
-	int i,j;
+	int i;
 	t_tablaDeProcesos* new;
 	t_tablaPags *new2;
 
-	for (i = 0; i < list_size(tablaDeProcesos); i++) //Borro al pid de la tabla de pags
+	int posProc = encontrarPosicionEnProcesos(pid);
+
+	new = list_remove(tablaDeProcesos, posProc);
+
+	for(i=0; i<queue_size(new->tablaDePaginas);i++)
 	{
-		new = list_get(tablaDeProcesos, i);
+		new2 = queue_pop(new->tablaDePaginas);
 
-		if (new->pid == pid)
+		t_TLB* new3 = buscarPagEnTLB(pid, new2->pagina);
+
+		if(new3!=NULL)
 		{
+			int posTLB = encontrarPosicionEnTLB(pid, new2->pagina);
 
-			for(j=0; j<queue_size(new->tablaDePaginas); j++)
-			{
-				new2 = queue_pop(new->tablaDePaginas);
-				t_TLB* entradaTLB = buscarPagEnTLB(new->pid, new2->pagina);
+			list_remove_and_destroy_element(listaTLB, posTLB, (void*) TLB_destroy);
 
-				if(entradaTLB!=NULL) //Si la pag q borro en Memoria Princial esta en la TLB
-				{
-					int posTLB = encontrarPosicionEnTLB(new->pid, new2->pagina);
-
-					list_remove_and_destroy_element(listaTLB, posTLB, (void*) TLB_destroy);
-				}
-
-				tablaPag_destroy(new2);
-			}
-			list_remove_and_destroy_element(tablaDeProcesos, i,	(void*) tablaProc_destroy);
 		}
+
+		free(new2);
+
 	}
+
+	tablaProc_destroy(new);
+
 
 	//Borrar TLB
 
@@ -501,7 +502,7 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 
 			if (new2 != NULL) //Si esta en Memoria Principal
 			{
-				log_info(logger, "Esta en memoria principal");
+				log_info(logger, "Proc: %d, Pag: %d. Esta en memoria principal", mensaje.pid, mensaje.pagina);
 
 				if (mensaje.orden == 1)	// leer pagina de un proceso
 				{
@@ -543,7 +544,7 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 			}
 			else  //No esta en Memoria Principal. La traigo desde SWAP
 			{
-				log_info(logger, "No esta en memoria principal");
+				log_info(logger, "mProc: %d, Pag: %d. No esta en memoria principal", mensaje.pid, mensaje.pagina);
 
 				new = buscarPID(mensaje.pid);
 
@@ -619,7 +620,10 @@ void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU)
 		respuestaSwap.pid = entradaTLB->pid;
 		respuestaSwap.pagina = entradaTLB->pagina;
 		respuestaSwap.orden = 4;
-		strncpy(memoriaPrincipal + entradaTLB->marco * tamMarcos, respuestaSwap.content, tamMarcos);	//Actualizo la memo ppal
+		strncpy(memoriaPrincipal + entradaTLB->marco * tamMarcos, mensaje.content, tamMarcos);	//Actualizo la memo ppal
+
+		respuestaSwap.contentSize = strlen(mensaje.content);
+		strncpy(respuestaSwap.content, mensaje.content, respuestaSwap.contentSize);
 
 		log_info(logger, "Proceso %d Escribiendo: %s en pag: %d", entradaTLB->pid, memoriaPrincipal + entradaTLB->marco * tamMarcos, entradaTLB->pagina);
 
@@ -862,6 +866,29 @@ int encontrarPosicionEnTLB(int pid, int pagina)
 		new = list_get(listaTLB,i);
 
 		if( (new->pid == pid) && (new->pagina==pagina) )
+		{
+			encontrado = 0;
+		}
+		else
+		{
+			i++;
+		}
+	}
+	return i;
+}
+
+int encontrarPosicionEnProcesos(int pid)
+{
+	t_tablaDeProcesos* new;
+
+	int i=0;
+	int encontrado = 1;
+
+	while( (i<list_size(tablaDeProcesos)) && encontrado!=0)
+	{
+		new = list_get(tablaDeProcesos,i);
+
+		if(new->pid == pid)
 		{
 			encontrado = 0;
 		}
