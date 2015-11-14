@@ -83,11 +83,11 @@ t_cpu* buscarCPU(int sock);
 int encontrarPosicionCPU(int sock);
 
 void conectarHilos1();
-void recibirPath1(int serverSocket);
+void recibirPath1(int serverSocket, int idNodo);
 char * obtenerLinea(char path[PACKAGESIZE], int puntero);
-void interpretarLinea(int socketPlanificador, char* linea, int pid);
+void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo);
 char * obtenerLinea(char path[PACKAGESIZE], int puntero);
-t_orden_CPU enviarOrdenAMemoria(int pid, int orden, int paginas, char *content);
+t_orden_CPU enviarOrdenAMemoria(int pid, int orden, int paginas, char *content, int idNodo);
 void cargaCPU();
 void recibirSolicitudCarga();
 
@@ -180,7 +180,7 @@ void conectarHilos1(void *context)
 
 	free(package);
 
-	recibirPath1(serverSocket);
+	recibirPath1(serverSocket, mensaje.idNodo);
 
 	close(serverSocket);
 
@@ -246,7 +246,8 @@ void recibirSolicitudCarga()
 	};
 }
 
-void recibirPath1(int serverSocket) {
+void recibirPath1(int serverSocket, int idNodo)
+{
 	int status = 1;
 
 	t_pathMensaje unaPersona;
@@ -276,17 +277,15 @@ void recibirPath1(int serverSocket) {
 
 			char * linea = obtenerLinea(unaPersona.path, unaPersona.puntero);
 
-			log_info(logger,"~~~~~~~~~~~~~~~~~~~Socket: %d...mProc: %d~~~~~~~~~~~~~~~~~~~", serverSocket, unaPersona.pid);
-
 			strncpy(unaPersona.path, " ", PACKAGESIZE);
 
 			pthread_mutex_lock(&mutex2);
 
-			interpretarLinea(serverSocket,linea, unaPersona.pid);
+			log_info(logger,"~~~~~~~~~~~~~~~~~~~ID CPU: %d...mProc: %d~~~~~~~~~~~~~~~~~~~", idNodo, unaPersona.pid);
+
+			interpretarLinea(serverSocket,linea, unaPersona.pid, idNodo);
 
 			pthread_mutex_unlock(&mutex2);
-
-			sleep(RETARDO);
 
 			pthread_mutex_lock(&mutex);
 			int posCPU = encontrarPosicionCPU(serverSocket);
@@ -347,14 +346,16 @@ void enviarRespuestaPlanificador(int socketPlanificador, int pid, int orden, int
 	memcpy(respuestaPackage+sizeof(respuestaPlan.pid)+sizeof(respuestaPlan.orden)+sizeof(respuestaPlan.pagina), &respuestaPlan.contentSize, sizeof(respuestaPlan.contentSize));
 	memcpy(respuestaPackage+sizeof(respuestaPlan.pid)+sizeof(respuestaPlan.orden)+sizeof(respuestaPlan.pagina)+sizeof(respuestaPlan.contentSize), &respuestaPlan.content, respuestaPlan.contentSize);
 
-	log_info(logger, "Respuesta %d", respuestaPlan.orden);
+	log_info(logger, "Rafaga concluida. PID %d. Respuesta: %d", respuestaPlan.pid, respuestaPlan.orden);
+
+	sleep(RETARDO);
 
 	send(socketPlanificador, respuestaPackage, tamanioMensajeMemo(respuestaPlan), 0);
 
 	free(respuestaPackage);
 }
 
-t_orden_CPU enviarOrdenAMemoria(int pid, int orden, int paginas, char *content)
+t_orden_CPU enviarOrdenAMemoria(int pid, int orden, int paginas, char *content, int idNodo)
 {
 	t_orden_CPU mensajeMemoria;
 
@@ -374,6 +375,8 @@ t_orden_CPU enviarOrdenAMemoria(int pid, int orden, int paginas, char *content)
 	memcpy(mensajeMemoPackage+sizeof(mensajeMemoria.pid)+sizeof(mensajeMemoria.orden)+sizeof(mensajeMemoria.pagina), &mensajeMemoria.contentSize, sizeof(mensajeMemoria.contentSize));
 	memcpy(mensajeMemoPackage+sizeof(mensajeMemoria.pid)+sizeof(mensajeMemoria.orden)+sizeof(mensajeMemoria.pagina)+sizeof(mensajeMemoria.contentSize), &mensajeMemoria.content, mensajeMemoria.contentSize);
 
+	log_info(logger, "ID CPU: %d conectado a Memoria", idNodo);
+
 	send(socketMemoria, mensajeMemoPackage, tamanioMensajeMemo(mensajeMemoria), 0);
 
 	free(mensajeMemoPackage);
@@ -381,7 +384,7 @@ t_orden_CPU enviarOrdenAMemoria(int pid, int orden, int paginas, char *content)
 	return recibirRespuestaSwap(socketMemoria);
 }
 
-void interpretarLinea(int socketPlanificador, char* linea, int pid)
+void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo)
 {
 	char * pch = strtok(linea, " \n");
 	int pagina;
@@ -392,7 +395,7 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid)
 		pch = strtok(NULL, " \n");
 		pagina = strtol(pch, NULL, 10);
 
-		mensaje = enviarOrdenAMemoria(pid, 0, pagina, "/");
+		mensaje = enviarOrdenAMemoria(pid, 0, pagina, "/", idNodo);
 	}
 	else
 	{
@@ -401,7 +404,7 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid)
 			pch = strtok(NULL, " \n");
 			pagina = strtol(pch, NULL, 10);
 
-			mensaje = enviarOrdenAMemoria(pid, 1, pagina, "/");
+			mensaje = enviarOrdenAMemoria(pid, 1, pagina, "/", idNodo);
 
 			printf("Mensaje: %s\n", mensaje.content);
 		}
@@ -409,7 +412,7 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid)
 		{
 			if (strncmp(pch, "finalizar", 9) == 0)
 			{
-				mensaje = enviarOrdenAMemoria(pid, 3, 0, "/");
+				mensaje = enviarOrdenAMemoria(pid, 3, 0, "/", idNodo);
 			}
 			else
 			{
@@ -420,7 +423,7 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid)
 
 					pch = strtok(NULL, " \n");
 
-					mensaje = enviarOrdenAMemoria(pid, 2, pagina, pch);
+					mensaje = enviarOrdenAMemoria(pid, 2, pagina, pch, idNodo);
 				}
 				else
 				{
