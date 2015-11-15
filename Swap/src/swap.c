@@ -111,6 +111,7 @@ t_espacioOcupado* buscarPIDEnOcupados(int pid);
 t_espacioLibre* buscarEspacioAOcupar(int cantPags);
 void defrag();
 void dumpSwap();
+int cuantasPaginasLibresTengo();
 
 
 int main()
@@ -197,7 +198,7 @@ int main()
 			char *command = malloc(MAXCHARCOMMAND);
 			char *arguments = malloc(MAXCHARPARAMETERS);
 
-			printf("=================================CONSOLA=================================\n\nComandos soportados: \n--------------------\n\nsimularPedidoMemoria(pid,orden,pagina/s,paquete)\ndumpSwap()\nmostrarListas()\nsalir()\n\nNOTA: Recordar que las ordenes disponibles son  0=Iniciar, 1=Leer, 2=Escribir, 3=Finalizar\nNOTA: En el caso de la simulacion, el paquete termina con \\0 ya que se simula usando un string\n\nEsperando comandos\n");
+			printf("=================================CONSOLA=================================\n\nComandos soportados: \n--------------------\n\nsimularPedidoMemoria(pid,orden,pagina/s,paquete)\ndumpSwap()\nmostrarListas()\ncuantasPaginasLibresTengo()\ndefragmentar()\nsalir()\n\nNOTA: Recordar que las ordenes disponibles son  0=Iniciar, 1=Leer, 2=Escribir, 3=Finalizar\nNOTA: En el caso de la simulacion, el paquete termina con \\0 ya que se simula usando un string\n\nEsperando comandos\n");
 
 			// Espera un comando por siempre
 
@@ -222,6 +223,14 @@ int main()
 
 				if( strncmp( command , "mostrarListas", MAXCHARCOMMAND) == 0) {
 					mostrarListas();
+				} else
+
+				if( strncmp( command , "defragmentar", MAXCHARCOMMAND) == 0) {
+					defrag();
+				} else
+
+				if( strncmp( command , "cuantasPaginasLibresTengo", MAXCHARCOMMAND) == 0) {
+					printf("Tengo %d paginas disponibles entre todos los nodos de la lista de libres\n", cuantasPaginasLibresTengo());
 				} else
 
 				if( strncmp( command , "salir", MAXCHARCOMMAND) == 0) {
@@ -433,6 +442,8 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 	{
 		if (ordenMemoria.orden == 1) // 1=Leer
 		{
+			// TODO: Revisar, creo que está para el  orto. Esos 4 hardcodeados no me gustan nada.
+			// Tampoco me gusta strncpy
 
 			t_espacioOcupado* pidOcup = buscarPIDEnOcupados(ordenMemoria.pid);
 			char * pagContent = malloc(20);
@@ -460,7 +471,7 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 			{
 				if (ordenMemoria.orden == 2) // 2=Escribir
 				{
-					int contentSize = strlen(ordenMemoria.content);
+					int contentSize = strlen(ordenMemoria.content); // TODO: Fijarse, creo que es redundante, ordenMemoria.contentSize deberia tener la longitud correcta
 
 					t_espacioOcupado* pidOcup = buscarPIDEnOcupados(ordenMemoria.pid);
 
@@ -507,7 +518,7 @@ char* mapearArchivo(char * nombreSwap)
 void crearArchivoSwap(char * nombreDelArchivo, int tamanioPagina, int cantidadDePaginas)
 {
   char buffer[255];
-  sprintf (buffer,"dd if=/dev/zero of=%s bs=%d count=%d &> /dev/null", nombreDelArchivo, tamanioPagina, cantidadDePaginas);
+  sprintf (buffer,"dd if=/dev/zero of=%s bs=%d count=%d > /dev/null 2>&1", nombreDelArchivo, tamanioPagina, cantidadDePaginas);
   system(buffer);
 }
 
@@ -727,22 +738,48 @@ int round_div(int dividend, int divisor)
 
 void defrag() {
 
-	/*char * nuevoSwap = (char *) malloc(tamanioPagSwap * cantPagSwap);
+	char * nuevoSwap = (char *) malloc(tamanioPagSwap * cantPagSwap);
 	t_espacioLibre *nuevoEspacioLibre = malloc(sizeof(t_espacioLibre));
-	int i, j, k;
+	int i;
+	char * posicionActualNuevoSwap = nuevoSwap;
+
+	nuevoEspacioLibre->cantPag = cuantasPaginasLibresTengo();
 
 	t_espacioOcupado* ocupadoAux;
 
 	for(i=0; i<list_size(listaOcupados);i++)
 	{
+
 		ocupadoAux = list_get(listaOcupados,i);
-		unsigned long paginaInicial = (unsigned long)(ocupadoAux->inicioSwap - mapeo) / (unsigned long)(tamanioPagSwap);
 
-		printf("Proceso %d - ", ocupadoAux->pid);
-		printf("Desde posicion %lu ", paginaInicial);
-		printf("hasta %lu \n", paginaInicial + (unsigned long)(ocupadoAux->cantPag) - 1);
+		printf("Copiando PID %d .... ", ocupadoAux->pid);
 
-	}*/
+		memcpy(posicionActualNuevoSwap,ocupadoAux->inicioSwap, ocupadoAux->cantPag*tamanioPagSwap);
+
+		ocupadoAux->inicioSwap = posicionActualNuevoSwap;
+
+		printf("%d bytes copiados al nuevo swap. \n", ocupadoAux->cantPag*tamanioPagSwap);
+
+		posicionActualNuevoSwap += ocupadoAux->cantPag*tamanioPagSwap;
+
+	}
+	nuevoEspacioLibre->inicioHueco = posicionActualNuevoSwap;
+
+	list_clean(listaLibres);
+	list_add(listaLibres, nuevoEspacioLibre);
+
+	mapeo = nuevoSwap;
+}
+
+int cuantasPaginasLibresTengo() {
+	t_espacioLibre* libreAux;
+	int i, paginasLibres = 0;
+	for(i=0; i<list_size(listaLibres);i++)
+	{
+		libreAux = list_get(listaLibres,i);
+		paginasLibres += libreAux->cantPag;
+	}
+	return paginasLibres;
 }
 
 void hexdump(void *mem, unsigned int len, int arrayPIDs[])
