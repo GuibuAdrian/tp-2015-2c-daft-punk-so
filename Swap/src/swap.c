@@ -1,3 +1,29 @@
+/*
+ * Casos de prueba para la consola
+ *
+
+
+// Crear y escribir
+
+simularPedidoMemoria(20,0,4,null)
+simularPedidoMemoria(20,2,0,content20)
+simularPedidoMemoria(10,0,3,null)
+simularPedidoMemoria(10,2,1,content10)
+simularPedidoMemoria(40,0,6,null)
+simularPedidoMemoria(40,2,3,content40)
+simularPedidoMemoria(40,2,5,content40)
+simularPedidoMemoria(80,0,3,null)
+simularPedidoMemoria(80,2,0,content80)
+
+// Borrar:
+
+simularPedidoMemoria(10,3,0,null)
+simularPedidoMemoria(80,3,0,null)
+
+
+
+ */
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -15,6 +41,7 @@
 #include <commons/config.h>
 #include <commons/log.h>
 
+#define HEXDUMP_COLS 16
 #define PACKAGESIZE 1024	// Define cual va a ser el size maximo del paquete a enviar
 #define MAXCHARCOMMAND 50
 #define MAXCHARPARAMETERS 200
@@ -72,6 +99,7 @@ static void ocupado_destroy(t_espacioOcupado *self);
 int tamanio_archivo(int fd);
 int tamanioRespuestaMemoria(t_orden_memoria unaPersona);
 int round_div(int dividend, int divisor);
+void hexdump(void *mem, unsigned int len, int arrayPIDs[]);
 
 char* mapearArchivo(char * nombreSwap);
 void crearArchivoSwap(char * nombreSwap, int tamanioSwap, int cantSwap);
@@ -81,6 +109,8 @@ int encontrarPosicionOcupado(int pid);
 int encontrarPosicionEspacioLibre(char* inicioHueco);
 t_espacioOcupado* buscarPIDEnOcupados(int pid);
 t_espacioLibre* buscarEspacioAOcupar(int cantPags);
+void defrag();
+void dumpSwap();
 
 
 int main()
@@ -167,7 +197,7 @@ int main()
 			char *command = malloc(MAXCHARCOMMAND);
 			char *arguments = malloc(MAXCHARPARAMETERS);
 
-			printf("=================================CONSOLA=================================\n\nComandos soportados: \n--------------------\n\nsimularPedidoMemoria(pid,orden,paquete)\ndumpSwap()\nshowConfig()\nsalir()\n\nNOTA: Recordar que las ordenes disponibles son  0=Iniciar, 1=Leer, 2=Escribir, 3=Finalizar\nNOTA: En el caso de la simulacion, el paquete termina con \\0 ya que se simula usando un string\n\nEsperando comandos\n");
+			printf("=================================CONSOLA=================================\n\nComandos soportados: \n--------------------\n\nsimularPedidoMemoria(pid,orden,pagina/s,paquete)\ndumpSwap()\nmostrarListas()\nsalir()\n\nNOTA: Recordar que las ordenes disponibles son  0=Iniciar, 1=Leer, 2=Escribir, 3=Finalizar\nNOTA: En el caso de la simulacion, el paquete termina con \\0 ya que se simula usando un string\n\nEsperando comandos\n");
 
 			// Espera un comando por siempre
 
@@ -187,11 +217,11 @@ int main()
 				} else
 
 				if( strncmp( command , "dumpSwap", MAXCHARCOMMAND) == 0) {
-					mostrarListas();
+					dumpSwap();
 				} else
 
-				if( strncmp( command , "showConfig", MAXCHARCOMMAND) == 0) {
-					printf(" Recibi %s", command);
+				if( strncmp( command , "mostrarListas", MAXCHARCOMMAND) == 0) {
+					mostrarListas();
 				} else
 
 				if( strncmp( command , "salir", MAXCHARCOMMAND) == 0) {
@@ -250,23 +280,36 @@ void simularPedidoMemoria(char * arguments) {
 	i++;
 	j=0;
 
-
-	// payload
+	//PAGINAS
 	while((arguments[i] != ',') && (arguments[i] != '\0')) {
 		stringDeCadaParametro[j] = arguments[i];
 		j++;
 		i++;
 	}
 	stringDeCadaParametro[j] = '\0';
-	strcpy(ordenMemoria.content, stringDeCadaParametro);
+	ordenMemoria.paginas = atoi(stringDeCadaParametro);
 	i++;
 	j=0;
 
-	// PAGINAS
+	// payload
 
-	ordenMemoria.paginas = round_div(strlen(stringDeCadaParametro), tamanioPagSwap);
+	while((arguments[i] != ',') && (arguments[i] != '\0')) {
+		stringDeCadaParametro[j] = arguments[i];
+		j++;
+		i++;
+	}
+	stringDeCadaParametro[j] = '\0';
 
+	if(strlen(stringDeCadaParametro) > tamanioPagSwap)
+	{
+		log_error(logger, "Se intento escribir mediante el simulador un payload de mayor tamanio que la pagina");
+		return;
+	}
+
+	strcpy(ordenMemoria.content, stringDeCadaParametro);
 	ordenMemoria.contentSize = strlen(ordenMemoria.content);
+	i++;
+	j=0;
 
 	// Proceso el pedido simulado
 	procesarOrden(ordenMemoria, CONSOLEMODE);
@@ -421,7 +464,8 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 
 					t_espacioOcupado* pidOcup = buscarPIDEnOcupados(ordenMemoria.pid);
 
-					strncpy(pidOcup->inicioSwap+(ordenMemoria.paginas*4), ordenMemoria.content, contentSize);
+					memcpy(pidOcup->inicioSwap + ordenMemoria.paginas*tamanioPagSwap , ordenMemoria.content, contentSize);
+					//strncpy(pidOcup->inicioSwap+(ordenMemoria.paginas*4), ordenMemoria.content, contentSize);
 
 					sleep(retardoSwap);
 
@@ -463,7 +507,7 @@ char* mapearArchivo(char * nombreSwap)
 void crearArchivoSwap(char * nombreDelArchivo, int tamanioPagina, int cantidadDePaginas)
 {
   char buffer[255];
-  sprintf (buffer,"dd if=/dev/zero of=%s bs=%d count=%d", nombreDelArchivo, tamanioPagina, cantidadDePaginas);
+  sprintf (buffer,"dd if=/dev/zero of=%s bs=%d count=%d &> /dev/null", nombreDelArchivo, tamanioPagina, cantidadDePaginas);
   system(buffer);
 }
 
@@ -512,9 +556,10 @@ void mostrarListas()
 		libreAux = list_get(listaLibres,i);
 		unsigned long paginaInicial = (unsigned long)(libreAux->inicioHueco - mapeo) / (unsigned long)(tamanioPagSwap);
 
-		printf("Hueco %d - ", i + 1);
+		printf("Hueco -%d - ", i + 1);
 		printf("Desde posicion %lu ", paginaInicial);
-		printf("hasta %lu (no inclusive)\n", paginaInicial + (unsigned long)(libreAux->cantPag));
+		printf("hasta %lu \n", paginaInicial + (unsigned long)(libreAux->cantPag) - 1);
+
 	}
 
 	printf("--------\nOcupados\n--------\n");
@@ -528,11 +573,54 @@ void mostrarListas()
 
 		printf("Proceso %d - ", ocupadoAux->pid);
 		printf("Desde posicion %lu ", paginaInicial);
-		printf("hasta %lu (no inclusive)\n", paginaInicial + (unsigned long)(ocupadoAux->cantPag));
+		printf("hasta %lu \n", paginaInicial + (unsigned long)(ocupadoAux->cantPag) - 1);
 
 	}
 
 }
+
+void dumpSwap() {
+
+	int * arrayPIDs = (int *) calloc(cantPagSwap , sizeof(int));
+	t_espacioLibre* libreAux;
+	int i;
+	unsigned long j;
+
+	for(i=0; i<list_size(listaLibres);i++)
+	{
+		libreAux = list_get(listaLibres,i);
+		unsigned long paginaInicial = (unsigned long)(libreAux->inicioHueco - mapeo) / (unsigned long)(tamanioPagSwap);
+
+		for(j = paginaInicial; j < (paginaInicial + libreAux->cantPag);j++) {
+			arrayPIDs[j] = -(i + 1);
+		}
+	}
+
+	t_espacioOcupado* ocupadoAux;
+
+	for(i=0; i<list_size(listaOcupados);i++)
+	{
+		ocupadoAux = list_get(listaOcupados,i);
+		unsigned long paginaInicial = (unsigned long)(ocupadoAux->inicioSwap - mapeo) / (unsigned long)(tamanioPagSwap);
+
+		for(j = paginaInicial; j < (paginaInicial + ocupadoAux->cantPag);j++) {
+			arrayPIDs[j] = ocupadoAux->pid;
+		}
+
+	}
+
+	// Muestro la memoria
+
+	printf("+------------------------------------------------------------+\n");
+	printf("|Dump Memoria (PIDs positivos son procesos, negativos huecos)|\n");
+	printf("+---------+------------------------------------------+-------+\n");
+	printf("|  PAGINA |                 CONTENT                  |  PID  |\n");
+	printf("+---------+------------------------------------------+-------+\n");
+	hexdump(mapeo, tamanioPagSwap * cantPagSwap, arrayPIDs);
+	printf("+---------+------------------------------------------+-------+\n");
+
+}
+
 int encontrarPosicionOcupado(int pid)
 {
 	t_espacioOcupado* new;
@@ -635,4 +723,72 @@ int recvall(int s, void *toReceive, int size, int flags) {
 int round_div(int dividend, int divisor)
 {
     return (dividend + divisor - 1) / divisor;
+}
+
+void defrag() {
+
+	/*char * nuevoSwap = (char *) malloc(tamanioPagSwap * cantPagSwap);
+	t_espacioLibre *nuevoEspacioLibre = malloc(sizeof(t_espacioLibre));
+	int i, j, k;
+
+	t_espacioOcupado* ocupadoAux;
+
+	for(i=0; i<list_size(listaOcupados);i++)
+	{
+		ocupadoAux = list_get(listaOcupados,i);
+		unsigned long paginaInicial = (unsigned long)(ocupadoAux->inicioSwap - mapeo) / (unsigned long)(tamanioPagSwap);
+
+		printf("Proceso %d - ", ocupadoAux->pid);
+		printf("Desde posicion %lu ", paginaInicial);
+		printf("hasta %lu \n", paginaInicial + (unsigned long)(ocupadoAux->cantPag) - 1);
+
+	}*/
+}
+
+void hexdump(void *mem, unsigned int len, int arrayPIDs[])
+{
+        unsigned int i, j, paginaActual;
+
+        for(i = 0; i < len + ((len % tamanioPagSwap) ? (tamanioPagSwap - len % tamanioPagSwap) : 0); i++)
+        {
+        		paginaActual = (i / tamanioPagSwap);
+
+                if(i % tamanioPagSwap == 0)
+                {
+                        printf("|%8d | ", paginaActual + 1);
+                }
+
+                /* print hex data */
+                if(i < len)
+                {
+                        printf("%02x ", 0xFF & ((char*)mem)[i]);
+                }
+                else
+                {
+                        printf("   ");
+                }
+
+                if(i % tamanioPagSwap == (tamanioPagSwap - 1))
+                {
+                        for(j = i - (tamanioPagSwap - 1); j <= i; j++)
+                        {
+                                if(j >= len)
+                                {
+                                        putchar(' ');
+                                }
+                                else if(isprint(((char*)mem)[j])) /* printable char */
+                                {
+                                        putchar(0xFF & ((char*)mem)[j]);
+                                }
+                                else
+                                {
+                                        putchar('.');
+                                }
+                        }
+
+                        printf(" |%7d|", arrayPIDs[paginaActual]);
+
+                        putchar('\n');
+                }
+        }
 }
