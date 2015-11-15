@@ -92,7 +92,7 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo);
 char * obtenerLinea(char path[PACKAGESIZE], int puntero);
 t_orden_CPU enviarOrdenAMemoria(int pid, int orden, int paginas, char *content, int idNodo);
 void cargaCPU();
-void recibirSolicitudCarga();
+void recibirSolicitudCarga_finQ();
 void removerPID(int pid);
 void enviarRespuestas(int socketPlanificador, int pid);
 
@@ -196,12 +196,12 @@ void cargaCPU()
 {
 	log_info(logger,"Conectado CPU %d!!", socketPlanCarga);
 
-	recibirSolicitudCarga();
+	recibirSolicitudCarga_finQ();
 
 	close(socketPlanCarga);
 }
 
-void recibirSolicitudCarga()
+void recibirSolicitudCarga_finQ()
 {
 	int package;
 	int status = 1; // Estructura que manjea el status de los recieve.
