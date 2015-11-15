@@ -372,9 +372,9 @@ int recibirRespuesta(int socketCliente)
 					{
 						int IO = respuesta.paginas;
 
-						log_info(logger, "mProc %d en entrada-salida de tiempo %d", respuesta.pid, IO);
-
 						recibirCjtoRespuestas(socketCliente);
+
+						log_info(logger, "mProc %d en entrada-salida de tiempo %d", respuesta.pid, IO);
 
 						pthread_mutex_lock(&mutex2);
 						pcb = buscarReadyEnPCB(respuesta.pid);
