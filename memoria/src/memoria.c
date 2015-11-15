@@ -502,7 +502,7 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 
 			if (new2 != NULL) //Si esta en Memoria Principal
 			{
-				log_info(logger, "Proc: %d, Pag: %d. Esta en memoria principal", mensaje.pid, mensaje.pagina);
+				log_info(logger, "Proc: %d, Pag: %d. Esta en memoria principal, marco: %d", mensaje.pid, mensaje.pagina, new2->marco);
 
 				if (mensaje.orden == 1)	// leer pagina de un proceso
 				{
@@ -544,11 +544,11 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 			}
 			else  //No esta en Memoria Principal. La traigo desde SWAP
 			{
-				log_info(logger, "mProc: %d, Pag: %d. No esta en memoria principal", mensaje.pid, mensaje.pagina);
-
 				new = buscarPID(mensaje.pid);
 
 				int marco = actualizarMemoriaPpal(new, mensaje.pagina);
+
+				log_info(logger, "mProc: %d, Pag: %d. No esta en memoria principal. Marco asignado: %d", mensaje.pid, mensaje.pagina, marco);
 
 				if (marco == -1) // Si no se le puede asignar mas marcos FALLO!!!!
 				{
