@@ -21,6 +21,11 @@
 #define NETWORKMODE 0
 #define CONSOLEMODE 1
 
+
+/////////////////////////
+//       STRUCTS       //
+/////////////////////////
+
 typedef struct
 {
 	int pid;
@@ -43,10 +48,19 @@ typedef struct
 	int cantPag;
 }t_espacioOcupado;
 
+/////////////////////////
+//       GLOBALES      //
+/////////////////////////
+
 t_log* logger;
 t_list *listaLibres, *listaOcupados;
 int tamanio, cantPagSwap, tamanioPagSwap, consoleMode, retardoSwap, retardoCompactacion;
 int socket_memoria;
+char* mapeo; // El mapeo en memoria del swap
+
+/////////////////////////
+//     PROTOTIPOS      //
+/////////////////////////
 
 int recvall(int s, void *toReceive, int size, int flags); // Función segura para recibir datos, se asegura de que recvall() reciba TODO (hay casos en los que, por detalles de bajo nivel, recvall() no recibe todo lo que debía recibir, es por eso que devuelve la cantidad de bytes recibidos)
 void parseConsoleCommand(char *commandLine,char *command,char *arguments);
@@ -57,6 +71,7 @@ static t_espacioOcupado *ocupado_create(int pid, char* inicioSwap, int cantPag);
 static void ocupado_destroy(t_espacioOcupado *self);
 int tamanio_archivo(int fd);
 int tamanioRespuestaMemoria(t_orden_memoria unaPersona);
+int round_div(int dividend, int divisor);
 
 char* mapearArchivo(char * nombreSwap);
 void crearArchivoSwap(char * nombreSwap, int tamanioSwap, int cantSwap);
@@ -95,7 +110,7 @@ int main()
 	crearArchivoSwap(nombreSwap, tamanioPagSwap, cantPagSwap);
 	printf("\n");
 
-	char* mapeo = mapearArchivo(nombreSwap);
+	mapeo = mapearArchivo(nombreSwap);
 
 
 	list_add(listaLibres, libre_create(mapeo, cantPagSwap));
@@ -152,7 +167,7 @@ int main()
 			char *command = malloc(MAXCHARCOMMAND);
 			char *arguments = malloc(MAXCHARPARAMETERS);
 
-			printf("=================================CONSOLA=================================\n\nComandos soportados: \n--------------------\n\nsimularPedidoMemoria(pid,orden,paginas,paquete)\ndumpSwap()\nshowConfig()\nsalir()\n\nNOTA: Recordar que las ordenes disponibles son  0=Iniciar, 1=Leer, 2=Escribir, 3=Finalizar\nNOTA: En el caso de la simulacion, el paquete termina con \\0 ya que se simula usando un string\n\nEsperando comandos\n");
+			printf("=================================CONSOLA=================================\n\nComandos soportados: \n--------------------\n\nsimularPedidoMemoria(pid,orden,paquete)\ndumpSwap()\nshowConfig()\nsalir()\n\nNOTA: Recordar que las ordenes disponibles son  0=Iniciar, 1=Leer, 2=Escribir, 3=Finalizar\nNOTA: En el caso de la simulacion, el paquete termina con \\0 ya que se simula usando un string\n\nEsperando comandos\n");
 
 			// Espera un comando por siempre
 
@@ -172,7 +187,7 @@ int main()
 				} else
 
 				if( strncmp( command , "dumpSwap", MAXCHARCOMMAND) == 0) {
-					printf(" Recibi %s", command);
+					mostrarListas();
 				} else
 
 				if( strncmp( command , "showConfig", MAXCHARCOMMAND) == 0) {
@@ -208,59 +223,52 @@ int main()
 void simularPedidoMemoria(char * arguments) {
 
 	t_orden_memoria ordenMemoria;
-	char caracterParametro[PACKAGESIZE];
+	char stringDeCadaParametro[PACKAGESIZE];
 
-	int argumentCounter = 0;
 	int i=0;
 	int j=0;
 
-	//PID
+	// PID
 	while((arguments[i] != ',') && (arguments[i] != '\0')) {
-		caracterParametro[j] = arguments[i];
+		stringDeCadaParametro[j] = arguments[i];
 		j++;
 		i++;
 	}
-	caracterParametro[j] = '\0';
-	ordenMemoria.pid = atoi(caracterParametro);
+	stringDeCadaParametro[j] = '\0';
+	ordenMemoria.pid = atoi(stringDeCadaParametro);
 	i++;
 	j=0;
 
-	//ORDEN
+	// ORDEN
 	while((arguments[i] != ',') && (arguments[i] != '\0')) {
-		caracterParametro[j] = arguments[i];
+		stringDeCadaParametro[j] = arguments[i];
 		j++;
 		i++;
 	}
-	caracterParametro[j] = '\0';
-	ordenMemoria.orden = atoi(caracterParametro);
+	stringDeCadaParametro[j] = '\0';
+	ordenMemoria.orden = atoi(stringDeCadaParametro);
 	i++;
 	j=0;
 
-	//PAGINAS
+
+	// payload
 	while((arguments[i] != ',') && (arguments[i] != '\0')) {
-		caracterParametro[j] = arguments[i];
+		stringDeCadaParametro[j] = arguments[i];
 		j++;
 		i++;
 	}
-	caracterParametro[j] = '\0';
-	ordenMemoria.paginas = atoi(caracterParametro);
+	stringDeCadaParametro[j] = '\0';
+	strcpy(ordenMemoria.content, stringDeCadaParametro);
 	i++;
 	j=0;
 
-	//payload
-	while((arguments[i] != ',') && (arguments[i] != '\0')) {
-		caracterParametro[j] = arguments[i];
-		j++;
-		i++;
-	}
-	caracterParametro[j] = '\0';
-	strcpy(ordenMemoria.content, caracterParametro);
-	i++;
-	j=0;
+	// PAGINAS
+
+	ordenMemoria.paginas = round_div(strlen(stringDeCadaParametro), tamanioPagSwap);
 
 	ordenMemoria.contentSize = strlen(ordenMemoria.content);
 
-	//printf("el pid es %d, el orden es %d, las paginas son %d, el length es %d, y el payload es %s\n\n", ordenMemoria.pid , ordenMemoria.orden, ordenMemoria.paginas, ordenMemoria.contentSize, ordenMemoria.content);
+	// Proceso el pedido simulado
 	procesarOrden(ordenMemoria, CONSOLEMODE);
 
 }
@@ -496,34 +504,31 @@ int tamanioRespuestaMemoria(t_orden_memoria unaPersona)
 
 void mostrarListas()
 {
-	t_espacioLibre* newL;
+	t_espacioLibre* libreAux;
 	int i;
-	printf("Libres\n\n");
+	printf("-------\nLibres:\n-------\n");
 	for(i=0; i<list_size(listaLibres);i++)
 	{
-		newL = list_get(listaLibres,i);
+		libreAux = list_get(listaLibres,i);
+		unsigned long paginaInicial = (unsigned long)(libreAux->inicioHueco - mapeo) / (unsigned long)(tamanioPagSwap);
 
-		printf("%s\n", newL->inicioHueco);
-		printf("CantPags: %d\n", newL->cantPag);
+		printf("Hueco %d - ", i + 1);
+		printf("Desde posicion %lu ", paginaInicial);
+		printf("hasta %lu (no inclusive)\n", paginaInicial + (unsigned long)(libreAux->cantPag));
 	}
 
-	printf("\n");
-	printf("Ocupados\n\n");
+	printf("--------\nOcupados\n--------\n");
 
-	t_espacioOcupado* newO;
+	t_espacioOcupado* ocupadoAux;
 
-	char string[30];
 	for(i=0; i<list_size(listaOcupados);i++)
 	{
-		newO = list_get(listaOcupados,i);
+		ocupadoAux = list_get(listaOcupados,i);
+		unsigned long paginaInicial = (unsigned long)(ocupadoAux->inicioSwap - mapeo) / (unsigned long)(tamanioPagSwap);
 
-		strncpy(string,"",30);
-
-		strncpy(string,newO->inicioSwap,4*newO->cantPag);
-
-		printf("PID: %d\n", newO->pid);
-		printf("%s\n", string);
-		printf("CantPags: %d\n", newO->cantPag);
+		printf("Proceso %d - ", ocupadoAux->pid);
+		printf("Desde posicion %lu ", paginaInicial);
+		printf("hasta %lu (no inclusive)\n", paginaInicial + (unsigned long)(ocupadoAux->cantPag));
 
 	}
 
@@ -625,4 +630,9 @@ int recvall(int s, void *toReceive, int size, int flags) {
     }
 
     return size;
+}
+
+int round_div(int dividend, int divisor)
+{
+    return (dividend + divisor - 1) / divisor;
 }
