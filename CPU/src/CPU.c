@@ -254,6 +254,9 @@ void recibirSolicitudCarga_finQ()
 			int pid;
 
 			recv(socketPlanCarga, &pid, sizeof(int), 0);
+
+			log_info(logger, "Rafaga concluida. PID %d", pid);
+
 			enviarRespuestas(socketPlanCarga, pid);
 		}
 
@@ -295,7 +298,7 @@ void recibirPath1(int serverSocket, int idNodo)
 
 			pthread_mutex_lock(&mutex2);
 
-			log_info(logger,"~~~~~~~~~~~~~~~~~~~ID CPU: %d...mProc: %d~~~~~~~~~~~~~~~~~~~", idNodo, unaPersona.pid);
+			log_info(logger,"Recibido mProc: %d, path: %s, puntero: %d", unaPersona.pid, unaPersona.path, unaPersona.puntero);
 
 			interpretarLinea(serverSocket,linea, unaPersona.pid, idNodo);
 
@@ -475,13 +478,14 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo)
 			}
 		}
 	}
-	log_info(logger, "Rafaga concluida. PID %d. Respuesta: %d", mensaje.pid, mensaje.orden);
 
 	sleep(RETARDO);
 	enviarRespuestaPlanificador(socketPlanificador, mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content);
 
 	if((mensaje.orden==3) || (mensaje.orden ==5) )
 	{
+		log_info(logger, "Rafaga concluida. PID %d.", mensaje.pid);
+
 		enviarRespuestas(socketPlanificador, mensaje.pid);
 	}
 }
