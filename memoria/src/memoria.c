@@ -15,6 +15,7 @@
 #include <sys/time.h>
 #include <errno.h>
 #include <signal.h>
+#include <pthread.h>
 
 #include <commons/collections/list.h>
 #include <commons/collections/queue.h>
@@ -52,14 +53,13 @@ typedef struct {
 } t_orden_CPU;
 
 t_log* logger;
-t_list *tablaDeProcesos;
+t_list *tablaDeProcesos, *espacioDeMemoria, *listaTLB;
+pthread_mutex_t mutexTLB, mutex2;
 int socketSwap;
 char *TLBHabil;
 int maxMarcos, cantMarcos, tamMarcos, entradasTLB, retardoMem;
 void* memoriaPrincipal;
 char *politicaDeReemplazo;
-t_list *espacioDeMemoria;
-t_list *listaTLB;
 
 static t_tablaDeProcesos *tablaProc_create(int pid, int pagina);
 static void tablaProc_destroy(t_tablaDeProcesos *self);
@@ -73,6 +73,7 @@ int tamanioOrdenCPU1(t_orden_CPU mensaje);
 t_tablaPags* encontrarPagEnMemoriaPpal(int pid, int pagina);
 t_tablaPags* buscarPagEnTablaDePags(int pagina, t_tablaDeProcesos* new);
 t_tablaDeProcesos* buscarPID(int pid);
+t_TLB* removerPIDEntrada(int pid);
 t_TLB* buscarPagEnTLB(int pid, int pag);
 int encontrarPosicionEnTLB(int pid, int pagina);
 int encontrarPosicionEnProcesos(int pid);
@@ -90,6 +91,7 @@ void dumpMemoriaPrincipal();
 void dumpMemory();
 void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU);
 int seEncuentraEnTLB( t_orden_CPU);
+void borrarPIDEnTLB(int pid);
 
 int main() {
 	printf("\n");
@@ -116,7 +118,13 @@ int main() {
 	politicaDeReemplazo = config_get_string_value(config,
 			"POLITICA_DE_REEMPLAZO");
 
+
+	pthread_mutex_init(&mutexTLB, NULL);
+	pthread_mutex_init(&mutex2, NULL);
+
+
 	socketSwap = conectarse(IP, PUERTO_SWAP);
+	log_info(logger, "Conectado a Swap");
 
 	char * PUERTO_CPU = config_get_string_value(config, "PUERTO_CPU");
 
@@ -230,7 +238,11 @@ void recibirConexiones1(char * PUERTO_CPU) {
 						}
 						else
 						{
+							pthread_mutex_lock(&mutexTLB);
+
 							t_TLB* new = buscarPagEnTLB(mensaje.pid, mensaje.pagina);
+
+							pthread_mutex_lock(&mutexTLB);
 
 							if ( (new != NULL) && (mensaje.orden != 0) && (mensaje.orden != 3) )
 							{
@@ -240,6 +252,8 @@ void recibirConexiones1(char * PUERTO_CPU) {
 							}
 							else
 							{
+								log_info(logger, "No esta en TLB");
+
 								procesarOrden(mensaje, socketCPU);
 							}
 
@@ -424,7 +438,10 @@ int actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag)
 		queue_push(new->tablaDePaginas, tablaPag_create(pag, marco));
 	}
 
+	pthread_mutex_lock(&mutexTLB);
 	actualizarTLB(new->pid, pag, marco);
+	pthread_mutex_unlock(&mutexTLB);
+
 	mostrarTLB();
 
 	mostrarTablaDePags(new->pid);
@@ -469,7 +486,7 @@ void finalizarProceso(int pid)
 	tablaProc_destroy(new);
 
 
-	//Borrar TLB
+	borrarPIDEnTLB(pid);
 
 	log_info(logger, "Proceso %d finalizado", pid);
 }
@@ -494,7 +511,7 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 
 			respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content);
 
-		enviarRespuestaCPU(respuestaSwap, socketCPU);
+			enviarRespuestaCPU(respuestaSwap, socketCPU);
 		}
 		else
 		{
@@ -522,7 +539,10 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 
 					enviarRespuestaCPU(respuestaSwap, socketCPU);//Le devuelvo el contenido del marco al CPU
 
+					pthread_mutex_lock(&mutexTLB);
 					actualizarTLB(respuestaSwap.pid, respuestaSwap.pagina, new2->marco);
+					pthread_mutex_unlock(&mutexTLB);
+
 					mostrarTLB();
 					enviarRespuestaCPU(mensaje, socketCPU);
 				}
@@ -537,7 +557,10 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 						respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, new2->pagina, mensaje.content); //Le aviso al SWAP del nuevo contenido//Le aviso al SWAP del nuevo contenido
 						enviarRespuestaCPU(respuestaSwap, socketCPU); //Le devuelvo el contenido del marco al CPU
 
+						pthread_mutex_lock(&mutexTLB);
 						actualizarTLB(respuestaSwap.pid, respuestaSwap.pagina, new2->marco);
+						pthread_mutex_unlock(&mutexTLB);
+
 						mostrarTLB();
 						enviarRespuestaCPU(mensaje, socketCPU);
 					}
@@ -612,8 +635,6 @@ void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU)
 		log_info(logger, "Proceso %d leyendo pag: %d. Contenido: %s", entradaTLB->pid, entradaTLB->pagina, respuestaSwap.content);
 
 		enviarRespuestaCPU(respuestaSwap, socketCPU);//Le devuelvo el contenido del marco al CPU
-		//me parece que solo con el primer enviarRespuestaCPU estaria bien.
-		//enviarRespuestaCPU(mensaje, socketCPU);
 	}
 	else if (mensaje.orden == 2)// escribe pagina de un proceso
 	{
@@ -794,6 +815,19 @@ t_orden_CPU enviarOrdenASwap(int pid, int orden, int paginas, char *content) {
 	return recibirRespuestaSwap(socketSwap);
 }
 
+void borrarPIDEnTLB(int pid)
+{
+	t_TLB *entradaTLB = removerPIDEntrada(pid);
+
+	while(entradaTLB!=NULL)
+	{
+		TLB_destroy(entradaTLB);
+		entradaTLB = removerPIDEntrada(pid);
+	}
+
+}
+
+
 t_tablaPags* encontrarPagEnMemoriaPpal(int pid, int pagina) {
 	t_tablaDeProcesos* new = buscarPID(pid);
 	t_tablaPags* new2;
@@ -838,6 +872,20 @@ t_tablaDeProcesos* buscarPID(int pid) {
 		return 0;
 	}
 	return list_find(tablaDeProcesos, (void*) compararPorIdentificador2);
+}
+
+t_TLB* removerPIDEntrada(int pid)
+{
+	bool compararPorIdentificador2(t_TLB *unaCaja)
+	{
+		if(unaCaja->pid == pid)
+		{
+			return 1;
+		}
+
+		return 0;
+	}
+	return list_remove_by_condition(listaTLB, (void*) compararPorIdentificador2);
 }
 
 t_TLB* buscarPagEnTLB(int pid, int pag)
@@ -900,10 +948,17 @@ int encontrarPosicionEnProcesos(int pid)
 	return i;
 }
 
-void rutinaFlushTLB() {
+void rutinaFlushTLB()
+{
 //	pthread_t hiloFlushTLB;
 
 	printf("Flush de TLB \n");
+
+	pthread_mutex_lock(&mutexTLB);
+	list_clean_and_destroy_elements(listaTLB, (void*) TLB_destroy);
+	pthread_mutex_unlock(&mutexTLB);
+
+	mostrarTLB();
 //	pthread_create(&hiloFlushTLB, NULL, tablaPag_destroy, NULL);
 //	pthread_join(hiloFlushTLB, NULL);
 }
@@ -1055,11 +1110,19 @@ void mostrarTLB()
 
 	t_TLB* new;
 	log_info(logger, "TLB");
-	log_info(logger, "Pid  Pagina  Marco");
-	for (i = 0; i < list_size(listaTLB); i++)
-	{
-		new = list_get(listaTLB,i);
 
-		log_info(logger, " %d  		 %d     	   %d", new->pid, new->pagina, new->marco);
+	if(list_is_empty(listaTLB))
+	{
+		log_info(logger, "TLB Vacia");
+	}
+	else
+	{
+		log_info(logger, "Pid  Pagina  Marco");
+		for (i = 0; i < list_size(listaTLB); i++)
+		{
+			new = list_get(listaTLB,i);
+
+			log_info(logger, " %d  		 %d     	   %d", new->pid, new->pagina, new->marco);
+		}
 	}
 }
