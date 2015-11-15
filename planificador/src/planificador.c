@@ -246,6 +246,61 @@ void recibirConexiones(char * PUERTO)
 	close(listenningSocket);
 }
 
+void recibirCjtoRespuestas(int socketCliente)
+{
+	t_respuesta respuesta;
+
+	void* package = malloc(tamanioRespuesta(respuesta));
+
+	int cpu=1;
+
+	while(respuesta.pid !=-1)
+	{
+		recv(socketCliente,(void*)package, sizeof(respuesta.pid), 0);
+		memcpy(&respuesta.pid,package,sizeof(respuesta.pid));
+		recv(socketCliente,(void*) (package+sizeof(respuesta.pid)), sizeof(respuesta.paginas), 0);
+		memcpy(&respuesta.mensajeSize, package+sizeof(respuesta.pid),sizeof(respuesta.mensajeSize));
+		recv(socketCliente,(void*) (package+sizeof(respuesta.pid)+sizeof(respuesta.mensajeSize)), sizeof(respuesta.paginas), 0);
+		memcpy(&respuesta.paginas, package+sizeof(respuesta.pid)+sizeof(respuesta.mensajeSize),sizeof(respuesta.paginas));
+		recv(socketCliente,(void*) (package+sizeof(respuesta.pid)+sizeof(respuesta.mensajeSize)+sizeof(respuesta.paginas)), sizeof(respuesta.contentSize), 0);
+		memcpy(&respuesta.contentSize, package+sizeof(respuesta.pid)+sizeof(respuesta.mensajeSize)+sizeof(respuesta.paginas), sizeof(respuesta.contentSize));
+
+		if(respuesta.pid==-1)
+		{
+			cpu = -1;
+		}
+		void* package2=malloc(respuesta.contentSize);
+
+		recv(socketCliente,(void*) package2, respuesta.contentSize, 0);//campo longitud(NO SIZEOF DE LONGITUD)
+		memcpy(&respuesta.content, package2, respuesta.contentSize);
+
+		if(cpu!=-1)
+		{
+			if( (respuesta.mensajeSize)==0 )
+			{
+				log_info(logger, "mProc %d - Iniciado", respuesta.pid);
+			}
+			else
+			{
+				if( (respuesta.mensajeSize)==2 )
+				{
+					log_info(logger, "mProc %d - Pagina %d leida: %s", respuesta.pid, respuesta.paginas, respuesta.content);
+				}
+				else
+				{
+					log_info(logger, "mProc %d - Pagina %d escrita: %s", respuesta.pid, respuesta.paginas, respuesta.content);
+				}
+
+			}
+
+		}
+
+		free(package2);
+	}
+
+	free(package);
+}
+
 int recibirRespuesta(int socketCliente)
 {
 	t_respuesta respuesta;
@@ -270,7 +325,7 @@ int recibirRespuesta(int socketCliente)
 
 	if( (respuesta.mensajeSize)==0 )
 	{
-		log_info(logger, "mProc %d - Iniciado", respuesta.pid);
+		//log_info(logger, "mProc %d - Iniciado", respuesta.pid);
 	}
 	else
 	{
@@ -286,12 +341,14 @@ int recibirRespuesta(int socketCliente)
 		{
 			if( (respuesta.mensajeSize)==2 )
 			{
-				log_info(logger, "mProc %d - Pagina %d leida: %s", respuesta.pid, respuesta.paginas, respuesta.content);
+				//log_info(logger, "mProc %d - Pagina %d leida: %s", respuesta.pid, respuesta.paginas, respuesta.content);
 			}
 			else
 			{
 				if( (respuesta.mensajeSize)==3 )
 				{
+					recibirCjtoRespuestas(socketCliente);
+
 					log_info(logger, "mProc %d finalizado", respuesta.pid);
 					pthread_mutex_lock(&mutex2);
 					int posPCB =  encontrarPosicionEnPCB(respuesta.pid);	//Encontrar pos en listaPCB
@@ -309,13 +366,16 @@ int recibirRespuesta(int socketCliente)
 				{
 					if( (respuesta.mensajeSize)==4 )
 					{
-						log_info(logger, "mProc %d - Pagina %d escrita: %s", respuesta.pid, respuesta.paginas, respuesta.content);
+						//log_info(logger, "mProc %d - Pagina %d escrita: %s", respuesta.pid, respuesta.paginas, respuesta.content);
 					}
 					else
 					{
 						int IO = respuesta.paginas;
 
 						log_info(logger, "mProc %d en entrada-salida de tiempo %d", respuesta.pid, IO);
+
+						recibirCjtoRespuestas(socketCliente);
+
 						pthread_mutex_lock(&mutex2);
 						pcb = buscarReadyEnPCB(respuesta.pid);
 						int posPCB =  encontrarPosicionEnPCB(pcb->pid);	//Encontrar pos en listaPCB
@@ -406,6 +466,14 @@ void ROUND_ROBIN(void* args)
 	}
 	if(Q>=QUANTUM)
 	{
+		log_info(logger,"FIN Q");
+
+		int message = 2;
+		send(socketCPUCarga, &message, sizeof(int), 0);
+		send(socketCPUCarga, &pid, sizeof(int), 0);
+
+		recibirCjtoRespuestas(socketCPUCarga);
+
 		pthread_mutex_lock(&mutex4);
 		list_add(listaReady, ready_create(pid));
 		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pid, path, i, 0, totalLineas), (void*)PCB_destroy);
@@ -657,8 +725,8 @@ void CPU()
 		printf("Socket %d\n",new2->socketCliente);
 		printf("PID %d\n",new2->idHilo);
 	}
-	char message[PACKAGESIZE]="hola\n";
-	send(socketCPUCarga, message, strlen(message) + 1, 0);
+	int message = 1;
+	send(socketCPUCarga, &message, sizeof(int), 0);
 
 	void* package=malloc(tamanioMensaje1(mensaje));
 
