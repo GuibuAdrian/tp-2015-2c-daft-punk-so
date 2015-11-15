@@ -66,7 +66,7 @@ typedef struct
 } t_mensaje;
 
 t_log* logger;
-t_list *listaHilos, *listaCPUs;
+t_list *listaHilos, *listaCPUs, *listaRespuestas;
 char *ipPlanificador, *puertoPlanificador, *ipMemoria, *puertoMemoria;
 int id = 7, RETARDO, numeroHilos, socketPlanCarga;
 pthread_mutex_t mutex, mutex2;
@@ -75,10 +75,13 @@ static t_hilos *hilo_create(pthread_t unHilo);
 static void hilo_destroy(t_hilos *self);
 static t_cpu *cpu_create(int idCPU, int cantInst, int socketPlan);
 static void cpu_destroy(t_cpu *self);
+static t_orden_CPU *respuesta_create(int pid, int orden, int pagina, char content[PACKAGESIZE]);
+static void respuesta_destroy(t_orden_CPU *self);
 int tamanioEstructura1(t_pathMensaje unaPersona);
 int tamanioEstructura2(t_pathMensaje unaPersona);
 int tamanioMensajeMemo(t_orden_CPU mensajeMemo);
 
+t_orden_CPU* buscarPID(int pid);
 t_cpu* buscarCPU(int sock);
 int encontrarPosicionCPU(int sock);
 
@@ -90,6 +93,8 @@ char * obtenerLinea(char path[PACKAGESIZE], int puntero);
 t_orden_CPU enviarOrdenAMemoria(int pid, int orden, int paginas, char *content, int idNodo);
 void cargaCPU();
 void recibirSolicitudCarga();
+void removerPID(int pid);
+void enviarRespuestas(int socketPlanificador, int pid);
 
 int main()
 {
@@ -99,6 +104,7 @@ int main()
 
 	listaHilos = list_create();
 	listaCPUs = list_create();
+	listaRespuestas = list_create();
 
 	logger = log_create("logsTP", "CPU", true, LOG_LEVEL_INFO);
 
@@ -197,50 +203,58 @@ void cargaCPU()
 
 void recibirSolicitudCarga()
 {
-	char package[PACKAGESIZE];
+	int package;
 	int status = 1; // Estructura que manjea el status de los recieve.
 
-	printf("Cliente conectado. Esperando mensajes:\n");
 	int i;
 	t_cpu *new;
 
 	while (status != 0)
 	{
-		status = recv(socketPlanCarga, (void*) package, PACKAGESIZE, 0);
+		status = recv(socketPlanCarga, &package, sizeof(int), 0);
 
-		if (status != 0)
+		if(package == 1)
 		{
-			printf("%s", package);
-
-			for(i=0; i<list_size(listaCPUs)+1; i++)
+			if (status != 0)
 			{
-				pthread_mutex_lock(&mutex);
-
-				t_idHilo mensaje;
-
-				if(i<list_size(listaCPUs))
+				for(i=0; i<list_size(listaCPUs)+1; i++)
 				{
-					new = list_get(listaCPUs,i);
-					mensaje.idNodo = new->idCPU;
-					mensaje.cantHilos = new->cantInst;
+					pthread_mutex_lock(&mutex);
+
+					t_idHilo mensaje;
+
+					if(i<list_size(listaCPUs))
+					{
+						new = list_get(listaCPUs,i);
+						mensaje.idNodo = new->idCPU;
+						mensaje.cantHilos = new->cantInst;
+					}
+					else
+					{
+						mensaje.idNodo = -1;
+						mensaje.cantHilos = -1;
+					}
+
+					//Envio id y aviso la cantidad de conexiones
+					void* package = malloc(sizeof(t_idHilo));
+
+					memcpy(package, &mensaje.idNodo, sizeof(mensaje.idNodo));
+					memcpy(package + sizeof(mensaje.idNodo), &mensaje.cantHilos, sizeof(mensaje.cantHilos));
+
+					send(socketPlanCarga, package, sizeof(t_idHilo), 0);
+
+					free(package);
+					pthread_mutex_unlock(&mutex);
 				}
-				else
-				{
-					mensaje.idNodo = -1;
-					mensaje.cantHilos = -1;
-				}
-
-				//Envio id y aviso la cantidad de conexiones
-				void* package = malloc(sizeof(t_idHilo));
-
-				memcpy(package, &mensaje.idNodo, sizeof(mensaje.idNodo));
-				memcpy(package + sizeof(mensaje.idNodo), &mensaje.cantHilos, sizeof(mensaje.cantHilos));
-
-				send(socketPlanCarga, package, sizeof(t_idHilo), 0);
-
-				free(package);
-				pthread_mutex_unlock(&mutex);
 			}
+
+		}
+		else
+		{
+			int pid;
+
+			recv(socketPlanCarga, &pid, sizeof(int), 0);
+			enviarRespuestas(socketPlanCarga, pid);
 		}
 
 	};
@@ -346,14 +360,30 @@ void enviarRespuestaPlanificador(int socketPlanificador, int pid, int orden, int
 	memcpy(respuestaPackage+sizeof(respuestaPlan.pid)+sizeof(respuestaPlan.orden)+sizeof(respuestaPlan.pagina), &respuestaPlan.contentSize, sizeof(respuestaPlan.contentSize));
 	memcpy(respuestaPackage+sizeof(respuestaPlan.pid)+sizeof(respuestaPlan.orden)+sizeof(respuestaPlan.pagina)+sizeof(respuestaPlan.contentSize), &respuestaPlan.content, respuestaPlan.contentSize);
 
-	log_info(logger, "Rafaga concluida. PID %d. Respuesta: %d", respuestaPlan.pid, respuestaPlan.orden);
-
-	sleep(RETARDO);
-
 	send(socketPlanificador, respuestaPackage, tamanioMensajeMemo(respuestaPlan), 0);
 
 	free(respuestaPackage);
 }
+
+void enviarRespuestas(int socketPlanificador, int pid)
+{
+	int i;
+	t_orden_CPU *new;
+
+	for(i=0; i < list_size(listaRespuestas); i++)
+	{
+		new = list_get(listaRespuestas, i);
+		if(new->pid == pid)
+		{
+			enviarRespuestaPlanificador(socketPlanificador, new->pid, new->orden, new->pagina, new->content);
+		}
+	}
+
+	enviarRespuestaPlanificador(socketPlanificador, -1, -1, -1, "/");
+
+	removerPID(pid);
+}
+
 
 t_orden_CPU enviarOrdenAMemoria(int pid, int orden, int paginas, char *content, int idNodo)
 {
@@ -396,6 +426,11 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo)
 		pagina = strtol(pch, NULL, 10);
 
 		mensaje = enviarOrdenAMemoria(pid, 0, pagina, "/", idNodo);
+
+		if(mensaje.orden==0)
+		{
+			list_add(listaRespuestas, respuesta_create(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content));
+		}
 	}
 	else
 	{
@@ -406,7 +441,7 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo)
 
 			mensaje = enviarOrdenAMemoria(pid, 1, pagina, "/", idNodo);
 
-			printf("Mensaje: %s\n", mensaje.content);
+			list_add(listaRespuestas, respuesta_create(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content));
 		}
 		else
 		{
@@ -424,6 +459,8 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo)
 					pch = strtok(NULL, " \n");
 
 					mensaje = enviarOrdenAMemoria(pid, 2, pagina, pch, idNodo);
+
+					list_add(listaRespuestas, respuesta_create(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content));
 				}
 				else
 				{
@@ -438,7 +475,15 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo)
 			}
 		}
 	}
+	log_info(logger, "Rafaga concluida. PID %d. Respuesta: %d", mensaje.pid, mensaje.orden);
+
+	sleep(RETARDO);
 	enviarRespuestaPlanificador(socketPlanificador, mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content);
+
+	if((mensaje.orden==3) || (mensaje.orden ==5) )
+	{
+		enviarRespuestas(socketPlanificador, mensaje.pid);
+	}
 }
 
 char * obtenerLinea(char path[PACKAGESIZE], int puntero) {
@@ -449,6 +494,44 @@ char * obtenerLinea(char path[PACKAGESIZE], int puntero) {
 	txt_close_file(file);
 
 	return linea;
+}
+
+void removerPID(int pid)
+{
+	t_orden_CPU *new;
+	new = buscarPID(pid);
+
+	while(new!=NULL)
+	{
+		bool compararPorIdentificador2(t_orden_CPU *unaCaja)
+		{
+			if (unaCaja->pid == pid)
+			{
+				return 1;
+			}
+
+			return 0;
+		}
+
+		list_remove_and_destroy_by_condition(listaRespuestas, (void*) compararPorIdentificador2, (void*) respuesta_destroy);
+
+		new = buscarPID(pid);
+	}
+
+}
+
+t_orden_CPU* buscarPID(int pid)
+{
+	bool compararPorIdentificador2(t_orden_CPU *unaCaja)
+	{
+		if (unaCaja->pid == pid)
+		{
+			return 1;
+		}
+
+		return 0;
+	}
+	return list_find(listaRespuestas, (void*) compararPorIdentificador2);
 }
 
 t_cpu* buscarCPU(int sock)
@@ -513,7 +596,6 @@ static void hilo_destroy(t_hilos *self)
 {
     free(self);
 }
-
 static t_cpu *cpu_create(int idCPU, int cantInst, int socketPlan)
 {
 	t_cpu *new = malloc(sizeof(t_cpu));
@@ -525,6 +607,22 @@ static t_cpu *cpu_create(int idCPU, int cantInst, int socketPlan)
 	 return new;
 }
 static void cpu_destroy(t_cpu *self)
+{
+    free(self);
+}
+static t_orden_CPU *respuesta_create(int pid, int orden, int pagina, char content[PACKAGESIZE])
+{
+	t_orden_CPU *new = malloc(sizeof(t_orden_CPU));
+
+	 new->pid = pid;
+	 new->orden = orden;
+	 new->pagina = pagina;
+	 strcpy(new->content, content);
+	 new->contentSize = strlen(content);
+
+	 return new;
+}
+static void respuesta_destroy(t_orden_CPU *self)
 {
     free(self);
 }
