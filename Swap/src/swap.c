@@ -27,6 +27,7 @@ simularPedidoMemoria(80,3,0,null)
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stddef.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>
@@ -402,6 +403,7 @@ int reservarEspacio(int pid, int paginas)	// 0=Exito  1=Fracaso
 
 		list_add(listaOcupados, ocupado_create(pid, libreAux->inicioHueco, paginas));
 
+		memset(libreAux->inicioHueco, 0, libreAux->cantPag * tamanioPagSwap);
 		libre_destroy(espLibreViejo);
 
 		return 0;
@@ -737,38 +739,46 @@ int round_div(int dividend, int divisor)
 }
 
 void defrag() {
-
-	char * nuevoSwap = (char *) malloc(tamanioPagSwap * cantPagSwap);
+	ptrdiff_t offset;
+	t_espacioOcupado* ocupadoAux;
+	char * copiaSwapViejo = (char *) malloc(tamanioPagSwap * cantPagSwap);
 	t_espacioLibre *nuevoEspacioLibre = malloc(sizeof(t_espacioLibre));
 	int i;
-	char * posicionActualNuevoSwap = nuevoSwap;
+	char * posicionActualEnMapeo = mapeo;
 
 	nuevoEspacioLibre->cantPag = cuantasPaginasLibresTengo();
 
-	t_espacioOcupado* ocupadoAux;
+	memcpy(copiaSwapViejo, mapeo, tamanioPagSwap * cantPagSwap);
+
+	for(i=0; i<list_size(listaOcupados);i++){
+		ocupadoAux = list_get(listaOcupados,i);
+		offset = (ocupadoAux->inicioSwap - mapeo);
+		ocupadoAux->inicioSwap = copiaSwapViejo + offset;
+
+	}
 
 	for(i=0; i<list_size(listaOcupados);i++)
 	{
 
 		ocupadoAux = list_get(listaOcupados,i);
 
-		printf("Copiando PID %d .... ", ocupadoAux->pid);
+		//printf("Copiando PID %d .... ", ocupadoAux->pid);
 
-		memcpy(posicionActualNuevoSwap,ocupadoAux->inicioSwap, ocupadoAux->cantPag*tamanioPagSwap);
+		memcpy(posicionActualEnMapeo,ocupadoAux->inicioSwap, ocupadoAux->cantPag*tamanioPagSwap);
 
-		ocupadoAux->inicioSwap = posicionActualNuevoSwap;
+		ocupadoAux->inicioSwap = posicionActualEnMapeo;
 
-		printf("%d bytes copiados al nuevo swap. \n", ocupadoAux->cantPag*tamanioPagSwap);
+		//printf("%d bytes copiados al nuevo swap. \n", ocupadoAux->cantPag*tamanioPagSwap);
 
-		posicionActualNuevoSwap += ocupadoAux->cantPag*tamanioPagSwap;
+		posicionActualEnMapeo += ocupadoAux->cantPag*tamanioPagSwap;
 
 	}
-	nuevoEspacioLibre->inicioHueco = posicionActualNuevoSwap;
+	nuevoEspacioLibre->inicioHueco = posicionActualEnMapeo;
 
 	list_clean(listaLibres);
 	list_add(listaLibres, nuevoEspacioLibre);
-
-	mapeo = nuevoSwap;
+	free(copiaSwapViejo);
+	printf("Swap compactado\n");
 }
 
 int cuantasPaginasLibresTengo() {
