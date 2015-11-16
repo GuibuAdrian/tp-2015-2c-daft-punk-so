@@ -94,7 +94,7 @@ void dumpMemory();
 void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU);
 int seEncuentraEnTLB( t_orden_CPU);
 void borrarPIDEnTLB(int pid);
-void decrementarBitReferencia(t_list* tablaDePaginas);
+void cambiarBitReferencia(int pid, int pagina);
 void cambiarBitReferencia(int pid, int pag);
 int buscarRefMaxima(t_list *tablaDePaginas);
 
@@ -241,11 +241,13 @@ void recibirConexiones1(char * PUERTO_CPU) {
 
 							pthread_mutex_unlock(&mutexTLB);
 
-							if ( (new != NULL) && (mensaje.orden != 0) && (mensaje.orden != 3) )
+							if ( (new != NULL) && (mensaje.orden != 0) && (mensaje.orden != 3) )  //Esta en la TLB
 							{
 								log_info(logger, "Proc: %d, Pag: %d. Esta en TLB", mensaje.pid, mensaje.pagina);
 								mostrarTLB();
+
 								cambiarBitReferencia(mensaje.pid, mensaje.pagina);
+
 								operarConTLB(new, mensaje, socketCPU);
 							}
 							else
@@ -306,15 +308,21 @@ void actualizarTLB(int pid, int pag, int marco)
 	list_add(listaTLB, TLB_create(pid, pag, marco));
 }
 
-t_tablaPags* lru(t_list *listaTablaPags, int pag)
+t_tablaPags* lru(t_list *listaTablaPags, int pag, int pid)
 {
-	t_tablaPags* new2;
+	t_tablaPags* new2, *new3;
+	int i;
 
 	int posRemove = encontrarPosReferencia(listaTablaPags, 0);
 
 	new2 = list_remove(listaTablaPags, posRemove);
 
-	decrementarBitReferencia(listaTablaPags);
+	for(i=0; i<list_size(listaTablaPags); i++)
+	{
+		new3 = list_get(listaTablaPags, i);
+
+		list_replace_and_destroy_element(listaTablaPags, i, tablaPag_create(new3->pagina, new3->marco, new3->bitReferencia-1), (void*) tablaPag_destroy);
+	}
 
 	int refMax = buscarRefMaxima(listaTablaPags);
 
@@ -334,7 +342,7 @@ t_tablaPags* fifo(t_list *listaTablaPags, int pag)
 	return new2;
 }
 
-t_tablaPags* reemplazarPag(t_tablaDeProcesos* new, int pag) {
+t_tablaPags* reemplazarPag(t_tablaDeProcesos* new, int pag, int pid) {
 	t_tablaPags* new2;
 
 	if(strncmp(politicaDeReemplazo, "FIFO",4)==0)
@@ -349,7 +357,7 @@ t_tablaPags* reemplazarPag(t_tablaDeProcesos* new, int pag) {
 		{
 			log_info(logger, "LRU");
 
-			new2 = lru(new->tablaDePaginas, pag);
+			new2 = lru(new->tablaDePaginas, pag, pid);
 		}
 	}
 
@@ -432,7 +440,7 @@ int actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag)
 	{
 		log_info(logger, "Reemplazando");
 
-		new2 = reemplazarPag(new, pag);
+		new2 = reemplazarPag(new, pag, new->pid);
 
 		t_TLB* entradaTLB = buscarPagEnTLB(new->pid, new2->pagina);
 
@@ -651,44 +659,6 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 	} //else orden de incio/fin
 }
 
-void decrementarBitReferencia(t_list* tablaDePaginas)
-{
-	int i, ref;
-	t_tablaPags *new2;
-
-	for(i=0; i<list_size(tablaDePaginas); i++)
-	{
-		new2 = list_get(tablaDePaginas, i);
-
-		if( (new2->bitReferencia-1)<0 )
-		{
-			ref = 0;
-		}
-		else
-		{
-			ref = new2->bitReferencia-1;
-		}
-		list_replace_and_destroy_element(tablaDePaginas, i, tablaPag_create(new2->pagina, new2->marco, ref), (void*) tablaPag_destroy);
-	}
-}
-
-void cambiarBitReferencia(int pid, int pag)
-{
-	t_tablaDeProcesos* new;
-	t_tablaPags *new2;
-
-	new =buscarPID(pid);
-
-	decrementarBitReferencia(new->tablaDePaginas);
-
-	int refMax = buscarRefMaxima(new->tablaDePaginas);
-
-	int posPag = encontrarPosicionEnTablaDePags(pag, new->tablaDePaginas);
-	new2 = list_get(new->tablaDePaginas, posPag);
-
-	list_replace_and_destroy_element(new->tablaDePaginas, posPag, tablaPag_create(new2->pagina, new2->marco, refMax+1), (void*) tablaPag_destroy);
-}
-
 void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU)
 {
 	t_orden_CPU respuestaSwap;
@@ -755,6 +725,41 @@ void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU) {
 	send(socketCPU, mensajeSwapPackage, tamanioOrdenCPU(mensajeSwap), 0);
 
 	free(mensajeSwapPackage);
+}
+
+void cambiarBitReferencia(int pid, int pagina)
+{
+	int i;
+	t_tablaDeProcesos* new = buscarPID(pid);
+	t_tablaPags* new2;
+	t_tablaPags* pagBuscada = buscarPagEnMemoriaPpal(pid, pagina);
+
+	for(i=0; i<list_size(new->tablaDePaginas); i++)
+	{
+		new2 = list_get(new->tablaDePaginas, i);
+
+		if(new2->bitReferencia>pagBuscada->bitReferencia)
+		{
+			list_replace_and_destroy_element(new->tablaDePaginas, i, tablaPag_create(new2->pagina, new2->marco, new2->bitReferencia-1), (void*) tablaPag_destroy);
+		}
+	}
+
+	int refMax = buscarRefMaxima(new->tablaDePaginas);
+
+	int posPag = encontrarPosicionEnTablaDePags(pagina, new->tablaDePaginas);
+	new2 = list_get(new->tablaDePaginas, posPag);
+
+	if(refMax+1>=(maxMarcos-1))
+	{
+		list_replace_and_destroy_element(new->tablaDePaginas, posPag, tablaPag_create(new2->pagina, new2->marco, refMax), (void*) tablaPag_destroy);
+
+	}
+	else
+	{
+		list_replace_and_destroy_element(new->tablaDePaginas, posPag, tablaPag_create(new2->pagina, new2->marco, refMax+1), (void*) tablaPag_destroy);
+	}
+
+	mostrarTablaDePags(pid);
 }
 
 t_orden_CPU recibirRespuestaSwap(int socketMemoria) {
