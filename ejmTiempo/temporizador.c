@@ -43,6 +43,13 @@ int main(){
 return 0;
 }
 
+/*
+ * Tiempo real (tambiénn wall time): lo que tarda desde que le lanzó el programa a ejecutarse hasta que el prog finalizó y da los resultados
+ * Tiempo usuario: tiempo que el CPU le dedicó exclusivamente al programa
+ * Tiempo sistema: tiempo que el CPU se dedicó a dar servicio al SO por necesidades del programa
+ * */
+
+
 
 void uswtime(double *usertime, double *systime, double *walltime)
 {
@@ -58,4 +65,5 @@ void uswtime(double *usertime, double *systime, double *walltime)
 	*systime  = (double) buffer.ru_stime.tv_sec + 1.0e-6 * buffer.ru_stime.tv_usec;
 	*walltime = (double) tp.tv_sec + 1.0e-6 * tp.tv_usec;
 }
+
 
