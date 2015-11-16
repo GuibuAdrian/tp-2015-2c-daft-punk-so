@@ -30,12 +30,13 @@
 typedef struct {
 	int pagina;
 	int marco;
+	int bitReferencia;
 } t_tablaPags;
 
 typedef struct {
 	int pid;
 	int paginas;
-	t_queue *tablaDePaginas;
+	t_list *tablaDePaginas;
 } t_tablaDeProcesos;
 
 typedef struct {
@@ -63,26 +64,27 @@ char *politicaDeReemplazo;
 
 static t_tablaDeProcesos *tablaProc_create(int pid, int pagina);
 static void tablaProc_destroy(t_tablaDeProcesos *self);
-static t_tablaPags *tablaPag_create(int pagina, int marco);
+static t_tablaPags *tablaPag_create(int pagina, int marco, int referencia);
 static void tablaPag_destroy(t_tablaPags *self);
 static t_TLB *TLB_create(int pid, int pagina, int marco);
 static void TLB_destroy(t_TLB *self);
 int tamanioOrdenCPU(t_orden_CPU mensaje);
 int tamanioOrdenCPU1(t_orden_CPU mensaje);
 
-t_tablaPags* encontrarPagEnMemoriaPpal(int pid, int pagina);
+t_tablaPags* buscarPagEnMemoriaPpal(int pid, int pagina);
 t_tablaPags* buscarPagEnTablaDePags(int pagina, t_tablaDeProcesos* new);
 t_tablaDeProcesos* buscarPID(int pid);
 t_TLB* removerPIDEntrada(int pid);
 t_TLB* buscarPagEnTLB(int pid, int pag);
 int encontrarPosicionEnTLB(int pid, int pagina);
 int encontrarPosicionEnProcesos(int pid);
+int encontrarPosicionEnTablaDePags(int pag, t_list *listaTablaPags);
+int encontrarPosReferencia(t_list *listaTablaPags, int ref);
 
 void recibirConexiones1(char * PUERTO_CPU);
 t_orden_CPU enviarOrdenASwap(int pid, int orden, int paginas, char *content);
 void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU);
 void procesarOrden(t_orden_CPU mensaje, int socketCPU);
-void liberarTablaDePags();
 void mostrarTablaDePags(int pid);
 void mostrarTLB();
 void rutinaFlushTLB();
@@ -92,6 +94,9 @@ void dumpMemory();
 void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU);
 int seEncuentraEnTLB( t_orden_CPU);
 void borrarPIDEnTLB(int pid);
+void decrementarBitReferencia(t_list* tablaDePaginas);
+void cambiarBitReferencia(int pid, int pag);
+int buscarRefMaxima(t_list *tablaDePaginas);
 
 int main() {
 	printf("\n");
@@ -131,19 +136,10 @@ int main() {
 	memoriaPrincipal = malloc(cantMarcos * tamMarcos);
 	listaTLB = list_create();
 
-	//listaTablaPags = queue_create();
 	tablaDeProcesos = list_create();
-
-	if ((espacioDeMemoria = malloc(cantMarcos * tamMarcos)) == NULL) {
-		log_error(logger,
-				"There is no enough space in memory for the stucture \n");
-	} else {
-		espacioDeMemoria = list_create();
-	}
 
 	recibirConexiones1(PUERTO_CPU);
 
-	liberarTablaDePags();
 	list_destroy_and_destroy_elements(tablaDeProcesos,
 			(void*) tablaProc_destroy);
 	close(socketSwap);
@@ -242,12 +238,13 @@ void recibirConexiones1(char * PUERTO_CPU) {
 
 							t_TLB* new = buscarPagEnTLB(mensaje.pid, mensaje.pagina);
 
-							pthread_mutex_lock(&mutexTLB);
+							pthread_mutex_unlock(&mutexTLB);
 
 							if ( (new != NULL) && (mensaje.orden != 0) && (mensaje.orden != 3) )
 							{
 								log_info(logger, "Proc: %d, Pag: %d. Esta en TLB", mensaje.pid, mensaje.pagina);
 								mostrarTLB();
+								cambiarBitReferencia(mensaje.pid, mensaje.pagina);
 								operarConTLB(new, mensaje, socketCPU);
 							}
 							else
@@ -256,17 +253,7 @@ void recibirConexiones1(char * PUERTO_CPU) {
 
 								procesarOrden(mensaje, socketCPU);
 							}
-
 						}
-						/*
-						 if (tablaDeProcesos == NULL) {
-						 //no se de donde o como obtener el marco =S
-						 tablaProc_create(mensaje.pid, mensaje.pagina,
-						 malloc(sizeof(int)));
-						 } else {
-						 buscarPID(mensaje.pid, mensaje.pagina, politica);
-						 }
-						 */
 
 						free(package2);
 					} else if (result == 0) {
@@ -318,37 +305,68 @@ void actualizarTLB(int pid, int pag, int marco)
 	list_add(listaTLB, TLB_create(pid, pag, marco));
 }
 
-void fifo(t_queue *listaTablaPags, int pag, int marco) {
+t_tablaPags* lru(t_list *listaTablaPags, int pag)
+{
 	t_tablaPags* new2;
 
-	new2 = queue_pop(listaTablaPags);
-	queue_push(listaTablaPags, tablaPag_create(pag, new2->marco));
+	int posRemove = encontrarPosReferencia(listaTablaPags, 0);
 
-	tablaPag_destroy(new2);
-}
+	new2 = list_remove(listaTablaPags, posRemove);
 
-t_tablaPags* reemplazarPag(t_tablaDeProcesos* new, int pag) {
-	//if(strncmp(algoritmoReemplazo, "FIFO",4))
-	t_tablaPags* new2;
+	decrementarBitReferencia(listaTablaPags);
 
-	log_info(logger, "FIFO");
+	int refMax = buscarRefMaxima(listaTablaPags);
 
-	new2 = queue_pop(new->tablaDePaginas);
-	queue_push(new->tablaDePaginas, tablaPag_create(pag, new2->marco));
+	list_add(listaTablaPags, tablaPag_create(pag, new2->marco, refMax+1));
 
 	return new2;
 }
 
-int buscarMarcoEnTablaDePags(t_tablaDeProcesos* new, int marcoBuscado) {
+t_tablaPags* fifo(t_list *listaTablaPags, int pag)
+{
+	t_tablaPags* new2;
+
+	new2 = list_remove(listaTablaPags, 0);
+
+	list_add(listaTablaPags, tablaPag_create(pag, new2->marco, 0));
+
+	return new2;
+}
+
+t_tablaPags* reemplazarPag(t_tablaDeProcesos* new, int pag) {
+	t_tablaPags* new2;
+
+	if(strncmp(politicaDeReemplazo, "FIFO",4)==0)
+	{
+		log_info(logger, "FIFO");
+
+		new2 = fifo(new->tablaDePaginas, pag);
+	}
+	else
+	{
+		if(strncmp(politicaDeReemplazo, "LRU",3)==0)
+		{
+			log_info(logger, "LRU");
+
+			new2 = lru(new->tablaDePaginas, pag);
+		}
+	}
+
+	return new2;
+}
+
+int buscarMarcoEnTablaDePags(t_tablaDeProcesos* new, int marcoBuscado)
+{
 	int i = 0, encontrado = -1;
 	t_tablaPags* new2;
 
-	while ((i < queue_size(new->tablaDePaginas))) {
-		new2 = queue_pop(new->tablaDePaginas);
+	while (i < list_size(new->tablaDePaginas))
+	{
+		new2 = list_get(new->tablaDePaginas, i);
 
-		queue_push(new->tablaDePaginas, new2);
 
-		if ((encontrado == -1) && (new2->marco == marcoBuscado)) {
+		if ((encontrado == -1) && (new2->marco == marcoBuscado))
+		{
 			encontrado = 1; //Encontre el marco buscado en memoria. Devuelvo 1
 		}
 
@@ -406,7 +424,7 @@ int asignarMarco()
 int actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag)
 {
 	t_tablaPags* new2;
-	int totalPag = queue_size(new->tablaDePaginas);
+	int totalPag = list_size(new->tablaDePaginas);
 	int marco;
 
 	if (totalPag == maxMarcos) //Si la cantidad de marcos ocupados es MAX entonces empiezo a reemplazar
@@ -425,17 +443,26 @@ int actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag)
 		}
 
 		marco = new2->marco;
+
+		tablaPag_destroy(new2);
 	}
 	else
 	{
-		marco = asignarMarco(); //Recorro la lista de procesos hasta en contrar algun marco valido (algun marco q no este en la tabla de paginas)
+		marco = asignarMarco(); //Recorro la lista de procesos hasta encontrar algun marco valido (algun marco q no este en la tabla de paginas)
 
 		if (marco == -1)//-1 No puedo asignarle marcos
 		{
 			return marco;
 		}
 
-		queue_push(new->tablaDePaginas, tablaPag_create(pag, marco));
+		int refMax = buscarRefMaxima(new->tablaDePaginas);
+
+		if(!list_is_empty(new->tablaDePaginas))
+		{
+			refMax++;
+		}
+
+		list_add(new->tablaDePaginas, tablaPag_create(pag, marco, refMax));
 	}
 
 	pthread_mutex_lock(&mutexTLB);
@@ -465,9 +492,9 @@ void finalizarProceso(int pid)
 
 	new = list_remove(tablaDeProcesos, posProc);
 
-	for(i=0; i<queue_size(new->tablaDePaginas);i++)
+	for(i=0; i<list_size(new->tablaDePaginas);i++)
 	{
-		new2 = queue_pop(new->tablaDePaginas);
+		new2 = list_remove(new->tablaDePaginas, i);
 
 		t_TLB* new3 = buscarPagEnTLB(pid, new2->pagina);
 
@@ -479,7 +506,7 @@ void finalizarProceso(int pid)
 
 		}
 
-		free(new2);
+		tablaPag_destroy(new2);
 
 	}
 
@@ -515,11 +542,13 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 		}
 		else
 		{
-			new2 = encontrarPagEnMemoriaPpal(mensaje.pid, mensaje.pagina);
+			new2 = buscarPagEnMemoriaPpal(mensaje.pid, mensaje.pagina);
 
 			if (new2 != NULL) //Si esta en Memoria Principal
 			{
 				log_info(logger, "Proc: %d, Pag: %d. Esta en memoria principal, marco: %d", mensaje.pid, mensaje.pagina, new2->marco);
+
+				cambiarBitReferencia(mensaje.pid, mensaje.pagina);
 
 				if (mensaje.orden == 1)	// leer pagina de un proceso
 				{
@@ -619,6 +648,36 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 	} //else orden de incio/fin
 }
 
+void decrementarBitReferencia(t_list* tablaDePaginas)
+{
+	int i;
+	t_tablaPags *new2;
+
+	for(i=0; i<list_size(tablaDePaginas); i++)
+	{
+		new2 = list_get(tablaDePaginas, i);
+
+		list_replace_and_destroy_element(tablaDePaginas, i, tablaPag_create(new2->pagina, new2->marco, new2->bitReferencia-1), (void*) tablaPag_destroy);
+	}
+}
+
+void cambiarBitReferencia(int pid, int pag)
+{
+	t_tablaDeProcesos* new;
+	t_tablaPags *new2;
+
+	new =buscarPID(pid);
+
+	decrementarBitReferencia(new->tablaDePaginas);
+
+	int refMax = buscarRefMaxima(new->tablaDePaginas);
+
+	int posPag = encontrarPosicionEnTablaDePags(pag, new->tablaDePaginas);
+	new2 = list_get(new->tablaDePaginas, posPag);
+
+	list_replace_and_destroy_element(new->tablaDePaginas, posPag, tablaPag_create(new2->pagina, new2->marco, refMax+1), (void*) tablaPag_destroy);
+}
+
 void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU)
 {
 	t_orden_CPU respuestaSwap;
@@ -653,57 +712,6 @@ void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU)
 		respuestaSwap = enviarOrdenASwap(entradaTLB->pid, mensaje.orden, entradaTLB->pagina, mensaje.content); //Le aviso al SWAP del nuevo contenido
 	}
 }
-
-/*
- int getIndice(t_list tablaDeProcesos,int pid){
- int index=0;
- t_list tablaCopia = tablaDeProcesos;
- t_tablaDeProcesos elemento = tablaCopia.head->data;
-
- while( elemento.pid != pid && index < tablaCopia.elements_count){
- index++;
- tablaCopia = tablaCopia.head->next;
- }
-
- return index;
- }
-
- void buscarPID(int pid, int pagina, char *politica) {
- t_list copiaTablaDeProcesos = tablaDeProcesos;
-
- t_tablaDeProcesos estructuraDeProceso = copiaTablaDeProcesos->head->data;
- int pidCopia = estructuraDeProceso.pid;
- while (pidCopia != pid) {
- estructuraDeProceso = copiaTablaDeProcesos.head->next->data;
- copiaTablaDeProcesos = copiaTablaDeProcesos.head->next;
- pidCopia = copiaTablaDeProcesos.head.data;
- }
- if (pidCopia != pid) {
- //sumamos un pid a la lista de procesos
- estructuraDeProceso.pid = pid;
- estructuraDeProceso.tablaDePaginas = tablaPag_create(pagina,
- malloc(sizeof(int)));
- list_add(tablaDeProcesos, estructuraDeProceso);
- } else {
- //aplicamos la politica correspondiente
- t_tablaPags paginaAActualizar;
- paginaAActualizar.pagina = pagina;
- paginaAActualizar.marco = malloc(sizeof(int));
- paginaAActualizar.bitPresencia = 1;
- if (politica == "FIFO") {
- reemplazoFIFO(paginaAActualizar,
- estructuraDeProceso.tablaDePaginas);
- } else if (politica == "LRU") {
- reemplazoLRU(paginaAActualizar, estructuraDeProceso.tablaDePaginas);
- } else if (politica == "CLOCK_MEJORADO") {
- //TODO diseñar el algoritmo de CLOCK MEJORADO
- reemplazoCLOCKMEJORADO(paginaAActualizar,
- estructuraDeProceso.tablaDePaginas);
- }
-
- }
- }
- */
 
 void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU) {
 	t_orden_CPU mensajeSwap;
@@ -827,8 +835,7 @@ void borrarPIDEnTLB(int pid)
 
 }
 
-
-t_tablaPags* encontrarPagEnMemoriaPpal(int pid, int pagina) {
+t_tablaPags* buscarPagEnMemoriaPpal(int pid, int pagina) {
 	t_tablaDeProcesos* new = buscarPID(pid);
 	t_tablaPags* new2;
 
@@ -837,33 +844,21 @@ t_tablaPags* encontrarPagEnMemoriaPpal(int pid, int pagina) {
 	return new2;
 }
 
-t_tablaPags* buscarPagEnTablaDePags(int pagina, t_tablaDeProcesos* new) {
-	int i = 0;
+t_tablaPags* buscarPagEnTablaDePags(int pagina, t_tablaDeProcesos* new)
+{
 
-	t_tablaPags* new2;
-
-	while (i < queue_size(new->tablaDePaginas)) {
-		new2 = queue_pop(new->tablaDePaginas);
-
-		if (new2->pagina == pagina) {
-			queue_push(new->tablaDePaginas, new2);
-
-			break;
+	bool compararPorIdentificador2(t_tablaPags* unaCaja) {
+		if (unaCaja->pagina == pagina) {
+			return 1;
 		}
 
-		queue_push(new->tablaDePaginas, new2);
-
-		i++;
+		return 0;
 	}
-
-	if ((queue_size(new->tablaDePaginas) == 0) || (new2->pagina != pagina)) {
-		return NULL;
-	} else {
-		return new2;
-	}
+	return list_find(new->tablaDePaginas, (void*) compararPorIdentificador2);
 }
 
-t_tablaDeProcesos* buscarPID(int pid) {
+t_tablaDeProcesos* buscarPID(int pid)
+{
 	bool compararPorIdentificador2(t_tablaDeProcesos *unaCaja) {
 		if (unaCaja->pid == pid) {
 			return 1;
@@ -900,6 +895,25 @@ t_TLB* buscarPagEnTLB(int pid, int pag)
 		return 0;
 	}
 	return list_find(listaTLB, (void*) compararPorIdentificador2);
+}
+
+int buscarRefMaxima(t_list *tablaDePaginas)
+{
+	t_tablaPags* new;
+	int i;
+	int maxRef = 0;
+
+	for(i=0;i<list_size(tablaDePaginas);i++)
+	{
+		new = list_get(tablaDePaginas, i);
+
+		if(new->bitReferencia>=maxRef)
+		{
+			maxRef = new->bitReferencia;
+		}
+	}
+
+	return maxRef;
 }
 
 int encontrarPosicionEnTLB(int pid, int pagina)
@@ -948,10 +962,55 @@ int encontrarPosicionEnProcesos(int pid)
 	return i;
 }
 
+int encontrarPosicionEnTablaDePags(int pag, t_list *listaTablaPags)
+{
+	t_tablaPags *new;
+
+	int i=0;
+	int encontrado = 1;
+
+	while( (i<list_size(listaTablaPags)) && encontrado!=0)
+	{
+		new = list_get(listaTablaPags,i);
+
+		if(new->pagina == pag)
+		{
+			encontrado = 0;
+		}
+		else
+		{
+			i++;
+		}
+	}
+	return i;
+}
+
+int encontrarPosReferencia(t_list *listaTablaPags, int ref)
+{
+	t_tablaPags *new;
+
+	int i=0;
+	int encontrado = 1;
+
+	while( (i<list_size(listaTablaPags)) && encontrado!=0)
+	{
+		new = list_get(listaTablaPags,i);
+
+		if(new->bitReferencia == ref)
+		{
+			encontrado = 0;
+		}
+		else
+		{
+			i++;
+		}
+	}
+
+	return i;
+}
+
 void rutinaFlushTLB()
 {
-//	pthread_t hiloFlushTLB;
-
 	printf("Flush de TLB \n");
 
 	pthread_mutex_lock(&mutexTLB);
@@ -959,8 +1018,6 @@ void rutinaFlushTLB()
 	pthread_mutex_unlock(&mutexTLB);
 
 	mostrarTLB();
-//	pthread_create(&hiloFlushTLB, NULL, tablaPag_destroy, NULL);
-//	pthread_join(hiloFlushTLB, NULL);
 }
 
 void rutinaLimpiarMemoriaPrincipal() {
@@ -1001,30 +1058,11 @@ void dumpMemory() {
 	//Hay que recorrer la lista de espacioDeMemoria y levantando marcos y logearlos e ir liberando la memoria.
 }
 
-/*
- void reemplazoLRU(t_tablaPags paginaAReemplazar, t_queue listaTablaPags) {
- t_queue copiaListaTablaPags = listaTablaPags;
-
- while (copiaListaTablaPags.elements->head->data != paginaAReemplazar) {
- copiaListaTablaPags = copiaListaTablaPags.elements->head->next;
- }
- //hay que borrarlo de esta posicion y ponerlo al final de la cola
- //sino eliminamos el primero de la cola y agregamos la pagina al final
- if (copiaListaTablaPags.elements->head->data == paginaAReemplazar) {
- copiaListaTablaPags.elements->head->next =
- copiaListaTablaPags.elements->head->next->next;
- queue_push(listaTablaPags, paginaAReemplazar);
- } else {
- queue_pop(listaTablaPags);
- queue_push(listaTablaPags, paginaAReemplazar);
- }
- }
- */
-
-static t_tablaPags *tablaPag_create(int pagina, int marco) {
+static t_tablaPags *tablaPag_create(int pagina, int marco, int referencia) {
 	t_tablaPags *new = malloc(sizeof(t_tablaPags));
 	new->pagina = pagina;
 	new->marco = marco;
+	new->bitReferencia = referencia;
 
 	return new;
 }
@@ -1033,16 +1071,19 @@ static void tablaPag_destroy(t_tablaPags *self) {
 	free(self);
 }
 
-static t_tablaDeProcesos *tablaProc_create(int pid, int pagina) {
+static t_tablaDeProcesos *tablaProc_create(int pid, int pagina)
+{
 	t_tablaDeProcesos *new = malloc(sizeof(t_tablaDeProcesos));
 	new->pid = pid;
 	new->paginas = pagina;
-	new->tablaDePaginas = queue_create();
+	new->tablaDePaginas = list_create();
 
 	return new;
 }
 
-static void tablaProc_destroy(t_tablaDeProcesos *self) {
+static void tablaProc_destroy(t_tablaDeProcesos *self)
+{
+	list_destroy_and_destroy_elements(self->tablaDePaginas, (void*) tablaPag_destroy);
 	free(self);
 }
 
@@ -1059,19 +1100,6 @@ static t_TLB *TLB_create(int pid, int pagina, int marco)
 static void TLB_destroy(t_TLB *self)
 {
 	free(self);
-}
-
-void liberarTablaDePags() {
-	int i;
-	t_tablaDeProcesos *new;
-
-	for (i = 0; i < list_size(tablaDeProcesos); i++) {
-		new = list_get(tablaDeProcesos, i);
-
-		queue_destroy_and_destroy_elements(new->tablaDePaginas,
-				(void*) tablaPag_destroy);
-
-	}
 }
 
 int tamanioOrdenCPU1(t_orden_CPU mensaje) {
@@ -1093,14 +1121,13 @@ void mostrarTablaDePags(int pid) {
 	new = buscarPID(pid);
 
 	log_info(logger, "mProc: %d", pid);
-	log_info(logger, "Pag  Marco  Posicion");
+	log_info(logger, "Pag  Marco  Posicion  Referencia");
 
-	for (i = 0; i < queue_size(new->tablaDePaginas); i++) {
-		new2 = queue_pop(new->tablaDePaginas);
-		queue_push(new->tablaDePaginas,
-				tablaPag_create(new2->pagina, new2->marco));
-		log_info(logger, " %d  		 %d     	   %d", new2->pagina, new2->marco,
-				i + 1);
+	for (i = 0; i < list_size(new->tablaDePaginas); i++)
+	{
+		new2 = list_get(new->tablaDePaginas, i);
+
+		log_info(logger, " %d  		 %d     	   %d			%d", new2->pagina, new2->marco,	i + 1, new2->bitReferencia);
 	}
 }
 
