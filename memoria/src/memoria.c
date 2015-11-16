@@ -228,6 +228,7 @@ void recibirConexiones1(char * PUERTO_CPU) {
 								0);	//campo longitud(NO SIZEOF DE LONGITUD)
 						memcpy(&mensaje.content, package2, mensaje.contentSize);
 
+
 						if (strncmp(TLBHabil, "NO", 2) == 0)
 						{
 							procesarOrden(mensaje, socketCPU);
@@ -556,7 +557,7 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 					respuestaSwap.pagina = mensaje.pagina;
 					respuestaSwap.orden = 2;
 					strncpy(respuestaSwap.content,
-							memoriaPrincipal + new2->marco * tamMarcos, tamMarcos);
+							memoriaPrincipal + new2->marco * tamMarcos, strlen(memoriaPrincipal + new2->marco * tamMarcos)+1);
 
 					sleep(retardoMem);
 
@@ -578,7 +579,7 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 				else
 					if (mensaje.orden == 2)	// escribe pagina de un proceso
 					{
-						strncpy(memoriaPrincipal + new2->marco * tamMarcos,	respuestaSwap.content, tamMarcos);//Actualizo la memo ppal
+						strncpy(memoriaPrincipal + new2->marco * tamMarcos,	mensaje.content, strlen(mensaje.content));//Actualizo la memo ppal
 						sleep(retardoMem);
 
 						log_info(logger, "Proceso %d Escribiendo: %s en pag: %d", mensaje.pid, memoriaPrincipal + new2->marco * tamMarcos, mensaje.pagina);
@@ -617,7 +618,7 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 
 						respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content);
 
-						strncpy(memoriaPrincipal + marco * tamMarcos, respuestaSwap.content, tamMarcos);
+						strncpy(memoriaPrincipal + marco * tamMarcos, respuestaSwap.content, strlen(respuestaSwap.content));
 
 						respuestaSwap.contentSize = strlen(respuestaSwap.content) + 1;
 
@@ -634,11 +635,13 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 							log_info(logger, "Solicitando mProc: %d Pag: %d a SWAP", mensaje.pid, mensaje.pagina);
 
 							respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content); //Le aviso al SWAP del nuevo contenido
-							strncpy(memoriaPrincipal + marco * tamMarcos, mensaje.content, tamMarcos); //Actualizo la memo ppal
+							strncpy(memoriaPrincipal + marco * tamMarcos, mensaje.content, mensaje.contentSize); //Actualizo la memo ppal
 
 							sleep(retardoMem);
 
 							log_info(logger, "Proceso %d Escribiendo: %s en pag: %d", mensaje.pid, mensaje.content, mensaje.pagina);
+
+							strncpy(respuestaSwap.content, mensaje.content, strlen(mensaje.content));
 
 							enviarRespuestaCPU(respuestaSwap, socketCPU);
 						}
@@ -650,14 +653,22 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 
 void decrementarBitReferencia(t_list* tablaDePaginas)
 {
-	int i;
+	int i, ref;
 	t_tablaPags *new2;
 
 	for(i=0; i<list_size(tablaDePaginas); i++)
 	{
 		new2 = list_get(tablaDePaginas, i);
 
-		list_replace_and_destroy_element(tablaDePaginas, i, tablaPag_create(new2->pagina, new2->marco, new2->bitReferencia-1), (void*) tablaPag_destroy);
+		if( (new2->bitReferencia-1)<0 )
+		{
+			ref = 0;
+		}
+		else
+		{
+			ref = new2->bitReferencia-1;
+		}
+		list_replace_and_destroy_element(tablaDePaginas, i, tablaPag_create(new2->pagina, new2->marco, ref), (void*) tablaPag_destroy);
 	}
 }
 
@@ -687,7 +698,7 @@ void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU)
 		respuestaSwap.pid = entradaTLB->pid;
 		respuestaSwap.pagina = entradaTLB->pagina;
 		respuestaSwap.orden = 2;
-		strncpy(respuestaSwap.content,memoriaPrincipal + entradaTLB->marco * tamMarcos, tamMarcos);
+		strncpy(respuestaSwap.content,memoriaPrincipal + entradaTLB->marco * tamMarcos, strlen(memoriaPrincipal + entradaTLB->marco * tamMarcos)+1);
 
 		respuestaSwap.contentSize = strlen(respuestaSwap.content) + 1;
 
@@ -700,7 +711,7 @@ void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU)
 		respuestaSwap.pid = entradaTLB->pid;
 		respuestaSwap.pagina = entradaTLB->pagina;
 		respuestaSwap.orden = 4;
-		strncpy(memoriaPrincipal + entradaTLB->marco * tamMarcos, mensaje.content, tamMarcos);	//Actualizo la memo ppal
+		strncpy(memoriaPrincipal + entradaTLB->marco * tamMarcos, mensaje.content, mensaje.contentSize);	//Actualizo la memo ppal
 
 		respuestaSwap.contentSize = strlen(mensaje.content);
 		strncpy(respuestaSwap.content, mensaje.content, respuestaSwap.contentSize);

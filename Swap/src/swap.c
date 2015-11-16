@@ -358,8 +358,8 @@ void respuestaMemoria(int pid, int paginas, int mensaje, char pagContent[PACKAGE
 	respuestaMemoria.pid = pid;
 	respuestaMemoria.paginas = paginas;
 	respuestaMemoria.orden = mensaje;
-	respuestaMemoria.contentSize = strlen(pagContent);
-	strcpy(respuestaMemoria.content ,pagContent);
+	respuestaMemoria.contentSize = strlen(pagContent)+1;
+	strncpy(respuestaMemoria.content, pagContent, respuestaMemoria.contentSize);
 
 	void* respuestaPackage = malloc(tamanioRespuestaMemoria(respuestaMemoria));
 
@@ -448,9 +448,9 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 			// Tampoco me gusta strncpy
 
 			t_espacioOcupado* pidOcup = buscarPIDEnOcupados(ordenMemoria.pid);
-			char * pagContent = malloc(20);
+			char * pagContent = malloc(tamanioPagSwap);
 
-			strncpy(pagContent,pidOcup->inicioSwap+(ordenMemoria.paginas*4),4);
+			strncpy(pagContent,pidOcup->inicioSwap+(ordenMemoria.paginas*tamanioPagSwap), strlen(pidOcup->inicioSwap+(ordenMemoria.paginas*tamanioPagSwap))+1);
 
 			sleep(retardoSwap);
 
@@ -473,12 +473,12 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 			{
 				if (ordenMemoria.orden == 2) // 2=Escribir
 				{
-					int contentSize = strlen(ordenMemoria.content); // TODO: Fijarse, creo que es redundante, ordenMemoria.contentSize deberia tener la longitud correcta
+					//int contentSize = strlen(ordenMemoria.content); // TODO: Fijarse, creo que es redundante, ordenMemoria.contentSize deberia tener la longitud correcta
 
 					t_espacioOcupado* pidOcup = buscarPIDEnOcupados(ordenMemoria.pid);
 
-					memcpy(pidOcup->inicioSwap + ordenMemoria.paginas*tamanioPagSwap , ordenMemoria.content, contentSize);
-					//strncpy(pidOcup->inicioSwap+(ordenMemoria.paginas*4), ordenMemoria.content, contentSize);
+					//memcpy(pidOcup->inicioSwap + ordenMemoria.paginas*tamanioPagSwap , ordenMemoria.content, contentSize+1);
+					strncpy(pidOcup->inicioSwap+(ordenMemoria.paginas*tamanioPagSwap), ordenMemoria.content, ordenMemoria.contentSize+1);
 
 					sleep(retardoSwap);
 
@@ -556,7 +556,7 @@ int tamanio_archivo(int fd){
 }
 int tamanioRespuestaMemoria(t_orden_memoria unaPersona)
 {
-	return (sizeof(unaPersona.pid)+sizeof(unaPersona.paginas)+sizeof(unaPersona.orden)+sizeof(unaPersona.contentSize)+strlen(unaPersona.content));
+	return (sizeof(unaPersona.pid)+sizeof(unaPersona.paginas)+sizeof(unaPersona.orden)+sizeof(unaPersona.contentSize)+unaPersona.contentSize);
 };
 
 void mostrarListas()

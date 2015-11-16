@@ -396,7 +396,7 @@ t_orden_CPU enviarOrdenAMemoria(int pid, int orden, int paginas, char *content, 
 	mensajeMemoria.orden = orden;
 	mensajeMemoria.pagina = paginas;
 	mensajeMemoria.contentSize = strlen(content)+1;
-	strcpy(mensajeMemoria.content,content);
+	strncpy(mensajeMemoria.content,content, mensajeMemoria.contentSize);
 
 	int socketMemoria = conectarse(ipMemoria, puertoMemoria);
 
