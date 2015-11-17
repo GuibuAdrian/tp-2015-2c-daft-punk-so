@@ -30,7 +30,8 @@
 typedef struct {
 	int pagina;
 	int marco;
-	int bitReferencia;
+	int bitReferencia;  //Funcion: para LRU para saber la ultima ref || para CLOCK para saber BIT de USO
+	int bitModificado;
 } t_tablaPags;
 
 typedef struct {
@@ -64,7 +65,7 @@ char *politicaDeReemplazo;
 
 static t_tablaDeProcesos *tablaProc_create(int pid, int pagina);
 static void tablaProc_destroy(t_tablaDeProcesos *self);
-static t_tablaPags *tablaPag_create(int pagina, int marco, int referencia);
+static t_tablaPags *tablaPag_create(int pagina, int marco, int referencia, int modificado);
 static void tablaPag_destroy(t_tablaPags *self);
 static t_TLB *TLB_create(int pid, int pagina, int marco);
 static void TLB_destroy(t_TLB *self);
@@ -76,27 +77,32 @@ t_tablaPags* buscarPagEnTablaDePags(int pagina, t_tablaDeProcesos* new);
 t_tablaDeProcesos* buscarPID(int pid);
 t_TLB* removerPIDEntrada(int pid);
 t_TLB* buscarPagEnTLB(int pid, int pag);
+int buscarMarcoEnTablaDePags(t_tablaDeProcesos* new, int marcoBuscado);
+int buscarRefMaxima(t_list *tablaDePaginas);
 int encontrarPosicionEnTLB(int pid, int pagina);
 int encontrarPosicionEnProcesos(int pid);
 int encontrarPosicionEnTablaDePags(int pag, t_list *listaTablaPags);
 int encontrarPosReferencia(t_list *listaTablaPags, int ref);
+int encontrarPosUsoYModificado_cero(t_list *listaTablaPags);
+int encontrarPosUso_cero_YModificado_uno(t_list *listaTablaPags);
 
 void recibirConexiones1(char * PUERTO_CPU);
 t_orden_CPU enviarOrdenASwap(int pid, int orden, int paginas, char *content);
 void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU);
 void procesarOrden(t_orden_CPU mensaje, int socketCPU);
-void mostrarTablaDePags(int pid);
-void mostrarTLB();
+void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU);
+void iniciarProceso(int pid, int paginas);
+void finalizarProceso(int pid);
 void rutinaFlushTLB();
 void limpiarMemoriaPrincipal();
 void dumpMemoriaPrincipal();
 void dumpMemory();
-void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU);
 int seEncuentraEnTLB( t_orden_CPU);
 void borrarPIDEnTLB(int pid);
 void cambiarBitReferencia(int pid, int pagina);
-void cambiarBitReferencia(int pid, int pag);
-int buscarRefMaxima(t_list *tablaDePaginas);
+void cambiarBitUsoYModificado(int pid, int pagina, int orden, int marco);
+void mostrarTablaDePags(int pid);
+void mostrarTLB();
 
 int main() {
 	printf("\n");
@@ -246,7 +252,6 @@ void recibirConexiones1(char * PUERTO_CPU) {
 								log_info(logger, "Proc: %d, Pag: %d. Esta en TLB", mensaje.pid, mensaje.pagina);
 								mostrarTLB();
 
-								cambiarBitReferencia(mensaje.pid, mensaje.pagina);
 
 								operarConTLB(new, mensaje, socketCPU);
 							}
@@ -308,6 +313,44 @@ void actualizarTLB(int pid, int pag, int marco)
 	list_add(listaTLB, TLB_create(pid, pag, marco));
 }
 
+t_tablaPags* clockMejorado(t_list *listaTablaPags, int pag, int pid, int orden)
+{
+	t_tablaPags* new2;
+	int posEncontrado;
+
+	posEncontrado = encontrarPosUsoYModificado_cero(listaTablaPags);
+
+	if(posEncontrado == -1)
+	{
+		printf("No hay 0 0");
+		posEncontrado = encontrarPosUso_cero_YModificado_uno(listaTablaPags);
+		mostrarTablaDePags(pid);
+		if(posEncontrado == -1)
+		{
+			printf("No hay 0 1");
+			posEncontrado = encontrarPosUsoYModificado_cero(listaTablaPags);
+
+			if(posEncontrado == -1)
+			{
+				posEncontrado = encontrarPosUso_cero_YModificado_uno(listaTablaPags);
+			}
+		}
+	}
+
+	new2 = list_remove(listaTablaPags, posEncontrado);
+
+	if(orden == 1)
+	{
+		list_add(listaTablaPags, tablaPag_create(pag, new2->marco, 1, 0));
+	}
+	else
+	{
+		list_add(listaTablaPags, tablaPag_create(pag, new2->marco, 1, 1));
+	}
+
+	return new2;
+}
+
 t_tablaPags* lru(t_list *listaTablaPags, int pag, int pid)
 {
 	t_tablaPags* new2, *new3;
@@ -321,12 +364,12 @@ t_tablaPags* lru(t_list *listaTablaPags, int pag, int pid)
 	{
 		new3 = list_get(listaTablaPags, i);
 
-		list_replace_and_destroy_element(listaTablaPags, i, tablaPag_create(new3->pagina, new3->marco, new3->bitReferencia-1), (void*) tablaPag_destroy);
+		list_replace_and_destroy_element(listaTablaPags, i, tablaPag_create(new3->pagina, new3->marco, new3->bitReferencia-1, -1), (void*) tablaPag_destroy);
 	}
 
 	int refMax = buscarRefMaxima(listaTablaPags);
 
-	list_add(listaTablaPags, tablaPag_create(pag, new2->marco, refMax+1));
+	list_add(listaTablaPags, tablaPag_create(pag, new2->marco, refMax+1, -1));
 
 	return new2;
 }
@@ -337,12 +380,12 @@ t_tablaPags* fifo(t_list *listaTablaPags, int pag)
 
 	new2 = list_remove(listaTablaPags, 0);
 
-	list_add(listaTablaPags, tablaPag_create(pag, new2->marco, 0));
+	list_add(listaTablaPags, tablaPag_create(pag, new2->marco, 0, -1));
 
 	return new2;
 }
 
-t_tablaPags* reemplazarPag(t_tablaDeProcesos* new, int pag, int pid) {
+t_tablaPags* reemplazarPag(t_tablaDeProcesos* new, int pag, int pid, int orden) {
 	t_tablaPags* new2;
 
 	if(strncmp(politicaDeReemplazo, "FIFO",4)==0)
@@ -359,30 +402,15 @@ t_tablaPags* reemplazarPag(t_tablaDeProcesos* new, int pag, int pid) {
 
 			new2 = lru(new->tablaDePaginas, pag, pid);
 		}
+		else
+		{
+			log_info(logger, "CLOCK MEJORADO");
+
+			new2 = clockMejorado(new->tablaDePaginas, pag, pid, orden);
+		}
 	}
 
 	return new2;
-}
-
-int buscarMarcoEnTablaDePags(t_tablaDeProcesos* new, int marcoBuscado)
-{
-	int i = 0, encontrado = -1;
-	t_tablaPags* new2;
-
-	while (i < list_size(new->tablaDePaginas))
-	{
-		new2 = list_get(new->tablaDePaginas, i);
-
-
-		if ((encontrado == -1) && (new2->marco == marcoBuscado))
-		{
-			encontrado = 1; //Encontre el marco buscado en memoria. Devuelvo 1
-		}
-
-		i++;
-	}
-
-	return encontrado;
 }
 
 int asignarMarco()
@@ -430,7 +458,7 @@ int asignarMarco()
 	}
 }
 
-int actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag)
+int actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag, int orden)
 {
 	t_tablaPags* new2;
 	int totalPag = list_size(new->tablaDePaginas);
@@ -440,7 +468,7 @@ int actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag)
 	{
 		log_info(logger, "Reemplazando");
 
-		new2 = reemplazarPag(new, pag, new->pid);
+		new2 = reemplazarPag(new, pag, new->pid, orden);
 
 		t_TLB* entradaTLB = buscarPagEnTLB(new->pid, new2->pagina);
 
@@ -464,14 +492,37 @@ int actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag)
 			return marco;
 		}
 
-		int refMax = buscarRefMaxima(new->tablaDePaginas);
-
-		if(!list_is_empty(new->tablaDePaginas))
+		if(strncmp(politicaDeReemplazo, "FIFO",3)==0)
 		{
-			refMax++;
+			list_add(new->tablaDePaginas, tablaPag_create(pag, marco, -1, -1));
+		}
+		else
+		{
+			if(strncmp(politicaDeReemplazo, "LRU",3)==0)
+			{
+				int refMax = buscarRefMaxima(new->tablaDePaginas);
+
+				if(!list_is_empty(new->tablaDePaginas))
+				{
+					refMax++;
+				}
+
+				list_add(new->tablaDePaginas, tablaPag_create(pag, marco, refMax, -1));
+			}
+			else
+			{
+				if(orden == 1)
+				{
+					list_add(new->tablaDePaginas, tablaPag_create(pag, marco, 1, 0));
+				}
+				else
+				{
+					list_add(new->tablaDePaginas, tablaPag_create(pag, marco, 1, 1));
+				}
+			}
+
 		}
 
-		list_add(new->tablaDePaginas, tablaPag_create(pag, marco, refMax));
 	}
 
 	pthread_mutex_lock(&mutexTLB);
@@ -483,48 +534,6 @@ int actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag)
 	mostrarTablaDePags(new->pid);
 
 	return marco;
-}
-
-void iniciarProceso(int pid, int paginas) {
-	list_add(tablaDeProcesos, tablaProc_create(pid, paginas));
-
-	log_info(logger, "Proceso %d iniciado de %d pags", pid, paginas);
-}
-
-void finalizarProceso(int pid)
-{
-	int i;
-	t_tablaDeProcesos* new;
-	t_tablaPags *new2;
-
-	int posProc = encontrarPosicionEnProcesos(pid);
-
-	new = list_remove(tablaDeProcesos, posProc);
-
-	for(i=0; i<list_size(new->tablaDePaginas);i++)
-	{
-		new2 = list_remove(new->tablaDePaginas, i);
-
-		t_TLB* new3 = buscarPagEnTLB(pid, new2->pagina);
-
-		if(new3!=NULL)
-		{
-			int posTLB = encontrarPosicionEnTLB(pid, new2->pagina);
-
-			list_remove_and_destroy_element(listaTLB, posTLB, (void*) TLB_destroy);
-
-		}
-
-		tablaPag_destroy(new2);
-
-	}
-
-	tablaProc_destroy(new);
-
-
-	borrarPIDEnTLB(pid);
-
-	log_info(logger, "Proceso %d finalizado", pid);
 }
 
 void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
@@ -557,7 +566,17 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 			{
 				log_info(logger, "Proc: %d, Pag: %d. Esta en memoria principal, marco: %d", mensaje.pid, mensaje.pagina, new2->marco);
 
-				cambiarBitReferencia(mensaje.pid, mensaje.pagina);
+				if(strncmp(politicaDeReemplazo, "LRU",3)==0)
+				{
+					cambiarBitReferencia(mensaje.pid, mensaje.pagina);
+				}
+				else
+				{
+					if(strncmp(politicaDeReemplazo, "CLOCK",3)==0)
+					{
+						cambiarBitUsoYModificado(mensaje.pid, mensaje.pagina, mensaje.orden, new2->marco);
+					}
+				}
 
 				if (mensaje.orden == 1)	// leer pagina de un proceso
 				{
@@ -607,7 +626,7 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 			{
 				new = buscarPID(mensaje.pid);
 
-				int marco = actualizarMemoriaPpal(new, mensaje.pagina);
+				int marco = actualizarMemoriaPpal(new, mensaje.pagina, mensaje.orden);
 
 				log_info(logger, "mProc: %d, Pag: %d. No esta en memoria principal. Marco asignado: %d", mensaje.pid, mensaje.pagina, marco);
 
@@ -663,6 +682,18 @@ void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU)
 {
 	t_orden_CPU respuestaSwap;
 
+	if(strncmp(politicaDeReemplazo, "LRU",3)==0)
+	{
+		cambiarBitReferencia(mensaje.pid, mensaje.pagina);
+	}
+	else
+	{
+		if(strncmp(politicaDeReemplazo, "CLOCK",3)==0)
+		{
+			cambiarBitUsoYModificado(mensaje.pid, mensaje.pagina, mensaje.orden, entradaTLB->marco);
+		}
+	}
+
 	if (mensaje.orden == 1)// leer pagina de un proceso
 	{
 		respuestaSwap.pid = entradaTLB->pid;
@@ -692,6 +723,101 @@ void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU)
 
 		respuestaSwap = enviarOrdenASwap(entradaTLB->pid, mensaje.orden, entradaTLB->pagina, mensaje.content); //Le aviso al SWAP del nuevo contenido
 	}
+}
+
+void iniciarProceso(int pid, int paginas) {
+	list_add(tablaDeProcesos, tablaProc_create(pid, paginas));
+
+	log_info(logger, "Proceso %d iniciado de %d pags", pid, paginas);
+}
+
+void finalizarProceso(int pid)
+{
+	int i;
+	t_tablaDeProcesos* new;
+	t_tablaPags *new2;
+
+	int posProc = encontrarPosicionEnProcesos(pid);
+
+	new = list_remove(tablaDeProcesos, posProc);
+
+	for(i=0; i<list_size(new->tablaDePaginas);i++)
+	{
+		new2 = list_remove(new->tablaDePaginas, i);
+
+		t_TLB* new3 = buscarPagEnTLB(pid, new2->pagina);
+
+		if(new3!=NULL)
+		{
+			int posTLB = encontrarPosicionEnTLB(pid, new2->pagina);
+
+			list_remove_and_destroy_element(listaTLB, posTLB, (void*) TLB_destroy);
+
+		}
+
+		tablaPag_destroy(new2);
+
+	}
+
+	tablaProc_destroy(new);
+
+
+	borrarPIDEnTLB(pid);
+
+	log_info(logger, "Proceso %d finalizado", pid);
+}
+
+void cambiarBitUsoYModificado(int pid, int pagina, int orden, int marco)
+{
+	t_tablaDeProcesos* new;
+
+	new = buscarPID(pid);
+
+	int posPag = encontrarPosicionEnTablaDePags(pagina, new->tablaDePaginas);
+
+	if(orden == 1)
+	{
+		list_replace_and_destroy_element(new->tablaDePaginas, posPag, tablaPag_create(pagina, marco, 1, 0), (void*) tablaPag_destroy);
+	}
+	else
+	{
+		list_replace_and_destroy_element(new->tablaDePaginas, posPag, tablaPag_create(pagina, marco, 1, 1), (void*) tablaPag_destroy);
+	}
+}
+
+void cambiarBitReferencia(int pid, int pagina)
+{
+	int i;
+	t_tablaDeProcesos* new = buscarPID(pid);
+	t_tablaPags* new2;
+	t_tablaPags* pagBuscada = buscarPagEnMemoriaPpal(pid, pagina);
+
+	for(i=0; i<list_size(new->tablaDePaginas); i++)
+	{
+		new2 = list_get(new->tablaDePaginas, i);
+
+		if(new2->bitReferencia>pagBuscada->bitReferencia)
+		{
+			list_replace_and_destroy_element(new->tablaDePaginas, i, tablaPag_create(new2->pagina, new2->marco, new2->bitReferencia-1, -1), (void*) tablaPag_destroy);
+		}
+	}
+
+	int refMax = buscarRefMaxima(new->tablaDePaginas);
+
+	int posPag = encontrarPosicionEnTablaDePags(pagina, new->tablaDePaginas);
+	new2 = list_get(new->tablaDePaginas, posPag);
+
+	if(refMax+1>(maxMarcos-1))
+	{
+		list_replace_and_destroy_element(new->tablaDePaginas, posPag, tablaPag_create(new2->pagina, new2->marco, refMax, -1), (void*) tablaPag_destroy);
+
+	}
+	else
+	{
+		list_replace_and_destroy_element(new->tablaDePaginas, posPag, tablaPag_create(new2->pagina, new2->marco, refMax+1, -1), (void*) tablaPag_destroy);
+	}
+
+	mostrarTablaDePags(pid);
 }
 
 void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU) {
@@ -725,41 +851,6 @@ void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU) {
 	send(socketCPU, mensajeSwapPackage, tamanioOrdenCPU(mensajeSwap), 0);
 
 	free(mensajeSwapPackage);
-}
-
-void cambiarBitReferencia(int pid, int pagina)
-{
-	int i;
-	t_tablaDeProcesos* new = buscarPID(pid);
-	t_tablaPags* new2;
-	t_tablaPags* pagBuscada = buscarPagEnMemoriaPpal(pid, pagina);
-
-	for(i=0; i<list_size(new->tablaDePaginas); i++)
-	{
-		new2 = list_get(new->tablaDePaginas, i);
-
-		if(new2->bitReferencia>pagBuscada->bitReferencia)
-		{
-			list_replace_and_destroy_element(new->tablaDePaginas, i, tablaPag_create(new2->pagina, new2->marco, new2->bitReferencia-1), (void*) tablaPag_destroy);
-		}
-	}
-
-	int refMax = buscarRefMaxima(new->tablaDePaginas);
-
-	int posPag = encontrarPosicionEnTablaDePags(pagina, new->tablaDePaginas);
-	new2 = list_get(new->tablaDePaginas, posPag);
-
-	if(refMax+1>=(maxMarcos-1))
-	{
-		list_replace_and_destroy_element(new->tablaDePaginas, posPag, tablaPag_create(new2->pagina, new2->marco, refMax), (void*) tablaPag_destroy);
-
-	}
-	else
-	{
-		list_replace_and_destroy_element(new->tablaDePaginas, posPag, tablaPag_create(new2->pagina, new2->marco, refMax+1), (void*) tablaPag_destroy);
-	}
-
-	mostrarTablaDePags(pid);
 }
 
 t_orden_CPU recibirRespuestaSwap(int socketMemoria) {
@@ -913,6 +1004,27 @@ t_TLB* buscarPagEnTLB(int pid, int pag)
 	return list_find(listaTLB, (void*) compararPorIdentificador2);
 }
 
+int buscarMarcoEnTablaDePags(t_tablaDeProcesos* new, int marcoBuscado)
+{
+	int i = 0, encontrado = -1;
+	t_tablaPags* new2;
+
+	while (i < list_size(new->tablaDePaginas))
+	{
+		new2 = list_get(new->tablaDePaginas, i);
+
+
+		if ((encontrado == -1) && (new2->marco == marcoBuscado))
+		{
+			encontrado = 1; //Encontre el marco buscado en memoria. Devuelvo 1
+		}
+
+		i++;
+	}
+
+	return encontrado;
+}
+
 int buscarRefMaxima(t_list *tablaDePaginas)
 {
 	t_tablaPags* new;
@@ -1025,6 +1137,66 @@ int encontrarPosReferencia(t_list *listaTablaPags, int ref)
 	return i;
 }
 
+int encontrarPosUso_cero_YModificado_uno(t_list *listaTablaPags)
+{
+	t_tablaPags *new;
+
+	int i=0;
+	int encontrado = -1;
+
+	while( (i<list_size(listaTablaPags)) && encontrado!=0)
+	{
+		new = list_get(listaTablaPags,i);
+
+		if( (new->bitReferencia == 0) && (new->bitModificado == 1) )
+		{
+			encontrado = 0;
+		}
+		else
+		{
+			list_replace_and_destroy_element(listaTablaPags, i, tablaPag_create(new->pagina, new->marco, 0, new->bitModificado), (void*) tablaPag_destroy);
+
+			i++;
+		}
+	}
+
+	if(encontrado == 0)
+	{
+		return i;
+	}
+
+	return -1;
+}
+
+int encontrarPosUsoYModificado_cero(t_list *listaTablaPags)
+{
+	t_tablaPags *new;
+
+	int i=0;
+	int encontrado = -1;
+
+	while( (i<list_size(listaTablaPags)) && encontrado!=0)
+	{
+		new = list_get(listaTablaPags,i);
+
+		if( (new->bitReferencia == 0) && (new->bitModificado == 0) )
+		{
+			encontrado = 0;
+		}
+		else
+		{
+			i++;
+		}
+	}
+
+	if(encontrado == 0)
+	{
+		return i;
+	}
+
+	return -1;
+}
+
 void rutinaFlushTLB()
 {
 	printf("Flush de TLB \n");
@@ -1074,11 +1246,13 @@ void dumpMemory() {
 	//Hay que recorrer la lista de espacioDeMemoria y levantando marcos y logearlos e ir liberando la memoria.
 }
 
-static t_tablaPags *tablaPag_create(int pagina, int marco, int referencia) {
+static t_tablaPags *tablaPag_create(int pagina, int marco, int referencia, int modificado)
+{
 	t_tablaPags *new = malloc(sizeof(t_tablaPags));
 	new->pagina = pagina;
 	new->marco = marco;
 	new->bitReferencia = referencia;
+	new->bitModificado = modificado;
 
 	return new;
 }
@@ -1137,13 +1311,13 @@ void mostrarTablaDePags(int pid) {
 	new = buscarPID(pid);
 
 	log_info(logger, "mProc: %d", pid);
-	log_info(logger, "Pag  Marco  Posicion  Referencia");
+	log_info(logger, "Pag  Marco  Posicion  Referencia  Modificado");
 
 	for (i = 0; i < list_size(new->tablaDePaginas); i++)
 	{
 		new2 = list_get(new->tablaDePaginas, i);
 
-		log_info(logger, " %d  		 %d     	   %d			%d", new2->pagina, new2->marco,	i + 1, new2->bitReferencia);
+		log_info(logger, " %d  		 %d     	   %d			%d			%d", new2->pagina, new2->marco,	i + 1, new2->bitReferencia, new2->bitModificado);
 	}
 }
 
