@@ -55,7 +55,7 @@ typedef struct {
 } t_orden_CPU;
 
 t_log* logger;
-t_list *tablaDeProcesos, *espacioDeMemoria, *listaTLB;
+t_list *tablaDeProcesos, *listaTLB;
 pthread_mutex_t mutexTLB, mutex2;
 int socketSwap;
 char *TLBHabil;
@@ -94,7 +94,7 @@ void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU);
 void iniciarProceso(int pid, int paginas);
 void finalizarProceso(int pid);
 void rutinaFlushTLB();
-void limpiarMemoriaPrincipal();
+void rutinaLimpiarMemoriaPrincipal();
 void dumpMemoriaPrincipal();
 void dumpMemory();
 int seEncuentraEnTLB( t_orden_CPU);
@@ -109,7 +109,7 @@ int main() {
 	printf("~~~~~~~~~~MEMORIA~~~~~~~~~~\n\n");
 
 	signal(SIGUSR1, rutinaFlushTLB);
-	signal(SIGUSR2, limpiarMemoriaPrincipal);
+	signal(SIGUSR2, rutinaLimpiarMemoriaPrincipal);
 	signal(SIGPOLL, dumpMemoriaPrincipal);
 
 	logger = log_create("logsTP", "Memoria", true, LOG_LEVEL_INFO);
@@ -1209,22 +1209,8 @@ void rutinaFlushTLB()
 }
 
 void rutinaLimpiarMemoriaPrincipal() {
-	pthread_t hiloLimpiezaMemoriaPrincipal;
-	t_queue *colaCopiaTLB;
-
 	t_list *listaDeTLB;
-	listaDeTLB = queue_pop(colaCopiaTLB);
-	t_TLB *elementoTLB = list_get(listaDeTLB, 0);
-
 	printf("Limpiar la Memoria Principal \n");
-	pthread_create(&hiloLimpiezaMemoriaPrincipal, NULL, limpiarMemoriaPrincipal,
-			NULL);
-	pthread_join(hiloLimpiezaMemoriaPrincipal, NULL);
-}
-
-void limpiarMemoriaPrincipal() {
-	list_destroy(espacioDeMemoria);
-	free(espacioDeMemoria);
 }
 
 void dumpMemoriaPrincipal() {
@@ -1317,7 +1303,7 @@ void mostrarTablaDePags(int pid) {
 	{
 		new2 = list_get(new->tablaDePaginas, i);
 
-		log_info(logger, " %d  		 %d     	   %d			%d			%d", new2->pagina, new2->marco,	i + 1, new2->bitReferencia, new2->bitModificado);
+		log_info(logger, "%4d%10d%19d%22d%25d", new2->pagina, new2->marco,	i + 1, new2->bitReferencia, new2->bitModificado);
 	}
 }
 
@@ -1339,7 +1325,7 @@ void mostrarTLB()
 		{
 			new = list_get(listaTLB,i);
 
-			log_info(logger, " %d  		 %d     	   %d", new->pid, new->pagina, new->marco);
+			log_info(logger, "%3d%12d%15d", new->pid, new->pagina, new->marco);
 		}
 	}
 }
