@@ -37,6 +37,7 @@ typedef struct {
 typedef struct {
 	int pid;
 	int paginas;
+	int fallos;
 	t_list *tablaDePaginas;
 } t_tablaDeProcesos;
 
@@ -56,14 +57,14 @@ typedef struct {
 
 t_log* logger;
 t_list *tablaDeProcesos, *listaTLB;
-pthread_mutex_t mutexTLB, mutex2;
+pthread_mutex_t mutexTLB, mutexMemoFlush;
 int socketSwap;
 char *TLBHabil;
 int maxMarcos, cantMarcos, tamMarcos, entradasTLB, retardoMem;
 void* memoriaPrincipal;
 char *politicaDeReemplazo;
 
-static t_tablaDeProcesos *tablaProc_create(int pid, int pagina);
+static t_tablaDeProcesos *tablaProc_create(int pid, int pagina, int fallos);
 static void tablaProc_destroy(t_tablaDeProcesos *self);
 static t_tablaPags *tablaPag_create(int pagina, int marco, int referencia, int modificado);
 static void tablaPag_destroy(t_tablaPags *self);
@@ -104,6 +105,7 @@ void cambiarBitReferencia(int pid, int pagina);
 void cambiarBitUsoYModificado(int pid, int pagina, int orden, int marco);
 void mostrarTablaDePags(int pid);
 void mostrarTLB();
+void mostrarMemoriaPpal();
 
 int main() {
 	printf("\n");
@@ -132,7 +134,7 @@ int main() {
 
 
 	pthread_mutex_init(&mutexTLB, NULL);
-	pthread_mutex_init(&mutex2, NULL);
+	pthread_mutex_init(&mutexMemoFlush, NULL);
 
 
 	socketSwap = conectarse(IP, PUERTO_SWAP);
@@ -510,9 +512,7 @@ int actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag, int orden)
 					list_add(new->tablaDePaginas, tablaPag_create(pag, marco, 1, 1));
 				}
 			}
-
 		}
-
 	}
 
 	pthread_mutex_lock(&mutexTLB);
@@ -550,11 +550,17 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 		}
 		else
 		{
+			pthread_mutex_lock(&mutexMemoFlush);
+
 			new2 = buscarPagEnMemoriaPpal(mensaje.pid, mensaje.pagina);
+
+			pthread_mutex_unlock(&mutexMemoFlush);
 
 			if (new2 != NULL) //Si esta en Memoria Principal
 			{
 				log_info(logger, "Proc: %d, Pag: %d. Esta en memoria principal, marco: %d", mensaje.pid, mensaje.pagina, new2->marco);
+
+				pthread_mutex_lock(&mutexTLB);
 
 				if(strncmp(politicaDeReemplazo, "LRU",3)==0)
 				{
@@ -573,8 +579,13 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 					respuestaSwap.pid = mensaje.pid;
 					respuestaSwap.pagina = mensaje.pagina;
 					respuestaSwap.orden = 2;
+
+					pthread_mutex_lock(&mutexMemoFlush);
+
 					strncpy(respuestaSwap.content,
 							memoriaPrincipal + new2->marco * tamMarcos, strlen(memoriaPrincipal + new2->marco * tamMarcos)+1);
+
+					pthread_mutex_unlock(&mutexMemoFlush);
 
 					sleep(retardoMem);
 
@@ -586,9 +597,6 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 
 					enviarRespuestaCPU(respuestaSwap, socketCPU);//Le devuelvo el contenido del marco al CPU
 
-					pthread_mutex_lock(&mutexTLB);
-					actualizarTLB(respuestaSwap.pid, respuestaSwap.pagina, new2->marco);
-					pthread_mutex_unlock(&mutexTLB);
 
 					mostrarTLB();
 					enviarRespuestaCPU(mensaje, socketCPU);
@@ -596,7 +604,12 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 				else
 					if (mensaje.orden == 2)	// escribe pagina de un proceso
 					{
+						pthread_mutex_unlock(&mutexMemoFlush);
+
 						strncpy(memoriaPrincipal + new2->marco * tamMarcos,	mensaje.content, strlen(mensaje.content));//Actualizo la memo ppal
+
+						pthread_mutex_unlock(&mutexMemoFlush);
+
 						sleep(retardoMem);
 
 						log_info(logger, "Proceso %d Escribiendo: %s en pag: %d", mensaje.pid, memoriaPrincipal + new2->marco * tamMarcos, mensaje.pagina);
@@ -604,19 +617,23 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 						respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, new2->pagina, mensaje.content); //Le aviso al SWAP del nuevo contenido//Le aviso al SWAP del nuevo contenido
 						enviarRespuestaCPU(respuestaSwap, socketCPU); //Le devuelvo el contenido del marco al CPU
 
-						pthread_mutex_lock(&mutexTLB);
-						actualizarTLB(respuestaSwap.pid, respuestaSwap.pagina, new2->marco);
-						pthread_mutex_unlock(&mutexTLB);
-
 						mostrarTLB();
 						enviarRespuestaCPU(mensaje, socketCPU);
 					}
+
+				actualizarTLB(respuestaSwap.pid, respuestaSwap.pagina, new2->marco);
+
+				pthread_mutex_unlock(&mutexTLB);
 			}
 			else  //No esta en Memoria Principal. La traigo desde SWAP
 			{
 				new = buscarPID(mensaje.pid);
 
+				pthread_mutex_lock(&mutexMemoFlush);
+
 				int marco = actualizarMemoriaPpal(new, mensaje.pagina, mensaje.orden);
+
+				pthread_mutex_unlock(&mutexMemoFlush);
 
 				log_info(logger, "mProc: %d, Pag: %d. No esta en memoria principal. Marco asignado: %d", mensaje.pid, mensaje.pagina, marco);
 
@@ -635,7 +652,11 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 
 						respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content);
 
+						pthread_mutex_lock(&mutexMemoFlush);
+
 						strncpy(memoriaPrincipal + marco * tamMarcos, respuestaSwap.content, strlen(respuestaSwap.content));
+
+						pthread_mutex_unlock(&mutexMemoFlush);
 
 						respuestaSwap.contentSize = strlen(respuestaSwap.content) + 1;
 
@@ -652,7 +673,12 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 							log_info(logger, "Solicitando mProc: %d Pag: %d a SWAP", mensaje.pid, mensaje.pagina);
 
 							respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content); //Le aviso al SWAP del nuevo contenido
+
+							pthread_mutex_lock(&mutexMemoFlush);
+
 							strncpy(memoriaPrincipal + marco * tamMarcos, mensaje.content, mensaje.contentSize); //Actualizo la memo ppal
+
+							pthread_mutex_unlock(&mutexMemoFlush);
 
 							sleep(retardoMem);
 
@@ -689,7 +715,12 @@ void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU)
 		respuestaSwap.pid = entradaTLB->pid;
 		respuestaSwap.pagina = entradaTLB->pagina;
 		respuestaSwap.orden = 2;
-		strncpy(respuestaSwap.content,memoriaPrincipal + entradaTLB->marco * tamMarcos, strlen(memoriaPrincipal + entradaTLB->marco * tamMarcos)+1);
+
+		pthread_mutex_lock(&mutexMemoFlush);
+
+		strncpy(respuestaSwap.content, memoriaPrincipal + entradaTLB->marco * tamMarcos, strlen(memoriaPrincipal + entradaTLB->marco * tamMarcos)+1);
+
+		pthread_mutex_unlock(&mutexMemoFlush);
 
 		respuestaSwap.contentSize = strlen(respuestaSwap.content) + 1;
 
@@ -702,12 +733,17 @@ void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU)
 		respuestaSwap.pid = entradaTLB->pid;
 		respuestaSwap.pagina = entradaTLB->pagina;
 		respuestaSwap.orden = 4;
+
+		pthread_mutex_lock(&mutexMemoFlush);
+
 		strncpy(memoriaPrincipal + entradaTLB->marco * tamMarcos, mensaje.content, mensaje.contentSize);	//Actualizo la memo ppal
 
 		respuestaSwap.contentSize = strlen(mensaje.content);
 		strncpy(respuestaSwap.content, mensaje.content, respuestaSwap.contentSize);
 
 		log_info(logger, "Proceso %d Escribiendo: %s en pag: %d", entradaTLB->pid, memoriaPrincipal + entradaTLB->marco * tamMarcos, entradaTLB->pagina);
+
+		pthread_mutex_unlock(&mutexMemoFlush);
 
 		enviarRespuestaCPU(respuestaSwap, socketCPU); //Le devuelvo el contenido del marco al CPU
 
@@ -716,7 +752,7 @@ void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU)
 }
 
 void iniciarProceso(int pid, int paginas) {
-	list_add(tablaDeProcesos, tablaProc_create(pid, paginas));
+	list_add(tablaDeProcesos, tablaProc_create(pid, paginas, 0));
 
 	log_info(logger, "Proceso %d iniciado de %d pags", pid, paginas);
 }
@@ -785,7 +821,6 @@ void aumentarBitReferencia(t_list* new)
 		new2 = list_get(new, i);
 
 		list_replace_and_destroy_element(new, i, tablaPag_create(new2->pagina, new2->marco, new2->bitReferencia+1, -1), (void*) tablaPag_destroy);
-
 	}
 }
 
@@ -1049,6 +1084,11 @@ int encontrarPosicionEnTLB(int pid, int pagina)
 			i++;
 		}
 	}
+
+	if(encontrado)
+	{
+		return -1;
+	}
 	return i;
 }
 
@@ -1193,9 +1233,38 @@ void rutinaFlushTLB()
 	mostrarTLB();
 }
 
-void rutinaLimpiarMemoriaPrincipal() {
-	t_list *listaDeTLB;
-	printf("Limpiar la Memoria Principal \n");
+void rutinaLimpiarMemoriaPrincipal()
+{
+	log_info(logger, "Limpiar la Memoria Principal");
+
+	int i, j;
+	t_tablaDeProcesos* new;
+	t_tablaPags* new2;
+
+	pthread_mutex_lock(&mutexMemoFlush);
+
+	for(i=0; i<list_size(tablaDeProcesos); i++)
+	{
+		new = list_get(tablaDeProcesos, i);
+
+		for(j=0; j<list_size(new->tablaDePaginas);j++)
+		{
+			new2 = list_remove(new->tablaDePaginas, 0);
+
+			int posTLB = encontrarPosicionEnTLB(new->pid, new2->pagina);
+
+			if(posTLB!=-1)
+			{
+				list_remove_and_destroy_element(listaTLB, posTLB, (void*) TLB_destroy);
+			}
+
+			tablaPag_destroy(new2);
+		}
+
+		mostrarTablaDePags(new->pid);
+	}
+
+	pthread_mutex_unlock(&mutexMemoFlush);
 }
 
 void dumpMemoriaPrincipal() {
@@ -1232,11 +1301,12 @@ static void tablaPag_destroy(t_tablaPags *self) {
 	free(self);
 }
 
-static t_tablaDeProcesos *tablaProc_create(int pid, int pagina)
+static t_tablaDeProcesos *tablaProc_create(int pid, int pagina, int fallos)
 {
 	t_tablaDeProcesos *new = malloc(sizeof(t_tablaDeProcesos));
 	new->pid = pid;
 	new->paginas = pagina;
+	new->fallos = fallos;
 	new->tablaDePaginas = list_create();
 
 	return new;
@@ -1273,6 +1343,20 @@ int tamanioOrdenCPU(t_orden_CPU mensaje) {
 			+ sizeof(mensaje.contentSize) + mensaje.contentSize);
 }
 
+void mostrarMemoriaPpal()
+{
+	int i;
+
+	t_tablaDeProcesos *new;
+
+	for (i = 0; i < list_size(tablaDeProcesos); i++)
+	{
+		new = list_get(tablaDeProcesos, i);
+
+		mostrarTablaDePags(new->pid);
+	}
+}
+
 void mostrarTablaDePags(int pid) {
 	int i;
 
@@ -1281,14 +1365,21 @@ void mostrarTablaDePags(int pid) {
 
 	new = buscarPID(pid);
 
-	log_info(logger, "mProc: %d", pid);
-	log_info(logger, "Pag  Marco  Posicion  Referencia  Modificado");
-
-	for (i = 0; i < list_size(new->tablaDePaginas); i++)
+	if(list_is_empty(new->tablaDePaginas))
 	{
-		new2 = list_get(new->tablaDePaginas, i);
+		log_info(logger, "Tabla vacia");
+	}
+	else
+	{
+		log_info(logger, "mProc: %d", pid);
+		log_info(logger, "Pag  Marco  Posicion  Referencia  Modificado");
 
-		log_info(logger, "%4d%9d%13d%18d%20d", new2->pagina, new2->marco,	i + 1, new2->bitReferencia, new2->bitModificado);
+		for (i = 0; i < list_size(new->tablaDePaginas); i++)
+		{
+			new2 = list_get(new->tablaDePaginas, i);
+
+			log_info(logger, "%4d%9d%13d%18d%20d", new2->pagina, new2->marco,	i + 1, new2->bitReferencia, new2->bitModificado);
+		}
 	}
 }
 
