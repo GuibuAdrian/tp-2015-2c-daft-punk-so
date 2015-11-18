@@ -99,6 +99,7 @@ void dumpMemoriaPrincipal();
 void dumpMemory();
 int seEncuentraEnTLB( t_orden_CPU);
 void borrarPIDEnTLB(int pid);
+void aumentarBitReferencia(t_list* new);
 void cambiarBitReferencia(int pid, int pagina);
 void cambiarBitUsoYModificado(int pid, int pagina, int orden, int marco);
 void mostrarTablaDePags(int pid);
@@ -353,23 +354,17 @@ t_tablaPags* clockMejorado(t_list *listaTablaPags, int pag, int pid, int orden)
 
 t_tablaPags* lru(t_list *listaTablaPags, int pag, int pid)
 {
-	t_tablaPags* new2, *new3;
-	int i;
+	t_tablaPags* new2;
 
-	int posRemove = encontrarPosReferencia(listaTablaPags, 0);
-
-	new2 = list_remove(listaTablaPags, posRemove);
-
-	for(i=0; i<list_size(listaTablaPags); i++)
-	{
-		new3 = list_get(listaTablaPags, i);
-
-		list_replace_and_destroy_element(listaTablaPags, i, tablaPag_create(new3->pagina, new3->marco, new3->bitReferencia-1, -1), (void*) tablaPag_destroy);
-	}
+	aumentarBitReferencia(listaTablaPags);
 
 	int refMax = buscarRefMaxima(listaTablaPags);
 
-	list_add(listaTablaPags, tablaPag_create(pag, new2->marco, refMax+1, -1));
+	int posRemove = encontrarPosReferencia(listaTablaPags, refMax);
+
+	new2 = list_remove(listaTablaPags, posRemove);
+
+	list_add(listaTablaPags, tablaPag_create(pag, new2->marco, 0, -1));
 
 	return new2;
 }
@@ -500,14 +495,9 @@ int actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag, int orden)
 		{
 			if(strncmp(politicaDeReemplazo, "LRU",3)==0)
 			{
-				int refMax = buscarRefMaxima(new->tablaDePaginas);
+				aumentarBitReferencia(new->tablaDePaginas);
 
-				if(!list_is_empty(new->tablaDePaginas))
-				{
-					refMax++;
-				}
-
-				list_add(new->tablaDePaginas, tablaPag_create(pag, marco, refMax, -1));
+				list_add(new->tablaDePaginas, tablaPag_create(pag, marco, 0, -1));
 			}
 			else
 			{
@@ -785,37 +775,32 @@ void cambiarBitUsoYModificado(int pid, int pagina, int orden, int marco)
 	}
 }
 
-void cambiarBitReferencia(int pid, int pagina)
+void aumentarBitReferencia(t_list* new)
 {
 	int i;
+	t_tablaPags* new2;
+
+	for(i=0; i<list_size(new); i++)
+	{
+		new2 = list_get(new, i);
+
+		list_replace_and_destroy_element(new, i, tablaPag_create(new2->pagina, new2->marco, new2->bitReferencia+1, -1), (void*) tablaPag_destroy);
+
+	}
+}
+
+void cambiarBitReferencia(int pid, int pagina)
+{
 	t_tablaDeProcesos* new = buscarPID(pid);
 	t_tablaPags* new2;
-	t_tablaPags* pagBuscada = buscarPagEnMemoriaPpal(pid, pagina);
 
-	for(i=0; i<list_size(new->tablaDePaginas); i++)
-	{
-		new2 = list_get(new->tablaDePaginas, i);
+	aumentarBitReferencia(new->tablaDePaginas);
 
-		if(new2->bitReferencia>pagBuscada->bitReferencia)
-		{
-			list_replace_and_destroy_element(new->tablaDePaginas, i, tablaPag_create(new2->pagina, new2->marco, new2->bitReferencia-1, -1), (void*) tablaPag_destroy);
-		}
-	}
-
-	int refMax = buscarRefMaxima(new->tablaDePaginas);
 
 	int posPag = encontrarPosicionEnTablaDePags(pagina, new->tablaDePaginas);
 	new2 = list_get(new->tablaDePaginas, posPag);
 
-	if(refMax+1>(maxMarcos-1))
-	{
-		list_replace_and_destroy_element(new->tablaDePaginas, posPag, tablaPag_create(new2->pagina, new2->marco, refMax, -1), (void*) tablaPag_destroy);
-
-	}
-	else
-	{
-		list_replace_and_destroy_element(new->tablaDePaginas, posPag, tablaPag_create(new2->pagina, new2->marco, refMax+1, -1), (void*) tablaPag_destroy);
-	}
+	list_replace_and_destroy_element(new->tablaDePaginas, posPag, tablaPag_create(new2->pagina, new2->marco, 0, -1), (void*) tablaPag_destroy);
 
 	mostrarTablaDePags(pid);
 }
@@ -1303,7 +1288,7 @@ void mostrarTablaDePags(int pid) {
 	{
 		new2 = list_get(new->tablaDePaginas, i);
 
-		log_info(logger, "%4d%10d%19d%22d%25d", new2->pagina, new2->marco,	i + 1, new2->bitReferencia, new2->bitModificado);
+		log_info(logger, "%4d%9d%13d%18d%20d", new2->pagina, new2->marco,	i + 1, new2->bitReferencia, new2->bitModificado);
 	}
 }
 
@@ -1325,7 +1310,7 @@ void mostrarTLB()
 		{
 			new = list_get(listaTLB,i);
 
-			log_info(logger, "%3d%12d%15d", new->pid, new->pagina, new->marco);
+			log_info(logger, "%3d%10d%12d", new->pid, new->pagina, new->marco);
 		}
 	}
 }
