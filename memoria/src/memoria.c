@@ -1237,32 +1237,21 @@ void rutinaLimpiarMemoriaPrincipal()
 {
 	log_info(logger, "Limpiar la Memoria Principal");
 
-	int i, j;
+	int i;
 	t_tablaDeProcesos* new;
-	t_tablaPags* new2;
 
 	pthread_mutex_lock(&mutexMemoFlush);
+
+	rutinaFlushTLB();
 
 	for(i=0; i<list_size(tablaDeProcesos); i++)
 	{
 		new = list_get(tablaDeProcesos, i);
 
-		for(j=0; j<list_size(new->tablaDePaginas);j++)
-		{
-			new2 = list_remove(new->tablaDePaginas, 0);
-
-			int posTLB = encontrarPosicionEnTLB(new->pid, new2->pagina);
-
-			if(posTLB!=-1)
-			{
-				list_remove_and_destroy_element(listaTLB, posTLB, (void*) TLB_destroy);
-			}
-
-			tablaPag_destroy(new2);
-		}
-
-		mostrarTablaDePags(new->pid);
+		list_clean_and_destroy_elements(new->tablaDePaginas, (void*) tablaPag_destroy);
 	}
+
+	mostrarMemoriaPpal();
 
 	pthread_mutex_unlock(&mutexMemoFlush);
 }
@@ -1343,20 +1332,6 @@ int tamanioOrdenCPU(t_orden_CPU mensaje) {
 			+ sizeof(mensaje.contentSize) + mensaje.contentSize);
 }
 
-void mostrarMemoriaPpal()
-{
-	int i;
-
-	t_tablaDeProcesos *new;
-
-	for (i = 0; i < list_size(tablaDeProcesos); i++)
-	{
-		new = list_get(tablaDeProcesos, i);
-
-		mostrarTablaDePags(new->pid);
-	}
-}
-
 void mostrarTablaDePags(int pid) {
 	int i;
 
@@ -1402,6 +1377,36 @@ void mostrarTLB()
 			new = list_get(listaTLB,i);
 
 			log_info(logger, "%3d%10d%12d", new->pid, new->pagina, new->marco);
+		}
+	}
+}
+
+void mostrarMemoriaPpal()
+{
+	int i, j;
+
+	t_tablaDeProcesos *new;
+	t_tablaPags* new2;
+
+
+	log_info(logger, "mProc  Pag  Marco");
+
+	for(j=0; j<list_size(tablaDeProcesos);j++)
+	{
+		new = list_get(tablaDeProcesos, j);
+
+		for (i = 0; i < list_size(new->tablaDePaginas); i++)
+		{
+			if(list_is_empty(new->tablaDePaginas))
+			{
+				log_info(logger, "%4d Vacio", new->pid);
+			}
+			else
+			{
+				new2 = list_get(new->tablaDePaginas, i);
+
+				log_info(logger, "%4d%9d%13d", new->pid, new2->pagina, new2->marco);
+			}
 		}
 	}
 }
