@@ -76,12 +76,18 @@ typedef struct
 	int cantPag;
 }t_espacioOcupado;
 
+typedef struct
+{
+	int pid;
+	int cantPagLeidas;
+	int cantPagEscritas;
+}t_proceso;
 /////////////////////////
 //       GLOBALES      //
 /////////////////////////
 
 t_log* logger;
-t_list *listaLibres, *listaOcupados;
+t_list *listaLibres, *listaOcupados, *listaProcesos;
 int tamanio, cantPagSwap, tamanioPagSwap, consoleMode, retardoSwap, retardoCompactacion;
 int socket_memoria;
 char* mapeo; // El mapeo en memoria del swap
@@ -97,6 +103,8 @@ static t_espacioLibre *libre_create(char* inicioHueco, int cantPag);
 static void libre_destroy(t_espacioLibre *self);
 static t_espacioOcupado *ocupado_create(int pid, char* inicioSwap, int cantPag);
 static void ocupado_destroy(t_espacioOcupado *self);
+static t_proceso *proceso_create(int pid, int cantPagLeidas, int cantPagEscritas);
+static void proceso_destroy(t_proceso *self);
 int tamanio_archivo(int fd);
 int tamanioRespuestaMemoria(t_orden_memoria unaPersona);
 int round_div(int dividend, int divisor);
@@ -110,6 +118,8 @@ int encontrarPosicionOcupado(int pid);
 int encontrarPosicionEspacioLibre(char* inicioHueco);
 t_espacioOcupado* buscarPIDEnOcupados(int pid);
 t_espacioLibre* buscarEspacioAOcupar(int cantPags);
+t_proceso* buscarPID(int pid);
+int encontrarPosicionProceso(int pid);
 void defrag();
 void dumpSwap();
 int cuantasPaginasLibresTengo();
@@ -137,7 +147,7 @@ int main()
 
 	listaLibres = list_create();
 	listaOcupados = list_create();
-
+	listaProcesos = list_create();
 
 	crearArchivoSwap(nombreSwap, tamanioPagSwap, cantPagSwap);
 	printf("\n");
@@ -182,7 +192,6 @@ int main()
 
 			recvall(socket_memoria,(void*) package2, ordenMemoria.contentSize, 0); //campo longitud(NO SIZEOF DE LONGITUD)
 			memcpy(&ordenMemoria.content, package2, ordenMemoria.contentSize);
-
 
 			procesarOrden(ordenMemoria, NETWORKMODE);
 
@@ -424,6 +433,8 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 
 		respuesta = reservarEspacio(ordenMemoria.pid, ordenMemoria.paginas);
 
+		list_add(listaProcesos, proceso_create(ordenMemoria.pid, 0, 0));
+
 		if(mode == CONSOLEMODE) {
 
 			respuesta?printf("Fallo inicio PID %d", ordenMemoria.pid):printf("Inicio exitoso PID %d", ordenMemoria.pid);
@@ -431,6 +442,8 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 		} else {
 			if (respuesta)  // 0 = Exito, 1 = Fallo
 			{
+				log_info(logger, "No hay espacio para mProc: %d", ordenMemoria.pid);
+
 				respuestaMemoria(ordenMemoria.pid, ordenMemoria.paginas, 1, "/");
 			}
 			else
@@ -438,7 +451,6 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 				respuestaMemoria(ordenMemoria.pid, ordenMemoria.paginas, 0, "/");
 			}
 		}
-
 	}
 	else
 	{
@@ -447,12 +459,17 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 			// TODO: Revisar, creo que está para el  orto. Esos 4 hardcodeados no me gustan nada.
 			// Tampoco me gusta strncpy
 
+			t_proceso* new = buscarPID(ordenMemoria.pid);
+			int posProc = encontrarPosicionProceso(ordenMemoria.pid);
+
+			list_replace_and_destroy_element(listaProcesos, posProc, proceso_create(new->pid, new->cantPagLeidas+1, new->cantPagEscritas), (void*) proceso_destroy);
+
 			t_espacioOcupado* pidOcup = buscarPIDEnOcupados(ordenMemoria.pid);
 			char * pagContent = malloc(tamanioPagSwap);
 
 			strncpy(pagContent,pidOcup->inicioSwap+(ordenMemoria.paginas*tamanioPagSwap), strlen(pidOcup->inicioSwap+(ordenMemoria.paginas*tamanioPagSwap))+1);
 
-			sleep(retardoSwap);
+			usleep(retardoSwap*1000000);
 
 			respuestaMemoria(ordenMemoria.pid, ordenMemoria.paginas, 2, pagContent);
 
@@ -466,6 +483,13 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 		{
 			if (ordenMemoria.orden == 3) // 3=Finalizar
 			{
+				t_proceso* new = buscarPID(ordenMemoria.pid);
+
+				log_info(logger, "mProc: %d. Total Paginas leidas: %d, escritas %d ", new->pid, new->cantPagLeidas, new->cantPagEscritas);
+
+				int posProc = encontrarPosicionProceso(ordenMemoria.pid);
+
+				list_remove_and_destroy_element(listaProcesos, posProc, (void*) proceso_destroy);
 
 				finalizarProceso(ordenMemoria.pid, ordenMemoria.paginas);
 			}
@@ -475,12 +499,18 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 				{
 					//int contentSize = strlen(ordenMemoria.content); // TODO: Fijarse, creo que es redundante, ordenMemoria.contentSize deberia tener la longitud correcta
 
+
+					t_proceso* new = buscarPID(ordenMemoria.pid);
+					int posProc = encontrarPosicionProceso(ordenMemoria.pid);
+
+					list_replace_and_destroy_element(listaProcesos, posProc, proceso_create(new->pid, new->cantPagLeidas, new->cantPagEscritas+1), (void*) proceso_destroy);
+
 					t_espacioOcupado* pidOcup = buscarPIDEnOcupados(ordenMemoria.pid);
 
 					//memcpy(pidOcup->inicioSwap + ordenMemoria.paginas*tamanioPagSwap , ordenMemoria.content, contentSize+1);
 					strncpy(pidOcup->inicioSwap+(ordenMemoria.paginas*tamanioPagSwap), ordenMemoria.content, ordenMemoria.contentSize+1);
 
-					sleep(retardoSwap);
+					usleep(retardoSwap*1000000);
 
 					log_info(logger, "Escribiendo mProc: %d. Pagina %d: %s ", ordenMemoria.pid, ordenMemoria.paginas, ordenMemoria.content);
 
@@ -546,6 +576,19 @@ static t_espacioOcupado *ocupado_create(int pid, char* inicioSwap, int cantPag)
 	return new;
 }
 static void ocupado_destroy(t_espacioOcupado *self)
+{
+    free(self);
+}
+static t_proceso *proceso_create(int pid, int cantPagLeidas, int cantPagEscritas)
+{
+	t_proceso *new = malloc(sizeof(t_proceso));
+	new->pid = pid;
+	new->cantPagLeidas = cantPagLeidas;
+	new->cantPagEscritas = cantPagEscritas;
+
+	return new;
+}
+static void proceso_destroy(t_proceso *self)
 {
     free(self);
 }
@@ -715,6 +758,42 @@ t_espacioLibre* buscarEspacioAOcupar(int cantPags)
 	}
 
 	return list_find(listaLibres, (void*) compararPorIdentificador2);
+}
+
+t_proceso* buscarPID(int pid)
+{
+	bool compararPorIdentificador2(t_proceso *unaCaja) {
+		if (unaCaja->pid == pid) {
+			return 1;
+		}
+
+		return 0;
+	}
+	return list_find(listaProcesos, (void*) compararPorIdentificador2);
+}
+
+int encontrarPosicionProceso(int pid)
+{
+	t_proceso* new;
+
+	int i=0;
+	int encontrado = -1;
+
+	while( (i<list_size(listaProcesos)) && encontrado!=1)
+	{
+		new = list_get(listaProcesos,i);
+
+		if(new->pid == pid)
+		{
+			encontrado = 1;
+		}
+		else
+		{
+			i++;
+		}
+	}
+
+	return i;
 }
 
 int recvall(int s, void *toReceive, int size, int flags) {
