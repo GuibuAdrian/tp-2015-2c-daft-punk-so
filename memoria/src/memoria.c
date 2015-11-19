@@ -12,6 +12,8 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include <sys/time.h>
 #include <errno.h>
 #include <signal.h>
@@ -58,11 +60,9 @@ typedef struct {
 t_log* logger;
 t_list *tablaDeProcesos, *listaTLB;
 pthread_mutex_t mutexTLB, mutexMemoFlush;
-int socketSwap;
-char *TLBHabil;
-int maxMarcos, cantMarcos, tamMarcos, entradasTLB, retardoMem;
+char *TLBHabil, *politicaDeReemplazo;
+int socketSwap, maxMarcos, cantMarcos, tamMarcos, entradasTLB, retardoMem;
 void* memoriaPrincipal;
-char *politicaDeReemplazo;
 
 static t_tablaDeProcesos *tablaProc_create(int pid, int pagina, int fallos);
 static void tablaProc_destroy(t_tablaDeProcesos *self);
@@ -97,7 +97,7 @@ void finalizarProceso(int pid);
 void rutinaFlushTLB();
 void rutinaLimpiarMemoriaPrincipal();
 void dumpMemoriaPrincipal();
-void dumpMemory();
+void rutina(int n);
 int seEncuentraEnTLB( t_orden_CPU);
 void borrarPIDEnTLB(int pid);
 void aumentarBitReferencia(t_list* new);
@@ -111,9 +111,9 @@ int main() {
 	printf("\n");
 	printf("~~~~~~~~~~MEMORIA~~~~~~~~~~\n\n");
 
-	signal(SIGUSR1, rutinaFlushTLB);
-	signal(SIGUSR2, rutinaLimpiarMemoriaPrincipal);
-	signal(SIGPOLL, dumpMemoriaPrincipal);
+	signal(SIGUSR1, rutina);
+	signal(SIGUSR2, rutina);
+	signal(SIGPOLL, rutina);
 
 	logger = log_create("logsTP", "Memoria", true, LOG_LEVEL_INFO);
 
@@ -325,12 +325,10 @@ t_tablaPags* clockMejorado(t_list *listaTablaPags, int pag, int pid, int orden)
 
 	if(posEncontrado == -1)
 	{
-		printf("No hay 0 0");
 		posEncontrado = encontrarPosUso_cero_YModificado_uno(listaTablaPags);
-		mostrarTablaDePags(pid);
+
 		if(posEncontrado == -1)
 		{
-			printf("No hay 0 1");
 			posEncontrado = encontrarPosUsoYModificado_cero(listaTablaPags);
 
 			if(posEncontrado == -1)
@@ -382,7 +380,8 @@ t_tablaPags* fifo(t_list *listaTablaPags, int pag)
 	return new2;
 }
 
-t_tablaPags* reemplazarPag(t_tablaDeProcesos* new, int pag, int pid, int orden) {
+t_tablaPags* aplicarAlgoritmo(t_tablaDeProcesos* new, int pag, int pid, int orden)
+{
 	t_tablaPags* new2;
 
 	if(strncmp(politicaDeReemplazo, "FIFO",4)==0)
@@ -408,6 +407,32 @@ t_tablaPags* reemplazarPag(t_tablaDeProcesos* new, int pag, int pid, int orden) 
 	}
 
 	return new2;
+}
+
+int reemplazarPagina(t_tablaDeProcesos* new, int pag, int orden)
+{
+	int marco;
+
+	t_tablaPags* new2;
+
+	new2 = aplicarAlgoritmo(new, pag, new->pid, orden);  //Devuelvo la pag q reemplazo
+
+	log_info(logger, "Reemplazando pag: %d, por pag: %d en el marco: %d", new2->pagina, pag, new2->marco);
+
+	t_TLB* entradaTLB = buscarPagEnTLB(new->pid, new2->pagina);
+
+	if(entradaTLB!=NULL) //Si la pag q reemplazo en Memoria Princial esta en la TLB
+	{
+		int posTLB = encontrarPosicionEnTLB(new->pid, new2->pagina);
+
+		list_remove_and_destroy_element(listaTLB, posTLB, (void*) TLB_destroy);
+	}
+
+	marco = new2->marco;
+
+	tablaPag_destroy(new2);
+
+	return marco;
 }
 
 int asignarMarco()
@@ -457,28 +482,12 @@ int asignarMarco()
 
 int actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag, int orden)
 {
-	t_tablaPags* new2;
 	int totalPag = list_size(new->tablaDePaginas);
 	int marco;
 
 	if (totalPag == maxMarcos) //Si la cantidad de marcos ocupados es MAX entonces empiezo a reemplazar
 	{
-		log_info(logger, "Reemplazando");
-
-		new2 = reemplazarPag(new, pag, new->pid, orden);
-
-		t_TLB* entradaTLB = buscarPagEnTLB(new->pid, new2->pagina);
-
-		if(entradaTLB!=NULL) //Si la pag q reemplazo en Memoria Princial esta en la TLB
-		{
-			int posTLB = encontrarPosicionEnTLB(new->pid, new2->pagina);
-
-			list_remove_and_destroy_element(listaTLB, posTLB, (void*) TLB_destroy);
-		}
-
-		marco = new2->marco;
-
-		tablaPag_destroy(new2);
+		marco = reemplazarPagina(new, pag, orden);
 	}
 	else
 	{
@@ -486,30 +495,39 @@ int actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag, int orden)
 
 		if (marco == -1)//-1 No puedo asignarle marcos
 		{
-			return marco;
-		}
-
-		if(strncmp(politicaDeReemplazo, "FIFO",3)==0)
-		{
-			list_add(new->tablaDePaginas, tablaPag_create(pag, marco, -1, -1));
-		}
-		else
-		{
-			if(strncmp(politicaDeReemplazo, "LRU",3)==0)
+			if(!list_is_empty(new->tablaDePaginas)) // Si tiene al menos 1 una pag en memoria la reemplazo
 			{
-				aumentarBitReferencia(new->tablaDePaginas);
-
-				list_add(new->tablaDePaginas, tablaPag_create(pag, marco, 0, -1));
+				marco = reemplazarPagina(new, pag, orden);
 			}
 			else
 			{
-				if(orden == 1)
+				return marco;
+			}
+		}
+		else
+		{
+			if(strncmp(politicaDeReemplazo, "FIFO",3)==0)
+			{
+				list_add(new->tablaDePaginas, tablaPag_create(pag, marco, -1, -1));
+			}
+			else
+			{
+				if(strncmp(politicaDeReemplazo, "LRU",3)==0)
 				{
-					list_add(new->tablaDePaginas, tablaPag_create(pag, marco, 1, 0));
+					aumentarBitReferencia(new->tablaDePaginas);
+
+					list_add(new->tablaDePaginas, tablaPag_create(pag, marco, 0, -1));
 				}
 				else
 				{
-					list_add(new->tablaDePaginas, tablaPag_create(pag, marco, 1, 1));
+					if(orden == 1)
+					{
+						list_add(new->tablaDePaginas, tablaPag_create(pag, marco, 1, 0));
+					}
+					else
+					{
+						list_add(new->tablaDePaginas, tablaPag_create(pag, marco, 1, 1));
+					}
 				}
 			}
 		}
@@ -520,8 +538,6 @@ int actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag, int orden)
 	pthread_mutex_unlock(&mutexTLB);
 
 	mostrarTLB();
-
-	mostrarTablaDePags(new->pid);
 
 	return marco;
 }
@@ -587,7 +603,7 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 
 					pthread_mutex_unlock(&mutexMemoFlush);
 
-					sleep(retardoMem);
+					 usleep(retardoMem*1000000);
 
 					respuestaSwap.contentSize = strlen(respuestaSwap.content) + 1;
 
@@ -610,7 +626,7 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 
 						pthread_mutex_unlock(&mutexMemoFlush);
 
-						sleep(retardoMem);
+						 usleep(retardoMem*1000000);
 
 						log_info(logger, "Proceso %d Escribiendo: %s en pag: %d", mensaje.pid, memoriaPrincipal + new2->marco * tamMarcos, mensaje.pagina);
 
@@ -660,7 +676,7 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 
 						respuestaSwap.contentSize = strlen(respuestaSwap.content) + 1;
 
-						sleep(retardoMem);
+						 usleep(retardoMem*1000000);
 
 						log_info(logger, "Proceso %d leyendo pag: %d, contenido: %s", mensaje.pid, mensaje.pagina, respuestaSwap.content);
 
@@ -680,7 +696,7 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 
 							pthread_mutex_unlock(&mutexMemoFlush);
 
-							sleep(retardoMem);
+							 usleep(retardoMem*1000000);
 
 							log_info(logger, "Proceso %d Escribiendo: %s en pag: %d", mensaje.pid, mensaje.content, mensaje.pagina);
 
@@ -781,6 +797,8 @@ void finalizarProceso(int pid)
 
 		}
 
+		log_info(logger, "Proceso %d Finalizado. Pags: %d | Fallos: %d", new->pid, new->paginas, new->fallos);
+
 		tablaPag_destroy(new2);
 
 	}
@@ -836,8 +854,6 @@ void cambiarBitReferencia(int pid, int pagina)
 	new2 = list_get(new->tablaDePaginas, posPag);
 
 	list_replace_and_destroy_element(new->tablaDePaginas, posPag, tablaPag_create(new2->pagina, new2->marco, 0, -1), (void*) tablaPag_destroy);
-
-	mostrarTablaDePags(pid);
 }
 
 void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU) {
@@ -1222,6 +1238,22 @@ int encontrarPosUsoYModificado_cero(t_list *listaTablaPags)
 	return -1;
 }
 
+void rutina(int n) {
+    switch (n) {
+        case SIGUSR1:
+        	rutinaFlushTLB();
+        break;
+        case SIGUSR2:
+        	rutinaLimpiarMemoriaPrincipal();
+        break;
+        case SIGPOLL:
+        	pthread_mutex_lock(&mutexMemoFlush);
+        	dumpMemoriaPrincipal();
+        	pthread_mutex_unlock(&mutexMemoFlush);
+        break;
+    }
+}
+
 void rutinaFlushTLB()
 {
 	printf("Flush de TLB \n");
@@ -1251,85 +1283,32 @@ void rutinaLimpiarMemoriaPrincipal()
 		list_clean_and_destroy_elements(new->tablaDePaginas, (void*) tablaPag_destroy);
 	}
 
-	mostrarMemoriaPpal();
-
 	pthread_mutex_unlock(&mutexMemoFlush);
 }
 
-void dumpMemoriaPrincipal() {
-	long pid = 0;
-
+void dumpMemoriaPrincipal()
+{
 	printf("Dump de la memoria principal \n");
-	//Se sugiere un fork D:
-	if (fork() == 0) {
-		//Dumpeamos la memoria
-		dumpMemory();
-		exit(0);
-	} else {
-		wait(pid);
-		exit(0);
+
+	pid_t childPID;
+	int status;
+	childPID = fork();
+
+	if(childPID >= 0) // fork was successful
+	{
+		if(childPID == 0) // child process
+		{
+			mostrarMemoriaPpal();
+		}
+		else
+		{
+			waitpid(childPID, &status, WUNTRACED | WCONTINUED);
+		}
 	}
-}
-
-void dumpMemory() {
-	//Hay que recorrer la lista de espacioDeMemoria y levantando marcos y logearlos e ir liberando la memoria.
-}
-
-static t_tablaPags *tablaPag_create(int pagina, int marco, int referencia, int modificado)
-{
-	t_tablaPags *new = malloc(sizeof(t_tablaPags));
-	new->pagina = pagina;
-	new->marco = marco;
-	new->bitReferencia = referencia;
-	new->bitModificado = modificado;
-
-	return new;
-}
-
-static void tablaPag_destroy(t_tablaPags *self) {
-	free(self);
-}
-
-static t_tablaDeProcesos *tablaProc_create(int pid, int pagina, int fallos)
-{
-	t_tablaDeProcesos *new = malloc(sizeof(t_tablaDeProcesos));
-	new->pid = pid;
-	new->paginas = pagina;
-	new->fallos = fallos;
-	new->tablaDePaginas = list_create();
-
-	return new;
-}
-
-static void tablaProc_destroy(t_tablaDeProcesos *self)
-{
-	list_destroy_and_destroy_elements(self->tablaDePaginas, (void*) tablaPag_destroy);
-	free(self);
-}
-
-static t_TLB *TLB_create(int pid, int pagina, int marco)
-{
-	t_TLB *new = malloc(sizeof(t_TLB));
-	new->pid = pid;
-	new->pagina = pagina;
-	new->marco = marco;
-
-	return new;
-}
-
-static void TLB_destroy(t_TLB *self)
-{
-	free(self);
-}
-
-int tamanioOrdenCPU1(t_orden_CPU mensaje) {
-	return (sizeof(mensaje.pid) + sizeof(mensaje.pagina) + sizeof(mensaje.orden)
-			+ sizeof(mensaje.contentSize));
-}
-
-int tamanioOrdenCPU(t_orden_CPU mensaje) {
-	return (sizeof(mensaje.pid) + sizeof(mensaje.pagina) + sizeof(mensaje.orden)
-			+ sizeof(mensaje.contentSize) + mensaje.contentSize);
+	else // fork failed
+	{
+		printf("\n Fork failed, quitting!!!!!!\n");
+	}
 }
 
 void mostrarTablaDePags(int pid) {
@@ -1388,8 +1367,7 @@ void mostrarMemoriaPpal()
 	t_tablaDeProcesos *new;
 	t_tablaPags* new2;
 
-
-	log_info(logger, "mProc  Pag  Marco");
+	log_info(logger, "Marco  Content");
 
 	for(j=0; j<list_size(tablaDeProcesos);j++)
 	{
@@ -1397,16 +1375,69 @@ void mostrarMemoriaPpal()
 
 		for (i = 0; i < list_size(new->tablaDePaginas); i++)
 		{
-			if(list_is_empty(new->tablaDePaginas))
-			{
-				log_info(logger, "%4d Vacio", new->pid);
-			}
-			else
+			if(!list_is_empty(new->tablaDePaginas))
 			{
 				new2 = list_get(new->tablaDePaginas, i);
 
-				log_info(logger, "%4d%9d%13d", new->pid, new2->pagina, new2->marco);
+				log_info(logger, "%4d%9s", new2->marco, memoriaPrincipal+(new2->marco*tamMarcos));
 			}
 		}
 	}
+}
+
+static t_tablaPags *tablaPag_create(int pagina, int marco, int referencia, int modificado)
+{
+	t_tablaPags *new = malloc(sizeof(t_tablaPags));
+	new->pagina = pagina;
+	new->marco = marco;
+	new->bitReferencia = referencia;
+	new->bitModificado = modificado;
+
+	return new;
+}
+
+static void tablaPag_destroy(t_tablaPags *self) {
+	free(self);
+}
+
+static t_tablaDeProcesos *tablaProc_create(int pid, int pagina, int fallos)
+{
+	t_tablaDeProcesos *new = malloc(sizeof(t_tablaDeProcesos));
+	new->pid = pid;
+	new->paginas = pagina;
+	new->fallos = fallos;
+	new->tablaDePaginas = list_create();
+
+	return new;
+}
+
+static void tablaProc_destroy(t_tablaDeProcesos *self)
+{
+	list_destroy_and_destroy_elements(self->tablaDePaginas, (void*) tablaPag_destroy);
+	free(self);
+}
+
+static t_TLB *TLB_create(int pid, int pagina, int marco)
+{
+	t_TLB *new = malloc(sizeof(t_TLB));
+	new->pid = pid;
+	new->pagina = pagina;
+	new->marco = marco;
+
+	return new;
+}
+
+static void TLB_destroy(t_TLB *self)
+{
+	free(self);
+}
+
+int tamanioOrdenCPU1(t_orden_CPU mensaje) {
+	return (sizeof(mensaje.pid) + sizeof(mensaje.pagina) + sizeof(mensaje.orden)
+			+ sizeof(mensaje.contentSize));
+}
+
+int tamanioOrdenCPU(t_orden_CPU mensaje) {
+	return (sizeof(mensaje.pid) + sizeof(mensaje.pagina) + sizeof(mensaje.orden)
+			+ sizeof(mensaje.contentSize) + mensaje.contentSize);
 }
