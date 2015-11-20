@@ -423,38 +423,41 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo)
 	int pagina;
 	t_orden_CPU mensaje;
 
-	if (strncmp(pch, "iniciar", 7) == 0)
+	if (strncmp(pch, "finalizar", 9) == 0)
 	{
-		pch = strtok(NULL, " \n");
-		pagina = strtol(pch, NULL, 10);
-
-		mensaje = enviarOrdenAMemoria(pid, 0, pagina, "/", idNodo);
-
-		if(mensaje.orden==0)
-		{
-			list_add(listaRespuestas, respuesta_create(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content));
-		}
+		mensaje = enviarOrdenAMemoria(pid, 3, 0, "/", idNodo);
 	}
 	else
 	{
-		if (strncmp(pch, "leer", 5) == 0)
+		if (strncmp(pch, "entrada-salida", 9) == 0)
 		{
 			pch = strtok(NULL, " \n");
 			pagina = strtol(pch, NULL, 10);
 
-			mensaje = enviarOrdenAMemoria(pid, 1, pagina, "/", idNodo);
-
-			list_add(listaRespuestas, respuesta_create(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content));
+			mensaje.pid = pid;
+			mensaje.pagina = pagina;
+			mensaje.orden = 5;
+			strcpy(mensaje.content,"/");
 		}
 		else
 		{
-			if (strncmp(pch, "finalizar", 9) == 0)
+			if (strncmp(pch, "iniciar", 7) == 0)
 			{
-				mensaje = enviarOrdenAMemoria(pid, 3, 0, "/", idNodo);
+				pch = strtok(NULL, " \n");
+				pagina = strtol(pch, NULL, 10);
+
+				mensaje = enviarOrdenAMemoria(pid, 0, pagina, "/", idNodo);
 			}
 			else
 			{
-				if (strncmp(pch, "escribir", 9) == 0)
+				if (strncmp(pch, "leer", 5) == 0)
+				{
+					pch = strtok(NULL, " \n");
+					pagina = strtol(pch, NULL, 10);
+
+					mensaje = enviarOrdenAMemoria(pid, 1, pagina, "/", idNodo);
+				}
+				else
 				{
 					pch = strtok(NULL, " \n");
 					pagina = strtol(pch, NULL, 10);
@@ -462,22 +465,16 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo)
 					pch = strtok(NULL, " \n");
 
 					mensaje = enviarOrdenAMemoria(pid, 2, pagina, pch, idNodo);
+				}//else escritura
+			}//else escritura/lectura
 
-					list_add(listaRespuestas, respuesta_create(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content));
-				}
-				else
-				{
-					pch = strtok(NULL, " \n");
-					pagina = strtol(pch, NULL, 10);
-
-					mensaje.pid = pid;
-					mensaje.pagina = pagina;
-					mensaje.orden = 5;
-					strcpy(mensaje.content,"/");
-				}
+			if(mensaje.orden!=1)
+			{
+				list_add(listaRespuestas, respuesta_create(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content));
 			}
-		}
-	}
+
+		}//else iniciar
+	}//else entrada-salida
 
 	sleep(RETARDO);
 	enviarRespuestaPlanificador(socketPlanificador, mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content);
