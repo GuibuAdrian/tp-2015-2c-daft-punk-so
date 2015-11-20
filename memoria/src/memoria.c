@@ -39,9 +39,14 @@ typedef struct {
 typedef struct {
 	int pid;
 	int paginas;
-	int fallos;
 	t_list *tablaDePaginas;
 } t_tablaDeProcesos;
+
+typedef struct {
+	int pid;
+	int fallos;
+	int accedidas;
+} t_fallosPid;
 
 typedef struct {
 	int pid;
@@ -58,14 +63,17 @@ typedef struct {
 } t_orden_CPU;
 
 t_log* logger;
-t_list *tablaDeProcesos, *listaTLB;
+t_list *tablaDeProcesos, *fallosPid, *listaTLB;
 pthread_mutex_t mutexTLB, mutexMemoFlush;
 char *TLBHabil, *politicaDeReemplazo;
 int socketSwap, maxMarcos, cantMarcos, tamMarcos, entradasTLB, retardoMem;
+float totalAccesos, totalTLBHits;
 void* memoriaPrincipal;
 
-static t_tablaDeProcesos *tablaProc_create(int pid, int pagina, int fallos);
+static t_tablaDeProcesos *tablaProc_create(int pid, int pagina);
 static void tablaProc_destroy(t_tablaDeProcesos *self);
+static t_fallosPid *fallos_create(int pid, int fallos, int accesos);
+static void fallos_destroy(t_fallosPid *self);
 static t_tablaPags *tablaPag_create(int pagina, int marco, int referencia, int modificado);
 static void tablaPag_destroy(t_tablaPags *self);
 static t_TLB *TLB_create(int pid, int pagina, int marco);
@@ -76,12 +84,14 @@ int tamanioOrdenCPU1(t_orden_CPU mensaje);
 t_tablaPags* buscarPagEnMemoriaPpal(int pid, int pagina);
 t_tablaPags* buscarPagEnTablaDePags(int pagina, t_tablaDeProcesos* new);
 t_tablaDeProcesos* buscarPID(int pid);
+t_fallosPid* buscarPIDFallos(int pid);
 t_TLB* removerPIDEntrada(int pid);
 t_TLB* buscarPagEnTLB(int pid, int pag);
 int buscarMarcoEnTablaDePags(t_tablaDeProcesos* new, int marcoBuscado);
 int buscarRefMaxima(t_list *tablaDePaginas);
 int encontrarPosicionEnTLB(int pid, int pagina);
 int encontrarPosicionEnProcesos(int pid);
+int encontrarPosicionEnFallos(int pid);
 int encontrarPosicionEnTablaDePags(int pag, t_list *listaTablaPags);
 int encontrarPosReferencia(t_list *listaTablaPags, int ref);
 int encontrarPosUsoYModificado_cero(t_list *listaTablaPags);
@@ -92,13 +102,13 @@ t_orden_CPU enviarOrdenASwap(int pid, int orden, int paginas, char *content);
 void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU);
 void procesarOrden(t_orden_CPU mensaje, int socketCPU);
 void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU);
+void tlbHistorica();
 void iniciarProceso(int pid, int paginas);
 void finalizarProceso(int pid);
 void rutinaFlushTLB();
 void rutinaLimpiarMemoriaPrincipal();
 void dumpMemoriaPrincipal();
 void rutina(int n);
-int seEncuentraEnTLB( t_orden_CPU);
 void borrarPIDEnTLB(int pid);
 void aumentarBitReferencia(t_list* new);
 void cambiarBitReferencia(int pid, int pagina);
@@ -136,6 +146,7 @@ int main() {
 	pthread_mutex_init(&mutexTLB, NULL);
 	pthread_mutex_init(&mutexMemoFlush, NULL);
 
+	totalAccesos = 0, totalTLBHits = 0;
 
 	socketSwap = conectarse(IP, PUERTO_SWAP);
 	log_info(logger, "Conectado a Swap");
@@ -146,8 +157,14 @@ int main() {
 	listaTLB = list_create();
 
 	tablaDeProcesos = list_create();
+	fallosPid = list_create();
+
+	pthread_t unHilo;
+	pthread_create(&unHilo,NULL,(void*) tlbHistorica, NULL);
 
 	recibirConexiones1(PUERTO_CPU);
+
+	totalTLBHits=-1;
 
 	list_destroy_and_destroy_elements(tablaDeProcesos,
 			(void*) tablaProc_destroy);
@@ -253,14 +270,14 @@ void recibirConexiones1(char * PUERTO_CPU) {
 							if ( (new != NULL) && (mensaje.orden != 0) && (mensaje.orden != 3) )  //Esta en la TLB
 							{
 								log_info(logger, "Proc: %d, Pag: %d. Esta en TLB", mensaje.pid, mensaje.pagina);
-								mostrarTLB();
 
+								totalTLBHits++;
+								totalAccesos++;
 
 								operarConTLB(new, mensaje, socketCPU);
 							}
 							else
 							{
-								log_info(logger, "No esta en TLB");
 
 								procesarOrden(mensaje, socketCPU);
 							}
@@ -286,24 +303,6 @@ void recibirConexiones1(char * PUERTO_CPU) {
 
 	close(socketCPU);
 	close(listenningSocket);
-}
-
-int seEncuentraEnTLB(t_orden_CPU mensaje)
-{
-	int i = 0;
-	t_TLB *elementoTLB = list_get(listaTLB, i);
-
-	while (mensaje.pid != elementoTLB->pid	&& mensaje.pagina != elementoTLB->pagina && i <= entradasTLB) {
-		elementoTLB = list_get(listaTLB, i);
-		i++;
-	}
-
-	if (mensaje.pid == elementoTLB->pid
-			&& mensaje.pagina == elementoTLB->pagina) {
-		return 1;
-	} else {
-		return 0;
-	}
 }
 
 void actualizarTLB(int pid, int pag, int marco)
@@ -537,8 +536,6 @@ int actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag, int orden)
 	actualizarTLB(new->pid, pag, marco);
 	pthread_mutex_unlock(&mutexTLB);
 
-	mostrarTLB();
-
 	return marco;
 }
 
@@ -566,6 +563,8 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 		}
 		else
 		{
+			log_info(logger, "No esta en TLB");
+
 			pthread_mutex_lock(&mutexMemoFlush);
 
 			new2 = buscarPagEnMemoriaPpal(mensaje.pid, mensaje.pagina);
@@ -574,7 +573,15 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 
 			if (new2 != NULL) //Si esta en Memoria Principal
 			{
-				log_info(logger, "Proc: %d, Pag: %d. Esta en memoria principal, marco: %d", mensaje.pid, mensaje.pagina, new2->marco);
+				t_fallosPid *new4;
+				new4 = buscarPIDFallos(mensaje.pid);
+				int posFallos = encontrarPosicionEnFallos(new4->pid);
+
+				list_replace_and_destroy_element(fallosPid, posFallos, fallos_create(new4->pid, new4->fallos, new4->accedidas+1), (void*) fallos_destroy);
+
+				int marco = new2->marco;
+
+				log_info(logger, "Proc: %d, Pag: %d. Esta en memoria principal, marco: %d", mensaje.pid, mensaje.pagina, marco);
 
 				pthread_mutex_lock(&mutexTLB);
 
@@ -586,9 +593,11 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 				{
 					if(strncmp(politicaDeReemplazo, "CLOCK",3)==0)
 					{
-						cambiarBitUsoYModificado(mensaje.pid, mensaje.pagina, mensaje.orden, new2->marco);
+						cambiarBitUsoYModificado(mensaje.pid, mensaje.pagina, mensaje.orden, marco);
 					}
 				}
+
+				totalAccesos++;
 
 				if (mensaje.orden == 1)	// leer pagina de un proceso
 				{
@@ -599,7 +608,7 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 					pthread_mutex_lock(&mutexMemoFlush);
 
 					strncpy(respuestaSwap.content,
-							memoriaPrincipal + new2->marco * tamMarcos, strlen(memoriaPrincipal + new2->marco * tamMarcos)+1);
+							memoriaPrincipal + marco * tamMarcos, strlen(memoriaPrincipal + marco * tamMarcos)+1);
 
 					pthread_mutex_unlock(&mutexMemoFlush);
 
@@ -613,8 +622,6 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 
 					enviarRespuestaCPU(respuestaSwap, socketCPU);//Le devuelvo el contenido del marco al CPU
 
-
-					mostrarTLB();
 					enviarRespuestaCPU(mensaje, socketCPU);
 				}
 				else
@@ -622,22 +629,21 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 					{
 						pthread_mutex_unlock(&mutexMemoFlush);
 
-						strncpy(memoriaPrincipal + new2->marco * tamMarcos,	mensaje.content, strlen(mensaje.content));//Actualizo la memo ppal
+						strncpy(memoriaPrincipal + marco * tamMarcos,	mensaje.content, strlen(mensaje.content));//Actualizo la memo ppal
 
 						pthread_mutex_unlock(&mutexMemoFlush);
 
 						 usleep(retardoMem*1000000);
 
-						log_info(logger, "Proceso %d Escribiendo: %s en pag: %d", mensaje.pid, memoriaPrincipal + new2->marco * tamMarcos, mensaje.pagina);
+						log_info(logger, "Proceso %d Escribiendo: %s en pag: %d", mensaje.pid, memoriaPrincipal + marco * tamMarcos, mensaje.pagina);
 
 						respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, new2->pagina, mensaje.content); //Le aviso al SWAP del nuevo contenido//Le aviso al SWAP del nuevo contenido
 						enviarRespuestaCPU(respuestaSwap, socketCPU); //Le devuelvo el contenido del marco al CPU
 
-						mostrarTLB();
 						enviarRespuestaCPU(mensaje, socketCPU);
 					}
 
-				actualizarTLB(respuestaSwap.pid, respuestaSwap.pagina, new2->marco);
+				actualizarTLB(respuestaSwap.pid, respuestaSwap.pagina, marco);
 
 				pthread_mutex_unlock(&mutexTLB);
 			}
@@ -651,16 +657,26 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 
 				pthread_mutex_unlock(&mutexMemoFlush);
 
-				log_info(logger, "mProc: %d, Pag: %d. No esta en memoria principal. Marco asignado: %d", mensaje.pid, mensaje.pagina, marco);
 
 				if (marco == -1) // Si no se le puede asignar mas marcos FALLO!!!!
 				{
 					mensaje.orden = 1;
+
+					log_info(logger, "mProc: %d, FALLO", mensaje.pid);
+
 					enviarRespuestaCPU(mensaje, socketCPU);
 				}
 				else
 				{
-					log_info(logger, "mProc: %d, Pag: %d, Marco asignado: %d", mensaje.pid, mensaje.pagina, marco);
+					log_info(logger, "mProc: %d, Pag: %d. No esta en memoria principal. Marco asignado: %d", mensaje.pid, mensaje.pagina, marco);
+
+					t_fallosPid *new4;
+					new4 = buscarPIDFallos(mensaje.pid);
+					int posFallos = encontrarPosicionEnFallos(new4->pid);
+
+					list_replace_and_destroy_element(fallosPid, posFallos, fallos_create(new4->pid, new4->fallos+1, new4->accedidas+1), (void*) fallos_destroy);
+
+					totalAccesos++;
 
 					if (mensaje.orden == 1)	// leer pagina de un proceso
 					{
@@ -713,6 +729,11 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU)
 {
 	t_orden_CPU respuestaSwap;
+	t_fallosPid *new4;
+	new4 = buscarPIDFallos(mensaje.pid);
+	int posFallos = encontrarPosicionEnFallos(new4->pid);
+
+	list_replace_and_destroy_element(fallosPid, posFallos, fallos_create(new4->pid, new4->fallos, new4->accedidas+1), (void*) fallos_destroy);
 
 	if(strncmp(politicaDeReemplazo, "LRU",3)==0)
 	{
@@ -767,8 +788,10 @@ void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU)
 	}
 }
 
-void iniciarProceso(int pid, int paginas) {
-	list_add(tablaDeProcesos, tablaProc_create(pid, paginas, 0));
+void iniciarProceso(int pid, int paginas)
+{
+	list_add(tablaDeProcesos, tablaProc_create(pid, paginas));
+	list_add(fallosPid, fallos_create(pid, 0, 0));
 
 	log_info(logger, "Proceso %d iniciado de %d pags", pid, paginas);
 }
@@ -778,10 +801,13 @@ void finalizarProceso(int pid)
 	int i;
 	t_tablaDeProcesos* new;
 	t_tablaPags *new2;
+	t_fallosPid* new4;
 
 	int posProc = encontrarPosicionEnProcesos(pid);
+	int posFallo = encontrarPosicionEnFallos(pid);
 
 	new = list_remove(tablaDeProcesos, posProc);
+	new4 = list_remove(fallosPid, posFallo);
 
 	for(i=0; i<list_size(new->tablaDePaginas);i++)
 	{
@@ -797,14 +823,13 @@ void finalizarProceso(int pid)
 
 		}
 
-		log_info(logger, "Proceso %d Finalizado. Pags: %d | Fallos: %d", new->pid, new->paginas, new->fallos);
-
 		tablaPag_destroy(new2);
-
 	}
 
-	tablaProc_destroy(new);
+	log_info(logger, "Proceso %d Finalizado. Accesos: %d | Fallos: %d", new->pid, new4->accedidas, new4->fallos);
 
+	fallos_destroy(new4);
+	tablaProc_destroy(new);
 
 	borrarPIDEnTLB(pid);
 
@@ -1012,6 +1037,18 @@ t_tablaDeProcesos* buscarPID(int pid)
 	return list_find(tablaDeProcesos, (void*) compararPorIdentificador2);
 }
 
+t_fallosPid* buscarPIDFallos(int pid)
+{
+	bool compararPorIdentificador2(t_fallosPid *unaCaja) {
+		if (unaCaja->pid == pid) {
+			return 1;
+		}
+
+		return 0;
+	}
+	return list_find(fallosPid, (void*) compararPorIdentificador2);
+}
+
 t_TLB* removerPIDEntrada(int pid)
 {
 	bool compararPorIdentificador2(t_TLB *unaCaja)
@@ -1118,6 +1155,29 @@ int encontrarPosicionEnProcesos(int pid)
 	while( (i<list_size(tablaDeProcesos)) && encontrado!=0)
 	{
 		new = list_get(tablaDeProcesos,i);
+
+		if(new->pid == pid)
+		{
+			encontrado = 0;
+		}
+		else
+		{
+			i++;
+		}
+	}
+	return i;
+}
+
+int encontrarPosicionEnFallos(int pid)
+{
+	t_fallosPid* new;
+
+	int i=0;
+	int encontrado = 1;
+
+	while( (i<list_size(fallosPid)) && encontrado!=0)
+	{
+		new = list_get(fallosPid,i);
 
 		if(new->pid == pid)
 		{
@@ -1311,6 +1371,18 @@ void dumpMemoriaPrincipal()
 	}
 }
 
+void tlbHistorica()
+{
+	while(totalAccesos!=-1)
+	{
+		sleep(60);
+
+		log_info(logger, "Total de accesos: %.0f. Total de hits: %.0f. Tasa de aciertos: %.2f", totalAccesos, totalTLBHits, totalTLBHits/totalAccesos);
+	}
+
+	log_info(logger, "Total de accesos: %.0f. Total de hits: %.0f. Tasa de aciertos: %.2f", totalAccesos, totalTLBHits, totalTLBHits/totalAccesos);
+}
+
 void mostrarTablaDePags(int pid) {
 	int i;
 
@@ -1400,12 +1472,25 @@ static void tablaPag_destroy(t_tablaPags *self) {
 	free(self);
 }
 
-static t_tablaDeProcesos *tablaProc_create(int pid, int pagina, int fallos)
+static t_fallosPid *fallos_create(int pid, int fallos, int accesos)
+{
+	t_fallosPid *new = malloc(sizeof(t_fallosPid));
+	new->pid = pid;
+	new->fallos = fallos;
+	new->accedidas = accesos;
+
+	return new;
+}
+
+static void fallos_destroy(t_fallosPid *self) {
+	free(self);
+}
+
+static t_tablaDeProcesos *tablaProc_create(int pid, int pagina)
 {
 	t_tablaDeProcesos *new = malloc(sizeof(t_tablaDeProcesos));
 	new->pid = pid;
 	new->paginas = pagina;
-	new->fallos = fallos;
 	new->tablaDePaginas = list_create();
 
 	return new;
