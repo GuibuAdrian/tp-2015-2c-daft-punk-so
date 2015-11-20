@@ -435,22 +435,23 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 
 		list_add(listaProcesos, proceso_create(ordenMemoria.pid, 0, 0));
 
-		if(mode == CONSOLEMODE) {
-
-			respuesta?printf("Fallo inicio PID %d", ordenMemoria.pid):printf("Inicio exitoso PID %d", ordenMemoria.pid);
-
-		} else {
-			if (respuesta)  // 0 = Exito, 1 = Fallo
-			{
-				log_info(logger, "No hay espacio para mProc: %d", ordenMemoria.pid);
-
-				respuestaMemoria(ordenMemoria.pid, ordenMemoria.paginas, 1, "/");
+		if (respuesta == 1){   // 0 = Exito, 1 = Fallo
+			int totalEspacioLibre = cuantasPaginasLibresTengo();
+			if (totalEspacioLibre >= ordenMemoria.paginas ){
+				defrag();
+				respuesta = reservarEspacio(ordenMemoria.pid, ordenMemoria.paginas);
 			}
-			else
-			{
-				respuestaMemoria(ordenMemoria.pid, ordenMemoria.paginas, 0, "/");
+			else {
+				log_info(logger, "No hay espacio para mProc: %d", ordenMemoria.pid);
 			}
 		}
+
+		if(mode == CONSOLEMODE) {
+			respuesta?printf("Fallo inicio PID %d", ordenMemoria.pid):printf("Inicio exitoso PID %d", ordenMemoria.pid);
+		} else {
+			respuestaMemoria(ordenMemoria.pid, ordenMemoria.paginas, respuesta, "/");
+		}
+
 	}
 	else
 	{
