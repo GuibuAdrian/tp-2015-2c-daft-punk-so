@@ -121,9 +121,9 @@ int main() {
 	printf("\n");
 	printf("~~~~~~~~~~MEMORIA~~~~~~~~~~\n\n");
 
-	signal(SIGUSR1, rutina);
-	signal(SIGUSR2, rutina);
-	signal(SIGPOLL, rutina);
+	signal(SIGUSR1, rutinaFlushTLB);
+	signal(SIGUSR2, rutinaLimpiarMemoriaPrincipal);
+	signal(SIGPOLL, dumpMemoriaPrincipal);
 
 	logger = log_create("logsTP", "Memoria", true, LOG_LEVEL_INFO);
 
@@ -607,8 +607,7 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 
 					pthread_mutex_lock(&mutexMemoFlush);
 
-					strncpy(respuestaSwap.content,
-							memoriaPrincipal + marco * tamMarcos, strlen(memoriaPrincipal + marco * tamMarcos)+1);
+					strncpy(respuestaSwap.content, memoriaPrincipal + marco * tamMarcos, strlen(memoriaPrincipal + marco * tamMarcos)+1);
 
 					pthread_mutex_unlock(&mutexMemoFlush);
 
@@ -1296,22 +1295,6 @@ int encontrarPosUsoYModificado_cero(t_list *listaTablaPags)
 	}
 
 	return -1;
-}
-
-void rutina(int n) {
-    switch (n) {
-        case SIGUSR1:
-        	rutinaFlushTLB();
-        break;
-        case SIGUSR2:
-        	rutinaLimpiarMemoriaPrincipal();
-        break;
-        case SIGPOLL:
-        	pthread_mutex_lock(&mutexMemoFlush);
-        	dumpMemoriaPrincipal();
-        	pthread_mutex_unlock(&mutexMemoFlush);
-        break;
-    }
 }
 
 void rutinaFlushTLB()

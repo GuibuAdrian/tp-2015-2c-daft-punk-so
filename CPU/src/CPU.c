@@ -71,6 +71,7 @@ char *ipPlanificador, *puertoPlanificador, *ipMemoria, *puertoMemoria;
 int id = 7, RETARDO, numeroHilos, socketPlanCarga;
 pthread_mutex_t mutex, mutex2;
 
+long tiempoUsuarioAntes = 0, tiempoUsuarioActual = 0, arranque = 0, fin = 0, tiempoEntradaSalida = 0, tiempoGlobal = 0;
 static t_hilos *hilo_create(pthread_t unHilo);
 static void hilo_destroy(t_hilos *self);
 static t_cpu *cpu_create(int idCPU, int cantInst, int socketPlan);
@@ -95,6 +96,7 @@ void cargaCPU();
 void recibirSolicitudCarga_finQ();
 void removerPID(int pid);
 void enviarRespuestas(int socketPlanificador, int pid);
+float porcentajeUsoCPU();
 
 int main()
 {
@@ -158,6 +160,10 @@ int main()
 	log_destroy(logger);
 
 	return 0;
+}
+
+float porcentajeUsoCPU(){
+	return 100 * (tiempoUsuarioActual - tiempoUsuarioAntes) + (tiempoEntradaSalida )/(fin - arranque);
 }
 
 void conectarHilos1(void *context)
@@ -387,7 +393,6 @@ void enviarRespuestas(int socketPlanificador, int pid)
 	removerPID(pid);
 }
 
-
 t_orden_CPU enviarOrdenAMemoria(int pid, int orden, int paginas, char *content, int idNodo)
 {
 	t_orden_CPU mensajeMemoria;
@@ -425,19 +430,27 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo)
 
 	if (strncmp(pch, "finalizar", 9) == 0)
 	{
+		fin = tiempoGlobal;
+		printf("%f",porcentajeUsoCPU());
 		mensaje = enviarOrdenAMemoria(pid, 3, 0, "/", idNodo);
+		fin = 0;
+		arranque = 0;
+		tiempoEntradaSalida = 0;
+		tiempoUsuarioActual = 0;
+		tiempoUsuarioAntes = 0;
 	}
 	else
 	{
 		if (strncmp(pch, "entrada-salida", 9) == 0)
-		{
+		{//TODO
 			pch = strtok(NULL, " \n");
 			pagina = strtol(pch, NULL, 10);
-
+			tiempoEntradaSalida = tiempoEntradaSalida + 10;
 			mensaje.pid = pid;
 			mensaje.pagina = pagina;
 			mensaje.orden = 5;
 			strcpy(mensaje.content,"/");
+			tiempoGlobal++;
 		}
 		else
 		{
@@ -445,7 +458,9 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo)
 			{
 				pch = strtok(NULL, " \n");
 				pagina = strtol(pch, NULL, 10);
-
+				tiempoUsuarioAntes = tiempoGlobal;
+				arranque = tiempoGlobal;
+				tiempoGlobal++;
 				mensaje = enviarOrdenAMemoria(pid, 0, pagina, "/", idNodo);
 			}
 			else
@@ -454,14 +469,16 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo)
 				{
 					pch = strtok(NULL, " \n");
 					pagina = strtol(pch, NULL, 10);
-
+					tiempoUsuarioActual = tiempoGlobal;
+					tiempoGlobal++;
 					mensaje = enviarOrdenAMemoria(pid, 1, pagina, "/", idNodo);
 				}
 				else
 				{
 					pch = strtok(NULL, " \n");
 					pagina = strtol(pch, NULL, 10);
-
+					tiempoUsuarioActual = tiempoGlobal;
+					tiempoGlobal++;
 					pch = strtok(NULL, " \n");
 
 					mensaje = enviarOrdenAMemoria(pid, 2, pagina, pch, idNodo);
