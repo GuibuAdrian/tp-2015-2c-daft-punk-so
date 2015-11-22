@@ -175,7 +175,7 @@ int main()
 			void* package = malloc(sizeof(int)*4);
 
 			result = recvall(socket_memoria, (void*)package, sizeof(ordenMemoria.pid), 0);
-			if(result < 0)
+			if(result <= 0)
 			{
 				break;
 			}
