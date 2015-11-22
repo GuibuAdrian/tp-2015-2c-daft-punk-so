@@ -325,7 +325,7 @@ int recibirRespuesta(int socketCliente)
 
 	if( (respuesta.mensajeSize)==0 )
 	{
-		//log_info(logger, "mProc %d - Iniciado", respuesta.pid);
+
 	}
 	else
 	{
@@ -341,7 +341,7 @@ int recibirRespuesta(int socketCliente)
 		{
 			if( (respuesta.mensajeSize)==2 )
 			{
-				//log_info(logger, "mProc %d - Pagina %d leida: %s", respuesta.pid, respuesta.paginas, respuesta.content);
+
 			}
 			else
 			{
@@ -366,7 +366,6 @@ int recibirRespuesta(int socketCliente)
 				{
 					if( (respuesta.mensajeSize)==4 )
 					{
-						//log_info(logger, "mProc %d - Pagina %d escrita: %s", respuesta.pid, respuesta.paginas, respuesta.content);
 					}
 					else
 					{
@@ -422,28 +421,32 @@ void ROUND_ROBIN(void* args)
 
 	int puntero = pcbReady->puntero;
 	int i = pcbReady->puntero;
-	int pid = pcbReady->pid;
+	int pid1 = pcbReady->pid;
 	char* path = strdup(pcbReady->path);
 
 	int Q = 0;
 
+	log_info(logger, "Correr %s, mProc: %d", pcbReady->path, pcbReady->pid);
+
+	list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pid1, path, puntero, 1, totalLineas), (void*)PCB_destroy);
+
 	while( ( (i-1)<=(totalLineas) ) && ( Q<QUANTUM ) )
 	{
-		pcbReady = buscarReadyEnPCB(pid);
+		pcbReady = buscarReadyEnPCB(pid1);
 
-		IO = enviarPath(socketCliente, pid, pcbReady->path, pcbReady->puntero);
+		IO = enviarPath(socketCliente, pid1, pcbReady->path, pcbReady->puntero);
 
 		if(IO>0)
 		{
 			break;
 		}
 
-		pcbReady = buscarReadyEnPCB(pid);
+		pcbReady = buscarReadyEnPCB(pid1);
 		if(pcbReady == NULL)
 		{
 			break;
 		}
-		posPCB =  encontrarPosicionEnPCB(pid);	//Encontrar pos en listaPCB
+		posPCB =  encontrarPosicionEnPCB(pid1);	//Encontrar pos en listaPCB
 
 		puntero = pcbReady->puntero;
 
@@ -451,7 +454,7 @@ void ROUND_ROBIN(void* args)
 		sem_wait(&semFZ);
 		i=puntero+1;
 
-		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pid, path, (puntero+1), 1, totalLineas), (void*)PCB_destroy);
+		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pid1, path, (puntero+1), 1, totalLineas), (void*)PCB_destroy);
 
 		sem_post(&semFZ);
 
@@ -470,13 +473,13 @@ void ROUND_ROBIN(void* args)
 
 		int message = 2;
 		send(socketCPUCarga, &message, sizeof(int), 0);
-		send(socketCPUCarga, &pid, sizeof(int), 0);
+		send(socketCPUCarga, &pid1, sizeof(int), 0);
 
 		recibirCjtoRespuestas(socketCPUCarga);
 
 		pthread_mutex_lock(&mutex4);
-		list_add(listaReady, ready_create(pid));
-		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pid, path, i, 0, totalLineas), (void*)PCB_destroy);
+		list_add(listaReady, ready_create(pid1));
+		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pid1, path, i, 0, totalLineas), (void*)PCB_destroy);
 		pthread_mutex_unlock(&mutex4);
 
 		sem_post(&semPlani);
@@ -486,11 +489,11 @@ void ROUND_ROBIN(void* args)
 		sleep(IO);
 
 		pthread_mutex_lock(&mutex4);
-		list_add(listaReady, ready_create(pid)); //Agrego el proceso NUEVO a Ready
-		pcbReady = buscarReadyEnPCB(pid);
-		posPCB =  encontrarPosicionEnPCB(pid);	//Encontrar pos en listaPCB
+		list_add(listaReady, ready_create(pid1)); //Agrego el proceso NUEVO a Ready
+		pcbReady = buscarReadyEnPCB(pid1);
+		posPCB =  encontrarPosicionEnPCB(pid1);	//Encontrar pos en listaPCB
 		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcbReady->pid, pcbReady->path, pcbReady->puntero, 0, pcbReady->totalLineas), (void*)PCB_destroy);
-		printf("mProc: %d a Ready\n", pid);
+		printf("mProc: %d a Ready\n", pid1);
 		pthread_mutex_unlock(&mutex4);
 		sem_post(&semPlani);
 	}
@@ -529,6 +532,10 @@ void FIFO(void *args)
 	char* path = strdup(pcbReady->path);
 
 	int totalLineas = mensaje->file;
+
+	log_info(logger, "Correr %s, mProc: %d", pcbReady->path, pcbReady->pid);
+
+	list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pid1, path, puntero, 1, totalLineas), (void*)PCB_destroy);
 
 	while( (i-1)<=(totalLineas) )
 	{
@@ -596,6 +603,8 @@ void planificador()
 			break;
 		}
 
+
+
 		t_ready *unReady = list_remove(listaReady, 0);	//Busco al primer ready
 		int pidReady = unReady->pid;
 		ready_destroy(unReady);
@@ -605,7 +614,6 @@ void planificador()
 
 		int posPCB =  encontrarPosicionEnPCB(pidReady);	//Encontrar pos en listaPCB
 		pthread_mutex_unlock(&mutex3);
-
 
 		pthread_t hilo;
 
@@ -671,8 +679,6 @@ void correrPath(char * pch)
 		pthread_mutex_unlock(&mutex4);
 
 		sem_post(&semPlani);
-
-		log_info(logger, "Correr %s, mProc: %d", pch, pid);
 
 		txt_close_file(file);
 	}
