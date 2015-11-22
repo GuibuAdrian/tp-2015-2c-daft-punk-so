@@ -108,7 +108,6 @@ void finalizarProceso(int pid);
 void rutinaFlushTLB();
 void rutinaLimpiarMemoriaPrincipal();
 void dumpMemoriaPrincipal();
-void rutina(int n);
 void borrarPIDEnTLB(int pid);
 void aumentarBitReferencia(t_list* new);
 void cambiarBitReferencia(int pid, int pagina);
@@ -754,7 +753,7 @@ void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU)
 
 		pthread_mutex_lock(&mutexMemoFlush);
 
-		strncpy(respuestaSwap.content, memoriaPrincipal + entradaTLB->marco * tamMarcos, strlen(memoriaPrincipal + entradaTLB->marco * tamMarcos)+1);
+		strncpy(respuestaSwap.content, memoriaPrincipal + entradaTLB->marco * tamMarcos, strlen(respuestaSwap.content));
 
 		pthread_mutex_unlock(&mutexMemoFlush);
 
