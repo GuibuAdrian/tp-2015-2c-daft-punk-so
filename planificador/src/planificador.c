@@ -75,13 +75,12 @@ typedef struct
 {
 	int file;
 	PCB* pcbReady;
-	int posPCB;
 } t_enviarProceso;
 
 t_log* logger;
 t_list *listaCPUs, *listaPCB, *listaReady;
 sem_t semPlani,semFZ, semCPU;
-pthread_mutex_t mutex, mutex2, mutex3, mutex4;
+pthread_mutex_t mutex, mutexPCB, mutex3, mutex4;
 char *ALGORITMO_PLANIFICACION;
 int pid=2, cantHilos, QUANTUM, socketCPUCarga;
 
@@ -145,7 +144,7 @@ int main()
 
 
 	pthread_mutex_init(&mutex, NULL);
-	pthread_mutex_init(&mutex2, NULL);
+	pthread_mutex_init(&mutexPCB, NULL);
 	pthread_mutex_init(&mutex3, NULL);
 	pthread_mutex_init(&mutex4, NULL);
 	sem_init(&semPlani, 0, 0);
@@ -350,10 +349,10 @@ int recibirRespuesta(int socketCliente)
 					recibirCjtoRespuestas(socketCliente);
 
 					log_info(logger, "mProc %d finalizado", respuesta.pid);
-					pthread_mutex_lock(&mutex2);
+					pthread_mutex_lock(&mutexPCB);
 					int posPCB =  encontrarPosicionEnPCB(respuesta.pid);	//Encontrar pos en listaPCB
 					list_remove_and_destroy_element(listaPCB, posPCB, (void*) PCB_destroy);
-					pthread_mutex_unlock(&mutex2);
+					pthread_mutex_unlock(&mutexPCB);
 					int i;
 
 					for(i=0;i<list_size(listaReady);i++)
@@ -375,11 +374,11 @@ int recibirRespuesta(int socketCliente)
 
 						log_info(logger, "mProc %d en entrada-salida de tiempo %d", respuesta.pid, IO);
 
-						pthread_mutex_lock(&mutex2);
+						pthread_mutex_lock(&mutexPCB);
 						pcb = buscarReadyEnPCB(respuesta.pid);
 						int posPCB =  encontrarPosicionEnPCB(pcb->pid);	//Encontrar pos en listaPCB
 						list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcb->pid, pcb->path, pcb->puntero+1, 2, pcb->totalLineas), (void*)PCB_destroy);//Pongo al mProc en bloqueado
-						pthread_mutex_unlock(&mutex2);
+						pthread_mutex_unlock(&mutexPCB);
 
 						free(package);
 						free(package2);
@@ -404,7 +403,6 @@ void ROUND_ROBIN(void* args)
 	int IO;
 
 	PCB* pcbReady = mensaje->pcbReady;
-	int posPCB = mensaje->posPCB;
 
 	sem_wait(&semCPU);
 	pthread_mutex_lock(&mutex);
@@ -426,9 +424,12 @@ void ROUND_ROBIN(void* args)
 
 	int Q = 0;
 
+	pthread_mutex_lock(&mutexPCB);
 	log_info(logger, "Correr %s, mProc: %d", pcbReady->path, pcbReady->pid);
 
+	int posPCB =  encontrarPosicionEnPCB(pid1);	//Encontrar pos en listaPCB
 	list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pid1, path, puntero, 1, totalLineas), (void*)PCB_destroy);
+	pthread_mutex_unlock(&mutexPCB);
 
 	while( ( (i-1)<=(totalLineas) ) && ( Q<QUANTUM ) )
 	{
@@ -463,9 +464,10 @@ void ROUND_ROBIN(void* args)
 
 	if( (i-1)>(totalLineas) )
 	{
-		pthread_mutex_lock(&mutex2);
+		pthread_mutex_lock(&mutexPCB);
+		posPCB =  encontrarPosicionEnPCB(pid1);
 		list_remove_and_destroy_element(listaPCB, posPCB, (void*) PCB_destroy);
-		pthread_mutex_unlock(&mutex2);
+		pthread_mutex_unlock(&mutexPCB);
 	}
 	if(Q>=QUANTUM)
 	{
@@ -511,7 +513,6 @@ void FIFO(void *args)
 	int IO;
 
 	PCB* pcbReady = mensaje->pcbReady;
-	int posPCB = mensaje->posPCB;
 
 	sem_wait(&semCPU);
 	pthread_mutex_lock(&mutex);
@@ -535,6 +536,7 @@ void FIFO(void *args)
 
 	log_info(logger, "Correr %s, mProc: %d", pcbReady->path, pcbReady->pid);
 
+	int posPCB =  encontrarPosicionEnPCB(pid1);	//Encontrar pos en listaPCB
 	list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pid1, path, puntero, 1, totalLineas), (void*)PCB_destroy);
 
 	while( (i-1)<=(totalLineas) )
@@ -612,7 +614,6 @@ void planificador()
 		pthread_mutex_lock(&mutex3);
 		PCB* pcbReady = buscarReadyEnPCB(pidReady);	//Busco al ready en el PCB
 
-		int posPCB =  encontrarPosicionEnPCB(pidReady);	//Encontrar pos en listaPCB
 		pthread_mutex_unlock(&mutex3);
 
 		pthread_t hilo;
@@ -622,7 +623,6 @@ void planificador()
 		unaPersona = (t_enviarProceso *)malloc(sizeof(t_enviarProceso));
 		unaPersona->file = pcbReady->totalLineas;
 		unaPersona->pcbReady = pcbReady;
-		unaPersona->posPCB = posPCB;
 
 		if (strncmp(ALGORITMO_PLANIFICACION,"FIFO", 4) == 0)
 		{
