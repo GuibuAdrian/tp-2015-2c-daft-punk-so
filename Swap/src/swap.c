@@ -48,6 +48,10 @@ simularPedidoMemoria(80,3,0,null)
 #define MAXCHARPARAMETERS 200
 #define NETWORKMODE 0
 #define CONSOLEMODE 1
+#define INICIAR 0
+#define LEER 1
+#define ESCRIBIR 2
+#define FINALIZAR 3
 
 
 /////////////////////////
@@ -109,7 +113,8 @@ int tamanio_archivo(int fd);
 int tamanioRespuestaMemoria(t_orden_memoria unaPersona);
 int round_div(int dividend, int divisor);
 void hexdump(void *mem, unsigned int len, int arrayPIDs[]);
-
+int buscarPosLibreQueTermineEn(char* espacio);
+int buscarPosLibreQueEmpieceEn(char* espacio);
 char* mapearArchivo(char * nombreSwap);
 void crearArchivoSwap(char * nombreSwap, int tamanioSwap, int cantSwap);
 void procesarOrden(t_orden_memoria ordenMemoria, int consoleMode);
@@ -393,11 +398,66 @@ void finalizarProceso(int pid, int pag)
 
 	if(posOcupado != -1)	//Pregunto si lo encontre
 	{
+
+		// Me fijo si tengo espacios libres atrás o adelante para unirlos si es necesario (ver enunciado)
+
+		int posLibreAtras;
+		int posLibreAdelante;
+
 		t_espacioOcupado *ocupadoAux = list_remove(listaOcupados, posOcupado);
 
-		list_add(listaLibres, libre_create(ocupadoAux->inicioSwap, ocupadoAux->cantPag));
+		posLibreAtras = buscarPosLibreQueTermineEn(ocupadoAux->inicioSwap);
+		posLibreAdelante = buscarPosLibreQueEmpieceEn(ocupadoAux->inicioSwap + ocupadoAux->cantPag*tamanioPagSwap);
+
+		if(posLibreAtras != -1 && posLibreAdelante != -1) { //Encontró lugar adelante y atrás
+			t_espacioLibre* nuevoEspacioLibre = list_get(listaLibres,posLibreAtras);
+			t_espacioLibre* EspacioLibreAdelante = list_get(listaLibres,posLibreAdelante);
+			nuevoEspacioLibre->cantPag = nuevoEspacioLibre->cantPag + EspacioLibreAdelante->cantPag + ocupadoAux->cantPag;
+			list_remove(listaLibres, posLibreAdelante);
+		} else if(posLibreAtras != -1 && posLibreAdelante == -1) { //Sólo encontró lugar Atras
+				t_espacioLibre* nuevoEspacioLibre = list_get(listaLibres,posLibreAtras);
+				nuevoEspacioLibre->cantPag = nuevoEspacioLibre->cantPag + ocupadoAux->cantPag;
+		} else if(posLibreAtras == -1 && posLibreAdelante != -1) { //Sólo encontró lugar adelante
+				t_espacioLibre* espacioLibreAdelante = list_get(listaLibres,posLibreAdelante);
+				espacioLibreAdelante->inicioHueco = ocupadoAux->inicioSwap;
+				espacioLibreAdelante->cantPag = espacioLibreAdelante->cantPag + ocupadoAux->cantPag;
+		} else { //No enconrtó lugares contiguos libres (ni atrás ni adelante) :'(
+			list_add(listaLibres, libre_create(ocupadoAux->inicioSwap, ocupadoAux->cantPag));
+		}
 	}
 
+}
+
+int buscarPosLibreQueTermineEn(char* espacio) {
+	t_espacioLibre* libreAux;
+	char* finLibre;
+
+	int i;
+	for(i=0; i<list_size(listaLibres);i++)
+	{
+		libreAux = list_get(listaLibres,i);
+		finLibre = libreAux->inicioHueco + libreAux->cantPag*tamanioPagSwap;
+		if(espacio == finLibre){
+			return i;
+		}
+	}
+	return -1;
+}
+
+int buscarPosLibreQueEmpieceEn(char* espacio) {
+	t_espacioLibre* libreAux;
+	char* comienzoLibre;
+
+	int i;
+	for(i=0; i<list_size(listaLibres);i++)
+	{
+		libreAux = list_get(listaLibres,i);
+		comienzoLibre = libreAux->inicioHueco;
+		if(espacio == comienzoLibre){
+			return i;
+		}
+	}
+	return -1;
 }
 
 int reservarEspacio(int pid, int paginas)	// 0=Exito  1=Fracaso
@@ -427,7 +487,7 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 {
 	int respuesta;
 
-	if (ordenMemoria.orden == 0)  // 0=Iniciar
+	if (ordenMemoria.orden == INICIAR)  // 0=Iniciar
 	{
 		log_info(logger, "Iniciando mProc: %d de %d paginas", ordenMemoria.pid, ordenMemoria.paginas);
 
@@ -455,7 +515,7 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 	}
 	else
 	{
-		if (ordenMemoria.orden == 1) // 1=Leer
+		if (ordenMemoria.orden == LEER) // 1=Leer
 		{
 			// TODO: Revisar, creo que está para el  orto. Esos 4 hardcodeados no me gustan nada.
 			// Tampoco me gusta strncpy
@@ -482,11 +542,11 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 		}
 		else
 		{
-			if (ordenMemoria.orden == 3) // 3=Finalizar
+			if (ordenMemoria.orden == FINALIZAR) // 3=Finalizar
 			{
 				t_proceso* new = buscarPID(ordenMemoria.pid);
 
-				log_info(logger, "mProc: %d. Total Paginas leidas: %d, escritas %d ", new->pid, new->cantPagLeidas, new->cantPagEscritas);
+				log_info(logger, "Finalizando proceso %d. Total Paginas leidas: %d, escritas %d", new->pid, new->cantPagLeidas, new->cantPagEscritas);
 
 				int posProc = encontrarPosicionProceso(ordenMemoria.pid);
 
@@ -496,7 +556,7 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 			}
 			else
 			{
-				if (ordenMemoria.orden == 2) // 2=Escribir
+				if (ordenMemoria.orden == ESCRIBIR) // 2=Escribir
 				{
 					//int contentSize = strlen(ordenMemoria.content); // TODO: Fijarse, creo que es redundante, ordenMemoria.contentSize deberia tener la longitud correcta
 
