@@ -16,6 +16,7 @@
 #include <netdb.h>
 #include <unistd.h>
 #include <errno.h>
+#include <stdbool.h>
 #include <pthread.h>
 #include <semaphore.h>
 
