@@ -467,7 +467,7 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo)
 			{
 				if (strncmp(pch, "leer", 5) == 0)
 				{
-					pch = strtok(NULL, " \n");
+					pch = strtok(NULL, " \n;\"“”");
 					pagina = strtol(pch, NULL, 10);
 					tiempoUsuarioActual = tiempoGlobal;
 					tiempoGlobal++;
@@ -475,11 +475,11 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo)
 				}
 				else
 				{
-					pch = strtok(NULL, " \n");
+					pch = strtok(NULL, " \n;\"“”");
 					pagina = strtol(pch, NULL, 10);
 					tiempoUsuarioActual = tiempoGlobal;
 					tiempoGlobal++;
-					pch = strtok(NULL, " \n");
+					pch = strtok(NULL, " \n;\"“”");
 
 					mensaje = enviarOrdenAMemoria(pid, 2, pagina, pch, idNodo);
 				}//else escritura
