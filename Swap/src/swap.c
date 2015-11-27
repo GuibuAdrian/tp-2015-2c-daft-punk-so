@@ -536,8 +536,6 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 
 			log_info(logger, "Leyendo mProc: %d. Pagina %d: %s ", ordenMemoria.pid, ordenMemoria.paginas, pagContent);
 
-			strncpy(pagContent,"",4);
-
 			free(pagContent);
 		}
 		else
@@ -558,8 +556,11 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 			{
 				if (ordenMemoria.orden == ESCRIBIR) // 2=Escribir
 				{
-					//int contentSize = strlen(ordenMemoria.content); // TODO: Fijarse, creo que es redundante, ordenMemoria.contentSize deberia tener la longitud correcta
 
+					if(ordenMemoria.contentSize > tamanioPagSwap) {
+						log_error(logger, "Recibí un mensaje para escribir en %d que tiene %d bytes y el tamanio de pagina es %d", ordenMemoria.pid, ordenMemoria.contentSize, tamanioPagSwap);
+						return;
+					}
 
 					t_proceso* new = buscarPID(ordenMemoria.pid);
 					int posProc = encontrarPosicionProceso(ordenMemoria.pid);
@@ -568,12 +569,12 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 
 					t_espacioOcupado* pidOcup = buscarPIDEnOcupados(ordenMemoria.pid);
 
-					//memcpy(pidOcup->inicioSwap + ordenMemoria.paginas*tamanioPagSwap , ordenMemoria.content, contentSize+1);
-					strncpy(pidOcup->inicioSwap+(ordenMemoria.paginas*tamanioPagSwap), ordenMemoria.content, ordenMemoria.contentSize+1);
+					memset(pidOcup->inicioSwap + ordenMemoria.paginas*tamanioPagSwap, 0, tamanioPagSwap); // Borro el contenido viejo de esa pagina (lo lleno con 0x00)
+					memcpy(pidOcup->inicioSwap + ordenMemoria.paginas*tamanioPagSwap , ordenMemoria.content, ordenMemoria.contentSize); // Pongo el contenido nuevo que viene de memoria (puede ser de menor tamaño que tamanioPagSwap!!)
 
 					usleep(retardoSwap*1000000);
 
-					log_info(logger, "Escribiendo mProc: %d. Pagina %d: %s ", ordenMemoria.pid, ordenMemoria.paginas, ordenMemoria.content);
+					log_info(logger, "Escribiendo mProc: %d. Pagina: %d. Contenido: %s ", ordenMemoria.pid, ordenMemoria.paginas, ordenMemoria.content);
 
 					respuestaMemoria(ordenMemoria.pid, ordenMemoria.paginas, 4, ordenMemoria.content);
 				}
