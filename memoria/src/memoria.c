@@ -700,6 +700,11 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 					{
 						if (mensaje.orden == 2)  // escribe pagina de un proceso
 						{
+							if(mensaje.contentSize > tamMarcos) {
+								log_error(logger, "Recibí un mensaje para escribir en %d que tiene %d bytes y el tamanio de marco es %d", mensaje.pid, mensaje.contentSize, tamMarcos);
+								return;
+							}
+
 							log_info(logger, "Solicitando mProc: %d Pag: %d a SWAP", mensaje.pid, mensaje.pagina);
 
 							respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content); //Le aviso al SWAP del nuevo contenido
@@ -710,7 +715,7 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 
 							pthread_mutex_unlock(&mutexMemoFlush);
 
-							 usleep(retardoMem*1000000);
+							usleep(retardoMem*1000000);
 
 							log_info(logger, "Proceso %d Escribiendo: %s en pag: %d", mensaje.pid, mensaje.content, mensaje.pagina);
 
