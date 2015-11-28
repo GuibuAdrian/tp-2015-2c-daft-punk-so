@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>
@@ -65,6 +66,13 @@ typedef struct
 	char path[PACKAGESIZE];
 } t_mensaje;
 
+typedef struct
+{
+	double tiempoUso;
+	double tiempoOcio;
+	double tiempoInicio;
+}tiempos;
+
 t_log* logger;
 t_list *listaHilos, *listaCPUs, *listaRespuestas;
 char *ipPlanificador, *puertoPlanificador, *ipMemoria, *puertoMemoria;
@@ -87,9 +95,9 @@ t_cpu* buscarCPU(int sock);
 int encontrarPosicionCPU(int sock);
 
 void conectarHilos1();
-void recibirPath1(int serverSocket, int idNodo);
+void recibirPath1(int serverSocket, int idNodo, tiempos*);
 char * obtenerLinea(char path[PACKAGESIZE], int puntero);
-void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo);
+void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, tiempos*);
 char * obtenerLinea(char path[PACKAGESIZE], int puntero);
 t_orden_CPU enviarOrdenAMemoria(int pid, int orden, int paginas, char *content, int idNodo);
 void cargaCPU();
@@ -111,6 +119,7 @@ int main()
 	logger = log_create("logsTP", "CPU", true, LOG_LEVEL_INFO);
 
 	t_config* config;
+	tiempos* tiemposCPU = malloc(2*sizeof(double));
 
 	config = config_create("config.cfg");
 
@@ -132,7 +141,7 @@ int main()
 
 	while (i <= numeroHilos)
 	{
-		pthread_create(&unHilo, NULL, (void*) conectarHilos1, NULL);
+		pthread_create(&unHilo, NULL, (void*) conectarHilos1, (void *) tiemposCPU);
 
 		list_add(listaHilos,hilo_create(unHilo));
 
@@ -162,12 +171,37 @@ int main()
 	return 0;
 }
 
-float porcentajeUsoCPU(){
-	return 100 * (tiempoUsuarioActual - tiempoUsuarioAntes) + (tiempoEntradaSalida )/(fin - arranque);
+float porcentajeUsoCPU(tiempos * tiemposCPU){
+	float porcentaje = 0;
+	tiempos *tiemposDelCPU = tiemposCPU;
+	double tiempoOcioso = tiemposDelCPU->tiempoOcio;
+	double tiempoOcupado = tiemposDelCPU->tiempoUso;
+
+	if(difftime(tiemposDelCPU->tiempoInicio,clock()) < 60){
+		if(tiempoOcioso < 30){
+			porcentaje = (tiempoOcupado - tiempoOcioso) * 100 / 60;
+		} else if (tiempoOcioso == 30){
+			porcentaje = 1/2;
+		} else if (tiempoOcioso > 30){
+			porcentaje = (tiempoOcioso - tiempoOcupado) * 100 / 60;
+		}
+	} else if(difftime(tiemposDelCPU->tiempoInicio,clock()) == 60){
+		tiemposDelCPU->tiempoInicio = clock();
+		if(tiempoOcioso < 30){
+			porcentaje = (tiempoOcupado - tiempoOcioso) * 100 / 60;
+		} else if (tiempoOcioso == 30){
+			porcentaje = 1/2;
+		} else if (tiempoOcioso > 30){
+			porcentaje = (tiempoOcioso - tiempoOcupado) * 100 / 60;
+		}
+	}
+	return porcentaje;
 }
 
 void conectarHilos1(void *context)
 {
+	tiempos * tiemposCPU;
+	tiemposCPU = ( tiempos*) context;
 	int serverSocket;
 	serverSocket = conectarse(ipPlanificador, puertoPlanificador);
 
@@ -192,7 +226,7 @@ void conectarHilos1(void *context)
 
 	free(package);
 
-	recibirPath1(serverSocket, mensaje.idNodo);
+	recibirPath1(serverSocket, mensaje.idNodo, tiemposCPU);
 
 	close(serverSocket);
 
@@ -269,7 +303,7 @@ void recibirSolicitudCarga_finQ()
 	};
 }
 
-void recibirPath1(int serverSocket, int idNodo)
+void recibirPath1(int serverSocket, int idNodo, tiempos *tiemposCPU)
 {
 	int status = 1;
 
@@ -306,7 +340,7 @@ void recibirPath1(int serverSocket, int idNodo)
 
 			log_info(logger,"Recibido mProc: %d, path: %s, puntero: %d", unaPersona.pid, unaPersona.path, unaPersona.puntero);
 
-			interpretarLinea(serverSocket,linea, unaPersona.pid, idNodo);
+			interpretarLinea(serverSocket,linea, unaPersona.pid, idNodo, tiemposCPU);
 
 			pthread_mutex_unlock(&mutex2);
 
@@ -422,27 +456,24 @@ t_orden_CPU enviarOrdenAMemoria(int pid, int orden, int paginas, char *content, 
 	return recibirRespuestaSwap(socketMemoria);
 }
 
-void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo)
+void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, tiempos *tiemposCPU)
 {
+	tiempos *tiemposDelCPU;
+	tiemposDelCPU = tiemposCPU;
 	char * pch = strtok(linea, " \n");
 	int pagina;
 	t_orden_CPU mensaje;
+	clock_t inicioInstuccion, finInstruccion;
 
 	if (strncmp(pch, "finalizar", 9) == 0)
 	{
-		fin = tiempoGlobal;
-		printf("%f",porcentajeUsoCPU());
 		mensaje = enviarOrdenAMemoria(pid, 3, 0, "/", idNodo);
-		fin = 0;
-		arranque = 0;
-		tiempoEntradaSalida = 0;
-		tiempoUsuarioActual = 0;
-		tiempoUsuarioAntes = 0;
 	}
 	else
 	{
 		if (strncmp(pch, "entrada-salida", 9) == 0)
 		{//TODO
+			inicioInstuccion = clock();
 			pch = strtok(NULL, " \n");
 			pagina = strtol(pch, NULL, 10);
 			tiempoEntradaSalida = tiempoEntradaSalida + 10;
@@ -450,31 +481,42 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo)
 			mensaje.pagina = pagina;
 			mensaje.orden = 5;
 			strcpy(mensaje.content,"/");
-			tiempoGlobal++;
+			finInstruccion = clock();
+			tiemposDelCPU->tiempoUso = tiemposDelCPU->tiempoUso + difftime(finInstruccion, inicioInstuccion);
+			tiemposDelCPU->tiempoOcio = tiemposDelCPU->tiempoOcio - difftime(finInstruccion, inicioInstuccion);
 		}
 		else
 		{
 			if (strncmp(pch, "iniciar", 7) == 0)
 			{
+				inicioInstuccion = clock();
 				pch = strtok(NULL, " \n");
 				pagina = strtol(pch, NULL, 10);
 				tiempoUsuarioAntes = tiempoGlobal;
 				arranque = tiempoGlobal;
 				tiempoGlobal++;
 				mensaje = enviarOrdenAMemoria(pid, 0, pagina, "/", idNodo);
+				finInstruccion = clock();
+				tiemposDelCPU->tiempoUso = tiemposDelCPU->tiempoUso + difftime(finInstruccion, inicioInstuccion);
+				tiemposDelCPU->tiempoOcio = tiemposDelCPU->tiempoOcio - difftime(finInstruccion, inicioInstuccion);
 			}
 			else
 			{
 				if (strncmp(pch, "leer", 5) == 0)
 				{
+					inicioInstuccion = clock();
 					pch = strtok(NULL, " \n;\"“”");
 					pagina = strtol(pch, NULL, 10);
 					tiempoUsuarioActual = tiempoGlobal;
 					tiempoGlobal++;
 					mensaje = enviarOrdenAMemoria(pid, 1, pagina, "/", idNodo);
+					finInstruccion = clock();
+					tiemposDelCPU->tiempoUso = tiemposDelCPU->tiempoUso + difftime(finInstruccion, inicioInstuccion);
+					tiemposDelCPU->tiempoOcio = tiemposDelCPU->tiempoOcio - difftime(finInstruccion, inicioInstuccion);
 				}
 				else
 				{
+					inicioInstuccion = clock();
 					pch = strtok(NULL, " \n;\"“”");
 					pagina = strtol(pch, NULL, 10);
 					tiempoUsuarioActual = tiempoGlobal;
@@ -482,6 +524,9 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo)
 					pch = strtok(NULL, " \n;\"“”");
 
 					mensaje = enviarOrdenAMemoria(pid, 2, pagina, pch, idNodo);
+					finInstruccion = clock();
+					tiemposDelCPU->tiempoUso = tiemposDelCPU->tiempoUso + difftime(finInstruccion, inicioInstuccion);
+					tiemposDelCPU->tiempoOcio = tiemposDelCPU->tiempoOcio - difftime(finInstruccion, inicioInstuccion);
 				}//else escritura
 			}//else escritura/lectura
 
