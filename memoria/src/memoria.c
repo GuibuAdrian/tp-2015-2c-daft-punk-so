@@ -105,6 +105,7 @@ void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU);
 void tlbHistorica();
 void iniciarProceso(int pid, int paginas);
 void finalizarProceso(int pid);
+void escribirPagina(int marco, char* content, int contentSize);
 void rutinaFlushTLB();
 void rutinaLimpiarMemoriaPrincipal();
 void dumpMemoriaPrincipal();
@@ -627,7 +628,7 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 					{
 						pthread_mutex_unlock(&mutexMemoFlush);
 
-						strncpy(memoriaPrincipal + marco * tamMarcos,	mensaje.content, strlen(mensaje.content));//Actualizo la memo ppal
+						escribirPagina(marco, mensaje.content, mensaje.contentSize);
 
 						pthread_mutex_unlock(&mutexMemoFlush);
 
@@ -684,7 +685,7 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 
 						pthread_mutex_lock(&mutexMemoFlush);
 
-						strncpy(memoriaPrincipal + marco * tamMarcos, respuestaSwap.content, strlen(respuestaSwap.content));
+						strncpy(respuestaSwap.content, memoriaPrincipal + marco * tamMarcos, strlen(memoriaPrincipal + marco * tamMarcos)+1);
 
 						pthread_mutex_unlock(&mutexMemoFlush);
 
@@ -711,7 +712,7 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 
 							pthread_mutex_lock(&mutexMemoFlush);
 
-							strncpy(memoriaPrincipal + marco * tamMarcos, mensaje.content, mensaje.contentSize); //Actualizo la memo ppal
+							escribirPagina(marco, mensaje.content, mensaje.contentSize);
 
 							pthread_mutex_unlock(&mutexMemoFlush);
 
@@ -758,7 +759,7 @@ void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU)
 
 		pthread_mutex_lock(&mutexMemoFlush);
 
-		strncpy(respuestaSwap.content, memoriaPrincipal + entradaTLB->marco * tamMarcos, strlen(respuestaSwap.content));
+		strncpy(respuestaSwap.content, memoriaPrincipal + entradaTLB->marco * tamMarcos, strlen(memoriaPrincipal + entradaTLB->marco * tamMarcos)+1);
 
 		pthread_mutex_unlock(&mutexMemoFlush);
 
@@ -776,7 +777,7 @@ void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU)
 
 		pthread_mutex_lock(&mutexMemoFlush);
 
-		strncpy(memoriaPrincipal + entradaTLB->marco * tamMarcos, mensaje.content, mensaje.contentSize);	//Actualizo la memo ppal
+		escribirPagina(entradaTLB->marco, mensaje.content, mensaje.contentSize);
 
 		respuestaSwap.contentSize = strlen(mensaje.content);
 		strncpy(respuestaSwap.content, mensaje.content, respuestaSwap.contentSize);
@@ -837,6 +838,11 @@ void finalizarProceso(int pid)
 	borrarPIDEnTLB(pid);
 
 	log_info(logger, "Proceso %d finalizado", pid);
+}
+
+void escribirPagina(int marco, char* content, int contentSize)
+{
+	strncpy(memoriaPrincipal + marco * tamMarcos, content, contentSize); //Actualizo la memo ppal
 }
 
 void cambiarBitUsoYModificado(int pid, int pagina, int orden, int marco)
