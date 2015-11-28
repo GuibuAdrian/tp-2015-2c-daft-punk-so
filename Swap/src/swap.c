@@ -92,9 +92,10 @@ typedef struct
 
 t_log* logger;
 t_list *listaLibres, *listaOcupados, *listaProcesos;
-int tamanio, cantPagSwap, tamanioPagSwap, consoleMode, retardoSwap, retardoCompactacion;
+int tamanio, cantPagSwap, tamanioPagSwap, consoleMode, retardoSwap, retardoCompactacion, debugMode;
 int socket_memoria;
 char* mapeo; // El mapeo en memoria del swap
+
 
 /////////////////////////
 //     PROTOTIPOS      //
@@ -135,9 +136,6 @@ int main()
 	printf("\n");
 	printf("~~~~~~~~~~SWAP~~~~~~~~~~\n\n");
 
-
-	logger = log_create("logsTP", "Swap", true, LOG_LEVEL_INFO);
-
 	t_config* config;
 
 	config = config_create("config.cfg");
@@ -148,7 +146,10 @@ int main()
 	consoleMode = config_get_int_value(config, "CONSOLE_MODE");
 	retardoSwap = config_get_int_value(config, "RETARDO_SWAP");
 	retardoCompactacion = config_get_int_value(config, "RETARDO_COMPACTACION");
+	debugMode = config_get_int_value(config, "DEBUG_MODE");
 
+
+	logger = log_create("logsTP", "Swap", debugMode, LOG_LEVEL_INFO);  //si debugMode = 1 muestra los logs por pantalla
 
 	listaLibres = list_create();
 	listaOcupados = list_create();
@@ -510,6 +511,9 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 			respuesta?printf("Fallo inicio PID %d", ordenMemoria.pid):printf("Inicio exitoso PID %d", ordenMemoria.pid);
 		} else {
 			respuestaMemoria(ordenMemoria.pid, ordenMemoria.paginas, respuesta, "/");
+			if (debugMode) {
+				dumpSwap();
+			}
 		}
 
 	}
@@ -551,6 +555,11 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 				list_remove_and_destroy_element(listaProcesos, posProc, (void*) proceso_destroy);
 
 				finalizarProceso(ordenMemoria.pid, ordenMemoria.paginas);
+
+				if(mode == NETWORKMODE && debugMode) {
+					dumpSwap();
+				}
+
 			}
 			else
 			{
@@ -577,6 +586,10 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 					log_info(logger, "Escribiendo mProc: %d. Pagina: %d. Contenido: %s ", ordenMemoria.pid, ordenMemoria.paginas, ordenMemoria.content);
 
 					respuestaMemoria(ordenMemoria.pid, ordenMemoria.paginas, 4, ordenMemoria.content);
+
+					if(mode == NETWORKMODE && debugMode) {
+						dumpSwap();
+					}
 				}
 			}
 	} //else finalizar
@@ -919,7 +932,10 @@ void defrag() {
 	list_clean(listaLibres);
 	list_add(listaLibres, nuevoEspacioLibre);
 	free(copiaSwapViejo);
+
+	usleep(retardoCompactacion*1000000); //Retardo compactación
 	printf("Swap compactado\n");
+
 }
 
 int cuantasPaginasLibresTengo() {
