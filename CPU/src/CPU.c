@@ -56,7 +56,7 @@ typedef struct
 typedef struct
 {
 	int idCPU;
-	int cantInst;
+	float cantInst;
 	int socketPan; //Le puse Pan aproposito :P
 } t_cpu;
 
@@ -68,6 +68,7 @@ typedef struct
 
 typedef struct
 {
+	int idCPU;
 	double tiempoUso;
 	double tiempoOcio;
 	double tiempoInicio;
@@ -95,16 +96,16 @@ t_cpu* buscarCPU(int sock);
 int encontrarPosicionCPU(int sock);
 
 void conectarHilos1();
-void recibirPath1(int serverSocket, int idNodo, tiempos*);
+void recibirPath1(int serverSocket, int idNodo, tiempos *);
 char * obtenerLinea(char path[PACKAGESIZE], int puntero);
-void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, tiempos*);
+void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, tiempos *);
 char * obtenerLinea(char path[PACKAGESIZE], int puntero);
 t_orden_CPU enviarOrdenAMemoria(int pid, int orden, int paginas, char *content, int idNodo);
 void cargaCPU();
 void recibirSolicitudCarga_finQ();
 void removerPID(int pid);
 void enviarRespuestas(int socketPlanificador, int pid);
-float porcentajeUsoCPU();
+float porcentajeUsoCPU(tiempos *);
 
 int main()
 {
@@ -119,7 +120,6 @@ int main()
 	logger = log_create("logsTP", "CPU", true, LOG_LEVEL_INFO);
 
 	t_config* config;
-	tiempos* tiemposCPU = malloc(2*sizeof(double));
 
 	config = config_create("config.cfg");
 
@@ -141,7 +141,7 @@ int main()
 
 	while (i <= numeroHilos)
 	{
-		pthread_create(&unHilo, NULL, (void*) conectarHilos1, (void *) tiemposCPU);
+		pthread_create(&unHilo, NULL, (void*) conectarHilos1, NULL);
 
 		list_add(listaHilos,hilo_create(unHilo));
 
@@ -173,11 +173,11 @@ int main()
 
 float porcentajeUsoCPU(tiempos * tiemposCPU){
 	float porcentaje = 0;
-	tiempos *tiemposDelCPU = tiemposCPU;
-	double tiempoOcioso = tiemposDelCPU->tiempoOcio;
-	double tiempoOcupado = tiemposDelCPU->tiempoUso;
+	tiempos tiemposDelCPU = *tiemposCPU;
+	double tiempoOcioso = tiemposDelCPU.tiempoOcio;
+	double tiempoOcupado = tiemposDelCPU.tiempoUso;
 
-	if(difftime(tiemposDelCPU->tiempoInicio,clock()) < 60){
+	if(difftime(tiemposDelCPU.tiempoInicio,clock()) < 60){
 		if(tiempoOcioso < 30){
 			porcentaje = (tiempoOcupado - tiempoOcioso) * 100 / 60;
 		} else if (tiempoOcioso == 30){
@@ -185,8 +185,8 @@ float porcentajeUsoCPU(tiempos * tiemposCPU){
 		} else if (tiempoOcioso > 30){
 			porcentaje = (tiempoOcioso - tiempoOcupado) * 100 / 60;
 		}
-	} else if(difftime(tiemposDelCPU->tiempoInicio,clock()) == 60){
-		tiemposDelCPU->tiempoInicio = clock();
+	} else if(difftime(tiemposDelCPU.tiempoInicio,clock()) == 60){
+		tiemposDelCPU.tiempoInicio = clock();
 		if(tiempoOcioso < 30){
 			porcentaje = (tiempoOcupado - tiempoOcioso) * 100 / 60;
 		} else if (tiempoOcioso == 30){
@@ -200,9 +200,9 @@ float porcentajeUsoCPU(tiempos * tiemposCPU){
 
 void conectarHilos1(void *context)
 {
-	tiempos * tiemposCPU;
-	tiemposCPU = ( tiempos*) context;
+	tiempos *tiemposCPU = malloc(3*sizeof(double)+sizeof(int));
 	int serverSocket;
+
 	serverSocket = conectarse(ipPlanificador, puertoPlanificador);
 
 	log_info(logger,"Planificador: %d conectado, viva!!", serverSocket);
@@ -213,6 +213,10 @@ void conectarHilos1(void *context)
 	list_add(listaCPUs,cpu_create(id,0,serverSocket));
 
 	pthread_mutex_unlock(&mutex);
+	tiemposCPU->idCPU = id;
+	tiemposCPU->tiempoInicio = 0;
+	tiemposCPU->tiempoOcio = 0;
+	tiemposCPU->tiempoUso = 0;
 	mensaje.idNodo = id;
 	mensaje.cantHilos = numeroHilos;
 
@@ -226,7 +230,7 @@ void conectarHilos1(void *context)
 
 	free(package);
 
-	recibirPath1(serverSocket, mensaje.idNodo, tiemposCPU);
+	recibirPath1(serverSocket, mensaje.idNodo, &tiemposCPU);
 
 	close(serverSocket);
 
@@ -340,7 +344,7 @@ void recibirPath1(int serverSocket, int idNodo, tiempos *tiemposCPU)
 
 			log_info(logger,"Recibido mProc: %d, path: %s, puntero: %d", unaPersona.pid, unaPersona.path, unaPersona.puntero);
 
-			interpretarLinea(serverSocket,linea, unaPersona.pid, idNodo, tiemposCPU);
+			interpretarLinea(serverSocket,linea, unaPersona.pid, idNodo, &tiemposCPU);
 
 			pthread_mutex_unlock(&mutex2);
 
@@ -456,14 +460,14 @@ t_orden_CPU enviarOrdenAMemoria(int pid, int orden, int paginas, char *content, 
 	return recibirRespuestaSwap(socketMemoria);
 }
 
-void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, tiempos *tiemposCPU)
+void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, tiempos *tiemposDelCPU)
 {
-	tiempos *tiemposDelCPU;
-	tiemposDelCPU = tiemposCPU;
 	char * pch = strtok(linea, " \n");
 	int pagina;
 	t_orden_CPU mensaje;
 	clock_t inicioInstuccion, finInstruccion;
+	int posicionCPU = 0;
+	t_cpu * cpuEncontrado;
 
 	if (strncmp(pch, "finalizar", 9) == 0)
 	{
@@ -484,6 +488,10 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, 
 			finInstruccion = clock();
 			tiemposDelCPU->tiempoUso = tiemposDelCPU->tiempoUso + difftime(finInstruccion, inicioInstuccion);
 			tiemposDelCPU->tiempoOcio = tiemposDelCPU->tiempoOcio - difftime(finInstruccion, inicioInstuccion);
+			posicionCPU = encontrarPosicionCPU(tiemposDelCPU->idCPU);
+			cpuEncontrado = list_get(listaCPUs,posicionCPU);
+			//cpuEncontrado = buscarCPU(tiemposDelCPU->idCPU); otra forma de hacer lo mismo de arriba
+			list_replace(listaCPUs,posicionCPU,cpu_create(cpuEncontrado->idCPU,porcentajeUsoCPU(tiemposDelCPU),cpuEncontrado->socketPan));
 		}
 		else
 		{
@@ -492,13 +500,14 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, 
 				inicioInstuccion = clock();
 				pch = strtok(NULL, " \n");
 				pagina = strtol(pch, NULL, 10);
-				tiempoUsuarioAntes = tiempoGlobal;
-				arranque = tiempoGlobal;
-				tiempoGlobal++;
 				mensaje = enviarOrdenAMemoria(pid, 0, pagina, "/", idNodo);
 				finInstruccion = clock();
 				tiemposDelCPU->tiempoUso = tiemposDelCPU->tiempoUso + difftime(finInstruccion, inicioInstuccion);
 				tiemposDelCPU->tiempoOcio = tiemposDelCPU->tiempoOcio - difftime(finInstruccion, inicioInstuccion);
+				posicionCPU = encontrarPosicionCPU(tiemposDelCPU->idCPU);
+				cpuEncontrado = list_get(listaCPUs,posicionCPU);
+				//cpuEncontrado = buscarCPU(tiemposDelCPU->idCPU); otra forma de hacer lo mismo de arriba
+				list_replace(listaCPUs,posicionCPU,cpu_create(cpuEncontrado->idCPU,porcentajeUsoCPU(tiemposDelCPU),cpuEncontrado->socketPan));
 			}
 			else
 			{
@@ -507,26 +516,30 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, 
 					inicioInstuccion = clock();
 					pch = strtok(NULL, " \n;\"“”");
 					pagina = strtol(pch, NULL, 10);
-					tiempoUsuarioActual = tiempoGlobal;
-					tiempoGlobal++;
 					mensaje = enviarOrdenAMemoria(pid, 1, pagina, "/", idNodo);
 					finInstruccion = clock();
 					tiemposDelCPU->tiempoUso = tiemposDelCPU->tiempoUso + difftime(finInstruccion, inicioInstuccion);
 					tiemposDelCPU->tiempoOcio = tiemposDelCPU->tiempoOcio - difftime(finInstruccion, inicioInstuccion);
+					posicionCPU = encontrarPosicionCPU(tiemposDelCPU->idCPU);
+					cpuEncontrado = list_get(listaCPUs,posicionCPU);
+					//cpuEncontrado = buscarCPU(tiemposDelCPU->idCPU); otra forma de hacer lo mismo de arriba
+					list_replace(listaCPUs,posicionCPU,cpu_create(cpuEncontrado->idCPU,porcentajeUsoCPU(tiemposDelCPU),cpuEncontrado->socketPan));
 				}
 				else
 				{
 					inicioInstuccion = clock();
 					pch = strtok(NULL, " \n;\"“”");
 					pagina = strtol(pch, NULL, 10);
-					tiempoUsuarioActual = tiempoGlobal;
-					tiempoGlobal++;
 					pch = strtok(NULL, " \n;\"“”");
 
 					mensaje = enviarOrdenAMemoria(pid, 2, pagina, pch, idNodo);
 					finInstruccion = clock();
 					tiemposDelCPU->tiempoUso = tiemposDelCPU->tiempoUso + difftime(finInstruccion, inicioInstuccion);
 					tiemposDelCPU->tiempoOcio = tiemposDelCPU->tiempoOcio - difftime(finInstruccion, inicioInstuccion);
+					posicionCPU = encontrarPosicionCPU(tiemposDelCPU->idCPU);
+					cpuEncontrado = list_get(listaCPUs,posicionCPU);
+					//cpuEncontrado = buscarCPU(tiemposDelCPU->idCPU); otra forma de hacer lo mismo de arriba
+					list_replace(listaCPUs,posicionCPU,cpu_create(cpuEncontrado->idCPU,porcentajeUsoCPU(tiemposDelCPU),cpuEncontrado->socketPan));
 				}//else escritura
 			}//else escritura/lectura
 
