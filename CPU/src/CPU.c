@@ -59,7 +59,6 @@ typedef struct
 	float cantInst;
 	int socketPan; //Le puse Pan aproposito :P
 	double tiempoUso;
-	double tiempoOcio;
 	double tiempoInicio;
 } t_cpu;
 
@@ -69,23 +68,15 @@ typedef struct
 	char path[PACKAGESIZE];
 } t_mensaje;
 
-typedef struct
-{
-	double tiempoUso;
-	double tiempoOcio;
-	double tiempoInicio;
-}tiempos;
-
 t_log* logger;
 t_list *listaHilos, *listaCPUs, *listaRespuestas;
 char *ipPlanificador, *puertoPlanificador, *ipMemoria, *puertoMemoria;
 int id = 0, RETARDO, numeroHilos, socketPlanCarga;
 pthread_mutex_t mutex, mutex2;
 
-long tiempoUsuarioAntes = 0, tiempoUsuarioActual = 0, arranque = 0, fin = 0, tiempoEntradaSalida = 0, tiempoGlobal = 0;
 static t_hilos *hilo_create(pthread_t unHilo);
 static void hilo_destroy(t_hilos *self);
-static t_cpu *cpu_create(int idCPU, float cantInst, int socketPlan, double inicio, double ocio, double uso);
+static t_cpu *cpu_create(int idCPU, float cantInst, int socketPlan, double inicio, double uso);
 static void cpu_destroy(t_cpu *self);
 static t_orden_CPU *respuesta_create(int pid, int orden, int pagina, char content[PACKAGESIZE]);
 static void respuesta_destroy(t_orden_CPU *self);
@@ -98,16 +89,16 @@ t_cpu* buscarCPU(int sock);
 int encontrarPosicionCPU(int sock);
 
 void conectarHilos1();
-void recibirPath1(int serverSocket, int idNodo, int idCPU/*, tiempos **/);
+void recibirPath1(int serverSocket, int idNodo, int idCPU);
 char * obtenerLinea(char path[PACKAGESIZE], int puntero);
-void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, int idCPU/*, tiempos **/);
+void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, int idCPU);
 char * obtenerLinea(char path[PACKAGESIZE], int puntero);
 t_orden_CPU enviarOrdenAMemoria(int pid, int orden, int paginas, char *content, int idNodo);
 void cargaCPU();
 void recibirSolicitudCarga_finQ();
 void removerPID(int pid);
 void enviarRespuestas(int socketPlanificador, int pid);
-float porcentajeUsoCPU(tiempos *);
+float porcentajeUsoCPU(double);
 
 int main()
 {
@@ -173,36 +164,12 @@ int main()
 	return 0;
 }
 
-float porcentajeUsoCPU(tiempos * tiemposCPU){
-	float porcentaje = 0;
-	tiempos tiemposDelCPU = *tiemposCPU;
-	double tiempoOcioso = tiemposDelCPU.tiempoOcio;
-	double tiempoOcupado = tiemposDelCPU.tiempoUso;
-
-	if(difftime(tiemposDelCPU.tiempoInicio,clock()) < 60){
-		if(tiempoOcioso < 30){
-			porcentaje = (tiempoOcupado - tiempoOcioso) * 100 / 60;
-		} else if (tiempoOcioso == 30){
-			porcentaje = 1/2;
-		} else if (tiempoOcioso > 30){
-			porcentaje = (tiempoOcioso - tiempoOcupado) * 100 / 60;
-		}
-	} else if(difftime(tiemposDelCPU.tiempoInicio,clock()) == 60){
-		tiemposDelCPU.tiempoInicio = clock();
-		if(tiempoOcioso < 30){
-			porcentaje = (tiempoOcupado - tiempoOcioso) * 100 / 60;
-		} else if (tiempoOcioso == 30){
-			porcentaje = 1/2;
-		} else if (tiempoOcioso > 30){
-			porcentaje = (tiempoOcioso - tiempoOcupado) * 100 / 60;
-		}
-	}
-	return porcentaje;
+float porcentajeUsoCPU(double tiempoUso){
+	return tiempoUso*100/60;
 }
 
 void conectarHilos1(void *context)
 {
-//	tiempos *tiemposCPU = malloc(3*sizeof(double)+sizeof(int));
 	int serverSocket;
 
 	serverSocket = conectarse(ipPlanificador, puertoPlanificador);
@@ -212,13 +179,9 @@ void conectarHilos1(void *context)
 	t_idHilo mensaje;
 	pthread_mutex_lock(&mutex);
 	id++;
-	list_add(listaCPUs,cpu_create(id,0,serverSocket,clock(),60,0));
+	list_add(listaCPUs,cpu_create(id,0,serverSocket,clock(),0));
 
 	pthread_mutex_unlock(&mutex);
-//	tiemposCPU->idCPU = id;
-//	tiemposCPU->tiempoInicio = 0;
-//	tiemposCPU->tiempoOcio = 0;
-//	tiemposCPU->tiempoUso = 0;
 	mensaje.idNodo = id;
 	mensaje.cantHilos = numeroHilos;
 
@@ -309,7 +272,7 @@ void recibirSolicitudCarga_finQ()
 	};
 }
 
-void recibirPath1(int serverSocket, int idNodo, int idCPU/*, tiempos *tiemposCPU*/)
+void recibirPath1(int serverSocket, int idNodo, int idCPU)
 {
 	int status = 1;
 
@@ -346,7 +309,7 @@ void recibirPath1(int serverSocket, int idNodo, int idCPU/*, tiempos *tiemposCPU
 
 			log_info(logger,"Recibido mProc: %d, path: %s, puntero: %d", unaPersona.pid, unaPersona.path, unaPersona.puntero);
 
-			interpretarLinea(serverSocket,linea, unaPersona.pid, idNodo, idCPU/*, tiemposCPU*/);
+			interpretarLinea(serverSocket,linea, unaPersona.pid, idNodo, idCPU);
 
 			pthread_mutex_unlock(&mutex2);
 
@@ -354,7 +317,7 @@ void recibirPath1(int serverSocket, int idNodo, int idCPU/*, tiempos *tiemposCPU
 			int posCPU = encontrarPosicionCPU(serverSocket);
 			t_cpu* new = buscarCPU(serverSocket);
 
-			list_replace_and_destroy_element(listaCPUs, posCPU, cpu_create(new->idCPU, new->cantInst, new->socketPan, new->tiempoInicio, new->tiempoOcio, new->tiempoUso) ,(void*) cpu_destroy);
+			list_replace_and_destroy_element(listaCPUs, posCPU, cpu_create(new->idCPU, new->cantInst, new->socketPan, new->tiempoInicio, new->tiempoUso) ,(void*) cpu_destroy);
 
 			pthread_mutex_unlock(&mutex);
 
@@ -462,7 +425,7 @@ t_orden_CPU enviarOrdenAMemoria(int pid, int orden, int paginas, char *content, 
 	return recibirRespuestaSwap(socketMemoria);
 }
 
-void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, int idCPU/*, tiempos *tiemposDelCPU*/)
+void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, int idCPU)
 {
 	char * pch = strtok(linea, " \n");
 	int pagina;
@@ -470,8 +433,8 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, 
 	clock_t inicioInstuccion, finInstruccion;
 	int posicionCPU = 0;
 	t_cpu * cpuEncontrado;
-	tiempos *tiemposDelCPU = malloc(3*sizeof(double));
 	float porcentaje = 0;
+	double tiempoInicio = 0, tiempoUso = 0;
 
 	if (strncmp(pch, "finalizar", 9) == 0)
 	{
@@ -484,30 +447,24 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, 
 			inicioInstuccion = clock();
 			pch = strtok(NULL, " \n");
 			pagina = strtol(pch, NULL, 10);
-			tiempoEntradaSalida = tiempoEntradaSalida + 10;
 			mensaje.pid = pid;
 			mensaje.pagina = pagina;
 			mensaje.orden = 5;
 			strcpy(mensaje.content,"/");
 			finInstruccion = clock();
-//			tiemposDelCPU->tiempoUso = tiemposDelCPU->tiempoUso + difftime(finInstruccion, inicioInstuccion);
-//			tiemposDelCPU->tiempoOcio = tiemposDelCPU->tiempoOcio - difftime(finInstruccion, inicioInstuccion);
 			posicionCPU = encontrarPosicionCPU(idCPU);
 			cpuEncontrado = list_get(listaCPUs,posicionCPU);
-			tiemposDelCPU->tiempoInicio = cpuEncontrado->tiempoInicio;
-			tiemposDelCPU->tiempoOcio = cpuEncontrado->tiempoOcio;
-			tiemposDelCPU->tiempoOcio = tiemposDelCPU->tiempoOcio - difftime(finInstruccion, inicioInstuccion);
-			tiemposDelCPU->tiempoUso = cpuEncontrado->tiempoUso;
-			tiemposDelCPU->tiempoUso = tiemposDelCPU->tiempoUso  + difftime(finInstruccion, inicioInstuccion);
 			//cpuEncontrado = buscarCPU(tiemposDelCPU->idCPU); otra forma de hacer lo mismo de arriba
-			porcentaje = porcentajeUsoCPU(tiemposDelCPU);
-			if(tiemposDelCPU->tiempoInicio != clock()){
-				list_replace(listaCPUs,posicionCPU,cpu_create(cpuEncontrado->idCPU,porcentaje,cpuEncontrado->socketPan,cpuEncontrado->tiempoInicio,cpuEncontrado->tiempoOcio,cpuEncontrado->tiempoUso));
+			tiempoInicio = cpuEncontrado->tiempoInicio;
+			tiempoUso = cpuEncontrado->tiempoUso;
+			tiempoUso = tiempoUso  + difftime(finInstruccion, inicioInstuccion);
+			porcentaje = porcentajeUsoCPU(tiempoUso);
+			if( difftime( clock(), tiempoInicio) < 60 ){
+				list_replace(listaCPUs,posicionCPU,cpu_create(cpuEncontrado->idCPU,porcentaje,cpuEncontrado->socketPan,cpuEncontrado->tiempoInicio,cpuEncontrado->tiempoUso));
 			}
 			else{
-				list_replace(listaCPUs,posicionCPU,cpu_create(cpuEncontrado->idCPU,porcentaje,cpuEncontrado->socketPan,clock(),cpuEncontrado->tiempoOcio,cpuEncontrado->tiempoUso));
+				list_replace(listaCPUs,posicionCPU,cpu_create(cpuEncontrado->idCPU,porcentaje,cpuEncontrado->socketPan,clock(),cpuEncontrado->tiempoUso));
 			}
-
 		}
 		else
 		{
@@ -518,22 +475,18 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, 
 				pagina = strtol(pch, NULL, 10);
 				mensaje = enviarOrdenAMemoria(pid, 0, pagina, "/", idNodo);
 				finInstruccion = clock();
-//				tiemposDelCPU->tiempoUso = tiemposDelCPU->tiempoUso + difftime(finInstruccion, inicioInstuccion);
-//				tiemposDelCPU->tiempoOcio = tiemposDelCPU->tiempoOcio - difftime(finInstruccion, inicioInstuccion);
 				posicionCPU = encontrarPosicionCPU(idCPU);
 				cpuEncontrado = list_get(listaCPUs,posicionCPU);
-				tiemposDelCPU->tiempoInicio = cpuEncontrado->tiempoInicio;
-				tiemposDelCPU->tiempoOcio = cpuEncontrado->tiempoOcio;
-				tiemposDelCPU->tiempoOcio = tiemposDelCPU->tiempoOcio - difftime(finInstruccion, inicioInstuccion);
-				tiemposDelCPU->tiempoUso = cpuEncontrado->tiempoUso;
-				tiemposDelCPU->tiempoUso = tiemposDelCPU->tiempoUso  + difftime(finInstruccion, inicioInstuccion);
 				//cpuEncontrado = buscarCPU(tiemposDelCPU->idCPU); otra forma de hacer lo mismo de arriba
-				porcentaje = porcentajeUsoCPU(tiemposDelCPU);
-				if(tiemposDelCPU->tiempoInicio != clock()){
-					list_replace(listaCPUs,posicionCPU,cpu_create(cpuEncontrado->idCPU,porcentaje,cpuEncontrado->socketPan,cpuEncontrado->tiempoInicio,cpuEncontrado->tiempoOcio,cpuEncontrado->tiempoUso));
+				tiempoInicio = cpuEncontrado->tiempoInicio;
+				tiempoUso = cpuEncontrado->tiempoUso;
+				tiempoUso = tiempoUso  + difftime(finInstruccion, inicioInstuccion);
+				porcentaje = porcentajeUsoCPU(tiempoUso);
+				if( difftime( clock(), tiempoInicio) < 60 ){
+					list_replace(listaCPUs,posicionCPU,cpu_create(cpuEncontrado->idCPU,porcentaje,cpuEncontrado->socketPan,cpuEncontrado->tiempoInicio,cpuEncontrado->tiempoUso));
 				}
 				else{
-					list_replace(listaCPUs,posicionCPU,cpu_create(cpuEncontrado->idCPU,porcentaje,cpuEncontrado->socketPan,clock(),cpuEncontrado->tiempoOcio,cpuEncontrado->tiempoUso));
+					list_replace(listaCPUs,posicionCPU,cpu_create(cpuEncontrado->idCPU,porcentaje,cpuEncontrado->socketPan,clock(),cpuEncontrado->tiempoUso));
 				}
 			}
 			else
@@ -545,22 +498,18 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, 
 					pagina = strtol(pch, NULL, 10);
 					mensaje = enviarOrdenAMemoria(pid, 1, pagina, "/", idNodo);
 					finInstruccion = clock();
-//					tiemposDelCPU->tiempoUso = tiemposDelCPU->tiempoUso + difftime(finInstruccion, inicioInstuccion);
-//					tiemposDelCPU->tiempoOcio = tiemposDelCPU->tiempoOcio - difftime(finInstruccion, inicioInstuccion);
 					posicionCPU = encontrarPosicionCPU(idCPU);
 					cpuEncontrado = list_get(listaCPUs,posicionCPU);
-					tiemposDelCPU->tiempoInicio = cpuEncontrado->tiempoInicio;
-					tiemposDelCPU->tiempoOcio = cpuEncontrado->tiempoOcio;
-					tiemposDelCPU->tiempoOcio = tiemposDelCPU->tiempoOcio - difftime(finInstruccion, inicioInstuccion);
-					tiemposDelCPU->tiempoUso = cpuEncontrado->tiempoUso;
-					tiemposDelCPU->tiempoUso = tiemposDelCPU->tiempoUso  + difftime(finInstruccion, inicioInstuccion);
 					//cpuEncontrado = buscarCPU(tiemposDelCPU->idCPU); otra forma de hacer lo mismo de arriba
-					porcentaje = porcentajeUsoCPU(tiemposDelCPU);
-					if(tiemposDelCPU->tiempoInicio != clock()){
-						list_replace(listaCPUs,posicionCPU,cpu_create(cpuEncontrado->idCPU,porcentaje,cpuEncontrado->socketPan,cpuEncontrado->tiempoInicio,cpuEncontrado->tiempoOcio,cpuEncontrado->tiempoUso));
+					tiempoInicio = cpuEncontrado->tiempoInicio;
+					tiempoUso = cpuEncontrado->tiempoUso;
+					tiempoUso = tiempoUso  + difftime(finInstruccion, inicioInstuccion);
+					porcentaje = porcentajeUsoCPU(tiempoUso);
+					if( difftime( clock(), tiempoInicio) < 60 ){
+						list_replace(listaCPUs,posicionCPU,cpu_create(cpuEncontrado->idCPU,porcentaje,cpuEncontrado->socketPan,cpuEncontrado->tiempoInicio,cpuEncontrado->tiempoUso));
 					}
 					else{
-						list_replace(listaCPUs,posicionCPU,cpu_create(cpuEncontrado->idCPU,porcentaje,cpuEncontrado->socketPan,clock(),cpuEncontrado->tiempoOcio,cpuEncontrado->tiempoUso));
+						list_replace(listaCPUs,posicionCPU,cpu_create(cpuEncontrado->idCPU,porcentaje,cpuEncontrado->socketPan,clock(),cpuEncontrado->tiempoUso));
 					}
 				}
 				else
@@ -572,22 +521,18 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, 
 
 					mensaje = enviarOrdenAMemoria(pid, 2, pagina, pch, idNodo);
 					finInstruccion = clock();
-//					tiemposDelCPU->tiempoUso = tiemposDelCPU->tiempoUso + difftime(finInstruccion, inicioInstuccion);
-//					tiemposDelCPU->tiempoOcio = tiemposDelCPU->tiempoOcio - difftime(finInstruccion, inicioInstuccion);
 					posicionCPU = encontrarPosicionCPU(idCPU);
 					cpuEncontrado = list_get(listaCPUs,posicionCPU);
-					tiemposDelCPU->tiempoInicio = cpuEncontrado->tiempoInicio;
-					tiemposDelCPU->tiempoOcio = cpuEncontrado->tiempoOcio;
-					tiemposDelCPU->tiempoOcio = tiemposDelCPU->tiempoOcio - difftime(finInstruccion, inicioInstuccion);
-					tiemposDelCPU->tiempoUso = cpuEncontrado->tiempoUso;
-					tiemposDelCPU->tiempoUso = tiemposDelCPU->tiempoUso  + difftime(finInstruccion, inicioInstuccion);
 					//cpuEncontrado = buscarCPU(tiemposDelCPU->idCPU); otra forma de hacer lo mismo de arriba
-					porcentaje = porcentajeUsoCPU(tiemposDelCPU);
-					if(tiemposDelCPU->tiempoInicio != clock()){
-						list_replace(listaCPUs,posicionCPU,cpu_create(cpuEncontrado->idCPU,porcentaje,cpuEncontrado->socketPan,cpuEncontrado->tiempoInicio,cpuEncontrado->tiempoOcio,cpuEncontrado->tiempoUso));
+					tiempoInicio = cpuEncontrado->tiempoInicio;
+					tiempoUso = cpuEncontrado->tiempoUso;
+					tiempoUso = tiempoUso  + difftime(finInstruccion, inicioInstuccion);
+					porcentaje = porcentajeUsoCPU(tiempoUso);
+					if( difftime( clock(), tiempoInicio) < 60 ){
+						list_replace(listaCPUs,posicionCPU,cpu_create(cpuEncontrado->idCPU,porcentaje,cpuEncontrado->socketPan,cpuEncontrado->tiempoInicio,cpuEncontrado->tiempoUso));
 					}
 					else{
-						list_replace(listaCPUs,posicionCPU,cpu_create(cpuEncontrado->idCPU,porcentaje,cpuEncontrado->socketPan,clock(),cpuEncontrado->tiempoOcio,cpuEncontrado->tiempoUso));
+						list_replace(listaCPUs,posicionCPU,cpu_create(cpuEncontrado->idCPU,porcentaje,cpuEncontrado->socketPan,clock(),cpuEncontrado->tiempoUso));
 					}
 				}//else escritura
 			}//else escritura/lectura
@@ -721,7 +666,7 @@ static void hilo_destroy(t_hilos *self)
 {
     free(self);
 }
-static t_cpu *cpu_create(int idCPU, float cantInst, int socketPlan, double inicio, double ocio, double uso)
+static t_cpu *cpu_create(int idCPU, float cantInst, int socketPlan, double inicio, double uso)
 {
 	t_cpu *new = malloc(sizeof(t_cpu));
 
@@ -729,7 +674,6 @@ static t_cpu *cpu_create(int idCPU, float cantInst, int socketPlan, double inici
 	 new->cantInst=cantInst;
 	 new->socketPan = socketPlan;
 	 new->tiempoInicio = inicio;
-	 new->tiempoOcio = ocio;
 	 new->tiempoUso = uso;
 
 	 return new;
