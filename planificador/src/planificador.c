@@ -501,13 +501,9 @@ void ROUND_ROBIN(void* args)
 	pthread_mutex_lock(&mutexPCB);
 	log_info(logger, "Correr %s, mProc: %d, en %d", path, pidReady, idHiloCPU);
 
-	struct tm * timeinfo,* timeinfo1;
-
 	time(&tiempoAhora);
 
-	timeinfo = localtime( &espeI );
-	timeinfo1 = localtime( &tiempoAhora );
-	printf("Correr %s, mProc: %d, en %d Espera %d:%d, Ahora %d:%d\n", path, pidReady, idHiloCPU, timeinfo->tm_min, timeinfo->tm_sec, timeinfo1->tm_min, timeinfo1->tm_sec);
+	printf("Correr %s, mProc: %d, en %d\n", path, pidReady, idHiloCPU);
 
 	espe = espe + difftime(tiempoAhora, espeI);
 
@@ -581,16 +577,8 @@ void ROUND_ROBIN(void* args)
 		pcbReady = buscarReadyEnPCB(pidReady);
 		posPCB =  encontrarPosicionEnPCB(pidReady);	//Encontrar pos en listaPCB
 
-		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, path, (puntero+1), 1, totalLineas, pcbReady->tiempoEjecI, time(&pcbReady->tiempoEspeI), pcbReady->tiempoEspe, pcbReady->tiempoRespI, pcbReady->tiempoResp), (void*)PCB_destroy);
-		/*
-
-		PCB* pcbAux = list_replace(listaPCB, posPCB, PCB_create(pidReady, path, (puntero+1), 1, totalLineas, pcbReady->tiempoEjecI, pcbReady->tiempoEspeI, pcbReady->tiempoEspe, pcbReady->tiempoRespI, pcbReady->tiempoResp));
-
-		PCB_destroy(pcbAux);
-		*/
-		timeinfo = localtime( &pcbReady->tiempoEspeI );
-
-		printf("QUANTUM mProc: %d %d:%d\n", pidReady, timeinfo->tm_min, timeinfo->tm_sec);
+		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, path, (puntero+1), 0, totalLineas,
+				pcbReady->tiempoEjecI, time(&pcbReady->tiempoEspeI), pcbReady->tiempoEspe, pcbReady->tiempoRespI, pcbReady->tiempoResp), (void*)PCB_destroy);
 
 		pthread_mutex_unlock(&mutexPCB);
 
@@ -634,12 +622,9 @@ void FIFO(void *args)
 	pthread_mutex_lock(&mutexPCB);
 	log_info(logger, "Correr %s, mProc: %d, en %d", path, pidReady, idHiloCPU);
 
-	struct tm * timeinfo;
-
 	time(&tiempoAhora);
 
-	timeinfo = localtime( &pcbReady->tiempoEjecI );
-	printf("Correr %s, mProc: %d, en %d %d:%d\n", path, pidReady, idHiloCPU, timeinfo->tm_min, timeinfo->tm_sec);
+	printf("Correr %s, mProc: %d, en %d\n", path, pidReady, idHiloCPU);
 
 	espe = espe + difftime(tiempoAhora, espeI);
 
@@ -759,15 +744,8 @@ void entrada_salida()
 		pthread_mutex_lock(&mutexPCB);
 		PCB* pcbReady = buscarReadyEnPCB(unIO->pid);
 
-		struct tm * timeinfo;
-
-		timeinfo = localtime( &pcbReady->tiempoEspeI );
-		printf("IO mProc: %d, %d:%d\n", pcbReady->pid, timeinfo->tm_min, timeinfo->tm_sec);
-
 		time_t espeI;
 		time(&espeI);
-		timeinfo = localtime( &espeI );
-		printf("mProc: %d a ready, %d:%d, %.2f\n", pcbReady->pid, timeinfo->tm_min, timeinfo->tm_sec, pcbReady->tiempoEspe);
 
 		int posPCB =  encontrarPosicionEnPCB(unIO->pid);	//Encontrar pos en listaPCB
 		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcbReady->pid, pcbReady->path, pcbReady->puntero, 0, pcbReady->totalLineas,
@@ -896,7 +874,7 @@ void CPU()
 		}
 		else
 		{
-			printf("CPU: %d, Carga: %d", mensaje.idHilo, mensaje.cantHilos);
+			printf("CPU: %d, Carga: %d\n", mensaje.idHilo, mensaje.cantHilos);
 		}
 	}
 
