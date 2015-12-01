@@ -312,13 +312,24 @@ void recibirPath1(int serverSocket, int idNodo)
 			recv(serverSocket, (void*) package2, unaPersona.pathSize, 0);
 			memcpy(&unaPersona.path, package2, unaPersona.pathSize);
 
-			char * linea = obtenerLinea(unaPersona.path, unaPersona.puntero);
+			char * linea;
+			int puntero = unaPersona.puntero;
 
-			strncpy(unaPersona.path, " ", PACKAGESIZE);
+			if(unaPersona.puntero == -1)
+			{
+				FILE* file;
+				file = txt_open_for_read(unaPersona.path);
+				puntero = txt_total_lines(file) + 1;
+
+				txt_close_file(file);
+			}
+
+			linea = obtenerLinea(unaPersona.path, puntero);
+
 
 			pthread_mutex_lock(&mutex2);
 
-			log_info(logger,"Recibido mProc: %d, path: %s, puntero: %d", unaPersona.pid, unaPersona.path, unaPersona.puntero);
+			log_info(logger,"Recibido mProc: %d, path: %s, puntero: %d", unaPersona.pid, unaPersona.path, puntero);
 
 			interpretarLinea(serverSocket,linea, unaPersona.pid, idNodo);
 
@@ -331,6 +342,8 @@ void recibirPath1(int serverSocket, int idNodo)
 			list_replace_and_destroy_element(listaCPUs, posCPU, cpu_create(new->idCPU, new->tiempoUso, new->tiempoUsoActual, new->socketPan) ,(void*) cpu_destroy);
 
 			pthread_mutex_unlock(&mutexCPU);
+
+			strncpy(unaPersona.path, " ", PACKAGESIZE);
 
 			free(linea);
 			free(package2);
