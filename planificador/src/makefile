@@ -8,6 +8,7 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include src/src/subdir.mk
 -include src/subdir.mk
 -include subdir.mk
 -include objects.mk
@@ -26,13 +27,13 @@ endif
 all: Planificador
 
 dependents:
-	-cd /home/utnso/workspace/commons/Debug && $(MAKE) all
+	-cd /home/utnso/github/tp-2015-2c-daft-punk-so/commons/Debug && $(MAKE) all
 
 # Tool invocations
-Planificador: $(OBJS) $(USER_OBJS) /home/utnso/workspace/commons/Debug/libcommons.so
+Planificador: $(OBJS) $(USER_OBJS) /home/utnso/github/tp-2015-2c-daft-punk-so/commons/Debug/libcommons.so
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc -L"/home/utnso/workspace/commons/Debug" -o "Planificador" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc -L"/home/utnso/github/tp-2015-2c-daft-punk-so/commons/Debug" -o "Planificador" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -43,6 +44,6 @@ clean:
 
 .PHONY: all clean dependents
 .SECONDARY:
-/home/utnso/workspace/commons/Debug/libcommons.so:
+/home/utnso/github/tp-2015-2c-daft-punk-so/commons/Debug/libcommons.so:
 
 -include ../makefile.targets
