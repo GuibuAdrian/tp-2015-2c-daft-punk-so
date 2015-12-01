@@ -89,9 +89,9 @@ t_cpu* buscarCPU(int sock);
 int encontrarPosicionCPU(int sock);
 
 void conectarHilos1();
-void recibirPath1(int serverSocket, int idNodo, int socketPan);
+void recibirPath1(int serverSocket, int idNodo);
 char * obtenerLinea(char path[PACKAGESIZE], int puntero);
-void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, int socketPan);
+void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo);
 char * obtenerLinea(char path[PACKAGESIZE], int puntero);
 t_orden_CPU enviarOrdenAMemoria(int pid, int orden, int paginas, char *content, int idNodo);
 void cargaCPU();
@@ -195,7 +195,7 @@ void conectarHilos1(void *context)
 
 	free(package);
 
-	recibirPath1(serverSocket, mensaje.idNodo, serverSocket);
+	recibirPath1(serverSocket, mensaje.idNodo);
 
 	close(serverSocket);
 
@@ -272,7 +272,7 @@ void recibirSolicitudCarga_finQ()
 	};
 }
 
-void recibirPath1(int serverSocket, int idNodo, int socketPan)
+void recibirPath1(int serverSocket, int idNodo)
 {
 	int status = 1;
 
@@ -309,7 +309,7 @@ void recibirPath1(int serverSocket, int idNodo, int socketPan)
 
 			log_info(logger,"Recibido mProc: %d, path: %s, puntero: %d", unaPersona.pid, unaPersona.path, unaPersona.puntero);
 
-			interpretarLinea(serverSocket,linea, unaPersona.pid, idNodo, socketPan);
+			interpretarLinea(serverSocket,linea, unaPersona.pid, idNodo);
 
 			pthread_mutex_unlock(&mutex2);
 
@@ -425,7 +425,7 @@ t_orden_CPU enviarOrdenAMemoria(int pid, int orden, int paginas, char *content, 
 	return recibirRespuestaSwap(socketMemoria);
 }
 
-void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, int socketPan)
+void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo)
 {
 	char * pch = strtok(linea, " \n");
 	int pagina = 0;
@@ -452,7 +452,7 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, 
 			mensaje.orden = 5;
 			strcpy(mensaje.content,"/");
 			finInstruccion = clock();
-			posicionCPU = encontrarPosicionCPU(socketPan);
+			posicionCPU = encontrarPosicionCPU(socketPlanificador);
 			cpuEncontrado = list_get(listaCPUs,posicionCPU);
 			//cpuEncontrado = buscarCPU(tiemposDelCPU->idCPU); otra forma de hacer lo mismo de arriba
 			tiempoInicio = cpuEncontrado->tiempoInicio;
@@ -475,7 +475,7 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, 
 				pagina = strtol(pch, NULL, 10);
 				mensaje = enviarOrdenAMemoria(pid, 0, pagina, "/", idNodo);
 				finInstruccion = clock();
-				posicionCPU = encontrarPosicionCPU(socketPan);
+				posicionCPU = encontrarPosicionCPU(socketPlanificador);
 				cpuEncontrado = list_get(listaCPUs,posicionCPU);
 				//cpuEncontrado = buscarCPU(tiemposDelCPU->idCPU); otra forma de hacer lo mismo de arriba
 				tiempoInicio = cpuEncontrado->tiempoInicio;
@@ -498,7 +498,7 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, 
 					pagina = strtol(pch, NULL, 10);
 					mensaje = enviarOrdenAMemoria(pid, 1, pagina, "/", idNodo);
 					finInstruccion = clock();
-					posicionCPU = encontrarPosicionCPU(socketPan);
+					posicionCPU = encontrarPosicionCPU(socketPlanificador);
 					cpuEncontrado = list_get(listaCPUs,posicionCPU);
 					//cpuEncontrado = buscarCPU(tiemposDelCPU->idCPU); otra forma de hacer lo mismo de arriba
 					tiempoInicio = cpuEncontrado->tiempoInicio;
@@ -521,7 +521,7 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, 
 
 					mensaje = enviarOrdenAMemoria(pid, 2, pagina, pch, idNodo);
 					finInstruccion = clock();
-					posicionCPU = encontrarPosicionCPU(socketPan);
+					posicionCPU = encontrarPosicionCPU(socketPlanificador);
 					cpuEncontrado = list_get(listaCPUs,posicionCPU);
 //					cpuEncontrado = buscarCPU(socketPan);// otra forma de hacer lo mismo de arriba
 					tiempoInicio = cpuEncontrado->tiempoInicio;
