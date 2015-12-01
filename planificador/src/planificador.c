@@ -479,7 +479,7 @@ int recibirRespuesta(int socketCliente)
 
 	return 0;
 }
-/*
+
 void ROUND_ROBIN(void* args)
 {
 	time_t tiempoAhora;
@@ -494,8 +494,6 @@ void ROUND_ROBIN(void* args)
 	int socketCliente = mensaje->socketCliente;
 	int IO;
 	int puntero = pcbReady->puntero;
-	int i = pcbReady->puntero;
-	int totalLineas = pcbReady->totalLineas;
 	char* path = strdup(pcbReady->path);
 	time_t ejecI = pcbReady->tiempoEjecI;
 	time_t espeI = pcbReady->tiempoEspeI;
@@ -513,13 +511,14 @@ void ROUND_ROBIN(void* args)
 	espe = espe + difftime(tiempoAhora, espeI);
 
 	int posPCB =  encontrarPosicionEnPCB(pidReady);	//Encontrar pos en listaPCB
-	list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, path, puntero, 1, totalLineas, ejecI, espeI ,espe, time(&respI), resp), (void*)PCB_destroy);
+	list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, path, puntero, 1,
+			ejecI, espeI ,espe, time(&respI), resp), (void*)PCB_destroy);
 
 	pthread_mutex_unlock(&mutexPCB);
 
 	int Q = 0;
 
-	while( ( (i-1)<=(totalLineas) ) && ( Q<QUANTUM ) )
+	while( ( IO==0 ) && ( Q<QUANTUM ) )
 	{
 		pcbReady = buscarReadyEnPCB(pidReady);
 
@@ -531,26 +530,22 @@ void ROUND_ROBIN(void* args)
 		}
 
 		pcbReady = buscarReadyEnPCB(pidReady);
+
 		if(pcbReady == NULL)
 		{
 			break;
 		}
 
-		puntero = pcbReady->puntero;
+		puntero = pcbReady->puntero+1;
 
 
 		sem_wait(&semFZ);
-		i=puntero+1;
 
 		pthread_mutex_lock(&mutexPCB);
 		posPCB =  encontrarPosicionEnPCB(pidReady);	//Encontrar pos en listaPCB
 
-		PCB* pcbAux = list_replace(listaPCB, posPCB, PCB_create(pidReady, path, (puntero+1), 1, totalLineas,
-				pcbReady->tiempoEjecI, pcbReady->tiempoEspeI, pcbReady->tiempoEspe, pcbReady->tiempoRespI, pcbReady->tiempoResp));
-
-		PCB_destroy(pcbAux);
-
-
+		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, path, puntero, 1,
+						pcbReady->tiempoEjecI, pcbReady->tiempoEspeI, pcbReady->tiempoEspe, pcbReady->tiempoRespI, pcbReady->tiempoResp), (void*)PCB_destroy);
 		pthread_mutex_unlock(&mutexPCB);
 
 		sem_post(&semFZ);
@@ -558,7 +553,7 @@ void ROUND_ROBIN(void* args)
 		Q++;
 	}
 
-	if( (i-1)>(totalLineas) )
+	if( IO==-1 )
 	{
 		pthread_mutex_lock(&mutexPCB);
 		posPCB =  encontrarPosicionEnPCB(pidReady);
@@ -582,7 +577,7 @@ void ROUND_ROBIN(void* args)
 		pcbReady = buscarReadyEnPCB(pidReady);
 		posPCB =  encontrarPosicionEnPCB(pidReady);	//Encontrar pos en listaPCB
 
-		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, path, (puntero+1), 0, totalLineas,
+		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, path, (puntero+1), 0,
 				pcbReady->tiempoEjecI, time(&pcbReady->tiempoEspeI), pcbReady->tiempoEspe, pcbReady->tiempoRespI, pcbReady->tiempoResp), (void*)PCB_destroy);
 
 		pthread_mutex_unlock(&mutexPCB);
@@ -600,7 +595,7 @@ void ROUND_ROBIN(void* args)
 	free(path);
 	free(args);
 }
-*/
+
 void FIFO(void *args)
 {
 	time_t tiempoAhora;
@@ -724,7 +719,7 @@ void planificador()
 		}
 		else
 		{
-			//pthread_create(&hilo, NULL, (void*) ROUND_ROBIN, (void*) unaPersona);
+			pthread_create(&hilo, NULL, (void*) ROUND_ROBIN, (void*) unaPersona);
 		}
 
 	}
