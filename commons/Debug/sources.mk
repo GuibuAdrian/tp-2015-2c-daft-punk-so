@@ -15,6 +15,4 @@ LIBRARIES :=
 SUBDIRS := \
 commons \
 commons/collections \
-commons/Debug \
-commons/Debug/collections \
 
