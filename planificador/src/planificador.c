@@ -19,6 +19,7 @@
 #include <stdbool.h>
 #include <pthread.h>
 #include <semaphore.h>
+#include <time.h>
 
 #include <commons/socket.h>
 #include <commons/config.h>
@@ -48,6 +49,11 @@ typedef struct
     int puntero;
     int estado;  // 0 = Listo,  1 = Ejecutando,  2 = Bloqueado
     int totalLineas;
+    time_t tiempoEjecI;
+    time_t tiempoEspeI;
+    time_t tiempoRespI;
+    double tiempoEspe;
+    double tiempoResp;
 }PCB;
 
 typedef struct
@@ -80,8 +86,7 @@ typedef struct
 
 typedef struct
 {
-	int file;
-	PCB* pcbReady;
+	int pcbReady;
 	int idHilo;
     int socketCliente;
 } t_enviarProceso;
@@ -97,7 +102,7 @@ int tamanioMensaje1(t_mensaje1 mensaje);
 int tamanioHiloCPU(t_hiloCPU mensaje);
 static t_hiloCPU *hiloCPU_create(int idNodo, int socket, int disponible);
 static void hiloCPU_destroy(t_hiloCPU *self);
-static PCB *PCB_create(int pid, char * path, int puntero, int estado, int totalLineas);
+static PCB *PCB_create(int pid, char * path, int puntero, int estado, int totalLineas, time_t tiempoEjecI, time_t tiempoEspeI, double tiempoEspe, time_t tiempoRespI, double tiempoResp);
 static void PCB_destroy(PCB *self);
 int tamanioPCB(PCB mensaje);
 static t_ready *ready_create(int pid);
@@ -121,6 +126,7 @@ void PS();
 void CPU();
 void finalizarPID(int pidF);
 void mostrarListos();
+void mostrarBloqueados();
 void cerrarConexiones();
 void consola();
 void recibirConexiones(char * PUERTO);
@@ -136,7 +142,7 @@ int main()
 	printf("~~~~~~~~~~PLANIFICADOR~~~~~~~~~~\n\n");
 
 
-	logger = log_create("logsTP", "PLANIFICADOR", true, LOG_LEVEL_INFO);
+	logger = log_create("logsTP", "PLANIFICADOR", 0, LOG_LEVEL_INFO);
 
 	t_config* config;
 
@@ -259,13 +265,14 @@ void recibirConexiones(char * PUERTO)
 	close(listenningSocket);
 }
 
-void recibirCjtoRespuestas(int socketCliente)
+void recibirCjtoRespuestas(int pid1, int socketCliente)
 {
 	t_respuesta respuesta;
 
 	void* package = malloc(tamanioRespuesta(respuesta));
 
 	int cpu=1;
+
 
 	while(respuesta.pid !=-1)
 	{
@@ -282,6 +289,11 @@ void recibirCjtoRespuestas(int socketCliente)
 		{
 			cpu = -1;
 		}
+		else
+		{
+			pid1 = respuesta.pid;
+		}
+
 		void* package2=malloc(respuesta.contentSize);
 
 		recv(socketCliente,(void*) package2, respuesta.contentSize, 0);//campo longitud(NO SIZEOF DE LONGITUD)
@@ -311,6 +323,21 @@ void recibirCjtoRespuestas(int socketCliente)
 		free(package2);
 	}
 
+	pthread_mutex_lock(&mutexPCB);
+
+	printf("Recibiendo mProc:%d.\n", pid1);
+
+	PCB *pcb = buscarReadyEnPCB(pid1);
+	int posPCB =  encontrarPosicionEnPCB(pcb->pid);	//Encontrar pos en listaPCB
+	time_t tiempoAhora;
+	double resp = pcb->tiempoResp;
+	time(&tiempoAhora);
+
+	resp = resp + difftime(tiempoAhora, pcb->tiempoRespI);
+
+	list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcb->pid, pcb->path, pcb->puntero+1, 2, pcb->totalLineas, pcb->tiempoEjecI, pcb->tiempoEspeI, pcb->tiempoEspe, pcb->tiempoRespI, resp), (void*)PCB_destroy);//Pongo al mProc en bloqueado
+	pthread_mutex_unlock(&mutexPCB);
+
 	free(package);
 }
 
@@ -336,9 +363,21 @@ int recibirRespuesta(int socketCliente)
 	recv(socketCliente,(void*) package2, respuesta.contentSize, 0);//campo longitud(NO SIZEOF DE LONGITUD)
 	memcpy(&respuesta.content, package2, respuesta.contentSize);
 
+
 	if( (respuesta.mensajeSize)==0 )
 	{
+		pthread_mutex_lock(&mutexPCB);
 
+		pcb = buscarReadyEnPCB(respuesta.pid);
+		int posPCB =  encontrarPosicionEnPCB(pcb->pid);	//Encontrar pos en listaPCB
+		time_t ejecI;
+
+		time(&ejecI);
+
+		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcb->pid, pcb->path, pcb->puntero, pcb->estado, pcb->totalLineas, ejecI, pcb->tiempoEspeI, pcb->tiempoEspe, pcb->tiempoRespI, pcb->tiempoResp), (void*)PCB_destroy);//Pongo al mProc en bloqueado
+
+
+		pthread_mutex_unlock(&mutexPCB);
 	}
 	else
 	{
@@ -360,11 +399,33 @@ int recibirRespuesta(int socketCliente)
 			{
 				if( (respuesta.mensajeSize)==3 )
 				{
-					recibirCjtoRespuestas(socketCliente);
+					recibirCjtoRespuestas(respuesta.pid, socketCliente);
 
 					log_info(logger, "mProc %d finalizado", respuesta.pid);
+
 					pthread_mutex_lock(&mutexPCB);
-					int posPCB =  encontrarPosicionEnPCB(respuesta.pid);	//Encontrar pos en listaPCB
+					pcb = buscarReadyEnPCB(respuesta.pid);
+					int posPCB =  encontrarPosicionEnPCB(pcb->pid);	//Encontrar pos en listaPCB
+
+					time_t ejecF, ejecI;
+
+					ejecI = pcb->tiempoEjecI;
+
+					time(&ejecF);
+					struct tm * timeinfo;
+
+					timeinfo = localtime( &ejecI );
+
+					printf("\nInicio mProc:%d %d:%d\n", respuesta.pid, timeinfo->tm_min, timeinfo->tm_sec);
+
+					timeinfo = localtime( &ejecF );
+
+					printf("\nFIN mProc:%d %d:%d\n", respuesta.pid, timeinfo->tm_min, timeinfo->tm_sec);
+
+					double tiempoEjec = difftime(ejecF, pcb->tiempoEjecI);
+
+					printf("\nmProc:%d. Ejec :%.2f. Espera: %.2f. Resp: %.2f\n", respuesta.pid, tiempoEjec, pcb->tiempoEspe, pcb->tiempoResp);
+
 					list_remove_and_destroy_element(listaPCB, posPCB, (void*) PCB_destroy);
 					pthread_mutex_unlock(&mutexPCB);
 				}
@@ -372,24 +433,28 @@ int recibirRespuesta(int socketCliente)
 				{
 					if( (respuesta.mensajeSize)==4 )
 					{
+
 					}
 					else
 					{
 						int IO = respuesta.paginas;
 
-						recibirCjtoRespuestas(socketCliente);
+						recibirCjtoRespuestas(respuesta.pid, socketCliente);
 
 						log_info(logger, "mProc %d en entrada-salida de tiempo %d", respuesta.pid, IO);
 
 						pthread_mutex_lock(&mutexPCB);
+
 						pcb = buscarReadyEnPCB(respuesta.pid);
 						int posPCB =  encontrarPosicionEnPCB(pcb->pid);	//Encontrar pos en listaPCB
-						list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcb->pid, pcb->path, pcb->puntero+1, 2, pcb->totalLineas), (void*)PCB_destroy);//Pongo al mProc en bloqueado
+
+						list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcb->pid, pcb->path, pcb->puntero, 2, pcb->totalLineas, pcb->tiempoEjecI, pcb->tiempoEspeI, pcb->tiempoEspe, pcb->tiempoRespI, pcb->tiempoResp), (void*)PCB_destroy);//Pongo al mProc en bloqueado
 						pthread_mutex_unlock(&mutexPCB);
 
 
 						pthread_mutex_lock(&mutexIO);
 						list_add(listaIO, IO_create(respuesta.pid, IO)); //Agrego el proceso NUEVO a Ready
+
 						pthread_mutex_unlock(&mutexIO);;
 
 						sem_post(&semIO);
@@ -412,41 +477,59 @@ int recibirRespuesta(int socketCliente)
 
 void ROUND_ROBIN(void* args)
 {
+	time_t tiempoAhora;
 	t_enviarProceso *mensaje;
 	mensaje = (t_enviarProceso*) args;
 
-	PCB* pcbReady = mensaje->pcbReady;
+	int pidReady = mensaje->pcbReady;
+
+	PCB* pcbReady = buscarReadyEnPCB(pidReady);	//Busco al ready en el PCB
 
 	int idHiloCPU = mensaje->idHilo;
 	int socketCliente = mensaje->socketCliente;
 	int IO;
 	int puntero = pcbReady->puntero;
 	int i = pcbReady->puntero;
-	int pid1 = pcbReady->pid;
-	int totalLineas = mensaje->file;
+	int totalLineas = pcbReady->totalLineas;
 	char* path = strdup(pcbReady->path);
+	time_t ejecI = pcbReady->tiempoEjecI;
+	time_t espeI = pcbReady->tiempoEspeI;
+	time_t respI = pcbReady->tiempoRespI;
+	double espe = pcbReady->tiempoEspe;
+	double resp = pcbReady->tiempoResp;
+
+	pthread_mutex_lock(&mutexPCB);
+	log_info(logger, "Correr %s, mProc: %d, en %d", path, pidReady, idHiloCPU);
+
+	struct tm * timeinfo,* timeinfo1;
+
+	time(&tiempoAhora);
+
+	timeinfo = localtime( &espeI );
+	timeinfo1 = localtime( &tiempoAhora );
+	printf("Correr %s, mProc: %d, en %d Espera %d:%d, Ahora %d:%d\n", path, pidReady, idHiloCPU, timeinfo->tm_min, timeinfo->tm_sec, timeinfo1->tm_min, timeinfo1->tm_sec);
+
+	espe = espe + difftime(tiempoAhora, espeI);
+
+	int posPCB =  encontrarPosicionEnPCB(pidReady);	//Encontrar pos en listaPCB
+	list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, path, puntero, 1, totalLineas, ejecI, espeI ,espe, time(&respI), resp), (void*)PCB_destroy);
+
+	pthread_mutex_unlock(&mutexPCB);
 
 	int Q = 0;
 
-	pthread_mutex_lock(&mutexPCB);
-	log_info(logger, "Correr %s, mProc: %d", pcbReady->path, pcbReady->pid);
-
-	int posPCB =  encontrarPosicionEnPCB(pid1);	//Encontrar pos en listaPCB
-	list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pid1, path, puntero, 1, totalLineas), (void*)PCB_destroy);
-	pthread_mutex_unlock(&mutexPCB);
-
 	while( ( (i-1)<=(totalLineas) ) && ( Q<QUANTUM ) )
 	{
-		pcbReady = buscarReadyEnPCB(pid1);
+		pcbReady = buscarReadyEnPCB(pidReady);
 
-		IO = enviarPath(socketCliente, pid1, pcbReady->path, pcbReady->puntero);
+		IO = enviarPath(socketCliente, pidReady, pcbReady->path, pcbReady->puntero);
 
 		if(IO>0)
 		{
 			break;
 		}
 
-		pcbReady = buscarReadyEnPCB(pid1);
+		pcbReady = buscarReadyEnPCB(pidReady);
 		if(pcbReady == NULL)
 		{
 			break;
@@ -459,8 +542,14 @@ void ROUND_ROBIN(void* args)
 		i=puntero+1;
 
 		pthread_mutex_lock(&mutexPCB);
-		posPCB =  encontrarPosicionEnPCB(pid1);	//Encontrar pos en listaPCB
-		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pid1, path, (puntero+1), 1, totalLineas), (void*)PCB_destroy);
+		posPCB =  encontrarPosicionEnPCB(pidReady);	//Encontrar pos en listaPCB
+
+		PCB* pcbAux = list_replace(listaPCB, posPCB, PCB_create(pidReady, path, (puntero+1), 1, totalLineas,
+				pcbReady->tiempoEjecI, pcbReady->tiempoEspeI, pcbReady->tiempoEspe, pcbReady->tiempoRespI, pcbReady->tiempoResp));
+
+		PCB_destroy(pcbAux);
+
+
 		pthread_mutex_unlock(&mutexPCB);
 
 		sem_post(&semFZ);
@@ -471,7 +560,7 @@ void ROUND_ROBIN(void* args)
 	if( (i-1)>(totalLineas) )
 	{
 		pthread_mutex_lock(&mutexPCB);
-		posPCB =  encontrarPosicionEnPCB(pid1);
+		posPCB =  encontrarPosicionEnPCB(pidReady);
 		list_remove_and_destroy_element(listaPCB, posPCB, (void*) PCB_destroy);
 		pthread_mutex_unlock(&mutexPCB);
 	}
@@ -481,15 +570,28 @@ void ROUND_ROBIN(void* args)
 
 		int message = 2;
 		send(socketCPUCarga, &message, sizeof(int), 0);
-		send(socketCPUCarga, &pid1, sizeof(int), 0);
+		send(socketCPUCarga, &pidReady, sizeof(int), 0);
 
-		recibirCjtoRespuestas(socketCPUCarga);
+		recibirCjtoRespuestas(pidReady, socketCPUCarga);
 
-
-		list_add(listaReady, ready_create(pid1));
+		list_add(listaReady, ready_create(pidReady)); //Pongo el mProc en ready
 
 		pthread_mutex_lock(&mutexPCB);
-		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pid1, path, i, 0, totalLineas), (void*)PCB_destroy);
+
+		pcbReady = buscarReadyEnPCB(pidReady);
+		posPCB =  encontrarPosicionEnPCB(pidReady);	//Encontrar pos en listaPCB
+
+		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, path, (puntero+1), 1, totalLineas, pcbReady->tiempoEjecI, time(&pcbReady->tiempoEspeI), pcbReady->tiempoEspe, pcbReady->tiempoRespI, pcbReady->tiempoResp), (void*)PCB_destroy);
+		/*
+
+		PCB* pcbAux = list_replace(listaPCB, posPCB, PCB_create(pidReady, path, (puntero+1), 1, totalLineas, pcbReady->tiempoEjecI, pcbReady->tiempoEspeI, pcbReady->tiempoEspe, pcbReady->tiempoRespI, pcbReady->tiempoResp));
+
+		PCB_destroy(pcbAux);
+		*/
+		timeinfo = localtime( &pcbReady->tiempoEspeI );
+
+		printf("QUANTUM mProc: %d %d:%d\n", pidReady, timeinfo->tm_min, timeinfo->tm_sec);
+
 		pthread_mutex_unlock(&mutexPCB);
 
 		sem_post(&semPlani);
@@ -498,7 +600,6 @@ void ROUND_ROBIN(void* args)
 	pthread_mutex_lock(&mutexCPU);
 	int posCPU = encontrarPosicionHiloCPU(idHiloCPU); //Busco posicion del CPU
 	list_replace_and_destroy_element(listaCPUs, posCPU, hiloCPU_create(idHiloCPU, socketCliente, 1), (void*) hiloCPU_destroy);	//Pongo en Disponible al CPU q usaba
-	printf("CPU %d disponible\n", idHiloCPU);
 	pthread_mutex_unlock(&mutexCPU);
 	sem_post(&semCPU);
 
@@ -509,40 +610,56 @@ void ROUND_ROBIN(void* args)
 
 void FIFO(void *args)
 {
+	time_t tiempoAhora;
 	t_enviarProceso *mensaje;
 	mensaje = (t_enviarProceso*) args;
 
-	PCB* pcbReady = mensaje->pcbReady;
+	int pidReady = mensaje->pcbReady;
+
+	PCB* pcbReady = buscarReadyEnPCB(pidReady);	//Busco al ready en el PCB
 
 	int idHiloCPU = mensaje->idHilo;
 	int socketCliente = mensaje->socketCliente;
 	int IO;
 	int puntero = pcbReady->puntero;
 	int i = pcbReady->puntero;
-	int pid1 = pcbReady->pid;
-	int totalLineas = mensaje->file;
+	int totalLineas = pcbReady->totalLineas;
 	char* path = strdup(pcbReady->path);
-
+	time_t ejecI = pcbReady->tiempoEjecI;
+	time_t espeI = pcbReady->tiempoEspeI;
+	time_t respI = pcbReady->tiempoRespI;
+	double espe = pcbReady->tiempoEspe;
+	double resp = pcbReady->tiempoResp;
 
 	pthread_mutex_lock(&mutexPCB);
-	log_info(logger, "Correr %s, mProc: %d, en %d", path, pid1, idHiloCPU);
+	log_info(logger, "Correr %s, mProc: %d, en %d", path, pidReady, idHiloCPU);
 
-	int posPCB =  encontrarPosicionEnPCB(pid1);	//Encontrar pos en listaPCB
-	list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pid1, path, puntero, 1, totalLineas), (void*)PCB_destroy);
+	struct tm * timeinfo;
+
+	time(&tiempoAhora);
+
+	timeinfo = localtime( &pcbReady->tiempoEjecI );
+	printf("Correr %s, mProc: %d, en %d %d:%d\n", path, pidReady, idHiloCPU, timeinfo->tm_min, timeinfo->tm_sec);
+
+	espe = espe + difftime(tiempoAhora, espeI);
+
+	int posPCB =  encontrarPosicionEnPCB(pidReady);	//Encontrar pos en listaPCB
+	list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, path, puntero, 1, totalLineas, ejecI, espeI ,espe, time(&respI), resp), (void*)PCB_destroy);
+
 	pthread_mutex_unlock(&mutexPCB);
 
 	while( (i-1)<=(totalLineas) )
 	{
-		pcbReady = buscarReadyEnPCB(pid1);
+		pcbReady = buscarReadyEnPCB(pidReady);
 
-		IO = enviarPath(socketCliente, pid1, path, pcbReady->puntero);
+		IO = enviarPath(socketCliente, pidReady, path, pcbReady->puntero);
 
 		if(IO>0)
 		{
 			break;
 		}
 
-		pcbReady = buscarReadyEnPCB(pid1);
+		pcbReady = buscarReadyEnPCB(pidReady);
 
 		if(pcbReady == NULL)
 		{
@@ -555,8 +672,8 @@ void FIFO(void *args)
 		i=puntero+1;
 
 		pthread_mutex_lock(&mutexPCB);
-		posPCB =  encontrarPosicionEnPCB(pid1);	//Encontrar pos en listaPCB
-		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pid1, path, (puntero+1), 1, totalLineas), (void*)PCB_destroy);
+		posPCB =  encontrarPosicionEnPCB(pidReady);	//Encontrar pos en listaPCB
+		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, path, (puntero+1), 1, totalLineas, pcbReady->tiempoEjecI, pcbReady->tiempoEspeI, pcbReady->tiempoEspe, pcbReady->tiempoRespI, pcbReady->tiempoResp), (void*)PCB_destroy);
 		pthread_mutex_unlock(&mutexPCB);
 
 		sem_post(&semFZ);
@@ -565,7 +682,6 @@ void FIFO(void *args)
 	pthread_mutex_lock(&mutexCPU);
 	int posCPU = encontrarPosicionHiloCPU(idHiloCPU); //Busco posicion del CPU
 	list_replace_and_destroy_element(listaCPUs, posCPU, hiloCPU_create(idHiloCPU, socketCliente, 1), (void*) hiloCPU_destroy);	//Pongo en Disponible al CPU q usaba
-	printf("CPU %d disponible\n", idHiloCPU);
 	pthread_mutex_unlock(&mutexCPU);
 	sem_post(&semCPU);
 
@@ -601,18 +717,12 @@ void planificador()
 		ready_destroy(unReady);
 		pthread_mutex_unlock(&mutexReady);
 
-		pthread_mutex_lock(&mutexPCB);
-		PCB* pcbReady = buscarReadyEnPCB(pidReady);	//Busco al ready en el PCB
-
-		pthread_mutex_unlock(&mutexPCB);
-
 		pthread_t hilo;
 
 		t_enviarProceso *unaPersona;	//Creo la estructura a enviar
 
 		unaPersona = (t_enviarProceso *)malloc(sizeof(t_enviarProceso));
-		unaPersona->file = pcbReady->totalLineas;
-		unaPersona->pcbReady = pcbReady;
+		unaPersona->pcbReady = pidReady;
 		unaPersona->idHilo = idHiloCPU;
 		unaPersona->socketCliente = socketCliente;
 
@@ -642,19 +752,29 @@ void entrada_salida()
 
 		t_io *unIO = list_remove(listaIO, 0);	//Busco al primer io
 
-		printf("mProc: %d IO\n", unIO->pid);
 		sleep(unIO->io);
 
 		list_add(listaReady, ready_create(unIO->pid)); //Agrego el proceso NUEVO a Ready
 
 		pthread_mutex_lock(&mutexPCB);
 		PCB* pcbReady = buscarReadyEnPCB(unIO->pid);
-		int posPCB =  encontrarPosicionEnPCB(unIO->pid);	//Encontrar pos en listaPCB
-		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcbReady->pid, pcbReady->path, pcbReady->puntero, 0, pcbReady->totalLineas), (void*)PCB_destroy);
 
-		printf("mProc: %d a Ready\n", unIO->pid);
+		struct tm * timeinfo;
+
+		timeinfo = localtime( &pcbReady->tiempoEspeI );
+		printf("IO mProc: %d, %d:%d\n", pcbReady->pid, timeinfo->tm_min, timeinfo->tm_sec);
+
+		time_t espeI;
+		time(&espeI);
+		timeinfo = localtime( &espeI );
+		printf("mProc: %d a ready, %d:%d, %.2f\n", pcbReady->pid, timeinfo->tm_min, timeinfo->tm_sec, pcbReady->tiempoEspe);
+
+		int posPCB =  encontrarPosicionEnPCB(unIO->pid);	//Encontrar pos en listaPCB
+		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcbReady->pid, pcbReady->path, pcbReady->puntero, 0, pcbReady->totalLineas,
+				pcbReady->tiempoEjecI, espeI, pcbReady->tiempoEspe, pcbReady->tiempoRespI, pcbReady->tiempoResp), (void*)PCB_destroy);
 
 		pthread_mutex_unlock(&mutexPCB);
+
 		sem_post(&semPlani);
 
 
@@ -694,6 +814,7 @@ void correrPath(char * pch)
 	pid++;
 
 	FILE* file = txt_open_for_read(pch);
+	time_t espeI;
 
 	if (file != NULL)
 	{
@@ -702,7 +823,7 @@ void correrPath(char * pch)
 
 		list_add(listaReady, ready_create(pid)); //Agrego el proceso NUEVO a Ready
 
-		list_add(listaPCB, PCB_create(pid, pch, 2, 0, totalLineas));	//Agrego el proceso NUEVO al PCB
+		list_add(listaPCB, PCB_create(pid, pch, 2, 0, totalLineas, 0, time(&espeI), 0, 0, 0));	//Agrego el proceso NUEVO al PCB
 
 		sem_post(&semPlani);
 
@@ -775,7 +896,7 @@ void CPU()
 		}
 		else
 		{
-			log_info(logger, "CPU: %d, Carga: %d", mensaje.idHilo, mensaje.cantHilos);
+			printf("CPU: %d, Carga: %d", mensaje.idHilo, mensaje.cantHilos);
 		}
 	}
 
@@ -797,7 +918,7 @@ void finalizarPID(int pidF)
 		int totalLineas = txt_total_lines(file);
 
 		sem_post(&semFZ);
-		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(unPCB->pid,unPCB->path, totalLineas, 1, unPCB->totalLineas), (void*) PCB_destroy);
+		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(unPCB->pid,unPCB->path, totalLineas, 1, unPCB->totalLineas, unPCB->tiempoEjecI, unPCB->tiempoEspeI, unPCB->tiempoEspe, unPCB->tiempoRespI, unPCB->tiempoResp), (void*) PCB_destroy);
 		sem_wait(&semFZ);
 
 		txt_close_file(file);
@@ -809,13 +930,25 @@ void mostrarListos()
 
 	int i;
 
+	printf("----Ready----\n");
 	for(i=0;i<list_size(listaReady);i++)
 	{
 		new = list_get(listaReady, i);
-		printf("PID READY: %d\n", new->pid);
+		printf("PID: %d\n", new->pid);
 	}
 }
+void mostrarBloqueados()
+{
+	t_io *new;
 
+	int i;
+	printf("\n----IO----\n");
+	for(i=0;i<list_size(listaIO);i++)
+	{
+		new = list_get(listaIO, i);
+		printf("PID: %d\n", new->pid);
+	}
+}
 void cerrarConexiones()
 {
 	int i;
@@ -828,6 +961,7 @@ void cerrarConexiones()
 		close(unHilo->socketCliente);
 	};
 }
+
 void consola()
 {
 	char comando[PACKAGESIZE];
@@ -887,6 +1021,14 @@ void consola()
 			}
 		else
 		{
+			if (strncmp(pch, "bl", 3) == 0)
+			{
+				mostrarBloqueados();
+
+				continue;
+			}
+		else
+		{
 			if (strncmp(pch, "man", 3) == 0)
 			{
 				printf("--------------COMANDOS-------------- \n");
@@ -894,6 +1036,8 @@ void consola()
 				printf("fz: FinaliZar PID \n");
 				printf("ps: PS \n");
 				printf("cpu: CPU \n");
+				printf("rd: Mostrar Ready \n");
+				printf("bl: Mostrar Bloqueados \n");
 				printf("fin: Finaliza la consola \n");
 				printf("\n");
 
@@ -921,10 +1065,12 @@ void consola()
 		}//Fin error comando
 		}//Fin fin
 		}//Fin man
+		}//Fin bl
 		}//Fin rd
 		}//Fin cpu
 		}//Fin ps
 		}//Fin fz
+
 
 		free(pch);
 
@@ -953,7 +1099,7 @@ static void hiloCPU_destroy(t_hiloCPU *self)
 {
     free(self);
 }
-static PCB *PCB_create(int pid, char * path, int puntero, int estado, int totalLineas)
+static PCB *PCB_create(int pid, char * path, int puntero, int estado, int totalLineas, time_t tiempoEjecI, time_t tiempoEspeI, double tiempoEspe, time_t tiempoRespI, double tiempoResp)
 {
 	 PCB *new = malloc(sizeof(PCB));
 	 new->path = strdup(path);
@@ -961,6 +1107,11 @@ static PCB *PCB_create(int pid, char * path, int puntero, int estado, int totalL
 	 new->puntero = puntero;
 	 new->estado = estado;
 	 new->totalLineas = totalLineas;
+	 new->tiempoEjecI = tiempoEjecI;
+	 new->tiempoEspeI = tiempoEspeI;
+	 new->tiempoEspe = tiempoEspe;
+	 new->tiempoRespI = tiempoRespI;
+	 new->tiempoResp = tiempoResp;
 
 	 return new;
 }
@@ -1022,7 +1173,6 @@ t_hiloCPU* buscarCPU(int cpu)
 	}
 	return (list_find(listaCPUs, (void*) compararPorIdentificador));
 }
-
 t_hiloCPU* buscarCPUDisponible()
 {
 	bool compararPorIdentificador(t_hiloCPU *unaCaja)
