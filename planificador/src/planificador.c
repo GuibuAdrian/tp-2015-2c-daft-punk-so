@@ -24,7 +24,6 @@
 #include <commons/socket.h>
 #include <commons/config.h>
 #include <commons/collections/list.h>
-#include <commons/txt.h>
 #include <commons/log.h>
 
 #define PACKAGESIZE 1024
@@ -48,7 +47,6 @@ typedef struct
     char * path;
     int puntero;
     int estado;  // 0 = Listo,  1 = Ejecutando,  2 = Bloqueado
-    int totalLineas;
     time_t tiempoEjecI;
     time_t tiempoEspeI;
     time_t tiempoRespI;
@@ -102,7 +100,7 @@ int tamanioMensaje1(t_mensaje1 mensaje);
 int tamanioHiloCPU(t_hiloCPU mensaje);
 static t_hiloCPU *hiloCPU_create(int idNodo, int socket, int disponible);
 static void hiloCPU_destroy(t_hiloCPU *self);
-static PCB *PCB_create(int pid, char * path, int puntero, int estado, int totalLineas, time_t tiempoEjecI, time_t tiempoEspeI, double tiempoEspe, time_t tiempoRespI, double tiempoResp);
+static PCB *PCB_create(int pid, char * path, int puntero, int estado, time_t tiempoEjecI, time_t tiempoEspeI, double tiempoEspe, time_t tiempoRespI, double tiempoResp);
 static void PCB_destroy(PCB *self);
 int tamanioPCB(PCB mensaje);
 static t_ready *ready_create(int pid);
@@ -335,7 +333,8 @@ void recibirCjtoRespuestas(int pid1, int socketCliente)
 
 	resp = resp + difftime(tiempoAhora, pcb->tiempoRespI);
 
-	list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcb->pid, pcb->path, pcb->puntero+1, 2, pcb->totalLineas, pcb->tiempoEjecI, pcb->tiempoEspeI, pcb->tiempoEspe, pcb->tiempoRespI, resp), (void*)PCB_destroy);//Pongo al mProc en bloqueado
+	list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcb->pid, pcb->path, pcb->puntero+1, 2,
+			pcb->tiempoEjecI, pcb->tiempoEspeI, pcb->tiempoEspe, pcb->tiempoRespI, resp), (void*)PCB_destroy);//Pongo al mProc en bloqueado
 	pthread_mutex_unlock(&mutexPCB);
 
 	free(package);
@@ -374,7 +373,8 @@ int recibirRespuesta(int socketCliente)
 
 		time(&ejecI);
 
-		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcb->pid, pcb->path, pcb->puntero, pcb->estado, pcb->totalLineas, ejecI, pcb->tiempoEspeI, pcb->tiempoEspe, pcb->tiempoRespI, pcb->tiempoResp), (void*)PCB_destroy);//Pongo al mProc en bloqueado
+		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcb->pid, pcb->path, pcb->puntero, pcb->estado,
+				ejecI, pcb->tiempoEspeI, pcb->tiempoEspe, pcb->tiempoRespI, pcb->tiempoResp), (void*)PCB_destroy);//Pongo al mProc en bloqueado
 
 
 		pthread_mutex_unlock(&mutexPCB);
@@ -428,6 +428,9 @@ int recibirRespuesta(int socketCliente)
 
 					list_remove_and_destroy_element(listaPCB, posPCB, (void*) PCB_destroy);
 					pthread_mutex_unlock(&mutexPCB);
+
+
+					return -1;
 				}
 				else
 				{
@@ -448,7 +451,9 @@ int recibirRespuesta(int socketCliente)
 						pcb = buscarReadyEnPCB(respuesta.pid);
 						int posPCB =  encontrarPosicionEnPCB(pcb->pid);	//Encontrar pos en listaPCB
 
-						list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcb->pid, pcb->path, pcb->puntero, 2, pcb->totalLineas, pcb->tiempoEjecI, pcb->tiempoEspeI, pcb->tiempoEspe, pcb->tiempoRespI, pcb->tiempoResp), (void*)PCB_destroy);//Pongo al mProc en bloqueado
+						//Pongo al mProc en bloqueado
+						list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcb->pid, pcb->path, pcb->puntero, 2,
+								pcb->tiempoEjecI, pcb->tiempoEspeI, pcb->tiempoEspe, pcb->tiempoRespI, pcb->tiempoResp), (void*)PCB_destroy);
 						pthread_mutex_unlock(&mutexPCB);
 
 
@@ -474,7 +479,7 @@ int recibirRespuesta(int socketCliente)
 
 	return 0;
 }
-
+/*
 void ROUND_ROBIN(void* args)
 {
 	time_t tiempoAhora;
@@ -595,7 +600,7 @@ void ROUND_ROBIN(void* args)
 	free(path);
 	free(args);
 }
-
+*/
 void FIFO(void *args)
 {
 	time_t tiempoAhora;
@@ -610,8 +615,6 @@ void FIFO(void *args)
 	int socketCliente = mensaje->socketCliente;
 	int IO;
 	int puntero = pcbReady->puntero;
-	int i = pcbReady->puntero;
-	int totalLineas = pcbReady->totalLineas;
 	char* path = strdup(pcbReady->path);
 	time_t ejecI = pcbReady->tiempoEjecI;
 	time_t espeI = pcbReady->tiempoEspeI;
@@ -629,11 +632,11 @@ void FIFO(void *args)
 	espe = espe + difftime(tiempoAhora, espeI);
 
 	int posPCB =  encontrarPosicionEnPCB(pidReady);	//Encontrar pos en listaPCB
-	list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, path, puntero, 1, totalLineas, ejecI, espeI ,espe, time(&respI), resp), (void*)PCB_destroy);
+	list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, path, puntero, 1, ejecI, espeI ,espe, time(&respI), resp), (void*)PCB_destroy);
 
 	pthread_mutex_unlock(&mutexPCB);
 
-	while( (i-1)<=(totalLineas) )
+	while( IO==0 )
 	{
 		pcbReady = buscarReadyEnPCB(pidReady);
 
@@ -651,14 +654,14 @@ void FIFO(void *args)
 			break;
 		}
 
-		puntero = pcbReady->puntero;
+		puntero = pcbReady->puntero+1;
 
 		sem_wait(&semFZ);
-		i=puntero+1;
 
 		pthread_mutex_lock(&mutexPCB);
 		posPCB =  encontrarPosicionEnPCB(pidReady);	//Encontrar pos en listaPCB
-		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, path, (puntero+1), 1, totalLineas, pcbReady->tiempoEjecI, pcbReady->tiempoEspeI, pcbReady->tiempoEspe, pcbReady->tiempoRespI, pcbReady->tiempoResp), (void*)PCB_destroy);
+		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, path, puntero, 1,
+				pcbReady->tiempoEjecI, pcbReady->tiempoEspeI, pcbReady->tiempoEspe, pcbReady->tiempoRespI, pcbReady->tiempoResp), (void*)PCB_destroy);
 		pthread_mutex_unlock(&mutexPCB);
 
 		sem_post(&semFZ);
@@ -666,7 +669,9 @@ void FIFO(void *args)
 
 	pthread_mutex_lock(&mutexCPU);
 	int posCPU = encontrarPosicionHiloCPU(idHiloCPU); //Busco posicion del CPU
-	list_replace_and_destroy_element(listaCPUs, posCPU, hiloCPU_create(idHiloCPU, socketCliente, 1), (void*) hiloCPU_destroy);	//Pongo en Disponible al CPU q usaba
+
+	//Pongo en Disponible al CPU q usaba
+	list_replace_and_destroy_element(listaCPUs, posCPU, hiloCPU_create(idHiloCPU, socketCliente, 1), (void*) hiloCPU_destroy);
 	pthread_mutex_unlock(&mutexCPU);
 	sem_post(&semCPU);
 
@@ -693,7 +698,8 @@ void planificador()
 		int socketCliente = hiloCPU->socketCliente;
 		int idHiloCPU = hiloCPU->idHilo;
 
-		list_replace_and_destroy_element(listaCPUs, posCPU, hiloCPU_create(idHiloCPU, socketCliente, 0), (void*) hiloCPU_destroy); //Pongo al CPU en ocupado (0)
+		//Pongo al CPU en ocupado (0)
+		list_replace_and_destroy_element(listaCPUs, posCPU, hiloCPU_create(idHiloCPU, socketCliente, 0), (void*) hiloCPU_destroy);
 		pthread_mutex_unlock(&mutexCPU);
 
 		pthread_mutex_lock(&mutexReady);
@@ -718,7 +724,7 @@ void planificador()
 		}
 		else
 		{
-			pthread_create(&hilo, NULL, (void*) ROUND_ROBIN, (void*) unaPersona);
+			//pthread_create(&hilo, NULL, (void*) ROUND_ROBIN, (void*) unaPersona);
 		}
 
 	}
@@ -748,7 +754,7 @@ void entrada_salida()
 		time(&espeI);
 
 		int posPCB =  encontrarPosicionEnPCB(unIO->pid);	//Encontrar pos en listaPCB
-		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcbReady->pid, pcbReady->path, pcbReady->puntero, 0, pcbReady->totalLineas,
+		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcbReady->pid, pcbReady->path, pcbReady->puntero, 0,
 				pcbReady->tiempoEjecI, espeI, pcbReady->tiempoEspe, pcbReady->tiempoRespI, pcbReady->tiempoResp), (void*)PCB_destroy);
 
 		pthread_mutex_unlock(&mutexPCB);
@@ -791,26 +797,13 @@ void correrPath(char * pch)
 {
 	pid++;
 
-	FILE* file = txt_open_for_read(pch);
 	time_t espeI;
 
-	if (file != NULL)
-	{
-		int totalLineas = txt_total_lines(file);
+	list_add(listaReady, ready_create(pid)); //Agrego el proceso NUEVO a Ready
 
+	list_add(listaPCB, PCB_create(pid, pch, 2, 0, 0, time(&espeI), 0, 0, 0));	//Agrego el proceso NUEVO al PCB
 
-		list_add(listaReady, ready_create(pid)); //Agrego el proceso NUEVO a Ready
-
-		list_add(listaPCB, PCB_create(pid, pch, 2, 0, totalLineas, 0, time(&espeI), 0, 0, 0));	//Agrego el proceso NUEVO al PCB
-
-		sem_post(&semPlani);
-
-		txt_close_file(file);
-	}
-	else
-	{
-		printf("El archivo no existe\n");
-	}
+	sem_post(&semPlani);
 
 
 	printf("\n");
@@ -885,22 +878,11 @@ void finalizarPID(int pidF)
 	int posPCB =  encontrarPosicionEnPCB(pidF);	//Encontrar pos en listaPCB
 	PCB* unPCB = buscarPCB(pidF);
 
-	FILE* file = txt_open_for_read(unPCB->path);
+	sem_post(&semFZ);
+	list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(unPCB->pid,unPCB->path, -2, 1,
+			unPCB->tiempoEjecI, unPCB->tiempoEspeI, unPCB->tiempoEspe, unPCB->tiempoRespI, unPCB->tiempoResp), (void*) PCB_destroy);
+	sem_wait(&semFZ);
 
-	if (file == NULL)
-	{
-		return;
-	}
-	else
-	{
-		int totalLineas = txt_total_lines(file);
-
-		sem_post(&semFZ);
-		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(unPCB->pid,unPCB->path, totalLineas, 1, unPCB->totalLineas, unPCB->tiempoEjecI, unPCB->tiempoEspeI, unPCB->tiempoEspe, unPCB->tiempoRespI, unPCB->tiempoResp), (void*) PCB_destroy);
-		sem_wait(&semFZ);
-
-		txt_close_file(file);
-	}
 }
 void mostrarListos()
 {
@@ -1077,14 +1059,13 @@ static void hiloCPU_destroy(t_hiloCPU *self)
 {
     free(self);
 }
-static PCB *PCB_create(int pid, char * path, int puntero, int estado, int totalLineas, time_t tiempoEjecI, time_t tiempoEspeI, double tiempoEspe, time_t tiempoRespI, double tiempoResp)
+static PCB *PCB_create(int pid, char * path, int puntero, int estado, time_t tiempoEjecI, time_t tiempoEspeI, double tiempoEspe, time_t tiempoRespI, double tiempoResp)
 {
 	 PCB *new = malloc(sizeof(PCB));
 	 new->path = strdup(path);
 	 new->pid = pid;
 	 new->puntero = puntero;
 	 new->estado = estado;
-	 new->totalLineas = totalLineas;
 	 new->tiempoEjecI = tiempoEjecI;
 	 new->tiempoEspeI = tiempoEspeI;
 	 new->tiempoEspe = tiempoEspe;
