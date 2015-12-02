@@ -363,6 +363,20 @@ int recibirRespuesta(int socketCliente)
 	memcpy(&respuesta.content, package2, respuesta.contentSize);
 
 
+	if( (respuesta.mensajeSize)==-1 )
+	{
+		log_info(logger, "El archivo no existe!!");
+		printf("El archivo no existe!!\n");
+
+		pthread_mutex_lock(&mutexPCB);
+		pcb = buscarReadyEnPCB(respuesta.pid);
+		int posPCB =  encontrarPosicionEnPCB(pcb->pid);	//Encontrar pos en listaPCB
+
+		list_remove_and_destroy_element(listaPCB, posPCB, (void*) PCB_destroy);
+		pthread_mutex_unlock(&mutexPCB);
+
+		return -1;
+	}
 	if( (respuesta.mensajeSize)==0 )
 	{
 		pthread_mutex_lock(&mutexPCB);
@@ -571,7 +585,7 @@ void ROUND_ROBIN(void* args)
 		pcbReady = buscarReadyEnPCB(pidReady);
 		posPCB =  encontrarPosicionEnPCB(pidReady);	//Encontrar pos en listaPCB
 
-		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, path, (puntero+1), 0,
+		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, path, puntero, 0,
 				pcbReady->tiempoEjecI, time(&pcbReady->tiempoEspeI), pcbReady->tiempoEspe, pcbReady->tiempoRespI, pcbReady->tiempoResp), (void*)PCB_destroy);
 
 		pthread_mutex_unlock(&mutexPCB);

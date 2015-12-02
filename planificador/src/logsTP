@@ -317,3 +317,117 @@
 [INFO] 00:06:20:815 PLANIFICADOR/(4252:4299): Correr corto.cod, mProc: 4, en 1
 [INFO] 00:06:25:817 PLANIFICADOR/(4252:4299): mProc 4 finalizado
 [INFO] 00:09:21:623 PLANIFICADOR/(4252:4252): ---------------------FIN---------------------
+[INFO] 00:38:36:566 PLANIFICADOR/(4684:4684): Recibiendo CPU
+[INFO] 00:38:36:568 PLANIFICADOR/(4684:4684): CPU: 1 Conectado
+[INFO] 00:38:43:4 PLANIFICADOR/(4684:4719): Correr /otro.cod, mProc: 3, en 1
+[INFO] 00:38:43:4 PLANIFICADOR/(4684:4719): El archivo no existe!!
+[INFO] 00:38:59:479 PLANIFICADOR/(4684:4721): Correr corto.cod, mProc: 4, en 1
+[INFO] 00:39:11:485 PLANIFICADOR/(4684:4721): FIN Q
+[INFO] 00:39:11:485 PLANIFICADOR/(4684:4721): mProc 4 - Iniciado
+[INFO] 00:39:11:485 PLANIFICADOR/(4684:4721): mProc 4 - Pagina 0 escrita: Corto
+[INFO] 00:39:11:485 PLANIFICADOR/(4684:4724): Correr corto.cod, mProc: 4, en 1
+[INFO] 00:39:23:531 PLANIFICADOR/(4684:4724): mProc 4 - Pagina 2 escrita: Corto
+[INFO] 00:39:23:531 PLANIFICADOR/(4684:4724): mProc 4 en entrada-salida de tiempo 5
+[INFO] 00:39:28:531 PLANIFICADOR/(4684:4730): Correr corto.cod, mProc: 4, en 1
+[INFO] 00:39:40:537 PLANIFICADOR/(4684:4730): FIN Q
+[INFO] 00:39:40:574 PLANIFICADOR/(4684:4730): mProc 4 - Pagina 0 leida: Corto
+[INFO] 00:39:40:574 PLANIFICADOR/(4684:4730): mProc 4 - Pagina 1 leida: 
+[INFO] 00:39:40:574 PLANIFICADOR/(4684:4733): Correr corto.cod, mProc: 4, en 1
+[INFO] 00:39:45:575 PLANIFICADOR/(4684:4733): mProc 4 finalizado
+[INFO] 00:40:13:197 PLANIFICADOR/(4684:4684): ---------------------FIN---------------------
+[INFO] 00:41:35:701 PLANIFICADOR/(4788:4788): Recibiendo CPU
+[INFO] 00:41:35:702 PLANIFICADOR/(4788:4788): CPU: 1 Conectado
+[INFO] 00:41:45:208 PLANIFICADOR/(4788:4802): Correr corto2.cod, mProc: 3, en 1
+[INFO] 00:41:45:209 PLANIFICADOR/(4788:4802): El archivo no existe!!
+[INFO] 00:41:51:37 PLANIFICADOR/(4788:4804): Correr corto.cod, mProc: 4, en 1
+[INFO] 00:41:51:37 PLANIFICADOR/(4788:4804): El archivo no existe!!
+[INFO] 00:42:13:778 PLANIFICADOR/(4788:4819): Correr corto.cod, mProc: 5, en 1
+[INFO] 00:42:13:779 PLANIFICADOR/(4788:4819): El archivo no existe!!
+[INFO] 00:42:21:73 PLANIFICADOR/(4788:4821): Correr cpu.cod, mProc: 6, en 1
+[INFO] 00:42:21:74 PLANIFICADOR/(4788:4821): El archivo no existe!!
+[INFO] 00:43:04:537 PLANIFICADOR/(4788:4825): Correr /home/utnso/github/tp-2015-2c-daft-punk-so/CPU/src/corto.cod, mProc: 7, en 1
+[INFO] 00:43:16:542 PLANIFICADOR/(4788:4825): FIN Q
+[INFO] 00:43:16:542 PLANIFICADOR/(4788:4825): mProc 7 - Iniciado
+[INFO] 00:43:16:542 PLANIFICADOR/(4788:4825): mProc 7 - Pagina 0 escrita: Corto
+[INFO] 00:43:16:543 PLANIFICADOR/(4788:4830): Correr /home/utnso/github/tp-2015-2c-daft-punk-so/CPU/src/corto.cod, mProc: 7, en 1
+[INFO] 00:43:28:585 PLANIFICADOR/(4788:4830): mProc 7 - Pagina 2 escrita: Corto
+[INFO] 00:43:28:585 PLANIFICADOR/(4788:4830): mProc 7 en entrada-salida de tiempo 5
+[INFO] 00:43:29:368 PLANIFICADOR/(4788:4833): Correr cpu.cod, mProc: 8, en 1
+[INFO] 00:43:41:373 PLANIFICADOR/(4788:4833): FIN Q
+[INFO] 00:43:41:415 PLANIFICADOR/(4788:4833): mProc 8 - Iniciado
+[INFO] 00:43:41:415 PLANIFICADOR/(4788:4833): mProc 8 - Pagina 0 escrita: 0
+[INFO] 00:43:41:415 PLANIFICADOR/(4788:4836): Correr /home/utnso/github/tp-2015-2c-daft-punk-so/CPU/src/corto.cod, mProc: 7, en 1
+[INFO] 00:43:53:417 PLANIFICADOR/(4788:4836): FIN Q
+[INFO] 00:43:53:461 PLANIFICADOR/(4788:4836): mProc 7 - Pagina 0 leida: Corto
+[INFO] 00:43:53:461 PLANIFICADOR/(4788:4836): mProc 7 - Pagina 1 leida: 
+[INFO] 00:43:53:462 PLANIFICADOR/(4788:4839): Correr cpu.cod, mProc: 8, en 1
+[INFO] 00:44:03:465 PLANIFICADOR/(4788:4839): FIN Q
+[INFO] 00:44:03:502 PLANIFICADOR/(4788:4839): mProc 8 - Pagina 0 escrita: 1
+[INFO] 00:44:03:502 PLANIFICADOR/(4788:4839): mProc 8 - Pagina 0 leida: 1
+[INFO] 00:44:03:502 PLANIFICADOR/(4788:4842): Correr /home/utnso/github/tp-2015-2c-daft-punk-so/CPU/src/corto.cod, mProc: 7, en 1
+[INFO] 00:44:08:504 PLANIFICADOR/(4788:4842): mProc 7 finalizado
+[INFO] 00:44:08:504 PLANIFICADOR/(4788:4844): Correr cpu.cod, mProc: 8, en 1
+[INFO] 00:44:18:511 PLANIFICADOR/(4788:4844): FIN Q
+[INFO] 00:44:18:551 PLANIFICADOR/(4788:4844): mProc 8 - Pagina 0 leida: 1
+[INFO] 00:44:18:551 PLANIFICADOR/(4788:4844): mProc 8 - Pagina 0 escrita: 3
+[INFO] 00:44:18:551 PLANIFICADOR/(4788:4848): Correr corto.cod, mProc: 9, en 1
+[INFO] 00:44:30:557 PLANIFICADOR/(4788:4848): FIN Q
+[INFO] 00:44:30:598 PLANIFICADOR/(4788:4848): mProc 9 - Iniciado
+[INFO] 00:44:30:598 PLANIFICADOR/(4788:4848): mProc 9 - Pagina 0 escrita: Corto
+[INFO] 00:44:30:598 PLANIFICADOR/(4788:4851): Correr cpu.cod, mProc: 8, en 1
+[INFO] 00:44:40:600 PLANIFICADOR/(4788:4851): FIN Q
+[INFO] 00:44:40:637 PLANIFICADOR/(4788:4851): mProc 8 - Pagina 0 escrita: 4
+[INFO] 00:44:40:678 PLANIFICADOR/(4788:4851): mProc 8 - Pagina 0 leida: 4
+[INFO] 00:44:40:678 PLANIFICADOR/(4788:4854): Correr corto.cod, mProc: 9, en 1
+[INFO] 00:44:52:721 PLANIFICADOR/(4788:4854): mProc 9 - Pagina 2 escrita: Corto
+[INFO] 00:44:52:721 PLANIFICADOR/(4788:4854): mProc 9 en entrada-salida de tiempo 5
+[INFO] 00:44:52:721 PLANIFICADOR/(4788:4857): Correr cpu.cod, mProc: 8, en 1
+[INFO] 00:45:02:723 PLANIFICADOR/(4788:4857): FIN Q
+[INFO] 00:45:02:761 PLANIFICADOR/(4788:4857): mProc 8 - Pagina 0 leida: 4
+[INFO] 00:45:02:761 PLANIFICADOR/(4788:4857): mProc 8 - Pagina 0 escrita: 6
+[INFO] 00:45:02:761 PLANIFICADOR/(4788:4860): Correr corto.cod, mProc: 9, en 1
+[INFO] 00:45:14:767 PLANIFICADOR/(4788:4860): FIN Q
+[INFO] 00:45:14:807 PLANIFICADOR/(4788:4860): mProc 9 - Pagina 0 leida: Corto
+[INFO] 00:45:14:807 PLANIFICADOR/(4788:4860): mProc 9 - Pagina 1 leida: 
+[INFO] 00:45:14:807 PLANIFICADOR/(4788:4864): Correr cpu.cod, mProc: 8, en 1
+[INFO] 00:45:24:813 PLANIFICADOR/(4788:4864): FIN Q
+[INFO] 00:45:24:849 PLANIFICADOR/(4788:4864): mProc 8 - Pagina 0 escrita: 7
+[INFO] 00:45:24:849 PLANIFICADOR/(4788:4864): mProc 8 - Pagina 0 leida: 7
+[INFO] 00:45:24:849 PLANIFICADOR/(4788:4867): Correr corto.cod, mProc: 9, en 1
+[INFO] 00:45:29:852 PLANIFICADOR/(4788:4867): mProc 9 finalizado
+[INFO] 00:45:29:852 PLANIFICADOR/(4788:4869): Correr cpu.cod, mProc: 8, en 1
+[INFO] 00:45:34:895 PLANIFICADOR/(4788:4869): mProc 8 finalizado
+[INFO] 00:46:35:75 PLANIFICADOR/(4788:4874): Correr corto.cod, mProc: 10, en 1
+[INFO] 00:46:47:80 PLANIFICADOR/(4788:4874): FIN Q
+[INFO] 00:46:47:117 PLANIFICADOR/(4788:4874): mProc 10 - Iniciado
+[INFO] 00:46:47:118 PLANIFICADOR/(4788:4874): mProc 10 - Pagina 0 escrita: Corto
+[INFO] 00:46:47:118 PLANIFICADOR/(4788:4878): Correr corto.cod, mProc: 10, en 1
+[INFO] 00:46:59:161 PLANIFICADOR/(4788:4878): mProc 10 - Pagina 2 escrita: Corto
+[INFO] 00:46:59:161 PLANIFICADOR/(4788:4878): mProc 10 en entrada-salida de tiempo 5
+[INFO] 00:47:04:161 PLANIFICADOR/(4788:4890): Correr corto.cod, mProc: 10, en 1
+[INFO] 00:47:16:172 PLANIFICADOR/(4788:4890): FIN Q
+[INFO] 00:47:16:209 PLANIFICADOR/(4788:4890): mProc 10 - Pagina 0 leida: Corto
+[INFO] 00:47:16:209 PLANIFICADOR/(4788:4890): mProc 10 - Pagina 1 leida: 7
+[INFO] 00:47:16:209 PLANIFICADOR/(4788:4903): Correr corto.cod, mProc: 10, en 1
+[INFO] 00:47:21:212 PLANIFICADOR/(4788:4903): mProc 10 finalizado
+[INFO] 00:47:47:113 PLANIFICADOR/(4788:4788): ---------------------FIN---------------------
+[INFO] 00:49:17:966 PLANIFICADOR/(4994:4994): Recibiendo CPU
+[INFO] 00:49:17:966 PLANIFICADOR/(4994:4994): CPU: 1 Conectado
+[INFO] 00:49:22:760 PLANIFICADOR/(4994:5008): Correr corto.cod, mProc: 3, en 1
+[INFO] 00:49:34:763 PLANIFICADOR/(4994:5008): FIN Q
+[INFO] 00:49:34:763 PLANIFICADOR/(4994:5008): mProc 3 - Iniciado
+[INFO] 00:49:34:763 PLANIFICADOR/(4994:5008): mProc 3 - Pagina 0 escrita: Corto
+[INFO] 00:49:34:764 PLANIFICADOR/(4994:5011): Correr corto.cod, mProc: 3, en 1
+[INFO] 00:49:48:770 PLANIFICADOR/(4994:5011): FIN Q
+[INFO] 00:49:48:809 PLANIFICADOR/(4994:5011): mProc 3 - Pagina 1 escrita: Corto
+[INFO] 00:49:48:809 PLANIFICADOR/(4994:5011): mProc 3 - Pagina 2 escrita: Corto
+[INFO] 00:49:48:810 PLANIFICADOR/(4994:5014): Correr corto.cod, mProc: 3, en 1
+[INFO] 00:49:53:810 PLANIFICADOR/(4994:5014): mProc 3 en entrada-salida de tiempo 5
+[INFO] 00:49:58:811 PLANIFICADOR/(4994:5017): Correr corto.cod, mProc: 3, en 1
+[INFO] 00:50:08:815 PLANIFICADOR/(4994:5017): FIN Q
+[INFO] 00:50:08:853 PLANIFICADOR/(4994:5017): mProc 3 - Pagina 0 leida: Corto
+[INFO] 00:50:08:854 PLANIFICADOR/(4994:5017): mProc 3 - Pagina 1 leida: Corto
+[INFO] 00:50:08:854 PLANIFICADOR/(4994:5020): Correr corto.cod, mProc: 3, en 1
+[INFO] 00:50:18:897 PLANIFICADOR/(4994:5020): mProc 3 - Pagina 2 leida: Corto
+[INFO] 00:50:18:897 PLANIFICADOR/(4994:5020): mProc 3 finalizado
+[INFO] 00:50:47:897 PLANIFICADOR/(4994:4994): ---------------------FIN---------------------
