@@ -36,6 +36,7 @@ simularPedidoMemoria(80,3,0,null)
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <errno.h>
+#include <ctype.h>
 
 #include <commons/collections/list.h>
 #include <commons/socket.h>
@@ -101,7 +102,7 @@ char* mapeo; // El mapeo en memoria del swap
 //     PROTOTIPOS      //
 /////////////////////////
 
-int recvall(int s, void *toReceive, int size, int flags); // Función segura para recibir datos, se asegura de que recvall() reciba TODO (hay casos en los que, por detalles de bajo nivel, recvall() no recibe todo lo que debía recibir, es por eso que devuelve la cantidad de bytes recibidos)
+int recvall(int s, void *toReceive, int size, int flags); // Función segura para recibir datos, se asegura de que recvall() reciba (hay casos en los que, por detalles de bajo nivel, recvall() no recibe  lo que debía recibir, es por eso que devuelve la cantidad de bytes recibidos)
 void parseConsoleCommand(char *commandLine,char *command,char *arguments);
 void simularPedidoMemoria(char * arguments);
 static t_espacioLibre *libre_create(char* inicioHueco, int cantPag);
@@ -521,9 +522,6 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 	{
 		if (ordenMemoria.orden == LEER) // 1=Leer
 		{
-			// TODO: Revisar, creo que está para el  orto. Esos 4 hardcodeados no me gustan nada.
-			// Tampoco me gusta strncpy
-
 			t_proceso* new = buscarPID(ordenMemoria.pid);
 			int posProc = encontrarPosicionProceso(ordenMemoria.pid);
 
@@ -876,7 +874,7 @@ int recvall(int s, void *toReceive, int size, int flags) {
     int ret;
 	int bytesleft = size;
 
-	// Cicla hasta que reciba TODO
+	// Cicla hasta que reciba
     while(bytesleft>0) {
         ret = recv(s,buffer,bytesleft,flags);
         if ((ret == -1) || (ret == 0)) { return ret; }
