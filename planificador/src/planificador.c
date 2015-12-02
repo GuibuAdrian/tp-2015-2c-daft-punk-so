@@ -429,7 +429,7 @@ int recibirRespuesta(int socketCliente)
 					list_remove_and_destroy_element(listaPCB, posPCB, (void*) PCB_destroy);
 					pthread_mutex_unlock(&mutexPCB);
 
-
+					printf("Finalizado\n");
 					return -1;
 				}
 				else
@@ -553,16 +553,10 @@ void ROUND_ROBIN(void* args)
 		Q++;
 	}
 
-	if( IO==-1 )
-	{
-		pthread_mutex_lock(&mutexPCB);
-		posPCB =  encontrarPosicionEnPCB(pidReady);
-		list_remove_and_destroy_element(listaPCB, posPCB, (void*) PCB_destroy);
-		pthread_mutex_unlock(&mutexPCB);
-	}
 	if(Q>=QUANTUM)
 	{
 		log_info(logger,"FIN Q");
+		printf("FIN Q\n");
 
 		int message = 2;
 		send(socketCPUCarga, &message, sizeof(int), 0);
