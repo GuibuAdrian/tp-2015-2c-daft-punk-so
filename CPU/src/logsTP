@@ -1,0 +1,2423 @@
+[INFO] 02:31:28:296 CPU/(10918:10921): Conectado CPU 4!!
+[INFO] 02:31:28:296 CPU/(10918:10920): Planificador: 5 conectado, viva!!
+[INFO] 02:31:28:297 CPU/(10918:10919): Planificador: 6 conectado, viva!!
+[INFO] 02:31:36:286 CPU/(10918:10920): Recibido mProc: 3, path: /home/utnso/github/cache13-scripts/corto.cod, puntero: 2
+[INFO] 02:31:36:286 CPU/(10918:10920): ID CPU: 8 conectado a Memoria
+[INFO] 02:32:42:793 CPU/(10970:10973): Conectado CPU 4!!
+[INFO] 02:32:42:794 CPU/(10970:10972): Planificador: 5 conectado, viva!!
+[INFO] 02:32:42:795 CPU/(10970:10971): Planificador: 6 conectado, viva!!
+[INFO] 02:32:47:988 CPU/(10970:10972): Recibido mProc: 3, path: /home/utnso/github/cache13-scripts/corto.cod, puntero: 2
+[INFO] 02:32:47:989 CPU/(10970:10972): ID CPU: 8 conectado a Memoria
+[INFO] 02:33:14:872 CPU/(11036:11039): Conectado CPU 4!!
+[INFO] 02:33:14:872 CPU/(11036:11038): Planificador: 5 conectado, viva!!
+[INFO] 02:33:14:873 CPU/(11036:11037): Planificador: 6 conectado, viva!!
+[INFO] 02:33:18:693 CPU/(11036:11038): Recibido mProc: 3, path: /home/utnso/github/cache13-scripts/corto.cod, puntero: 2
+[INFO] 02:33:18:693 CPU/(11036:11038): ID CPU: 8 conectado a Memoria
+[INFO] 02:35:15:959 CPU/(11133:11136): Conectado CPU 4!!
+[INFO] 02:35:15:961 CPU/(11133:11135): Planificador: 5 conectado, viva!!
+[INFO] 02:35:15:962 CPU/(11133:11134): Planificador: 6 conectado, viva!!
+[INFO] 02:35:19:904 CPU/(11133:11136): Rafaga concluida. PID 4
+[INFO] 02:35:19:904 CPU/(11133:11133): ---------------------FIN---------------------
+[INFO] 02:36:18:868 CPU/(11197:11200): Conectado CPU 4!!
+[INFO] 02:36:18:868 CPU/(11197:11200): Rafaga concluida. PID 4
+[INFO] 02:36:28:75 CPU/(11208:11211): Conectado CPU 4!!
+[INFO] 02:36:28:75 CPU/(11208:11210): Planificador: 5 conectado, viva!!
+[INFO] 02:36:28:76 CPU/(11208:11209): Planificador: 6 conectado, viva!!
+[INFO] 02:36:31:576 CPU/(11208:11210): Recibido mProc: 3, path: /home/utnso/github/cache13-scripts/corto.cod, puntero: 2
+[INFO] 02:36:31:576 CPU/(11208:11210): ID CPU: 8 conectado a Memoria
+[INFO] 13:18:21:922 CPU/(3386:3389): Conectado CPU 4!!
+[INFO] 13:18:21:923 CPU/(3386:3388): Planificador: 5 conectado, viva!!
+[INFO] 13:18:21:923 CPU/(3386:3387): Planificador: 6 conectado, viva!!
+[INFO] 13:19:10:736 CPU/(3386:3389): Rafaga concluida. PID 4
+[INFO] 13:19:10:737 CPU/(3386:3386): ---------------------FIN---------------------
+[INFO] 13:19:51:756 CPU/(3418:3421): Conectado CPU 4!!
+[INFO] 13:19:51:756 CPU/(3418:3420): Planificador: 5 conectado, viva!!
+[INFO] 13:19:51:756 CPU/(3418:3421): Rafaga concluida. PID 4
+[INFO] 13:20:31:219 CPU/(3425:3428): Conectado CPU 4!!
+[INFO] 13:20:31:220 CPU/(3425:3427): Planificador: 5 conectado, viva!!
+[INFO] 13:20:31:220 CPU/(3425:3426): Planificador: 6 conectado, viva!!
+[INFO] 13:20:39:533 CPU/(3425:3427): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 13:20:39:534 CPU/(3425:3427): ID CPU: 1 conectado a Memoria
+[INFO] 13:26:38:987 CPU/(4052:4055): Conectado CPU 4!!
+[INFO] 13:26:38:987 CPU/(4052:4054): Planificador: 5 conectado, viva!!
+[INFO] 13:26:38:988 CPU/(4052:4053): Planificador: 6 conectado, viva!!
+[INFO] 13:26:44:361 CPU/(4052:4054): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 13:26:44:361 CPU/(4052:4054): ID CPU: 1 conectado a Memoria
+[INFO] 13:26:45:363 CPU/(4052:4054): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 13:26:45:363 CPU/(4052:4054): ID CPU: 1 conectado a Memoria
+[INFO] 13:26:48:368 CPU/(4052:4054): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 13:26:48:368 CPU/(4052:4054): ID CPU: 1 conectado a Memoria
+[INFO] 13:26:51:371 CPU/(4052:4054): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 13:26:51:372 CPU/(4052:4054): ID CPU: 1 conectado a Memoria
+[INFO] 13:26:54:374 CPU/(4052:4054): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 13:26:55:375 CPU/(4052:4054): Rafaga concluida. PID 3.
+[INFO] 13:27:00:416 CPU/(4052:4054): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 13:27:00:416 CPU/(4052:4054): ID CPU: 1 conectado a Memoria
+[INFO] 13:27:01:417 CPU/(4052:4054): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 13:27:01:418 CPU/(4052:4054): ID CPU: 1 conectado a Memoria
+[INFO] 13:27:02:418 CPU/(4052:4054): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 13:27:02:418 CPU/(4052:4054): ID CPU: 1 conectado a Memoria
+[INFO] 13:27:03:419 CPU/(4052:4054): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 13:27:03:419 CPU/(4052:4054): ID CPU: 1 conectado a Memoria
+[INFO] 13:27:04:420 CPU/(4052:4054): Rafaga concluida. PID 3.
+[INFO] 13:27:14:332 CPU/(4052:4055): Rafaga concluida. PID 4
+[INFO] 13:27:14:332 CPU/(4052:4052): ---------------------FIN---------------------
+[INFO] 13:27:54:342 CPU/(4078:4081): Conectado CPU 4!!
+[INFO] 13:27:54:343 CPU/(4078:4081): Rafaga concluida. PID 4
+[INFO] 13:28:40:178 CPU/(4094:4097): Conectado CPU 4!!
+[INFO] 13:28:40:179 CPU/(4094:4096): Planificador: 5 conectado, viva!!
+[INFO] 13:28:40:179 CPU/(4094:4095): Planificador: 6 conectado, viva!!
+[INFO] 13:29:03:169 CPU/(4094:4097): Rafaga concluida. PID 4
+[INFO] 13:29:03:169 CPU/(4094:4094): ---------------------FIN---------------------
+[INFO] 13:30:34:839 CPU/(4168:4171): Conectado CPU 4!!
+[INFO] 13:30:34:839 CPU/(4168:4170): Planificador: 5 conectado, viva!!
+[INFO] 13:30:34:840 CPU/(4168:4169): Planificador: 6 conectado, viva!!
+[INFO] 13:30:40:74 CPU/(4168:4170): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 13:30:40:74 CPU/(4168:4170): ID CPU: 1 conectado a Memoria
+[INFO] 13:30:41:76 CPU/(4168:4170): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 13:30:41:76 CPU/(4168:4170): ID CPU: 1 conectado a Memoria
+[INFO] 13:30:44:78 CPU/(4168:4171): Rafaga concluida. PID 3
+[INFO] 13:30:44:81 CPU/(4168:4169): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 13:30:44:81 CPU/(4168:4169): ID CPU: 2 conectado a Memoria
+[INFO] 13:30:47:85 CPU/(4168:4169): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 13:30:47:85 CPU/(4168:4169): ID CPU: 2 conectado a Memoria
+[INFO] 13:30:50:127 CPU/(4168:4171): Rafaga concluida. PID 3
+[INFO] 13:30:50:127 CPU/(4168:4170): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 13:30:51:129 CPU/(4168:4170): Rafaga concluida. PID 3.
+[INFO] 13:30:56:131 CPU/(4168:4170): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 13:30:56:132 CPU/(4168:4170): ID CPU: 1 conectado a Memoria
+[INFO] 13:30:57:133 CPU/(4168:4170): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 13:30:57:134 CPU/(4168:4170): ID CPU: 1 conectado a Memoria
+[INFO] 13:30:58:175 CPU/(4168:4171): Rafaga concluida. PID 3
+[INFO] 13:30:58:175 CPU/(4168:4169): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 13:30:58:175 CPU/(4168:4169): ID CPU: 2 conectado a Memoria
+[INFO] 13:30:59:176 CPU/(4168:4169): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 13:30:59:177 CPU/(4168:4169): ID CPU: 2 conectado a Memoria
+[INFO] 13:31:00:182 CPU/(4168:4169): Rafaga concluida. PID 3.
+[INFO] 13:31:46:131 CPU/(4168:4171): Rafaga concluida. PID 3
+[INFO] 13:31:46:132 CPU/(4168:4168): ---------------------FIN---------------------
+[INFO] 15:25:29:415 CPU/(4434:4437): Conectado CPU 4!!
+[INFO] 15:25:29:416 CPU/(4434:4436): Planificador: 5 conectado, viva!!
+[INFO] 15:25:29:416 CPU/(4434:4435): Planificador: 6 conectado, viva!!
+[INFO] 15:25:46:522 CPU/(4434:4436): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 15:25:46:523 CPU/(4434:4436): ID CPU: 1 conectado a Memoria
+[INFO] 15:25:47:523 CPU/(4434:4436): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 15:25:47:524 CPU/(4434:4436): ID CPU: 1 conectado a Memoria
+[INFO] 15:25:50:526 CPU/(4434:4437): Rafaga concluida. PID 3
+[INFO] 15:25:50:526 CPU/(4434:4435): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 15:25:50:526 CPU/(4434:4435): ID CPU: 2 conectado a Memoria
+[INFO] 15:25:53:527 CPU/(4434:4435): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 15:25:53:528 CPU/(4434:4435): ID CPU: 2 conectado a Memoria
+[INFO] 15:25:56:570 CPU/(4434:4437): Rafaga concluida. PID 3
+[INFO] 15:25:56:570 CPU/(4434:4436): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 15:25:57:572 CPU/(4434:4436): Rafaga concluida. PID 3.
+[INFO] 15:26:02:572 CPU/(4434:4436): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 15:26:02:573 CPU/(4434:4436): ID CPU: 1 conectado a Memoria
+[INFO] 15:26:03:573 CPU/(4434:4436): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 15:26:03:573 CPU/(4434:4436): ID CPU: 1 conectado a Memoria
+[INFO] 15:26:04:615 CPU/(4434:4437): Rafaga concluida. PID 3
+[INFO] 15:26:04:615 CPU/(4434:4435): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 15:26:04:615 CPU/(4434:4435): ID CPU: 2 conectado a Memoria
+[INFO] 15:26:05:616 CPU/(4434:4435): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 15:26:05:616 CPU/(4434:4435): ID CPU: 2 conectado a Memoria
+[INFO] 15:26:06:617 CPU/(4434:4435): Rafaga concluida. PID 3.
+[INFO] 15:29:01:869 CPU/(4434:4437): Rafaga concluida. PID 3
+[INFO] 15:29:01:869 CPU/(4434:4434): ---------------------FIN---------------------
+[INFO] 15:38:55:962 CPU/(4587:4590): Conectado CPU 4!!
+[INFO] 15:38:55:964 CPU/(4587:4589): Planificador: 5 conectado, viva!!
+[INFO] 15:38:55:965 CPU/(4587:4588): Planificador: 6 conectado, viva!!
+[INFO] 15:39:00:297 CPU/(4587:4589): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 15:39:00:297 CPU/(4587:4589): ID CPU: 1 conectado a Memoria
+[INFO] 15:39:01:300 CPU/(4587:4589): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 15:39:01:300 CPU/(4587:4589): ID CPU: 1 conectado a Memoria
+[INFO] 15:39:04:304 CPU/(4587:4590): Rafaga concluida. PID 3
+[INFO] 15:39:04:305 CPU/(4587:4588): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 15:39:04:305 CPU/(4587:4588): ID CPU: 2 conectado a Memoria
+[INFO] 15:39:07:309 CPU/(4587:4588): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 15:39:07:309 CPU/(4587:4588): ID CPU: 2 conectado a Memoria
+[INFO] 15:39:10:350 CPU/(4587:4590): Rafaga concluida. PID 3
+[INFO] 15:39:10:350 CPU/(4587:4589): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 15:39:11:351 CPU/(4587:4589): Rafaga concluida. PID 3.
+[INFO] 15:39:16:353 CPU/(4587:4589): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 15:39:16:354 CPU/(4587:4589): ID CPU: 1 conectado a Memoria
+[INFO] 15:39:17:354 CPU/(4587:4589): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 15:39:17:355 CPU/(4587:4589): ID CPU: 1 conectado a Memoria
+[INFO] 15:39:18:394 CPU/(4587:4590): Rafaga concluida. PID 3
+[INFO] 15:39:18:395 CPU/(4587:4588): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 15:39:18:396 CPU/(4587:4588): ID CPU: 2 conectado a Memoria
+[INFO] 15:39:19:396 CPU/(4587:4588): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 15:39:19:397 CPU/(4587:4588): ID CPU: 2 conectado a Memoria
+[INFO] 15:39:20:399 CPU/(4587:4588): Rafaga concluida. PID 3.
+[INFO] 15:40:03:534 CPU/(4587:4590): Rafaga concluida. PID 3
+[INFO] 15:40:03:536 CPU/(4587:4587): ---------------------FIN---------------------
+[INFO] 15:43:33:660 CPU/(4740:4743): Conectado CPU 4!!
+[INFO] 15:43:33:660 CPU/(4740:4742): Planificador: 5 conectado, viva!!
+[INFO] 15:43:33:661 CPU/(4740:4741): Planificador: 6 conectado, viva!!
+[INFO] 15:43:42:317 CPU/(4740:4742): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 15:43:42:317 CPU/(4740:4742): ID CPU: 1 conectado a Memoria
+[INFO] 15:43:43:318 CPU/(4740:4742): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 15:43:43:319 CPU/(4740:4742): ID CPU: 1 conectado a Memoria
+[INFO] 15:43:46:322 CPU/(4740:4743): Rafaga concluida. PID 3
+[INFO] 15:43:46:323 CPU/(4740:4741): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 15:43:46:324 CPU/(4740:4741): ID CPU: 2 conectado a Memoria
+[INFO] 15:43:49:327 CPU/(4740:4741): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 15:43:49:328 CPU/(4740:4741): ID CPU: 2 conectado a Memoria
+[INFO] 15:43:52:370 CPU/(4740:4743): Rafaga concluida. PID 3
+[INFO] 15:43:52:370 CPU/(4740:4742): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 15:43:53:371 CPU/(4740:4742): Rafaga concluida. PID 3.
+[INFO] 15:43:58:372 CPU/(4740:4742): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 15:43:58:372 CPU/(4740:4742): ID CPU: 1 conectado a Memoria
+[INFO] 15:43:59:374 CPU/(4740:4742): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 15:43:59:374 CPU/(4740:4742): ID CPU: 1 conectado a Memoria
+[INFO] 15:44:00:415 CPU/(4740:4743): Rafaga concluida. PID 3
+[INFO] 15:44:00:416 CPU/(4740:4741): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 15:44:00:416 CPU/(4740:4741): ID CPU: 2 conectado a Memoria
+[INFO] 15:44:01:418 CPU/(4740:4741): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 15:44:01:419 CPU/(4740:4741): ID CPU: 2 conectado a Memoria
+[INFO] 15:44:02:421 CPU/(4740:4741): Rafaga concluida. PID 3.
+[INFO] 15:44:09:25 CPU/(4740:4743): Rafaga concluida. PID 3
+[INFO] 15:44:09:25 CPU/(4740:4740): ---------------------FIN---------------------
+[INFO] 15:56:01:859 CPU/(5020:5023): Conectado CPU 4!!
+[INFO] 15:56:01:859 CPU/(5020:5022): Planificador: 5 conectado, viva!!
+[INFO] 15:56:01:860 CPU/(5020:5021): Planificador: 6 conectado, viva!!
+[INFO] 15:56:06:92 CPU/(5020:5022): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 15:56:06:92 CPU/(5020:5022): ID CPU: 1 conectado a Memoria
+[INFO] 15:56:07:94 CPU/(5020:5022): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 15:56:07:94 CPU/(5020:5022): ID CPU: 1 conectado a Memoria
+[INFO] 15:56:10:97 CPU/(5020:5023): Rafaga concluida. PID 3
+[INFO] 15:56:10:99 CPU/(5020:5021): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 15:56:10:99 CPU/(5020:5021): ID CPU: 2 conectado a Memoria
+[INFO] 15:56:13:101 CPU/(5020:5021): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 15:56:13:102 CPU/(5020:5021): ID CPU: 2 conectado a Memoria
+[INFO] 15:56:16:142 CPU/(5020:5023): Rafaga concluida. PID 3
+[INFO] 15:56:16:143 CPU/(5020:5022): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 15:56:17:143 CPU/(5020:5022): Rafaga concluida. PID 3.
+[INFO] 15:56:22:144 CPU/(5020:5022): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 15:56:22:145 CPU/(5020:5022): ID CPU: 1 conectado a Memoria
+[INFO] 15:56:23:146 CPU/(5020:5022): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 15:56:23:146 CPU/(5020:5022): ID CPU: 1 conectado a Memoria
+[INFO] 15:56:24:186 CPU/(5020:5023): Rafaga concluida. PID 3
+[INFO] 15:56:24:187 CPU/(5020:5021): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 15:56:24:187 CPU/(5020:5021): ID CPU: 2 conectado a Memoria
+[INFO] 15:56:25:189 CPU/(5020:5021): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 15:56:25:190 CPU/(5020:5021): ID CPU: 2 conectado a Memoria
+[INFO] 15:56:26:192 CPU/(5020:5021): Rafaga concluida. PID 3.
+[INFO] 15:56:27:484 CPU/(5020:5023): Rafaga concluida. PID 3
+[INFO] 15:56:27:484 CPU/(5020:5020): ---------------------FIN---------------------
+[INFO] 15:58:40:89 CPU/(5164:5167): Conectado CPU 4!!
+[INFO] 15:58:40:90 CPU/(5164:5166): Planificador: 5 conectado, viva!!
+[INFO] 15:58:40:91 CPU/(5164:5165): Planificador: 6 conectado, viva!!
+[INFO] 15:58:43:885 CPU/(5164:5166): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 15:58:43:885 CPU/(5164:5166): ID CPU: 1 conectado a Memoria
+[INFO] 15:58:44:888 CPU/(5164:5166): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 15:58:44:888 CPU/(5164:5166): ID CPU: 1 conectado a Memoria
+[INFO] 15:58:47:891 CPU/(5164:5167): Rafaga concluida. PID 3
+[INFO] 15:58:47:894 CPU/(5164:5165): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 15:58:47:894 CPU/(5164:5165): ID CPU: 2 conectado a Memoria
+[INFO] 15:58:50:896 CPU/(5164:5165): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 15:58:50:897 CPU/(5164:5165): ID CPU: 2 conectado a Memoria
+[INFO] 15:58:53:938 CPU/(5164:5167): Rafaga concluida. PID 3
+[INFO] 15:58:53:940 CPU/(5164:5166): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 15:58:54:940 CPU/(5164:5166): Rafaga concluida. PID 3.
+[INFO] 15:58:59:942 CPU/(5164:5166): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 15:58:59:943 CPU/(5164:5166): ID CPU: 1 conectado a Memoria
+[INFO] 15:59:00:944 CPU/(5164:5166): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 15:59:00:944 CPU/(5164:5166): ID CPU: 1 conectado a Memoria
+[INFO] 15:59:01:982 CPU/(5164:5167): Rafaga concluida. PID 3
+[INFO] 15:59:01:983 CPU/(5164:5165): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 15:59:01:983 CPU/(5164:5165): ID CPU: 2 conectado a Memoria
+[INFO] 15:59:02:985 CPU/(5164:5165): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 15:59:02:986 CPU/(5164:5165): ID CPU: 2 conectado a Memoria
+[INFO] 15:59:03:988 CPU/(5164:5165): Rafaga concluida. PID 3.
+[INFO] 16:01:29:341 CPU/(5164:5167): Rafaga concluida. PID 3
+[INFO] 16:01:29:341 CPU/(5164:5164): ---------------------FIN---------------------
+[INFO] 16:03:59:930 CPU/(5322:5325): Conectado CPU 4!!
+[INFO] 16:03:59:934 CPU/(5322:5324): Planificador: 5 conectado, viva!!
+[INFO] 16:03:59:935 CPU/(5322:5323): Planificador: 6 conectado, viva!!
+[INFO] 16:04:04:312 CPU/(5322:5324): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 16:04:04:312 CPU/(5322:5324): ID CPU: 1 conectado a Memoria
+[INFO] 16:04:05:314 CPU/(5322:5324): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 16:04:05:314 CPU/(5322:5324): ID CPU: 1 conectado a Memoria
+[INFO] 16:04:08:318 CPU/(5322:5325): Rafaga concluida. PID 3
+[INFO] 16:04:08:320 CPU/(5322:5323): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 16:04:08:320 CPU/(5322:5323): ID CPU: 2 conectado a Memoria
+[INFO] 16:04:11:324 CPU/(5322:5323): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 16:04:11:324 CPU/(5322:5323): ID CPU: 2 conectado a Memoria
+[INFO] 16:04:14:366 CPU/(5322:5325): Rafaga concluida. PID 3
+[INFO] 16:04:14:367 CPU/(5322:5324): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 16:04:15:368 CPU/(5322:5324): Rafaga concluida. PID 3.
+[INFO] 16:04:20:369 CPU/(5322:5324): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 16:04:20:369 CPU/(5322:5324): ID CPU: 1 conectado a Memoria
+[INFO] 16:04:21:369 CPU/(5322:5324): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 16:04:21:370 CPU/(5322:5324): ID CPU: 1 conectado a Memoria
+[INFO] 16:04:22:411 CPU/(5322:5325): Rafaga concluida. PID 3
+[INFO] 16:04:22:411 CPU/(5322:5323): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 16:04:22:412 CPU/(5322:5323): ID CPU: 2 conectado a Memoria
+[INFO] 16:04:23:413 CPU/(5322:5323): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 16:04:23:414 CPU/(5322:5323): ID CPU: 2 conectado a Memoria
+[INFO] 16:04:24:414 CPU/(5322:5323): Rafaga concluida. PID 3.
+[INFO] 16:06:50:514 CPU/(5322:5325): Rafaga concluida. PID 3
+[INFO] 16:06:50:515 CPU/(5322:5322): ---------------------FIN---------------------
+[INFO] 16:08:02:327 CPU/(5505:5508): Conectado CPU 4!!
+[INFO] 16:08:02:329 CPU/(5505:5507): Planificador: 5 conectado, viva!!
+[INFO] 16:08:02:330 CPU/(5505:5506): Planificador: 6 conectado, viva!!
+[INFO] 16:08:07:139 CPU/(5505:5507): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 16:08:07:139 CPU/(5505:5507): ID CPU: 1 conectado a Memoria
+[INFO] 16:08:08:140 CPU/(5505:5507): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 16:08:08:141 CPU/(5505:5507): ID CPU: 1 conectado a Memoria
+[INFO] 16:08:11:143 CPU/(5505:5508): Rafaga concluida. PID 3
+[INFO] 16:08:11:146 CPU/(5505:5506): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 16:08:11:147 CPU/(5505:5506): ID CPU: 2 conectado a Memoria
+[INFO] 16:08:14:151 CPU/(5505:5506): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 16:08:14:152 CPU/(5505:5506): ID CPU: 2 conectado a Memoria
+[INFO] 16:08:17:194 CPU/(5505:5508): Rafaga concluida. PID 3
+[INFO] 16:08:17:195 CPU/(5505:5507): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 16:08:18:195 CPU/(5505:5507): Rafaga concluida. PID 3.
+[INFO] 16:08:23:197 CPU/(5505:5507): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 16:08:23:197 CPU/(5505:5507): ID CPU: 1 conectado a Memoria
+[INFO] 16:08:24:198 CPU/(5505:5507): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 16:08:24:198 CPU/(5505:5507): ID CPU: 1 conectado a Memoria
+[INFO] 16:08:25:239 CPU/(5505:5508): Rafaga concluida. PID 3
+[INFO] 16:08:25:240 CPU/(5505:5506): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 16:08:25:240 CPU/(5505:5506): ID CPU: 2 conectado a Memoria
+[INFO] 16:08:26:241 CPU/(5505:5506): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 16:08:26:241 CPU/(5505:5506): ID CPU: 2 conectado a Memoria
+[INFO] 16:08:27:242 CPU/(5505:5506): Rafaga concluida. PID 3.
+[INFO] 16:08:30:140 CPU/(5505:5508): Rafaga concluida. PID 3
+[INFO] 16:08:30:140 CPU/(5505:5505): ---------------------FIN---------------------
+[INFO] 17:04:31:392 CPU/(6170:6173): Conectado CPU 4!!
+[INFO] 17:04:31:392 CPU/(6170:6172): Planificador: 5 conectado, viva!!
+[INFO] 17:04:31:393 CPU/(6170:6171): Planificador: 6 conectado, viva!!
+[INFO] 17:04:38:596 CPU/(6170:6172): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 17:04:38:597 CPU/(6170:6172): ID CPU: 1 conectado a Memoria
+[INFO] 17:04:39:597 CPU/(6170:6172): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 17:04:39:598 CPU/(6170:6172): ID CPU: 1 conectado a Memoria
+[INFO] 17:04:42:600 CPU/(6170:6173): Rafaga concluida. PID 3
+[INFO] 17:04:42:601 CPU/(6170:6171): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 17:04:42:602 CPU/(6170:6171): ID CPU: 2 conectado a Memoria
+[INFO] 17:04:45:603 CPU/(6170:6171): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 17:04:45:605 CPU/(6170:6171): ID CPU: 2 conectado a Memoria
+[INFO] 17:04:48:650 CPU/(6170:6173): Rafaga concluida. PID 3
+[INFO] 17:04:48:651 CPU/(6170:6172): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 17:04:49:651 CPU/(6170:6172): Rafaga concluida. PID 3.
+[INFO] 17:04:54:654 CPU/(6170:6172): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 17:04:54:654 CPU/(6170:6172): ID CPU: 1 conectado a Memoria
+[INFO] 17:04:55:655 CPU/(6170:6172): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 17:04:55:655 CPU/(6170:6172): ID CPU: 1 conectado a Memoria
+[INFO] 17:04:56:694 CPU/(6170:6173): Rafaga concluida. PID 3
+[INFO] 17:04:56:695 CPU/(6170:6171): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 17:04:56:695 CPU/(6170:6171): ID CPU: 2 conectado a Memoria
+[INFO] 17:04:57:696 CPU/(6170:6171): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 17:04:57:696 CPU/(6170:6171): ID CPU: 2 conectado a Memoria
+[INFO] 17:04:58:696 CPU/(6170:6171): Rafaga concluida. PID 3.
+[INFO] 17:05:28:280 CPU/(6170:6173): Rafaga concluida. PID 3
+[INFO] 17:05:28:280 CPU/(6170:6170): ---------------------FIN---------------------
+[INFO] 17:08:01:529 CPU/(6205:6208): Conectado CPU 4!!
+[INFO] 17:08:01:530 CPU/(6205:6207): Planificador: 5 conectado, viva!!
+[INFO] 17:08:01:531 CPU/(6205:6206): Planificador: 6 conectado, viva!!
+[INFO] 17:08:06:42 CPU/(6205:6207): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 17:08:06:42 CPU/(6205:6207): ID CPU: 1 conectado a Memoria
+[INFO] 17:08:07:42 CPU/(6205:6207): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 17:08:07:43 CPU/(6205:6207): ID CPU: 1 conectado a Memoria
+[INFO] 17:08:10:46 CPU/(6205:6207): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 17:08:10:46 CPU/(6205:6207): ID CPU: 1 conectado a Memoria
+[INFO] 17:08:13:48 CPU/(6205:6207): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 17:08:13:48 CPU/(6205:6207): ID CPU: 1 conectado a Memoria
+[INFO] 17:08:16:52 CPU/(6205:6207): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 17:08:17:52 CPU/(6205:6207): Rafaga concluida. PID 3.
+[INFO] 17:08:22:91 CPU/(6205:6207): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 17:08:22:92 CPU/(6205:6207): ID CPU: 1 conectado a Memoria
+[INFO] 17:08:23:93 CPU/(6205:6207): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 17:08:23:94 CPU/(6205:6207): ID CPU: 1 conectado a Memoria
+[INFO] 17:08:24:95 CPU/(6205:6207): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 17:08:24:95 CPU/(6205:6207): ID CPU: 1 conectado a Memoria
+[INFO] 17:08:25:95 CPU/(6205:6207): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 17:08:25:96 CPU/(6205:6207): ID CPU: 1 conectado a Memoria
+[INFO] 17:08:26:96 CPU/(6205:6207): Rafaga concluida. PID 3.
+[INFO] 17:08:33:147 CPU/(6205:6208): Rafaga concluida. PID 4
+[INFO] 17:08:33:148 CPU/(6205:6205): ---------------------FIN---------------------
+[INFO] 17:33:28:998 CPU/(6320:6323): Conectado CPU 4!!
+[INFO] 17:33:28:999 CPU/(6320:6322): Planificador: 5 conectado, viva!!
+[INFO] 17:33:28:999 CPU/(6320:6321): Planificador: 6 conectado, viva!!
+[INFO] 17:33:33:753 CPU/(6320:6322): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 17:33:33:755 CPU/(6320:6322): ID CPU: 1 conectado a Memoria
+[INFO] 17:33:34:758 CPU/(6320:6322): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 17:33:34:759 CPU/(6320:6322): ID CPU: 1 conectado a Memoria
+[INFO] 17:33:37:761 CPU/(6320:6323): Rafaga concluida. PID 3
+[INFO] 17:33:37:763 CPU/(6320:6321): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 17:33:37:763 CPU/(6320:6321): ID CPU: 2 conectado a Memoria
+[INFO] 17:33:40:767 CPU/(6320:6321): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 17:33:40:767 CPU/(6320:6321): ID CPU: 2 conectado a Memoria
+[INFO] 17:33:43:805 CPU/(6320:6323): Rafaga concluida. PID 3
+[INFO] 17:33:43:806 CPU/(6320:6322): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 17:33:44:806 CPU/(6320:6322): Rafaga concluida. PID 3.
+[INFO] 17:33:49:807 CPU/(6320:6322): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 17:33:49:808 CPU/(6320:6322): ID CPU: 1 conectado a Memoria
+[INFO] 17:33:50:809 CPU/(6320:6322): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 17:33:50:809 CPU/(6320:6322): ID CPU: 1 conectado a Memoria
+[INFO] 17:33:51:850 CPU/(6320:6323): Rafaga concluida. PID 3
+[INFO] 17:33:51:850 CPU/(6320:6321): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 17:33:51:850 CPU/(6320:6321): ID CPU: 2 conectado a Memoria
+[INFO] 17:33:52:851 CPU/(6320:6321): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 17:33:52:851 CPU/(6320:6321): ID CPU: 2 conectado a Memoria
+[INFO] 17:33:53:852 CPU/(6320:6321): Rafaga concluida. PID 3.
+[INFO] 17:33:57:965 CPU/(6320:6323): Rafaga concluida. PID 3
+[INFO] 17:33:57:967 CPU/(6320:6320): ---------------------FIN---------------------
+[INFO] 17:36:03:250 CPU/(6477:6480): Conectado CPU 4!!
+[INFO] 17:36:03:250 CPU/(6477:6479): Planificador: 5 conectado, viva!!
+[INFO] 17:36:03:251 CPU/(6477:6478): Planificador: 6 conectado, viva!!
+[INFO] 17:36:07:92 CPU/(6477:6479): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 17:36:07:92 CPU/(6477:6479): ID CPU: 1 conectado a Memoria
+[INFO] 17:36:08:93 CPU/(6477:6479): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 17:36:08:93 CPU/(6477:6479): ID CPU: 1 conectado a Memoria
+[INFO] 17:36:11:95 CPU/(6477:6480): Rafaga concluida. PID 3
+[INFO] 17:36:11:97 CPU/(6477:6478): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 17:36:11:97 CPU/(6477:6478): ID CPU: 2 conectado a Memoria
+[INFO] 17:36:14:102 CPU/(6477:6478): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 17:36:14:102 CPU/(6477:6478): ID CPU: 2 conectado a Memoria
+[INFO] 17:36:17:142 CPU/(6477:6480): Rafaga concluida. PID 3
+[INFO] 17:36:17:142 CPU/(6477:6479): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 17:36:18:143 CPU/(6477:6479): Rafaga concluida. PID 3.
+[INFO] 17:36:23:145 CPU/(6477:6479): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 17:36:23:145 CPU/(6477:6479): ID CPU: 1 conectado a Memoria
+[INFO] 17:36:24:146 CPU/(6477:6479): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 17:36:24:146 CPU/(6477:6479): ID CPU: 1 conectado a Memoria
+[INFO] 17:36:25:186 CPU/(6477:6480): Rafaga concluida. PID 3
+[INFO] 17:36:25:186 CPU/(6477:6478): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 17:36:25:186 CPU/(6477:6478): ID CPU: 2 conectado a Memoria
+[INFO] 17:36:26:187 CPU/(6477:6478): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 17:36:26:187 CPU/(6477:6478): ID CPU: 2 conectado a Memoria
+[INFO] 17:36:27:189 CPU/(6477:6478): Rafaga concluida. PID 3.
+[INFO] 17:36:45:416 CPU/(6477:6480): Rafaga concluida. PID 3
+[INFO] 17:36:45:416 CPU/(6477:6477): ---------------------FIN---------------------
+[INFO] 17:40:17:97 CPU/(6573:6576): Conectado CPU 4!!
+[INFO] 17:40:17:98 CPU/(6573:6575): Planificador: 5 conectado, viva!!
+[INFO] 17:40:17:99 CPU/(6573:6574): Planificador: 6 conectado, viva!!
+[INFO] 17:40:21:176 CPU/(6573:6575): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 17:40:21:176 CPU/(6573:6575): ID CPU: 1 conectado a Memoria
+[INFO] 17:40:22:178 CPU/(6573:6575): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 17:40:22:178 CPU/(6573:6575): ID CPU: 1 conectado a Memoria
+[INFO] 17:40:25:182 CPU/(6573:6576): Rafaga concluida. PID 3
+[INFO] 17:40:25:184 CPU/(6573:6574): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 17:40:25:185 CPU/(6573:6574): ID CPU: 2 conectado a Memoria
+[INFO] 17:40:28:188 CPU/(6573:6574): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 17:40:28:188 CPU/(6573:6574): ID CPU: 2 conectado a Memoria
+[INFO] 17:40:31:230 CPU/(6573:6576): Rafaga concluida. PID 3
+[INFO] 17:40:31:231 CPU/(6573:6575): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 17:40:32:231 CPU/(6573:6575): Rafaga concluida. PID 3.
+[INFO] 17:40:37:233 CPU/(6573:6575): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 17:40:37:233 CPU/(6573:6575): ID CPU: 1 conectado a Memoria
+[INFO] 17:40:38:234 CPU/(6573:6575): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 17:40:38:235 CPU/(6573:6575): ID CPU: 1 conectado a Memoria
+[INFO] 17:40:39:274 CPU/(6573:6576): Rafaga concluida. PID 3
+[INFO] 17:40:39:274 CPU/(6573:6574): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 17:40:39:274 CPU/(6573:6574): ID CPU: 2 conectado a Memoria
+[INFO] 17:40:40:276 CPU/(6573:6574): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 17:40:40:276 CPU/(6573:6574): ID CPU: 2 conectado a Memoria
+[INFO] 17:40:41:277 CPU/(6573:6574): Rafaga concluida. PID 3.
+[INFO] 17:40:42:601 CPU/(6573:6576): Rafaga concluida. PID 3
+[INFO] 17:40:42:601 CPU/(6573:6573): ---------------------FIN---------------------
+[INFO] 22:06:35:848 CPU/(3197:3200): Conectado CPU 4!!
+[INFO] 22:06:35:849 CPU/(3197:3199): Planificador: 5 conectado, viva!!
+[INFO] 22:06:35:850 CPU/(3197:3198): Planificador: 6 conectado, viva!!
+[INFO] 22:11:20:446 CPU/(3197:3199): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 22:11:20:446 CPU/(3197:3199): ID CPU: 1 conectado a Memoria
+[INFO] 22:12:50:651 CPU/(3320:3323): Conectado CPU 4!!
+[INFO] 22:12:50:653 CPU/(3320:3322): Planificador: 5 conectado, viva!!
+[INFO] 22:12:50:655 CPU/(3320:3321): Planificador: 6 conectado, viva!!
+[INFO] 22:12:55:281 CPU/(3320:3322): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 22:12:55:282 CPU/(3320:3322): ID CPU: 1 conectado a Memoria
+[INFO] 22:14:13:745 CPU/(3415:3418): Conectado CPU 4!!
+[INFO] 22:14:13:745 CPU/(3415:3417): Planificador: 5 conectado, viva!!
+[INFO] 22:14:13:746 CPU/(3415:3416): Planificador: 6 conectado, viva!!
+[INFO] 22:14:25:86 CPU/(3415:3417): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 22:14:25:87 CPU/(3415:3417): ID CPU: 1 conectado a Memoria
+[INFO] 22:14:26:88 CPU/(3415:3417): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 22:14:26:88 CPU/(3415:3417): ID CPU: 1 conectado a Memoria
+[INFO] 22:14:29:90 CPU/(3415:3417): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 22:14:29:91 CPU/(3415:3417): ID CPU: 1 conectado a Memoria
+[INFO] 22:14:32:93 CPU/(3415:3417): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 22:14:32:93 CPU/(3415:3417): ID CPU: 1 conectado a Memoria
+[INFO] 22:14:35:96 CPU/(3415:3417): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 22:14:36:97 CPU/(3415:3417): Rafaga concluida. PID 3.
+[INFO] 22:14:41:140 CPU/(3415:3417): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 22:14:41:141 CPU/(3415:3417): ID CPU: 1 conectado a Memoria
+[INFO] 22:14:42:142 CPU/(3415:3417): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 22:14:42:142 CPU/(3415:3417): ID CPU: 1 conectado a Memoria
+[INFO] 22:14:43:144 CPU/(3415:3417): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 22:14:43:144 CPU/(3415:3417): ID CPU: 1 conectado a Memoria
+[INFO] 22:14:44:145 CPU/(3415:3417): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 22:14:44:146 CPU/(3415:3417): ID CPU: 1 conectado a Memoria
+[INFO] 22:14:45:147 CPU/(3415:3417): Rafaga concluida. PID 3.
+[INFO] 22:14:51:402 CPU/(3415:3418): Rafaga concluida. PID 4
+[INFO] 22:14:51:402 CPU/(3415:3415): ---------------------FIN---------------------
+[INFO] 22:19:29:444 CPU/(3466:3469): Conectado CPU 4!!
+[INFO] 22:19:29:445 CPU/(3466:3468): Planificador: 5 conectado, viva!!
+[INFO] 22:19:29:446 CPU/(3466:3467): Planificador: 6 conectado, viva!!
+[INFO] 22:19:33:223 CPU/(3466:3468): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 22:19:33:223 CPU/(3466:3468): ID CPU: 1 conectado a Memoria
+[INFO] 22:19:34:224 CPU/(3466:3468): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 22:19:34:225 CPU/(3466:3468): ID CPU: 1 conectado a Memoria
+[INFO] 22:19:37:228 CPU/(3466:3469): Rafaga concluida. PID 3
+[INFO] 22:19:37:248 CPU/(3466:3467): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 22:19:37:248 CPU/(3466:3467): ID CPU: 2 conectado a Memoria
+[INFO] 22:19:40:251 CPU/(3466:3467): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 22:19:40:252 CPU/(3466:3467): ID CPU: 2 conectado a Memoria
+[INFO] 22:19:43:293 CPU/(3466:3469): Rafaga concluida. PID 3
+[INFO] 22:19:43:295 CPU/(3466:3468): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 22:19:44:296 CPU/(3466:3468): Rafaga concluida. PID 3.
+[INFO] 22:19:49:297 CPU/(3466:3468): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 22:19:49:298 CPU/(3466:3468): ID CPU: 1 conectado a Memoria
+[INFO] 22:19:50:300 CPU/(3466:3468): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 22:19:50:300 CPU/(3466:3468): ID CPU: 1 conectado a Memoria
+[INFO] 22:19:51:358 CPU/(3466:3469): Rafaga concluida. PID 3
+[INFO] 22:19:51:359 CPU/(3466:3467): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 22:19:51:359 CPU/(3466:3467): ID CPU: 2 conectado a Memoria
+[INFO] 22:19:52:361 CPU/(3466:3467): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 22:19:52:362 CPU/(3466:3467): ID CPU: 2 conectado a Memoria
+[INFO] 22:19:53:363 CPU/(3466:3467): Rafaga concluida. PID 3.
+[INFO] 22:23:36:704 CPU/(3466:3469): Rafaga concluida. PID 3
+[INFO] 22:23:36:705 CPU/(3466:3466): ---------------------FIN---------------------
+[INFO] 22:46:33:325 CPU/(3652:3655): Conectado CPU 4!!
+[INFO] 22:46:33:326 CPU/(3652:3654): Planificador: 5 conectado, viva!!
+[INFO] 22:46:33:327 CPU/(3652:3653): Planificador: 6 conectado, viva!!
+[INFO] 22:46:39:685 CPU/(3652:3654): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 22:46:39:685 CPU/(3652:3654): ID CPU: 1 conectado a Memoria
+[INFO] 22:46:40:688 CPU/(3652:3654): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 22:46:40:688 CPU/(3652:3654): ID CPU: 1 conectado a Memoria
+[INFO] 22:46:43:691 CPU/(3652:3655): Rafaga concluida. PID 3
+[INFO] 22:46:43:692 CPU/(3652:3653): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 22:46:43:692 CPU/(3652:3653): ID CPU: 2 conectado a Memoria
+[INFO] 22:46:46:695 CPU/(3652:3653): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 22:46:46:695 CPU/(3652:3653): ID CPU: 2 conectado a Memoria
+[INFO] 22:46:49:738 CPU/(3652:3655): Rafaga concluida. PID 3
+[INFO] 22:46:49:739 CPU/(3652:3654): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 22:46:50:739 CPU/(3652:3654): Rafaga concluida. PID 3.
+[INFO] 22:46:55:740 CPU/(3652:3654): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 22:46:55:741 CPU/(3652:3654): ID CPU: 1 conectado a Memoria
+[INFO] 22:46:56:742 CPU/(3652:3654): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 22:46:56:742 CPU/(3652:3654): ID CPU: 1 conectado a Memoria
+[INFO] 22:46:57:781 CPU/(3652:3655): Rafaga concluida. PID 3
+[INFO] 22:46:57:782 CPU/(3652:3653): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 22:46:57:782 CPU/(3652:3653): ID CPU: 2 conectado a Memoria
+[INFO] 22:46:58:784 CPU/(3652:3653): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 22:46:58:785 CPU/(3652:3653): ID CPU: 2 conectado a Memoria
+[INFO] 22:46:59:786 CPU/(3652:3653): Rafaga concluida. PID 3.
+[INFO] 22:47:03:385 CPU/(3652:3655): Rafaga concluida. PID 3
+[INFO] 22:47:03:385 CPU/(3652:3652): ---------------------FIN---------------------
+[INFO] 22:50:56:498 CPU/(3833:3836): Conectado CPU 4!!
+[INFO] 22:50:56:499 CPU/(3833:3835): Planificador: 5 conectado, viva!!
+[INFO] 22:50:56:499 CPU/(3833:3834): Planificador: 6 conectado, viva!!
+[INFO] 22:51:02:297 CPU/(3833:3835): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 22:51:02:298 CPU/(3833:3835): ID CPU: 1 conectado a Memoria
+[INFO] 22:51:03:299 CPU/(3833:3835): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 22:51:03:299 CPU/(3833:3835): ID CPU: 1 conectado a Memoria
+[INFO] 22:51:06:303 CPU/(3833:3836): Rafaga concluida. PID 3
+[INFO] 22:51:06:304 CPU/(3833:3834): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 22:51:06:305 CPU/(3833:3834): ID CPU: 2 conectado a Memoria
+[INFO] 22:51:09:307 CPU/(3833:3834): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 22:51:09:307 CPU/(3833:3834): ID CPU: 2 conectado a Memoria
+[INFO] 22:51:12:349 CPU/(3833:3836): Rafaga concluida. PID 3
+[INFO] 22:51:12:350 CPU/(3833:3835): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 22:51:13:350 CPU/(3833:3835): Rafaga concluida. PID 3.
+[INFO] 22:51:18:351 CPU/(3833:3835): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 22:51:18:352 CPU/(3833:3835): ID CPU: 1 conectado a Memoria
+[INFO] 22:51:19:353 CPU/(3833:3835): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 22:51:19:353 CPU/(3833:3835): ID CPU: 1 conectado a Memoria
+[INFO] 22:51:20:393 CPU/(3833:3836): Rafaga concluida. PID 3
+[INFO] 22:51:20:394 CPU/(3833:3834): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 22:51:20:394 CPU/(3833:3834): ID CPU: 2 conectado a Memoria
+[INFO] 22:51:21:396 CPU/(3833:3834): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 22:51:21:397 CPU/(3833:3834): ID CPU: 2 conectado a Memoria
+[INFO] 22:51:22:398 CPU/(3833:3834): Rafaga concluida. PID 3.
+[INFO] 22:51:22:607 CPU/(3833:3836): Rafaga concluida. PID 3
+[INFO] 22:51:22:607 CPU/(3833:3833): ---------------------FIN---------------------
+[INFO] 22:54:59:957 CPU/(3935:3938): Conectado CPU 4!!
+[INFO] 22:54:59:959 CPU/(3935:3937): Planificador: 5 conectado, viva!!
+[INFO] 22:54:59:959 CPU/(3935:3936): Planificador: 6 conectado, viva!!
+[INFO] 22:55:06:12 CPU/(3935:3937): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 22:55:06:12 CPU/(3935:3937): ID CPU: 1 conectado a Memoria
+[INFO] 22:55:07:14 CPU/(3935:3937): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 22:55:07:15 CPU/(3935:3937): ID CPU: 1 conectado a Memoria
+[INFO] 22:55:10:19 CPU/(3935:3937): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 22:55:10:19 CPU/(3935:3937): ID CPU: 1 conectado a Memoria
+[INFO] 22:55:13:24 CPU/(3935:3937): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 22:55:13:24 CPU/(3935:3937): ID CPU: 1 conectado a Memoria
+[INFO] 22:55:16:28 CPU/(3935:3937): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 22:55:17:28 CPU/(3935:3937): Rafaga concluida. PID 3.
+[INFO] 22:55:22:69 CPU/(3935:3937): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 22:55:22:69 CPU/(3935:3937): ID CPU: 1 conectado a Memoria
+[INFO] 22:55:23:71 CPU/(3935:3937): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 22:55:23:72 CPU/(3935:3937): ID CPU: 1 conectado a Memoria
+[INFO] 22:55:24:74 CPU/(3935:3937): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 22:55:24:74 CPU/(3935:3937): ID CPU: 1 conectado a Memoria
+[INFO] 22:55:25:78 CPU/(3935:3937): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 22:55:25:79 CPU/(3935:3937): ID CPU: 1 conectado a Memoria
+[INFO] 22:55:26:80 CPU/(3935:3937): Rafaga concluida. PID 3.
+[INFO] 22:55:26:294 CPU/(3935:3938): Rafaga concluida. PID 4
+[INFO] 22:55:26:294 CPU/(3935:3935): ---------------------FIN---------------------
+[INFO] 22:56:20:876 CPU/(4034:4037): Conectado CPU 4!!
+[INFO] 22:56:20:877 CPU/(4034:4036): Planificador: 5 conectado, viva!!
+[INFO] 22:56:20:877 CPU/(4034:4037): Rafaga concluida. PID 4
+[INFO] 22:57:10:254 CPU/(4041:4044): Conectado CPU 4!!
+[INFO] 22:57:10:256 CPU/(4041:4043): Planificador: 5 conectado, viva!!
+[INFO] 22:57:10:257 CPU/(4041:4042): Planificador: 6 conectado, viva!!
+[INFO] 22:57:17:76 CPU/(4041:4043): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 22:57:17:76 CPU/(4041:4043): ID CPU: 1 conectado a Memoria
+[INFO] 22:57:18:78 CPU/(4041:4043): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 22:57:18:78 CPU/(4041:4043): ID CPU: 1 conectado a Memoria
+[INFO] 22:57:21:82 CPU/(4041:4043): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 22:57:21:83 CPU/(4041:4043): ID CPU: 1 conectado a Memoria
+[INFO] 22:57:24:85 CPU/(4041:4043): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 22:57:24:85 CPU/(4041:4043): ID CPU: 1 conectado a Memoria
+[INFO] 22:57:27:88 CPU/(4041:4043): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 22:57:28:88 CPU/(4041:4043): Rafaga concluida. PID 3.
+[INFO] 22:57:33:127 CPU/(4041:4043): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 22:57:33:127 CPU/(4041:4043): ID CPU: 1 conectado a Memoria
+[INFO] 22:57:34:128 CPU/(4041:4043): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 22:57:34:128 CPU/(4041:4043): ID CPU: 1 conectado a Memoria
+[INFO] 22:57:35:129 CPU/(4041:4043): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 22:57:35:129 CPU/(4041:4043): ID CPU: 1 conectado a Memoria
+[INFO] 22:57:36:130 CPU/(4041:4043): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 22:57:36:130 CPU/(4041:4043): ID CPU: 1 conectado a Memoria
+[INFO] 22:57:37:131 CPU/(4041:4043): Rafaga concluida. PID 3.
+[INFO] 22:57:59:646 CPU/(4041:4044): Rafaga concluida. PID 4
+[INFO] 22:57:59:646 CPU/(4041:4041): ---------------------FIN---------------------
+[INFO] 22:58:35:825 CPU/(4103:4106): Conectado CPU 4!!
+[INFO] 22:58:35:825 CPU/(4103:4106): Rafaga concluida. PID 4
+[INFO] 22:58:50:244 CPU/(4110:4113): Conectado CPU 4!!
+[INFO] 22:58:50:246 CPU/(4110:4113): Rafaga concluida. PID 4
+[INFO] 22:58:50:246 CPU/(4110:4112): Planificador: 5 conectado, viva!!
+[INFO] 22:59:47:801 CPU/(4118:4121): Conectado CPU 4!!
+[INFO] 22:59:47:802 CPU/(4118:4120): Planificador: 5 conectado, viva!!
+[INFO] 22:59:47:803 CPU/(4118:4119): Planificador: 6 conectado, viva!!
+[INFO] 22:59:54:182 CPU/(4118:4120): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 22:59:54:183 CPU/(4118:4120): ID CPU: 1 conectado a Memoria
+[INFO] 22:59:55:184 CPU/(4118:4120): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 22:59:55:184 CPU/(4118:4120): ID CPU: 1 conectado a Memoria
+[INFO] 22:59:58:187 CPU/(4118:4120): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 22:59:58:187 CPU/(4118:4120): ID CPU: 1 conectado a Memoria
+[INFO] 23:00:01:192 CPU/(4118:4120): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 23:00:01:192 CPU/(4118:4120): ID CPU: 1 conectado a Memoria
+[INFO] 23:00:04:194 CPU/(4118:4120): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 23:00:05:194 CPU/(4118:4120): Rafaga concluida. PID 3.
+[INFO] 23:00:10:235 CPU/(4118:4120): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 23:00:10:235 CPU/(4118:4120): ID CPU: 1 conectado a Memoria
+[INFO] 23:00:11:237 CPU/(4118:4120): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 23:00:11:238 CPU/(4118:4120): ID CPU: 1 conectado a Memoria
+[INFO] 23:00:12:238 CPU/(4118:4120): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 23:00:12:238 CPU/(4118:4120): ID CPU: 1 conectado a Memoria
+[INFO] 23:00:13:239 CPU/(4118:4120): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 23:00:13:240 CPU/(4118:4120): ID CPU: 1 conectado a Memoria
+[INFO] 23:00:14:242 CPU/(4118:4120): Rafaga concluida. PID 3.
+[INFO] 23:00:14:459 CPU/(4118:4121): Rafaga concluida. PID 4
+[INFO] 23:00:14:459 CPU/(4118:4118): ---------------------FIN---------------------
+[INFO] 23:01:13:383 CPU/(4211:4214): Conectado CPU 4!!
+[INFO] 23:01:13:384 CPU/(4211:4214): Rafaga concluida. PID 4
+[INFO] 23:01:13:384 CPU/(4211:4213): Planificador: 5 conectado, viva!!
+[INFO] 23:03:45:630 CPU/(4243:4246): Conectado CPU 4!!
+[INFO] 23:03:45:631 CPU/(4243:4245): Planificador: 5 conectado, viva!!
+[INFO] 23:03:45:632 CPU/(4243:4244): Planificador: 6 conectado, viva!!
+[INFO] 23:03:51:831 CPU/(4243:4245): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 23:03:51:832 CPU/(4243:4245): ID CPU: 1 conectado a Memoria
+[INFO] 23:03:52:834 CPU/(4243:4245): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 23:03:52:835 CPU/(4243:4245): ID CPU: 1 conectado a Memoria
+[INFO] 23:03:53:836 CPU/(4243:4245): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 23:03:53:837 CPU/(4243:4245): ID CPU: 1 conectado a Memoria
+[INFO] 23:03:56:838 CPU/(4243:4245): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 23:03:56:839 CPU/(4243:4245): ID CPU: 1 conectado a Memoria
+[INFO] 23:03:59:842 CPU/(4243:4245): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 23:03:59:843 CPU/(4243:4245): ID CPU: 1 conectado a Memoria
+[INFO] 23:04:02:846 CPU/(4243:4245): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 23:04:03:846 CPU/(4243:4245): Rafaga concluida. PID 3.
+[INFO] 23:04:08:889 CPU/(4243:4245): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 23:04:08:889 CPU/(4243:4245): ID CPU: 1 conectado a Memoria
+[INFO] 23:04:09:890 CPU/(4243:4245): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 23:04:09:890 CPU/(4243:4245): ID CPU: 1 conectado a Memoria
+[INFO] 23:04:10:892 CPU/(4243:4245): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 23:04:10:893 CPU/(4243:4245): ID CPU: 1 conectado a Memoria
+[INFO] 23:12:32:658 CPU/(4243:4246): Rafaga concluida. PID 4
+[INFO] 23:12:32:658 CPU/(4243:4243): ---------------------FIN---------------------
+[INFO] 23:16:40:898 CPU/(4369:4372): Conectado CPU 4!!
+[INFO] 23:16:40:899 CPU/(4369:4371): Planificador: 5 conectado, viva!!
+[INFO] 23:16:40:900 CPU/(4369:4370): Planificador: 6 conectado, viva!!
+[INFO] 23:16:45:698 CPU/(4369:4371): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 23:16:45:699 CPU/(4369:4371): ID CPU: 1 conectado a Memoria
+[INFO] 23:16:46:700 CPU/(4369:4371): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 23:16:46:700 CPU/(4369:4371): ID CPU: 1 conectado a Memoria
+[INFO] 23:16:49:706 CPU/(4369:4371): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 23:16:49:707 CPU/(4369:4371): ID CPU: 1 conectado a Memoria
+[INFO] 23:16:52:710 CPU/(4369:4371): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 23:16:52:710 CPU/(4369:4371): ID CPU: 1 conectado a Memoria
+[INFO] 23:16:55:712 CPU/(4369:4371): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 23:16:56:713 CPU/(4369:4371): Rafaga concluida. PID 3.
+[INFO] 23:17:01:751 CPU/(4369:4371): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 23:17:01:752 CPU/(4369:4371): ID CPU: 1 conectado a Memoria
+[INFO] 23:17:02:753 CPU/(4369:4371): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 23:17:02:753 CPU/(4369:4371): ID CPU: 1 conectado a Memoria
+[INFO] 23:17:03:756 CPU/(4369:4371): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 23:17:03:756 CPU/(4369:4371): ID CPU: 1 conectado a Memoria
+[INFO] 23:17:04:757 CPU/(4369:4371): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 23:17:04:757 CPU/(4369:4371): ID CPU: 1 conectado a Memoria
+[INFO] 23:17:05:759 CPU/(4369:4371): Rafaga concluida. PID 3.
+[INFO] 23:17:10:401 CPU/(4369:4372): Rafaga concluida. PID 4
+[INFO] 23:17:10:401 CPU/(4369:4369): ---------------------FIN---------------------
+[INFO] 23:23:09:713 CPU/(4473:4476): Conectado CPU 4!!
+[INFO] 23:23:09:715 CPU/(4473:4475): Planificador: 5 conectado, viva!!
+[INFO] 23:23:09:716 CPU/(4473:4474): Planificador: 6 conectado, viva!!
+[INFO] 23:23:14:585 CPU/(4473:4475): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 23:23:14:586 CPU/(4473:4475): ID CPU: 1 conectado a Memoria
+[INFO] 23:23:15:587 CPU/(4473:4475): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 23:23:15:587 CPU/(4473:4475): ID CPU: 1 conectado a Memoria
+[INFO] 23:23:18:590 CPU/(4473:4476): Rafaga concluida. PID 3
+[INFO] 23:23:18:592 CPU/(4473:4474): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 23:23:18:592 CPU/(4473:4474): ID CPU: 2 conectado a Memoria
+[INFO] 23:23:21:596 CPU/(4473:4474): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 23:23:21:597 CPU/(4473:4474): ID CPU: 2 conectado a Memoria
+[INFO] 23:23:24:637 CPU/(4473:4476): Rafaga concluida. PID 3
+[INFO] 23:23:24:638 CPU/(4473:4475): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 23:23:25:639 CPU/(4473:4475): Rafaga concluida. PID 3.
+[INFO] 23:23:30:641 CPU/(4473:4475): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 23:23:30:641 CPU/(4473:4475): ID CPU: 1 conectado a Memoria
+[INFO] 23:23:31:642 CPU/(4473:4475): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 23:23:31:642 CPU/(4473:4475): ID CPU: 1 conectado a Memoria
+[INFO] 23:23:32:681 CPU/(4473:4476): Rafaga concluida. PID 3
+[INFO] 23:23:32:681 CPU/(4473:4474): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 23:23:32:681 CPU/(4473:4474): ID CPU: 2 conectado a Memoria
+[INFO] 23:23:33:682 CPU/(4473:4474): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 23:23:33:682 CPU/(4473:4474): ID CPU: 2 conectado a Memoria
+[INFO] 23:23:34:683 CPU/(4473:4474): Rafaga concluida. PID 3.
+[INFO] 23:26:04:26 CPU/(4473:4476): Rafaga concluida. PID 3
+[INFO] 23:26:04:26 CPU/(4473:4473): ---------------------FIN---------------------
+[INFO] 23:29:38:840 CPU/(4728:4731): Conectado CPU 4!!
+[INFO] 23:29:38:841 CPU/(4728:4730): Planificador: 5 conectado, viva!!
+[INFO] 23:29:38:842 CPU/(4728:4729): Planificador: 6 conectado, viva!!
+[INFO] 23:29:43:951 CPU/(4728:4730): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 23:29:43:951 CPU/(4728:4730): ID CPU: 1 conectado a Memoria
+[INFO] 23:29:44:952 CPU/(4728:4730): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 23:29:44:952 CPU/(4728:4730): ID CPU: 1 conectado a Memoria
+[INFO] 23:29:47:955 CPU/(4728:4731): Rafaga concluida. PID 3
+[INFO] 23:29:47:956 CPU/(4728:4729): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 23:29:47:956 CPU/(4728:4729): ID CPU: 2 conectado a Memoria
+[INFO] 23:29:50:960 CPU/(4728:4729): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 23:29:50:961 CPU/(4728:4729): ID CPU: 2 conectado a Memoria
+[INFO] 23:29:54:5 CPU/(4728:4731): Rafaga concluida. PID 3
+[INFO] 23:29:54:5 CPU/(4728:4730): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 23:29:55:7 CPU/(4728:4730): Rafaga concluida. PID 3.
+[INFO] 23:30:00:8 CPU/(4728:4730): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 23:30:00:8 CPU/(4728:4730): ID CPU: 1 conectado a Memoria
+[INFO] 23:30:01:9 CPU/(4728:4730): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 23:30:01:9 CPU/(4728:4730): ID CPU: 1 conectado a Memoria
+[INFO] 23:30:02:49 CPU/(4728:4731): Rafaga concluida. PID 3
+[INFO] 23:30:02:49 CPU/(4728:4729): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 23:30:02:49 CPU/(4728:4729): ID CPU: 2 conectado a Memoria
+[INFO] 23:30:03:50 CPU/(4728:4729): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 23:30:03:51 CPU/(4728:4729): ID CPU: 2 conectado a Memoria
+[INFO] 23:30:04:53 CPU/(4728:4729): Rafaga concluida. PID 3.
+[INFO] 23:31:21:585 CPU/(4728:4731): Rafaga concluida. PID 3
+[INFO] 23:31:21:586 CPU/(4728:4728): ---------------------FIN---------------------
+[INFO] 23:57:18:315 CPU/(4925:4928): Conectado CPU 4!!
+[INFO] 23:57:18:317 CPU/(4925:4927): Planificador: 5 conectado, viva!!
+[INFO] 23:57:18:317 CPU/(4925:4926): Planificador: 6 conectado, viva!!
+[INFO] 23:57:23:305 CPU/(4925:4927): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 23:57:23:305 CPU/(4925:4927): ID CPU: 1 conectado a Memoria
+[INFO] 23:57:24:305 CPU/(4925:4927): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 23:57:24:306 CPU/(4925:4927): ID CPU: 1 conectado a Memoria
+[INFO] 23:57:27:307 CPU/(4925:4928): Rafaga concluida. PID 3
+[INFO] 23:57:27:308 CPU/(4925:4926): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 23:57:27:309 CPU/(4925:4926): ID CPU: 2 conectado a Memoria
+[INFO] 23:57:30:311 CPU/(4925:4926): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 23:57:30:311 CPU/(4925:4926): ID CPU: 2 conectado a Memoria
+[INFO] 23:57:33:353 CPU/(4925:4928): Rafaga concluida. PID 3
+[INFO] 23:57:33:353 CPU/(4925:4927): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 23:57:34:354 CPU/(4925:4927): Rafaga concluida. PID 3.
+[INFO] 23:57:39:354 CPU/(4925:4927): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 23:57:39:355 CPU/(4925:4927): ID CPU: 1 conectado a Memoria
+[INFO] 23:57:40:355 CPU/(4925:4927): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 23:57:40:356 CPU/(4925:4927): ID CPU: 1 conectado a Memoria
+[INFO] 23:57:41:393 CPU/(4925:4928): Rafaga concluida. PID 3
+[INFO] 23:57:41:393 CPU/(4925:4926): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 23:57:41:394 CPU/(4925:4926): ID CPU: 2 conectado a Memoria
+[INFO] 23:57:42:394 CPU/(4925:4926): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 23:57:42:394 CPU/(4925:4926): ID CPU: 2 conectado a Memoria
+[INFO] 23:57:43:395 CPU/(4925:4926): Rafaga concluida. PID 3.
+[INFO] 23:58:15:363 CPU/(4925:4928): Rafaga concluida. PID 3
+[INFO] 23:58:15:363 CPU/(4925:4925): ---------------------FIN---------------------
+[INFO] 00:03:39:321 CPU/(5134:5137): Conectado CPU 4!!
+[INFO] 00:03:39:321 CPU/(5134:5136): Planificador: 5 conectado, viva!!
+[INFO] 00:03:39:322 CPU/(5134:5135): Planificador: 6 conectado, viva!!
+[INFO] 00:03:47:25 CPU/(5134:5136): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 00:03:47:26 CPU/(5134:5136): ID CPU: 1 conectado a Memoria
+[INFO] 00:03:48:27 CPU/(5134:5136): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 00:03:48:28 CPU/(5134:5136): ID CPU: 1 conectado a Memoria
+[INFO] 00:03:51:29 CPU/(5134:5137): Rafaga concluida. PID 3
+[INFO] 00:03:51:29 CPU/(5134:5135): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 00:03:51:29 CPU/(5134:5135): ID CPU: 2 conectado a Memoria
+[INFO] 00:03:54:35 CPU/(5134:5135): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 00:03:54:35 CPU/(5134:5135): ID CPU: 2 conectado a Memoria
+[INFO] 00:03:57:77 CPU/(5134:5137): Rafaga concluida. PID 3
+[INFO] 00:03:57:77 CPU/(5134:5136): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 00:03:58:77 CPU/(5134:5136): Rafaga concluida. PID 3.
+[INFO] 00:04:03:79 CPU/(5134:5136): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 00:04:03:80 CPU/(5134:5136): ID CPU: 1 conectado a Memoria
+[INFO] 00:04:04:82 CPU/(5134:5136): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 00:04:04:83 CPU/(5134:5136): ID CPU: 1 conectado a Memoria
+[INFO] 00:04:05:122 CPU/(5134:5137): Rafaga concluida. PID 3
+[INFO] 00:04:05:122 CPU/(5134:5135): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 00:04:05:122 CPU/(5134:5135): ID CPU: 2 conectado a Memoria
+[INFO] 00:04:06:123 CPU/(5134:5135): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 00:04:06:123 CPU/(5134:5135): ID CPU: 2 conectado a Memoria
+[INFO] 00:04:07:124 CPU/(5134:5135): Rafaga concluida. PID 3.
+[INFO] 00:04:45:574 CPU/(5134:5137): Rafaga concluida. PID 3
+[INFO] 00:04:45:574 CPU/(5134:5134): ---------------------FIN---------------------
+[INFO] 00:07:39:929 CPU/(5251:5254): Conectado CPU 4!!
+[INFO] 00:07:39:929 CPU/(5251:5253): Planificador: 5 conectado, viva!!
+[INFO] 00:07:39:938 CPU/(5251:5252): Planificador: 6 conectado, viva!!
+[INFO] 00:07:44:951 CPU/(5251:5253): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 00:07:44:951 CPU/(5251:5253): ID CPU: 1 conectado a Memoria
+[INFO] 00:07:45:953 CPU/(5251:5253): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 00:07:45:953 CPU/(5251:5253): ID CPU: 1 conectado a Memoria
+[INFO] 00:07:48:955 CPU/(5251:5254): Rafaga concluida. PID 3
+[INFO] 00:07:48:957 CPU/(5251:5252): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 00:07:48:957 CPU/(5251:5252): ID CPU: 2 conectado a Memoria
+[INFO] 00:07:51:962 CPU/(5251:5252): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 00:07:51:962 CPU/(5251:5252): ID CPU: 2 conectado a Memoria
+[INFO] 00:07:54:2 CPU/(5251:5254): Rafaga concluida. PID 3
+[INFO] 00:07:54:3 CPU/(5251:5253): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 00:07:55:3 CPU/(5251:5253): Rafaga concluida. PID 3.
+[INFO] 00:08:01:4 CPU/(5251:5253): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 00:08:01:4 CPU/(5251:5253): ID CPU: 1 conectado a Memoria
+[INFO] 00:08:02:5 CPU/(5251:5253): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 00:08:02:6 CPU/(5251:5253): ID CPU: 1 conectado a Memoria
+[INFO] 00:08:03:46 CPU/(5251:5254): Rafaga concluida. PID 3
+[INFO] 00:08:03:47 CPU/(5251:5252): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 00:08:03:47 CPU/(5251:5252): ID CPU: 2 conectado a Memoria
+[INFO] 00:08:04:49 CPU/(5251:5252): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 00:08:04:49 CPU/(5251:5252): ID CPU: 2 conectado a Memoria
+[INFO] 00:08:05:50 CPU/(5251:5252): Rafaga concluida. PID 3.
+[INFO] 00:09:43:933 CPU/(5251:5254): Rafaga concluida. PID 3
+[INFO] 00:09:43:933 CPU/(5251:5251): ---------------------FIN---------------------
+[INFO] 00:10:53:61 CPU/(5384:5387): Conectado CPU 4!!
+[INFO] 00:10:53:63 CPU/(5384:5386): Planificador: 5 conectado, viva!!
+[INFO] 00:10:53:64 CPU/(5384:5385): Planificador: 6 conectado, viva!!
+[INFO] 00:10:57:756 CPU/(5384:5386): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 00:10:57:757 CPU/(5384:5386): ID CPU: 1 conectado a Memoria
+[INFO] 00:10:58:758 CPU/(5384:5386): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 00:10:58:758 CPU/(5384:5386): ID CPU: 1 conectado a Memoria
+[INFO] 00:11:01:760 CPU/(5384:5387): Rafaga concluida. PID 3
+[INFO] 00:11:01:762 CPU/(5384:5385): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 00:11:01:763 CPU/(5384:5385): ID CPU: 2 conectado a Memoria
+[INFO] 00:11:04:765 CPU/(5384:5385): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 00:11:04:765 CPU/(5384:5385): ID CPU: 2 conectado a Memoria
+[INFO] 00:11:07:806 CPU/(5384:5387): Rafaga concluida. PID 3
+[INFO] 00:11:07:806 CPU/(5384:5386): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 00:11:08:806 CPU/(5384:5386): Rafaga concluida. PID 3.
+[INFO] 00:11:13:807 CPU/(5384:5386): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 00:11:13:807 CPU/(5384:5386): ID CPU: 1 conectado a Memoria
+[INFO] 00:11:14:808 CPU/(5384:5386): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 00:11:14:808 CPU/(5384:5386): ID CPU: 1 conectado a Memoria
+[INFO] 00:11:15:846 CPU/(5384:5387): Rafaga concluida. PID 3
+[INFO] 00:11:15:847 CPU/(5384:5385): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 00:11:15:847 CPU/(5384:5385): ID CPU: 2 conectado a Memoria
+[INFO] 00:11:16:849 CPU/(5384:5385): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 00:11:16:849 CPU/(5384:5385): ID CPU: 2 conectado a Memoria
+[INFO] 00:11:17:850 CPU/(5384:5385): Rafaga concluida. PID 3.
+[INFO] 00:11:22:504 CPU/(5384:5387): Rafaga concluida. PID 3
+[INFO] 00:11:22:504 CPU/(5384:5384): ---------------------FIN---------------------
+[INFO] 00:14:45:833 CPU/(5493:5496): Conectado CPU 4!!
+[INFO] 00:14:45:833 CPU/(5493:5495): Planificador: 5 conectado, viva!!
+[INFO] 00:14:45:834 CPU/(5493:5494): Planificador: 6 conectado, viva!!
+[INFO] 00:14:50:135 CPU/(5493:5495): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 00:14:50:136 CPU/(5493:5495): ID CPU: 1 conectado a Memoria
+[INFO] 00:14:51:137 CPU/(5493:5495): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 00:14:51:137 CPU/(5493:5495): ID CPU: 1 conectado a Memoria
+[INFO] 00:14:54:141 CPU/(5493:5496): Rafaga concluida. PID 3
+[INFO] 00:14:54:142 CPU/(5493:5494): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 00:14:54:142 CPU/(5493:5494): ID CPU: 2 conectado a Memoria
+[INFO] 00:14:57:148 CPU/(5493:5494): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 00:14:57:148 CPU/(5493:5494): ID CPU: 2 conectado a Memoria
+[INFO] 00:15:00:189 CPU/(5493:5496): Rafaga concluida. PID 3
+[INFO] 00:15:00:190 CPU/(5493:5495): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 00:15:01:191 CPU/(5493:5495): Rafaga concluida. PID 3.
+[INFO] 00:15:06:193 CPU/(5493:5495): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 00:15:06:194 CPU/(5493:5495): ID CPU: 1 conectado a Memoria
+[INFO] 00:15:07:195 CPU/(5493:5495): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 00:15:07:196 CPU/(5493:5495): ID CPU: 1 conectado a Memoria
+[INFO] 00:15:08:233 CPU/(5493:5496): Rafaga concluida. PID 3
+[INFO] 00:15:08:234 CPU/(5493:5494): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 00:15:08:234 CPU/(5493:5494): ID CPU: 2 conectado a Memoria
+[INFO] 00:15:09:236 CPU/(5493:5494): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 00:15:09:237 CPU/(5493:5494): ID CPU: 2 conectado a Memoria
+[INFO] 00:15:10:238 CPU/(5493:5494): Rafaga concluida. PID 3.
+[INFO] 00:15:11:590 CPU/(5493:5496): Rafaga concluida. PID 3
+[INFO] 00:15:11:591 CPU/(5493:5493): ---------------------FIN---------------------
+[INFO] 00:17:59:446 CPU/(5594:5597): Conectado CPU 4!!
+[INFO] 00:17:59:446 CPU/(5594:5596): Planificador: 5 conectado, viva!!
+[INFO] 00:17:59:447 CPU/(5594:5595): Planificador: 6 conectado, viva!!
+[INFO] 00:18:04:444 CPU/(5594:5596): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 00:18:04:444 CPU/(5594:5596): ID CPU: 1 conectado a Memoria
+[INFO] 00:18:05:444 CPU/(5594:5596): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 00:18:05:445 CPU/(5594:5596): ID CPU: 1 conectado a Memoria
+[INFO] 00:18:08:447 CPU/(5594:5597): Rafaga concluida. PID 3
+[INFO] 00:18:08:449 CPU/(5594:5595): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 00:18:08:449 CPU/(5594:5595): ID CPU: 2 conectado a Memoria
+[INFO] 00:18:11:451 CPU/(5594:5595): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 00:18:11:451 CPU/(5594:5595): ID CPU: 2 conectado a Memoria
+[INFO] 00:18:14:489 CPU/(5594:5597): Rafaga concluida. PID 3
+[INFO] 00:18:14:489 CPU/(5594:5596): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 00:18:15:489 CPU/(5594:5596): Rafaga concluida. PID 3.
+[INFO] 00:18:20:490 CPU/(5594:5596): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 00:18:20:490 CPU/(5594:5596): ID CPU: 1 conectado a Memoria
+[INFO] 00:18:21:491 CPU/(5594:5596): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 00:18:21:491 CPU/(5594:5596): ID CPU: 1 conectado a Memoria
+[INFO] 00:18:22:529 CPU/(5594:5597): Rafaga concluida. PID 3
+[INFO] 00:18:22:529 CPU/(5594:5595): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 00:18:22:529 CPU/(5594:5595): ID CPU: 2 conectado a Memoria
+[INFO] 00:18:23:530 CPU/(5594:5595): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 00:18:23:530 CPU/(5594:5595): ID CPU: 2 conectado a Memoria
+[INFO] 00:18:24:531 CPU/(5594:5595): Rafaga concluida. PID 3.
+[INFO] 00:18:53:514 CPU/(5594:5597): Rafaga concluida. PID 3
+[INFO] 00:18:53:514 CPU/(5594:5594): ---------------------FIN---------------------
+[INFO] 00:27:07:649 CPU/(5812:5815): Conectado CPU 4!!
+[INFO] 00:27:07:650 CPU/(5812:5814): Planificador: 5 conectado, viva!!
+[INFO] 00:27:07:651 CPU/(5812:5813): Planificador: 6 conectado, viva!!
+[INFO] 00:27:13:874 CPU/(5812:5814): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 00:27:13:875 CPU/(5812:5814): ID CPU: 1 conectado a Memoria
+[INFO] 00:27:14:877 CPU/(5812:5814): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 00:27:14:877 CPU/(5812:5814): ID CPU: 1 conectado a Memoria
+[INFO] 00:27:17:880 CPU/(5812:5815): Rafaga concluida. PID 3
+[INFO] 00:27:17:880 CPU/(5812:5813): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 00:27:17:880 CPU/(5812:5813): ID CPU: 2 conectado a Memoria
+[INFO] 00:27:20:881 CPU/(5812:5813): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 00:27:20:882 CPU/(5812:5813): ID CPU: 2 conectado a Memoria
+[INFO] 00:27:23:921 CPU/(5812:5815): Rafaga concluida. PID 3
+[INFO] 00:27:23:922 CPU/(5812:5814): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 00:27:24:923 CPU/(5812:5814): Rafaga concluida. PID 3.
+[INFO] 00:27:29:924 CPU/(5812:5814): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 00:27:29:924 CPU/(5812:5814): ID CPU: 1 conectado a Memoria
+[INFO] 00:27:30:926 CPU/(5812:5814): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 00:27:30:926 CPU/(5812:5814): ID CPU: 1 conectado a Memoria
+[INFO] 00:27:31:970 CPU/(5812:5815): Rafaga concluida. PID 3
+[INFO] 00:27:31:970 CPU/(5812:5813): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 00:27:31:970 CPU/(5812:5813): ID CPU: 2 conectado a Memoria
+[INFO] 00:27:32:971 CPU/(5812:5813): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 00:27:32:971 CPU/(5812:5813): ID CPU: 2 conectado a Memoria
+[INFO] 00:27:33:972 CPU/(5812:5813): Rafaga concluida. PID 3.
+[INFO] 00:27:54:112 CPU/(5812:5815): Rafaga concluida. PID 3
+[INFO] 00:27:54:112 CPU/(5812:5812): ---------------------FIN---------------------
+[INFO] 00:29:49:729 CPU/(5940:5943): Conectado CPU 4!!
+[INFO] 00:29:49:729 CPU/(5940:5942): Planificador: 5 conectado, viva!!
+[INFO] 00:29:49:730 CPU/(5940:5941): Planificador: 6 conectado, viva!!
+[INFO] 00:29:53:548 CPU/(5940:5942): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 00:29:53:548 CPU/(5940:5942): ID CPU: 1 conectado a Memoria
+[INFO] 00:29:54:550 CPU/(5940:5942): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 00:29:54:551 CPU/(5940:5942): ID CPU: 1 conectado a Memoria
+[INFO] 00:29:57:553 CPU/(5940:5943): Rafaga concluida. PID 3
+[INFO] 00:29:57:554 CPU/(5940:5941): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 00:29:57:568 CPU/(5940:5941): ID CPU: 2 conectado a Memoria
+[INFO] 00:30:00:569 CPU/(5940:5941): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 00:30:00:570 CPU/(5940:5941): ID CPU: 2 conectado a Memoria
+[INFO] 00:30:03:609 CPU/(5940:5943): Rafaga concluida. PID 3
+[INFO] 00:30:03:609 CPU/(5940:5942): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 00:30:04:609 CPU/(5940:5942): Rafaga concluida. PID 3.
+[INFO] 00:30:09:612 CPU/(5940:5942): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 00:30:09:612 CPU/(5940:5942): ID CPU: 1 conectado a Memoria
+[INFO] 00:30:10:613 CPU/(5940:5942): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 00:30:10:613 CPU/(5940:5942): ID CPU: 1 conectado a Memoria
+[INFO] 00:30:11:654 CPU/(5940:5943): Rafaga concluida. PID 3
+[INFO] 00:30:11:655 CPU/(5940:5941): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 00:30:11:656 CPU/(5940:5941): ID CPU: 2 conectado a Memoria
+[INFO] 00:30:12:658 CPU/(5940:5941): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 00:30:12:658 CPU/(5940:5941): ID CPU: 2 conectado a Memoria
+[INFO] 00:30:13:659 CPU/(5940:5941): Rafaga concluida. PID 3.
+[INFO] 00:30:45:740 CPU/(5940:5943): Rafaga concluida. PID 3
+[INFO] 00:30:45:740 CPU/(5940:5940): ---------------------FIN---------------------
+[INFO] 00:31:46:592 CPU/(6036:6039): Conectado CPU 4!!
+[INFO] 00:31:46:593 CPU/(6036:6038): Planificador: 5 conectado, viva!!
+[INFO] 00:31:46:594 CPU/(6036:6037): Planificador: 6 conectado, viva!!
+[INFO] 00:31:50:473 CPU/(6036:6038): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 00:31:50:473 CPU/(6036:6038): ID CPU: 1 conectado a Memoria
+[INFO] 00:31:51:475 CPU/(6036:6038): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 00:31:51:476 CPU/(6036:6038): ID CPU: 1 conectado a Memoria
+[INFO] 00:31:54:478 CPU/(6036:6039): Rafaga concluida. PID 3
+[INFO] 00:31:54:479 CPU/(6036:6037): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 00:31:54:479 CPU/(6036:6037): ID CPU: 2 conectado a Memoria
+[INFO] 00:31:57:481 CPU/(6036:6037): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 00:31:57:482 CPU/(6036:6037): ID CPU: 2 conectado a Memoria
+[INFO] 00:32:00:526 CPU/(6036:6039): Rafaga concluida. PID 3
+[INFO] 00:32:00:526 CPU/(6036:6038): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 00:32:01:527 CPU/(6036:6038): Rafaga concluida. PID 3.
+[INFO] 00:32:01:721 CPU/(6036:6039): Rafaga concluida. PID 3
+[INFO] 00:32:46:846 CPU/(6113:6116): Conectado CPU 4!!
+[INFO] 00:32:46:847 CPU/(6113:6115): Planificador: 5 conectado, viva!!
+[INFO] 00:32:46:847 CPU/(6113:6116): Rafaga concluida. PID 4
+[INFO] 00:34:37:570 CPU/(6121:6123): Planificador: 5 conectado, viva!!
+[INFO] 00:34:37:570 CPU/(6121:6124): Conectado CPU 4!!
+[INFO] 00:34:37:570 CPU/(6121:6122): Planificador: 6 conectado, viva!!
+[INFO] 00:34:41:747 CPU/(6121:6123): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 00:34:41:747 CPU/(6121:6123): ID CPU: 1 conectado a Memoria
+[INFO] 00:34:42:749 CPU/(6121:6123): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 00:34:42:749 CPU/(6121:6123): ID CPU: 1 conectado a Memoria
+[INFO] 00:34:45:750 CPU/(6121:6124): Rafaga concluida. PID 3
+[INFO] 00:34:45:751 CPU/(6121:6122): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 00:34:45:751 CPU/(6121:6122): ID CPU: 2 conectado a Memoria
+[INFO] 00:34:48:753 CPU/(6121:6122): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 00:34:48:753 CPU/(6121:6122): ID CPU: 2 conectado a Memoria
+[INFO] 00:34:51:793 CPU/(6121:6124): Rafaga concluida. PID 3
+[INFO] 00:34:51:793 CPU/(6121:6123): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 00:34:52:793 CPU/(6121:6123): Rafaga concluida. PID 3.
+[INFO] 00:34:57:794 CPU/(6121:6123): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 00:34:57:795 CPU/(6121:6123): ID CPU: 1 conectado a Memoria
+[INFO] 00:34:58:795 CPU/(6121:6123): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 00:34:58:795 CPU/(6121:6123): ID CPU: 1 conectado a Memoria
+[INFO] 00:34:59:833 CPU/(6121:6124): Rafaga concluida. PID 3
+[INFO] 00:34:59:833 CPU/(6121:6122): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 00:34:59:834 CPU/(6121:6122): ID CPU: 2 conectado a Memoria
+[INFO] 00:35:00:834 CPU/(6121:6122): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 00:35:00:835 CPU/(6121:6122): ID CPU: 2 conectado a Memoria
+[INFO] 00:35:01:835 CPU/(6121:6122): Rafaga concluida. PID 3.
+[INFO] 00:35:08:523 CPU/(6121:6124): Rafaga concluida. PID 3
+[INFO] 00:35:08:523 CPU/(6121:6121): ---------------------FIN---------------------
+[INFO] 00:36:16:715 CPU/(6210:6213): Conectado CPU 4!!
+[INFO] 00:36:16:716 CPU/(6210:6212): Planificador: 5 conectado, viva!!
+[INFO] 00:36:16:716 CPU/(6210:6211): Planificador: 6 conectado, viva!!
+[INFO] 00:36:21:324 CPU/(6210:6212): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 00:36:21:326 CPU/(6210:6212): ID CPU: 1 conectado a Memoria
+[INFO] 00:36:22:328 CPU/(6210:6212): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 00:36:22:329 CPU/(6210:6212): ID CPU: 1 conectado a Memoria
+[INFO] 00:36:25:332 CPU/(6210:6213): Rafaga concluida. PID 3
+[INFO] 00:36:25:332 CPU/(6210:6211): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 00:36:25:332 CPU/(6210:6211): ID CPU: 2 conectado a Memoria
+[INFO] 00:36:28:335 CPU/(6210:6211): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 00:36:28:335 CPU/(6210:6211): ID CPU: 2 conectado a Memoria
+[INFO] 00:36:31:378 CPU/(6210:6213): Rafaga concluida. PID 3
+[INFO] 00:36:31:379 CPU/(6210:6212): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 00:36:32:379 CPU/(6210:6212): Rafaga concluida. PID 3.
+[INFO] 00:36:37:380 CPU/(6210:6212): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 00:36:37:380 CPU/(6210:6212): ID CPU: 1 conectado a Memoria
+[INFO] 00:36:38:382 CPU/(6210:6212): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 00:36:38:382 CPU/(6210:6212): ID CPU: 1 conectado a Memoria
+[INFO] 00:36:39:422 CPU/(6210:6213): Rafaga concluida. PID 3
+[INFO] 00:36:39:423 CPU/(6210:6211): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 00:36:39:423 CPU/(6210:6211): ID CPU: 2 conectado a Memoria
+[INFO] 00:36:40:425 CPU/(6210:6211): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 00:36:40:425 CPU/(6210:6211): ID CPU: 2 conectado a Memoria
+[INFO] 00:36:41:425 CPU/(6210:6211): Rafaga concluida. PID 3.
+[INFO] 00:36:46:294 CPU/(6210:6213): Rafaga concluida. PID 3
+[INFO] 00:36:46:294 CPU/(6210:6210): ---------------------FIN---------------------
+[INFO] 00:39:08:580 CPU/(6357:6360): Conectado CPU 4!!
+[INFO] 00:39:08:581 CPU/(6357:6359): Planificador: 5 conectado, viva!!
+[INFO] 00:39:08:582 CPU/(6357:6358): Planificador: 6 conectado, viva!!
+[INFO] 00:39:12:932 CPU/(6357:6359): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 00:39:12:933 CPU/(6357:6359): ID CPU: 1 conectado a Memoria
+[INFO] 00:39:13:934 CPU/(6357:6359): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 00:39:13:934 CPU/(6357:6359): ID CPU: 1 conectado a Memoria
+[INFO] 00:39:16:937 CPU/(6357:6360): Rafaga concluida. PID 3
+[INFO] 00:39:16:945 CPU/(6357:6358): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 00:39:16:946 CPU/(6357:6358): ID CPU: 2 conectado a Memoria
+[INFO] 00:39:19:947 CPU/(6357:6358): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 00:39:19:948 CPU/(6357:6358): ID CPU: 2 conectado a Memoria
+[INFO] 00:39:22:990 CPU/(6357:6360): Rafaga concluida. PID 3
+[INFO] 00:39:22:991 CPU/(6357:6359): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 00:39:23:991 CPU/(6357:6359): Rafaga concluida. PID 3.
+[INFO] 00:39:28:992 CPU/(6357:6359): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 00:39:28:992 CPU/(6357:6359): ID CPU: 1 conectado a Memoria
+[INFO] 00:39:29:993 CPU/(6357:6359): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 00:39:29:994 CPU/(6357:6359): ID CPU: 1 conectado a Memoria
+[INFO] 00:39:31:33 CPU/(6357:6360): Rafaga concluida. PID 3
+[INFO] 00:39:31:33 CPU/(6357:6358): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 00:39:31:33 CPU/(6357:6358): ID CPU: 2 conectado a Memoria
+[INFO] 00:39:32:35 CPU/(6357:6358): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 00:39:32:35 CPU/(6357:6358): ID CPU: 2 conectado a Memoria
+[INFO] 00:39:33:36 CPU/(6357:6358): Rafaga concluida. PID 3.
+[INFO] 00:39:43:110 CPU/(6357:6360): Rafaga concluida. PID 3
+[INFO] 00:39:43:110 CPU/(6357:6357): ---------------------FIN---------------------
+[INFO] 00:43:00:109 CPU/(6703:6706): Conectado CPU 4!!
+[INFO] 00:43:00:110 CPU/(6703:6705): Planificador: 5 conectado, viva!!
+[INFO] 00:43:00:113 CPU/(6703:6704): Planificador: 6 conectado, viva!!
+[INFO] 00:43:04:693 CPU/(6703:6705): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 00:43:04:694 CPU/(6703:6705): ID CPU: 1 conectado a Memoria
+[INFO] 00:43:05:696 CPU/(6703:6705): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 00:43:05:696 CPU/(6703:6705): ID CPU: 1 conectado a Memoria
+[INFO] 00:43:08:698 CPU/(6703:6706): Rafaga concluida. PID 3
+[INFO] 00:43:08:699 CPU/(6703:6704): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 00:43:08:699 CPU/(6703:6704): ID CPU: 2 conectado a Memoria
+[INFO] 00:43:11:701 CPU/(6703:6704): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 00:43:11:702 CPU/(6703:6704): ID CPU: 2 conectado a Memoria
+[INFO] 00:43:14:745 CPU/(6703:6706): Rafaga concluida. PID 3
+[INFO] 00:43:14:749 CPU/(6703:6705): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 00:43:15:749 CPU/(6703:6705): Rafaga concluida. PID 3.
+[INFO] 00:43:20:751 CPU/(6703:6705): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 00:43:20:752 CPU/(6703:6705): ID CPU: 1 conectado a Memoria
+[INFO] 00:43:21:753 CPU/(6703:6705): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 00:43:21:754 CPU/(6703:6705): ID CPU: 1 conectado a Memoria
+[INFO] 00:43:22:793 CPU/(6703:6706): Rafaga concluida. PID 3
+[INFO] 00:43:22:794 CPU/(6703:6704): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 00:43:22:795 CPU/(6703:6704): ID CPU: 2 conectado a Memoria
+[INFO] 00:43:23:796 CPU/(6703:6704): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 00:43:23:796 CPU/(6703:6704): ID CPU: 2 conectado a Memoria
+[INFO] 00:43:24:798 CPU/(6703:6704): Rafaga concluida. PID 3.
+[INFO] 00:44:03:539 CPU/(6703:6706): Rafaga concluida. PID 3
+[INFO] 00:44:03:539 CPU/(6703:6703): ---------------------FIN---------------------
+[INFO] 00:49:12:559 CPU/(6880:6883): Conectado CPU 4!!
+[INFO] 00:49:12:559 CPU/(6880:6882): Planificador: 5 conectado, viva!!
+[INFO] 00:49:12:560 CPU/(6880:6881): Planificador: 6 conectado, viva!!
+[INFO] 00:49:17:738 CPU/(6880:6882): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 00:49:17:739 CPU/(6880:6882): ID CPU: 1 conectado a Memoria
+[INFO] 00:49:18:741 CPU/(6880:6882): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 00:49:18:741 CPU/(6880:6882): ID CPU: 1 conectado a Memoria
+[INFO] 00:49:21:745 CPU/(6880:6883): Rafaga concluida. PID 3
+[INFO] 00:49:21:746 CPU/(6880:6881): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 00:49:21:746 CPU/(6880:6881): ID CPU: 2 conectado a Memoria
+[INFO] 00:49:24:748 CPU/(6880:6881): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 00:49:24:748 CPU/(6880:6881): ID CPU: 2 conectado a Memoria
+[INFO] 00:49:27:790 CPU/(6880:6883): Rafaga concluida. PID 3
+[INFO] 00:49:27:793 CPU/(6880:6882): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 00:49:28:793 CPU/(6880:6882): Rafaga concluida. PID 3.
+[INFO] 00:49:33:795 CPU/(6880:6882): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 00:49:33:795 CPU/(6880:6882): ID CPU: 1 conectado a Memoria
+[INFO] 00:49:34:797 CPU/(6880:6882): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 00:49:34:797 CPU/(6880:6882): ID CPU: 1 conectado a Memoria
+[INFO] 00:49:35:837 CPU/(6880:6883): Rafaga concluida. PID 3
+[INFO] 00:49:35:839 CPU/(6880:6881): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 00:49:35:839 CPU/(6880:6881): ID CPU: 2 conectado a Memoria
+[INFO] 00:49:36:840 CPU/(6880:6881): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 00:49:36:840 CPU/(6880:6881): ID CPU: 2 conectado a Memoria
+[INFO] 00:49:37:842 CPU/(6880:6881): Rafaga concluida. PID 3.
+[INFO] 00:49:41:719 CPU/(6880:6883): Rafaga concluida. PID 3
+[INFO] 00:49:41:720 CPU/(6880:6880): ---------------------FIN---------------------
+[INFO] 00:50:33:748 CPU/(6972:6975): Conectado CPU 4!!
+[INFO] 00:50:33:748 CPU/(6972:6975): Rafaga concluida. PID 4
+[INFO] 00:50:43:552 CPU/(6980:6983): Conectado CPU 4!!
+[INFO] 00:50:43:552 CPU/(6980:6982): Planificador: 5 conectado, viva!!
+[INFO] 00:50:43:553 CPU/(6980:6981): Planificador: 6 conectado, viva!!
+[INFO] 00:50:49:289 CPU/(6980:6982): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 00:50:49:289 CPU/(6980:6982): ID CPU: 1 conectado a Memoria
+[INFO] 00:50:50:289 CPU/(6980:6982): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 00:50:50:290 CPU/(6980:6982): ID CPU: 1 conectado a Memoria
+[INFO] 00:50:53:291 CPU/(6980:6983): Rafaga concluida. PID 3
+[INFO] 00:50:53:293 CPU/(6980:6981): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 00:50:53:293 CPU/(6980:6981): ID CPU: 2 conectado a Memoria
+[INFO] 00:50:56:296 CPU/(6980:6981): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 00:50:56:296 CPU/(6980:6981): ID CPU: 2 conectado a Memoria
+[INFO] 00:50:59:337 CPU/(6980:6983): Rafaga concluida. PID 3
+[INFO] 00:50:59:338 CPU/(6980:6982): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 00:51:00:339 CPU/(6980:6982): Rafaga concluida. PID 3.
+[INFO] 00:51:05:340 CPU/(6980:6982): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 00:51:05:340 CPU/(6980:6982): ID CPU: 1 conectado a Memoria
+[INFO] 00:51:06:340 CPU/(6980:6982): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 00:51:06:341 CPU/(6980:6982): ID CPU: 1 conectado a Memoria
+[INFO] 00:51:07:383 CPU/(6980:6983): Rafaga concluida. PID 3
+[INFO] 00:51:07:384 CPU/(6980:6981): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 00:51:07:384 CPU/(6980:6981): ID CPU: 2 conectado a Memoria
+[INFO] 00:51:08:384 CPU/(6980:6981): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 00:51:08:385 CPU/(6980:6981): ID CPU: 2 conectado a Memoria
+[INFO] 00:51:09:385 CPU/(6980:6981): Rafaga concluida. PID 3.
+[INFO] 00:51:16:636 CPU/(6980:6983): Rafaga concluida. PID 3
+[INFO] 00:51:16:636 CPU/(6980:6980): ---------------------FIN---------------------
+[INFO] 00:54:14:510 CPU/(7123:7126): Conectado CPU 4!!
+[INFO] 00:54:14:511 CPU/(7123:7125): Planificador: 5 conectado, viva!!
+[INFO] 00:54:14:512 CPU/(7123:7124): Planificador: 6 conectado, viva!!
+[INFO] 00:54:19:879 CPU/(7123:7125): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 00:54:19:879 CPU/(7123:7125): ID CPU: 1 conectado a Memoria
+[INFO] 00:54:20:880 CPU/(7123:7125): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 00:54:20:880 CPU/(7123:7125): ID CPU: 1 conectado a Memoria
+[INFO] 00:54:23:882 CPU/(7123:7126): Rafaga concluida. PID 3
+[INFO] 00:54:23:884 CPU/(7123:7124): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 00:54:23:884 CPU/(7123:7124): ID CPU: 2 conectado a Memoria
+[INFO] 00:54:26:888 CPU/(7123:7124): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 00:54:26:888 CPU/(7123:7124): ID CPU: 2 conectado a Memoria
+[INFO] 00:54:29:929 CPU/(7123:7126): Rafaga concluida. PID 3
+[INFO] 00:54:29:931 CPU/(7123:7125): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 00:54:30:932 CPU/(7123:7125): Rafaga concluida. PID 3.
+[INFO] 00:54:35:932 CPU/(7123:7125): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 00:54:35:932 CPU/(7123:7125): ID CPU: 1 conectado a Memoria
+[INFO] 00:54:36:934 CPU/(7123:7125): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 00:54:36:935 CPU/(7123:7125): ID CPU: 1 conectado a Memoria
+[INFO] 00:54:37:974 CPU/(7123:7126): Rafaga concluida. PID 3
+[INFO] 00:54:37:975 CPU/(7123:7124): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 00:54:37:975 CPU/(7123:7124): ID CPU: 2 conectado a Memoria
+[INFO] 00:54:38:977 CPU/(7123:7124): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 00:54:38:977 CPU/(7123:7124): ID CPU: 2 conectado a Memoria
+[INFO] 00:54:39:978 CPU/(7123:7124): Rafaga concluida. PID 3.
+[INFO] 00:54:52:414 CPU/(7123:7126): Rafaga concluida. PID 3
+[INFO] 00:54:52:414 CPU/(7123:7123): ---------------------FIN---------------------
+[INFO] 00:55:55:610 CPU/(7275:7278): Conectado CPU 4!!
+[INFO] 00:55:55:610 CPU/(7275:7277): Planificador: 5 conectado, viva!!
+[INFO] 00:55:55:611 CPU/(7275:7276): Planificador: 6 conectado, viva!!
+[INFO] 00:55:59:169 CPU/(7275:7277): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 00:55:59:169 CPU/(7275:7277): ID CPU: 1 conectado a Memoria
+[INFO] 00:56:00:170 CPU/(7275:7277): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 00:56:00:170 CPU/(7275:7277): ID CPU: 1 conectado a Memoria
+[INFO] 00:56:03:172 CPU/(7275:7278): Rafaga concluida. PID 3
+[INFO] 00:56:03:173 CPU/(7275:7276): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 00:56:03:173 CPU/(7275:7276): ID CPU: 2 conectado a Memoria
+[INFO] 00:56:06:176 CPU/(7275:7276): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 00:56:06:176 CPU/(7275:7276): ID CPU: 2 conectado a Memoria
+[INFO] 00:56:09:217 CPU/(7275:7278): Rafaga concluida. PID 3
+[INFO] 00:56:09:217 CPU/(7275:7277): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 00:56:10:218 CPU/(7275:7277): Rafaga concluida. PID 3.
+[INFO] 00:56:15:218 CPU/(7275:7277): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 00:56:15:219 CPU/(7275:7277): ID CPU: 1 conectado a Memoria
+[INFO] 00:56:16:219 CPU/(7275:7277): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 00:56:16:219 CPU/(7275:7277): ID CPU: 1 conectado a Memoria
+[INFO] 00:56:17:261 CPU/(7275:7278): Rafaga concluida. PID 3
+[INFO] 00:56:17:262 CPU/(7275:7276): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 00:56:17:262 CPU/(7275:7276): ID CPU: 2 conectado a Memoria
+[INFO] 00:56:18:263 CPU/(7275:7276): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 00:56:18:264 CPU/(7275:7276): ID CPU: 2 conectado a Memoria
+[INFO] 00:56:19:265 CPU/(7275:7276): Rafaga concluida. PID 3.
+[INFO] 00:56:44:11 CPU/(7275:7278): Rafaga concluida. PID 3
+[INFO] 00:56:44:11 CPU/(7275:7275): ---------------------FIN---------------------
+[INFO] 01:00:20:874 CPU/(7474:7477): Conectado CPU 4!!
+[INFO] 01:00:20:878 CPU/(7474:7476): Planificador: 5 conectado, viva!!
+[INFO] 01:00:20:878 CPU/(7474:7475): Planificador: 6 conectado, viva!!
+[INFO] 01:00:24:853 CPU/(7474:7476): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 01:00:24:853 CPU/(7474:7476): ID CPU: 1 conectado a Memoria
+[INFO] 01:00:25:854 CPU/(7474:7476): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 01:00:25:854 CPU/(7474:7476): ID CPU: 1 conectado a Memoria
+[INFO] 01:00:28:856 CPU/(7474:7477): Rafaga concluida. PID 3
+[INFO] 01:00:28:857 CPU/(7474:7475): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 01:00:28:857 CPU/(7474:7475): ID CPU: 2 conectado a Memoria
+[INFO] 01:00:31:859 CPU/(7474:7475): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 01:00:31:860 CPU/(7474:7475): ID CPU: 2 conectado a Memoria
+[INFO] 01:00:34:902 CPU/(7474:7477): Rafaga concluida. PID 3
+[INFO] 01:00:34:903 CPU/(7474:7476): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 01:00:35:903 CPU/(7474:7476): Rafaga concluida. PID 3.
+[INFO] 01:00:40:904 CPU/(7474:7476): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 01:00:40:904 CPU/(7474:7476): ID CPU: 1 conectado a Memoria
+[INFO] 01:00:41:906 CPU/(7474:7476): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 01:00:41:906 CPU/(7474:7476): ID CPU: 1 conectado a Memoria
+[INFO] 01:00:42:945 CPU/(7474:7477): Rafaga concluida. PID 3
+[INFO] 01:00:42:947 CPU/(7474:7475): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 01:00:42:947 CPU/(7474:7475): ID CPU: 2 conectado a Memoria
+[INFO] 01:00:43:949 CPU/(7474:7475): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 01:00:43:949 CPU/(7474:7475): ID CPU: 2 conectado a Memoria
+[INFO] 01:00:44:952 CPU/(7474:7475): Rafaga concluida. PID 3.
+[INFO] 01:01:23:307 CPU/(7474:7477): Rafaga concluida. PID 3
+[INFO] 01:01:23:307 CPU/(7474:7474): ---------------------FIN---------------------
+[INFO] 01:05:10:289 CPU/(7521:7524): Conectado CPU 4!!
+[INFO] 01:05:10:290 CPU/(7521:7523): Planificador: 5 conectado, viva!!
+[INFO] 01:05:10:291 CPU/(7521:7522): Planificador: 6 conectado, viva!!
+[INFO] 01:05:16:485 CPU/(7521:7523): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 01:05:16:485 CPU/(7521:7523): ID CPU: 1 conectado a Memoria
+[INFO] 01:05:17:486 CPU/(7521:7523): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 01:05:17:486 CPU/(7521:7523): ID CPU: 1 conectado a Memoria
+[INFO] 01:05:20:488 CPU/(7521:7522): Recibido mProc: 4, path:  , puntero: 2
+[INFO] 01:05:20:488 CPU/(7521:7522): ID CPU: 2 conectado a Memoria
+[INFO] 01:05:21:488 CPU/(7521:7523): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 01:05:21:489 CPU/(7521:7523): ID CPU: 1 conectado a Memoria
+[INFO] 01:05:24:493 CPU/(7521:7522): Recibido mProc: 4, path:  , puntero: 3
+[INFO] 01:05:24:494 CPU/(7521:7522): ID CPU: 2 conectado a Memoria
+[INFO] 01:05:27:496 CPU/(7521:7523): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 01:05:27:497 CPU/(7521:7523): ID CPU: 1 conectado a Memoria
+[INFO] 01:05:30:499 CPU/(7521:7522): Recibido mProc: 4, path:  , puntero: 4
+[INFO] 01:05:30:500 CPU/(7521:7522): ID CPU: 2 conectado a Memoria
+[INFO] 01:05:33:503 CPU/(7521:7523): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 01:05:34:504 CPU/(7521:7523): Rafaga concluida. PID 3.
+[INFO] 01:05:34:504 CPU/(7521:7522): Recibido mProc: 4, path:  , puntero: 5
+[INFO] 01:05:34:504 CPU/(7521:7522): ID CPU: 2 conectado a Memoria
+[INFO] 01:05:37:508 CPU/(7521:7522): Recibido mProc: 4, path:  , puntero: 6
+[INFO] 01:05:38:508 CPU/(7521:7522): Rafaga concluida. PID 4.
+[INFO] 01:05:39:542 CPU/(7521:7523): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 01:05:39:542 CPU/(7521:7523): ID CPU: 1 conectado a Memoria
+[INFO] 01:05:40:544 CPU/(7521:7523): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 01:05:40:545 CPU/(7521:7523): ID CPU: 1 conectado a Memoria
+[INFO] 01:05:41:546 CPU/(7521:7523): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 01:05:41:546 CPU/(7521:7523): ID CPU: 1 conectado a Memoria
+[INFO] 01:05:42:548 CPU/(7521:7523): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 01:05:42:548 CPU/(7521:7523): ID CPU: 1 conectado a Memoria
+[INFO] 01:05:43:549 CPU/(7521:7523): Rafaga concluida. PID 3.
+[INFO] 01:05:44:542 CPU/(7521:7523): Recibido mProc: 4, path:  , puntero: 7
+[INFO] 01:05:44:543 CPU/(7521:7523): ID CPU: 1 conectado a Memoria
+[INFO] 01:05:45:544 CPU/(7521:7523): Recibido mProc: 4, path:  , puntero: 8
+[INFO] 01:05:45:544 CPU/(7521:7523): ID CPU: 1 conectado a Memoria
+[INFO] 01:05:46:545 CPU/(7521:7523): Recibido mProc: 4, path:  , puntero: 9
+[INFO] 01:05:46:546 CPU/(7521:7523): ID CPU: 1 conectado a Memoria
+[INFO] 01:05:47:547 CPU/(7521:7523): Recibido mProc: 4, path:  , puntero: 10
+[INFO] 01:05:47:547 CPU/(7521:7523): ID CPU: 1 conectado a Memoria
+[INFO] 01:05:48:549 CPU/(7521:7523): Rafaga concluida. PID 4.
+[INFO] 01:06:01:102 CPU/(7521:7524): Rafaga concluida. PID 4
+[INFO] 01:06:01:102 CPU/(7521:7521): ---------------------FIN---------------------
+[INFO] 01:09:17:343 CPU/(7661:7664): Conectado CPU 4!!
+[INFO] 01:09:17:344 CPU/(7661:7663): Planificador: 5 conectado, viva!!
+[INFO] 01:09:17:345 CPU/(7661:7662): Planificador: 6 conectado, viva!!
+[INFO] 01:09:21:11 CPU/(7661:7663): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 01:09:21:11 CPU/(7661:7663): ID CPU: 1 conectado a Memoria
+[INFO] 01:09:22:12 CPU/(7661:7663): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 01:09:22:13 CPU/(7661:7663): ID CPU: 1 conectado a Memoria
+[INFO] 01:09:25:14 CPU/(7661:7664): Rafaga concluida. PID 3
+[INFO] 01:09:25:15 CPU/(7661:7662): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 01:09:25:15 CPU/(7661:7662): ID CPU: 2 conectado a Memoria
+[INFO] 01:09:28:17 CPU/(7661:7662): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 01:09:28:18 CPU/(7661:7662): ID CPU: 2 conectado a Memoria
+[INFO] 01:09:31:62 CPU/(7661:7664): Rafaga concluida. PID 3
+[INFO] 01:09:31:62 CPU/(7661:7663): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 01:09:32:64 CPU/(7661:7663): Rafaga concluida. PID 3.
+[INFO] 01:09:37:65 CPU/(7661:7663): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 01:09:37:66 CPU/(7661:7663): ID CPU: 1 conectado a Memoria
+[INFO] 01:09:38:68 CPU/(7661:7663): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 01:09:38:68 CPU/(7661:7663): ID CPU: 1 conectado a Memoria
+[INFO] 01:09:39:109 CPU/(7661:7664): Rafaga concluida. PID 3
+[INFO] 01:09:39:109 CPU/(7661:7662): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 01:09:39:110 CPU/(7661:7662): ID CPU: 2 conectado a Memoria
+[INFO] 01:09:40:111 CPU/(7661:7662): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 01:09:40:112 CPU/(7661:7662): ID CPU: 2 conectado a Memoria
+[INFO] 01:09:41:114 CPU/(7661:7662): Rafaga concluida. PID 3.
+[INFO] 01:09:52:668 CPU/(7661:7664): Rafaga concluida. PID 3
+[INFO] 01:09:52:668 CPU/(7661:7661): ---------------------FIN---------------------
+[INFO] 01:11:19:821 CPU/(7764:7767): Conectado CPU 4!!
+[INFO] 01:11:19:822 CPU/(7764:7766): Planificador: 5 conectado, viva!!
+[INFO] 01:11:19:822 CPU/(7764:7765): Planificador: 6 conectado, viva!!
+[INFO] 01:11:25:122 CPU/(7764:7766): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 01:11:25:122 CPU/(7764:7766): ID CPU: 1 conectado a Memoria
+[INFO] 01:11:26:123 CPU/(7764:7766): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 01:11:26:124 CPU/(7764:7766): ID CPU: 1 conectado a Memoria
+[INFO] 01:11:29:126 CPU/(7764:7767): Rafaga concluida. PID 3
+[INFO] 01:11:29:128 CPU/(7764:7765): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 01:11:29:128 CPU/(7764:7765): ID CPU: 2 conectado a Memoria
+[INFO] 01:11:32:130 CPU/(7764:7765): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 01:11:32:130 CPU/(7764:7765): ID CPU: 2 conectado a Memoria
+[INFO] 01:11:35:174 CPU/(7764:7767): Rafaga concluida. PID 3
+[INFO] 01:11:35:175 CPU/(7764:7766): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 01:11:36:175 CPU/(7764:7766): Rafaga concluida. PID 3.
+[INFO] 01:11:41:176 CPU/(7764:7766): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 01:11:41:176 CPU/(7764:7766): ID CPU: 1 conectado a Memoria
+[INFO] 01:11:42:177 CPU/(7764:7766): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 01:11:42:178 CPU/(7764:7766): ID CPU: 1 conectado a Memoria
+[INFO] 01:11:43:221 CPU/(7764:7767): Rafaga concluida. PID 3
+[INFO] 01:11:43:221 CPU/(7764:7765): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 01:11:43:221 CPU/(7764:7765): ID CPU: 2 conectado a Memoria
+[INFO] 01:11:44:223 CPU/(7764:7765): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 01:11:44:223 CPU/(7764:7765): ID CPU: 2 conectado a Memoria
+[INFO] 01:11:45:226 CPU/(7764:7765): Rafaga concluida. PID 3.
+[INFO] 01:12:29:729 CPU/(7764:7767): Rafaga concluida. PID 3
+[INFO] 01:12:29:729 CPU/(7764:7764): ---------------------FIN---------------------
+[INFO] 01:13:49:651 CPU/(7866:7869): Conectado CPU 4!!
+[INFO] 01:13:49:651 CPU/(7866:7868): Planificador: 5 conectado, viva!!
+[INFO] 01:13:49:652 CPU/(7866:7867): Planificador: 6 conectado, viva!!
+[INFO] 01:13:54:263 CPU/(7866:7868): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 01:13:54:263 CPU/(7866:7868): ID CPU: 1 conectado a Memoria
+[INFO] 01:13:55:265 CPU/(7866:7868): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 01:13:55:265 CPU/(7866:7868): ID CPU: 1 conectado a Memoria
+[INFO] 01:13:58:268 CPU/(7866:7869): Rafaga concluida. PID 3
+[INFO] 01:13:58:272 CPU/(7866:7867): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 01:13:58:272 CPU/(7866:7867): ID CPU: 2 conectado a Memoria
+[INFO] 01:14:01:275 CPU/(7866:7867): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 01:14:01:275 CPU/(7866:7867): ID CPU: 2 conectado a Memoria
+[INFO] 01:14:04:318 CPU/(7866:7869): Rafaga concluida. PID 3
+[INFO] 01:14:04:318 CPU/(7866:7868): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 01:14:05:319 CPU/(7866:7868): Rafaga concluida. PID 3.
+[INFO] 01:14:10:319 CPU/(7866:7868): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 01:14:10:320 CPU/(7866:7868): ID CPU: 1 conectado a Memoria
+[INFO] 01:14:11:321 CPU/(7866:7868): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 01:14:11:321 CPU/(7866:7868): ID CPU: 1 conectado a Memoria
+[INFO] 01:14:12:361 CPU/(7866:7869): Rafaga concluida. PID 3
+[INFO] 01:14:12:361 CPU/(7866:7867): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 01:14:12:361 CPU/(7866:7867): ID CPU: 2 conectado a Memoria
+[INFO] 01:14:13:362 CPU/(7866:7867): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 01:14:13:362 CPU/(7866:7867): ID CPU: 2 conectado a Memoria
+[INFO] 01:14:14:364 CPU/(7866:7867): Rafaga concluida. PID 3.
+[INFO] 01:14:27:401 CPU/(7866:7869): Rafaga concluida. PID 3
+[INFO] 01:14:27:402 CPU/(7866:7866): ---------------------FIN---------------------
+[INFO] 01:15:18:376 CPU/(7998:8001): Conectado CPU 4!!
+[INFO] 01:15:18:377 CPU/(7998:8001): Rafaga concluida. PID 4
+[INFO] 01:15:46:296 CPU/(8005:8008): Conectado CPU 4!!
+[INFO] 01:15:46:297 CPU/(8005:8007): Planificador: 5 conectado, viva!!
+[INFO] 01:15:46:298 CPU/(8005:8006): Planificador: 6 conectado, viva!!
+[INFO] 01:15:50:409 CPU/(8005:8007): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 01:15:50:409 CPU/(8005:8007): ID CPU: 1 conectado a Memoria
+[INFO] 01:15:51:410 CPU/(8005:8007): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 01:15:51:410 CPU/(8005:8007): ID CPU: 1 conectado a Memoria
+[INFO] 01:15:54:412 CPU/(8005:8008): Rafaga concluida. PID 3
+[INFO] 01:15:54:415 CPU/(8005:8006): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 01:15:54:415 CPU/(8005:8006): ID CPU: 2 conectado a Memoria
+[INFO] 01:15:57:420 CPU/(8005:8006): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 01:15:57:421 CPU/(8005:8006): ID CPU: 2 conectado a Memoria
+[INFO] 01:16:00:461 CPU/(8005:8008): Rafaga concluida. PID 3
+[INFO] 01:16:00:462 CPU/(8005:8007): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 01:16:01:462 CPU/(8005:8007): Rafaga concluida. PID 3.
+[INFO] 01:16:06:464 CPU/(8005:8007): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 01:16:06:464 CPU/(8005:8007): ID CPU: 1 conectado a Memoria
+[INFO] 01:16:07:465 CPU/(8005:8007): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 01:16:07:466 CPU/(8005:8007): ID CPU: 1 conectado a Memoria
+[INFO] 01:16:08:505 CPU/(8005:8008): Rafaga concluida. PID 3
+[INFO] 01:16:08:506 CPU/(8005:8006): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 01:16:08:506 CPU/(8005:8006): ID CPU: 2 conectado a Memoria
+[INFO] 01:16:09:508 CPU/(8005:8006): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 01:16:09:509 CPU/(8005:8006): ID CPU: 2 conectado a Memoria
+[INFO] 01:16:10:510 CPU/(8005:8006): Rafaga concluida. PID 3.
+[INFO] 01:16:15:973 CPU/(8005:8008): Rafaga concluida. PID 3
+[INFO] 01:16:15:974 CPU/(8005:8005): ---------------------FIN---------------------
+[INFO] 01:19:04:409 CPU/(8059:8061): Conectado CPU 4!!
+[INFO] 01:19:04:411 CPU/(8059:8060): Planificador: 5 conectado, viva!!
+[INFO] 01:19:10:362 CPU/(8059:8060): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 01:19:10:363 CPU/(8059:8060): ID CPU: 1 conectado a Memoria
+[INFO] 01:19:11:364 CPU/(8059:8060): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 01:19:11:365 CPU/(8059:8060): ID CPU: 1 conectado a Memoria
+[INFO] 01:19:14:366 CPU/(8059:8061): Rafaga concluida. PID 3
+[INFO] 01:19:14:369 CPU/(8059:8060): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 01:19:14:369 CPU/(8059:8060): ID CPU: 1 conectado a Memoria
+[INFO] 01:19:17:371 CPU/(8059:8060): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 01:19:17:372 CPU/(8059:8060): ID CPU: 1 conectado a Memoria
+[INFO] 01:19:20:413 CPU/(8059:8061): Rafaga concluida. PID 3
+[INFO] 01:19:20:414 CPU/(8059:8060): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 01:19:21:415 CPU/(8059:8060): Rafaga concluida. PID 3.
+[INFO] 01:19:26:417 CPU/(8059:8060): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 01:19:26:417 CPU/(8059:8060): ID CPU: 1 conectado a Memoria
+[INFO] 01:19:27:420 CPU/(8059:8060): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 01:19:27:420 CPU/(8059:8060): ID CPU: 1 conectado a Memoria
+[INFO] 01:19:28:462 CPU/(8059:8061): Rafaga concluida. PID 3
+[INFO] 01:19:28:463 CPU/(8059:8060): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 01:19:28:463 CPU/(8059:8060): ID CPU: 1 conectado a Memoria
+[INFO] 01:19:29:466 CPU/(8059:8060): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 01:19:29:467 CPU/(8059:8060): ID CPU: 1 conectado a Memoria
+[INFO] 01:19:30:468 CPU/(8059:8060): Rafaga concluida. PID 3.
+[INFO] 01:19:44:227 CPU/(8059:8061): Rafaga concluida. PID 3
+[INFO] 01:19:44:227 CPU/(8059:8059): ---------------------FIN---------------------
+[INFO] 01:22:02:859 CPU/(8145:8147): Conectado CPU 4!!
+[INFO] 01:22:02:859 CPU/(8145:8147): Rafaga concluida. PID 4
+[INFO] 01:22:05:868 CPU/(8151:8153): Conectado CPU 4!!
+[INFO] 01:22:05:868 CPU/(8151:8152): Planificador: 5 conectado, viva!!
+[INFO] 01:22:13:487 CPU/(8151:8152): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 01:22:13:487 CPU/(8151:8152): ID CPU: 1 conectado a Memoria
+[INFO] 01:22:14:489 CPU/(8151:8152): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 01:22:14:490 CPU/(8151:8152): ID CPU: 1 conectado a Memoria
+[INFO] 01:22:17:495 CPU/(8151:8153): Rafaga concluida. PID 3
+[INFO] 01:22:17:496 CPU/(8151:8152): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 01:22:17:496 CPU/(8151:8152): ID CPU: 1 conectado a Memoria
+[INFO] 01:22:20:500 CPU/(8151:8152): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 01:22:20:500 CPU/(8151:8152): ID CPU: 1 conectado a Memoria
+[INFO] 01:22:23:541 CPU/(8151:8153): Rafaga concluida. PID 3
+[INFO] 01:22:23:542 CPU/(8151:8152): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 01:22:24:542 CPU/(8151:8152): Rafaga concluida. PID 3.
+[INFO] 01:22:29:543 CPU/(8151:8152): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 01:22:29:544 CPU/(8151:8152): ID CPU: 1 conectado a Memoria
+[INFO] 01:22:30:546 CPU/(8151:8152): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 01:22:30:546 CPU/(8151:8152): ID CPU: 1 conectado a Memoria
+[INFO] 01:22:31:586 CPU/(8151:8153): Rafaga concluida. PID 3
+[INFO] 01:22:31:587 CPU/(8151:8152): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 01:22:31:587 CPU/(8151:8152): ID CPU: 1 conectado a Memoria
+[INFO] 01:22:32:588 CPU/(8151:8152): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 01:22:32:588 CPU/(8151:8152): ID CPU: 1 conectado a Memoria
+[INFO] 01:22:33:589 CPU/(8151:8152): Rafaga concluida. PID 3.
+[INFO] 01:23:47:446 CPU/(8151:8153): Rafaga concluida. PID 3
+[INFO] 01:23:47:446 CPU/(8151:8151): ---------------------FIN---------------------
+[INFO] 01:40:18:267 CPU/(8495:8497): Conectado CPU 4!!
+[INFO] 01:40:18:267 CPU/(8495:8496): Planificador: 5 conectado, viva!!
+[INFO] 01:40:22:191 CPU/(8495:8496): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 01:40:22:192 CPU/(8495:8496): ID CPU: 1 conectado a Memoria
+[INFO] 01:40:23:192 CPU/(8495:8496): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 01:40:23:193 CPU/(8495:8496): ID CPU: 1 conectado a Memoria
+[INFO] 01:40:26:195 CPU/(8495:8497): Rafaga concluida. PID 3
+[INFO] 01:40:26:196 CPU/(8495:8496): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 01:40:26:196 CPU/(8495:8496): ID CPU: 1 conectado a Memoria
+[INFO] 01:40:29:200 CPU/(8495:8496): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 01:40:29:200 CPU/(8495:8496): ID CPU: 1 conectado a Memoria
+[INFO] 01:40:32:242 CPU/(8495:8497): Rafaga concluida. PID 3
+[INFO] 01:40:32:242 CPU/(8495:8496): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 01:40:33:244 CPU/(8495:8496): Rafaga concluida. PID 3.
+[INFO] 01:40:38:248 CPU/(8495:8496): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 01:40:38:248 CPU/(8495:8496): ID CPU: 1 conectado a Memoria
+[INFO] 01:40:39:249 CPU/(8495:8496): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 01:40:39:249 CPU/(8495:8496): ID CPU: 1 conectado a Memoria
+[INFO] 01:40:40:289 CPU/(8495:8497): Rafaga concluida. PID 3
+[INFO] 01:40:40:289 CPU/(8495:8496): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 01:40:40:289 CPU/(8495:8496): ID CPU: 1 conectado a Memoria
+[INFO] 01:40:41:290 CPU/(8495:8496): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 01:40:41:290 CPU/(8495:8496): ID CPU: 1 conectado a Memoria
+[INFO] 01:40:42:292 CPU/(8495:8496): Rafaga concluida. PID 3.
+[INFO] 01:54:41:912 CPU/(8663:8665): Conectado CPU 4!!
+[INFO] 01:54:41:913 CPU/(8663:8664): Planificador: 5 conectado, viva!!
+[INFO] 01:54:49:410 CPU/(8663:8664): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 01:54:49:410 CPU/(8663:8664): ID CPU: 1 conectado a Memoria
+[INFO] 01:54:50:412 CPU/(8663:8664): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 01:54:50:412 CPU/(8663:8664): ID CPU: 1 conectado a Memoria
+[INFO] 01:54:53:414 CPU/(8663:8665): Rafaga concluida. PID 3
+[INFO] 01:54:53:415 CPU/(8663:8664): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 01:54:53:415 CPU/(8663:8664): ID CPU: 1 conectado a Memoria
+[INFO] 01:54:56:419 CPU/(8663:8664): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 01:54:56:419 CPU/(8663:8664): ID CPU: 1 conectado a Memoria
+[INFO] 01:54:59:461 CPU/(8663:8665): Rafaga concluida. PID 3
+[INFO] 01:54:59:462 CPU/(8663:8664): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 01:55:00:462 CPU/(8663:8664): Rafaga concluida. PID 3.
+[INFO] 01:55:05:463 CPU/(8663:8664): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 01:55:05:464 CPU/(8663:8664): ID CPU: 1 conectado a Memoria
+[INFO] 01:55:06:465 CPU/(8663:8664): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 01:55:06:465 CPU/(8663:8664): ID CPU: 1 conectado a Memoria
+[INFO] 01:55:07:505 CPU/(8663:8665): Rafaga concluida. PID 3
+[INFO] 01:55:07:505 CPU/(8663:8664): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 01:55:07:505 CPU/(8663:8664): ID CPU: 1 conectado a Memoria
+[INFO] 01:55:08:506 CPU/(8663:8664): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 01:55:08:507 CPU/(8663:8664): ID CPU: 1 conectado a Memoria
+[INFO] 01:55:09:509 CPU/(8663:8664): Rafaga concluida. PID 3.
+[INFO] 01:58:43:528 CPU/(8663:8665): Rafaga concluida. PID 3
+[INFO] 01:58:43:528 CPU/(8663:8663): ---------------------FIN---------------------
+[INFO] 01:59:11:283 CPU/(8777:8779): Conectado CPU 4!!
+[INFO] 01:59:11:283 CPU/(8777:8779): Rafaga concluida. PID 4
+[INFO] 01:59:31:450 CPU/(8783:8785): Conectado CPU 4!!
+[INFO] 01:59:31:451 CPU/(8783:8785): Rafaga concluida. PID 4
+[INFO] 01:59:32:681 CPU/(8789:8791): Conectado CPU 4!!
+[INFO] 01:59:32:681 CPU/(8789:8791): Rafaga concluida. PID 4
+[INFO] 01:59:36:155 CPU/(8794:8796): Conectado CPU 4!!
+[INFO] 01:59:36:156 CPU/(8794:8796): Rafaga concluida. PID 4
+[INFO] 01:59:54:428 CPU/(8800:8802): Conectado CPU 4!!
+[INFO] 01:59:54:429 CPU/(8800:8801): Planificador: 5 conectado, viva!!
+[INFO] 02:00:01:144 CPU/(8800:8801): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 02:00:01:144 CPU/(8800:8801): ID CPU: 1 conectado a Memoria
+[INFO] 02:00:02:145 CPU/(8800:8801): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 02:00:02:146 CPU/(8800:8801): ID CPU: 1 conectado a Memoria
+[INFO] 02:00:05:150 CPU/(8800:8802): Rafaga concluida. PID 3
+[INFO] 02:00:05:151 CPU/(8800:8801): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 02:00:05:151 CPU/(8800:8801): ID CPU: 1 conectado a Memoria
+[INFO] 02:00:08:154 CPU/(8800:8801): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 02:00:08:155 CPU/(8800:8801): ID CPU: 1 conectado a Memoria
+[INFO] 02:00:11:197 CPU/(8800:8802): Rafaga concluida. PID 3
+[INFO] 02:00:11:198 CPU/(8800:8801): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 02:00:12:198 CPU/(8800:8801): Rafaga concluida. PID 3.
+[INFO] 02:00:17:200 CPU/(8800:8801): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 02:00:17:200 CPU/(8800:8801): ID CPU: 1 conectado a Memoria
+[INFO] 02:00:18:201 CPU/(8800:8801): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 02:00:18:201 CPU/(8800:8801): ID CPU: 1 conectado a Memoria
+[INFO] 02:00:19:242 CPU/(8800:8802): Rafaga concluida. PID 3
+[INFO] 02:00:19:243 CPU/(8800:8801): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 02:00:19:244 CPU/(8800:8801): ID CPU: 1 conectado a Memoria
+[INFO] 02:00:20:245 CPU/(8800:8801): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 02:00:20:246 CPU/(8800:8801): ID CPU: 1 conectado a Memoria
+[INFO] 02:00:21:247 CPU/(8800:8801): Rafaga concluida. PID 3.
+[INFO] 02:00:21:577 CPU/(8800:8802): Rafaga concluida. PID 3
+[INFO] 02:00:21:577 CPU/(8800:8800): ---------------------FIN---------------------
+[INFO] 02:11:54:118 CPU/(9624:9626): Conectado CPU 4!!
+[INFO] 02:11:54:118 CPU/(9624:9626): Rafaga concluida. PID 4
+[INFO] 02:11:58:357 CPU/(9629:9631): Conectado CPU 4!!
+[INFO] 02:11:58:357 CPU/(9629:9630): Planificador: 5 conectado, viva!!
+[INFO] 02:12:03:303 CPU/(9629:9630): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 02:12:03:304 CPU/(9629:9630): ID CPU: 1 conectado a Memoria
+[INFO] 02:12:04:305 CPU/(9629:9630): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 02:12:04:305 CPU/(9629:9630): ID CPU: 1 conectado a Memoria
+[INFO] 02:12:07:307 CPU/(9629:9631): Rafaga concluida. PID 3
+[INFO] 02:12:07:308 CPU/(9629:9630): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 02:12:07:308 CPU/(9629:9630): ID CPU: 1 conectado a Memoria
+[INFO] 02:12:10:313 CPU/(9629:9630): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 02:12:10:313 CPU/(9629:9630): ID CPU: 1 conectado a Memoria
+[INFO] 02:12:13:354 CPU/(9629:9631): Rafaga concluida. PID 3
+[INFO] 02:12:13:355 CPU/(9629:9630): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 02:12:14:356 CPU/(9629:9630): Rafaga concluida. PID 3.
+[INFO] 02:12:19:357 CPU/(9629:9630): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 02:12:19:357 CPU/(9629:9630): ID CPU: 1 conectado a Memoria
+[INFO] 02:12:20:359 CPU/(9629:9630): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 02:12:20:359 CPU/(9629:9630): ID CPU: 1 conectado a Memoria
+[INFO] 02:12:21:398 CPU/(9629:9631): Rafaga concluida. PID 3
+[INFO] 02:12:21:398 CPU/(9629:9630): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 02:12:21:398 CPU/(9629:9630): ID CPU: 1 conectado a Memoria
+[INFO] 02:12:22:399 CPU/(9629:9630): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 02:12:22:399 CPU/(9629:9630): ID CPU: 1 conectado a Memoria
+[INFO] 02:12:23:400 CPU/(9629:9630): Rafaga concluida. PID 3.
+[INFO] 02:12:23:618 CPU/(9629:9631): Rafaga concluida. PID 3
+[INFO] 02:12:23:618 CPU/(9629:9629): ---------------------FIN---------------------
+[INFO] 02:14:55:201 CPU/(9682:9684): Conectado CPU 4!!
+[INFO] 02:14:55:201 CPU/(9682:9683): Planificador: 5 conectado, viva!!
+[INFO] 02:14:59:408 CPU/(9682:9683): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 02:14:59:408 CPU/(9682:9683): ID CPU: 1 conectado a Memoria
+[INFO] 02:15:00:409 CPU/(9682:9683): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 02:15:00:410 CPU/(9682:9683): ID CPU: 1 conectado a Memoria
+[INFO] 02:15:03:412 CPU/(9682:9684): Rafaga concluida. PID 3
+[INFO] 02:15:03:412 CPU/(9682:9683): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 02:15:03:413 CPU/(9682:9683): ID CPU: 1 conectado a Memoria
+[INFO] 02:15:06:417 CPU/(9682:9683): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 02:15:06:417 CPU/(9682:9683): ID CPU: 1 conectado a Memoria
+[INFO] 02:15:09:457 CPU/(9682:9684): Rafaga concluida. PID 3
+[INFO] 02:15:09:458 CPU/(9682:9683): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 02:15:10:458 CPU/(9682:9683): Rafaga concluida. PID 3.
+[INFO] 02:15:15:460 CPU/(9682:9683): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 02:15:15:461 CPU/(9682:9683): ID CPU: 1 conectado a Memoria
+[INFO] 02:15:16:463 CPU/(9682:9683): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 02:15:16:463 CPU/(9682:9683): ID CPU: 1 conectado a Memoria
+[INFO] 02:15:17:501 CPU/(9682:9684): Rafaga concluida. PID 3
+[INFO] 02:15:17:502 CPU/(9682:9683): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 02:15:17:502 CPU/(9682:9683): ID CPU: 1 conectado a Memoria
+[INFO] 02:15:18:503 CPU/(9682:9683): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 02:15:18:504 CPU/(9682:9683): ID CPU: 1 conectado a Memoria
+[INFO] 02:15:19:505 CPU/(9682:9683): Rafaga concluida. PID 3.
+[INFO] 02:15:33:146 CPU/(9682:9684): Rafaga concluida. PID 3
+[INFO] 02:15:33:147 CPU/(9682:9682): ---------------------FIN---------------------
+[INFO] 02:17:22:76 CPU/(9835:9837): Conectado CPU 4!!
+[INFO] 02:17:22:77 CPU/(9835:9836): Planificador: 5 conectado, viva!!
+[INFO] 02:17:26:649 CPU/(9835:9836): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 02:17:26:649 CPU/(9835:9836): ID CPU: 1 conectado a Memoria
+[INFO] 02:17:27:650 CPU/(9835:9836): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 02:17:27:650 CPU/(9835:9836): ID CPU: 1 conectado a Memoria
+[INFO] 02:17:30:653 CPU/(9835:9837): Rafaga concluida. PID 3
+[INFO] 02:17:30:654 CPU/(9835:9836): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 02:17:30:654 CPU/(9835:9836): ID CPU: 1 conectado a Memoria
+[INFO] 02:17:33:659 CPU/(9835:9836): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 02:17:33:659 CPU/(9835:9836): ID CPU: 1 conectado a Memoria
+[INFO] 02:17:36:701 CPU/(9835:9837): Rafaga concluida. PID 3
+[INFO] 02:17:36:702 CPU/(9835:9836): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 02:17:37:702 CPU/(9835:9836): Rafaga concluida. PID 3.
+[INFO] 02:17:42:703 CPU/(9835:9836): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 02:17:42:704 CPU/(9835:9836): ID CPU: 1 conectado a Memoria
+[INFO] 02:17:43:705 CPU/(9835:9836): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 02:17:43:705 CPU/(9835:9836): ID CPU: 1 conectado a Memoria
+[INFO] 02:17:44:745 CPU/(9835:9837): Rafaga concluida. PID 3
+[INFO] 02:17:44:745 CPU/(9835:9836): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 02:17:44:746 CPU/(9835:9836): ID CPU: 1 conectado a Memoria
+[INFO] 02:17:45:746 CPU/(9835:9836): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 02:17:45:747 CPU/(9835:9836): ID CPU: 1 conectado a Memoria
+[INFO] 02:17:46:749 CPU/(9835:9836): Rafaga concluida. PID 3.
+[INFO] 02:18:08:929 CPU/(9835:9837): Rafaga concluida. PID 3
+[INFO] 02:18:08:929 CPU/(9835:9835): ---------------------FIN---------------------
+[INFO] 02:19:04:964 CPU/(9974:9976): Conectado CPU 4!!
+[INFO] 02:19:04:964 CPU/(9974:9976): Rafaga concluida. PID 4
+[INFO] 02:19:14:721 CPU/(9978:9980): Conectado CPU 4!!
+[INFO] 02:19:14:724 CPU/(9978:9979): Planificador: 5 conectado, viva!!
+[INFO] 02:19:22:89 CPU/(9978:9979): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 02:19:22:89 CPU/(9978:9979): ID CPU: 1 conectado a Memoria
+[INFO] 02:19:23:92 CPU/(9978:9979): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 02:19:23:92 CPU/(9978:9979): ID CPU: 1 conectado a Memoria
+[INFO] 02:19:26:95 CPU/(9978:9980): Rafaga concluida. PID 3
+[INFO] 02:19:26:96 CPU/(9978:9979): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 02:19:26:96 CPU/(9978:9979): ID CPU: 1 conectado a Memoria
+[INFO] 02:19:29:98 CPU/(9978:9979): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 02:19:29:99 CPU/(9978:9979): ID CPU: 1 conectado a Memoria
+[INFO] 02:19:32:141 CPU/(9978:9980): Rafaga concluida. PID 3
+[INFO] 02:19:32:141 CPU/(9978:9979): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 02:19:33:142 CPU/(9978:9979): Rafaga concluida. PID 3.
+[INFO] 02:19:35:970 CPU/(9978:9980): Rafaga concluida. PID 3
+[INFO] 02:19:35:971 CPU/(9978:9978): ---------------------FIN---------------------
+[INFO] 02:20:42:621 CPU/(10072:10074): Conectado CPU 4!!
+[INFO] 02:20:42:622 CPU/(10072:10074): Rafaga concluida. PID 4
+[INFO] 02:20:44:926 CPU/(10076:10077): Planificador: 5 conectado, viva!!
+[INFO] 02:20:44:926 CPU/(10076:10078): Conectado CPU 4!!
+[INFO] 02:20:49:871 CPU/(10076:10077): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 02:20:49:871 CPU/(10076:10077): ID CPU: 1 conectado a Memoria
+[INFO] 02:20:50:872 CPU/(10076:10077): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 02:20:50:873 CPU/(10076:10077): ID CPU: 1 conectado a Memoria
+[INFO] 02:20:53:878 CPU/(10076:10078): Rafaga concluida. PID 3
+[INFO] 02:20:53:878 CPU/(10076:10077): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 02:20:53:879 CPU/(10076:10077): ID CPU: 1 conectado a Memoria
+[INFO] 02:20:56:882 CPU/(10076:10077): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 02:20:56:882 CPU/(10076:10077): ID CPU: 1 conectado a Memoria
+[INFO] 02:20:59:925 CPU/(10076:10078): Rafaga concluida. PID 3
+[INFO] 02:20:59:926 CPU/(10076:10077): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 02:21:00:927 CPU/(10076:10077): Rafaga concluida. PID 3.
+[INFO] 02:21:05:928 CPU/(10076:10077): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 02:21:05:929 CPU/(10076:10077): ID CPU: 1 conectado a Memoria
+[INFO] 02:21:06:929 CPU/(10076:10077): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 02:21:06:930 CPU/(10076:10077): ID CPU: 1 conectado a Memoria
+[INFO] 02:21:07:970 CPU/(10076:10078): Rafaga concluida. PID 3
+[INFO] 02:21:07:971 CPU/(10076:10077): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 02:21:07:971 CPU/(10076:10077): ID CPU: 1 conectado a Memoria
+[INFO] 02:21:08:972 CPU/(10076:10077): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 02:21:08:972 CPU/(10076:10077): ID CPU: 1 conectado a Memoria
+[INFO] 02:21:09:972 CPU/(10076:10077): Rafaga concluida. PID 3.
+[INFO] 02:21:49:448 CPU/(10076:10078): Rafaga concluida. PID 3
+[INFO] 02:21:49:448 CPU/(10076:10076): ---------------------FIN---------------------
+[INFO] 02:23:11:804 CPU/(10180:10182): Conectado CPU 4!!
+[INFO] 02:23:11:805 CPU/(10180:10181): Planificador: 5 conectado, viva!!
+[INFO] 02:23:15:521 CPU/(10180:10181): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 02:23:15:521 CPU/(10180:10181): ID CPU: 1 conectado a Memoria
+[INFO] 02:23:16:524 CPU/(10180:10181): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 02:23:16:525 CPU/(10180:10181): ID CPU: 1 conectado a Memoria
+[INFO] 02:23:19:527 CPU/(10180:10182): Rafaga concluida. PID 3
+[INFO] 02:23:19:527 CPU/(10180:10181): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 02:23:19:527 CPU/(10180:10181): ID CPU: 1 conectado a Memoria
+[INFO] 02:23:22:531 CPU/(10180:10181): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 02:23:22:532 CPU/(10180:10181): ID CPU: 1 conectado a Memoria
+[INFO] 02:23:25:574 CPU/(10180:10182): Rafaga concluida. PID 3
+[INFO] 02:23:25:575 CPU/(10180:10181): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 02:23:26:575 CPU/(10180:10181): Rafaga concluida. PID 3.
+[INFO] 02:23:31:577 CPU/(10180:10182): Rafaga concluida. PID 3
+[INFO] 02:23:31:577 CPU/(10180:10180): ---------------------FIN---------------------
+[INFO] 02:26:35:78 CPU/(10286:10288): Conectado CPU 4!!
+[INFO] 02:26:35:79 CPU/(10286:10287): Planificador: 5 conectado, viva!!
+[INFO] 02:26:40:967 CPU/(10286:10287): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 02:26:40:967 CPU/(10286:10287): ID CPU: 1 conectado a Memoria
+[INFO] 02:26:41:970 CPU/(10286:10287): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 02:26:41:970 CPU/(10286:10287): ID CPU: 1 conectado a Memoria
+[INFO] 02:26:44:974 CPU/(10286:10288): Rafaga concluida. PID 3
+[INFO] 02:26:44:975 CPU/(10286:10287): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 02:26:44:975 CPU/(10286:10287): ID CPU: 1 conectado a Memoria
+[INFO] 02:26:47:980 CPU/(10286:10287): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 02:26:47:980 CPU/(10286:10287): ID CPU: 1 conectado a Memoria
+[INFO] 02:26:51:22 CPU/(10286:10288): Rafaga concluida. PID 3
+[INFO] 02:26:51:23 CPU/(10286:10287): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 02:26:52:25 CPU/(10286:10287): Rafaga concluida. PID 3.
+[INFO] 02:26:57:27 CPU/(10286:10287): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 02:26:57:27 CPU/(10286:10287): ID CPU: 1 conectado a Memoria
+[INFO] 02:26:58:28 CPU/(10286:10287): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 02:26:58:29 CPU/(10286:10287): ID CPU: 1 conectado a Memoria
+[INFO] 02:26:59:70 CPU/(10286:10288): Rafaga concluida. PID 3
+[INFO] 02:26:59:71 CPU/(10286:10287): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 02:26:59:71 CPU/(10286:10287): ID CPU: 1 conectado a Memoria
+[INFO] 02:27:00:71 CPU/(10286:10287): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 02:27:00:71 CPU/(10286:10287): ID CPU: 1 conectado a Memoria
+[INFO] 02:27:01:72 CPU/(10286:10287): Rafaga concluida. PID 3.
+[INFO] 02:27:28:672 CPU/(10286:10288): Rafaga concluida. PID 3
+[INFO] 02:27:28:672 CPU/(10286:10286): ---------------------FIN---------------------
+[INFO] 02:29:21:626 CPU/(10403:10405): Conectado CPU 4!!
+[INFO] 02:29:21:627 CPU/(10403:10404): Planificador: 5 conectado, viva!!
+[INFO] 02:29:25:691 CPU/(10403:10404): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 02:29:25:692 CPU/(10403:10404): ID CPU: 1 conectado a Memoria
+[INFO] 02:29:26:693 CPU/(10403:10404): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 02:29:26:694 CPU/(10403:10404): ID CPU: 1 conectado a Memoria
+[INFO] 02:29:29:697 CPU/(10403:10405): Rafaga concluida. PID 3
+[INFO] 02:29:29:698 CPU/(10403:10404): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 02:29:29:698 CPU/(10403:10404): ID CPU: 1 conectado a Memoria
+[INFO] 02:29:32:700 CPU/(10403:10404): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 02:29:32:700 CPU/(10403:10404): ID CPU: 1 conectado a Memoria
+[INFO] 02:29:35:745 CPU/(10403:10405): Rafaga concluida. PID 3
+[INFO] 02:29:35:746 CPU/(10403:10404): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 02:29:36:747 CPU/(10403:10404): Rafaga concluida. PID 3.
+[INFO] 02:29:41:749 CPU/(10403:10404): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 02:29:41:749 CPU/(10403:10404): ID CPU: 1 conectado a Memoria
+[INFO] 02:29:42:750 CPU/(10403:10404): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 02:29:42:751 CPU/(10403:10404): ID CPU: 1 conectado a Memoria
+[INFO] 02:29:43:789 CPU/(10403:10405): Rafaga concluida. PID 3
+[INFO] 02:29:43:789 CPU/(10403:10404): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 02:29:43:790 CPU/(10403:10404): ID CPU: 1 conectado a Memoria
+[INFO] 02:29:44:791 CPU/(10403:10404): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 02:29:44:791 CPU/(10403:10404): ID CPU: 1 conectado a Memoria
+[INFO] 02:29:45:793 CPU/(10403:10404): Rafaga concluida. PID 3.
+[INFO] 02:30:07:603 CPU/(10403:10405): Rafaga concluida. PID 3
+[INFO] 02:30:07:603 CPU/(10403:10403): ---------------------FIN---------------------
+[INFO] 02:30:53:318 CPU/(10511:10513): Conectado CPU 4!!
+[INFO] 02:30:53:318 CPU/(10511:10513): Rafaga concluida. PID 4
+[INFO] 02:31:29:852 CPU/(10516:10518): Conectado CPU 4!!
+[INFO] 02:31:29:852 CPU/(10516:10517): Planificador: 5 conectado, viva!!
+[INFO] 02:31:33:824 CPU/(10516:10517): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 02:31:33:824 CPU/(10516:10517): ID CPU: 1 conectado a Memoria
+[INFO] 02:31:34:826 CPU/(10516:10517): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 02:31:34:826 CPU/(10516:10517): ID CPU: 1 conectado a Memoria
+[INFO] 02:31:37:829 CPU/(10516:10518): Rafaga concluida. PID 3
+[INFO] 02:31:37:829 CPU/(10516:10517): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 02:31:37:829 CPU/(10516:10517): ID CPU: 1 conectado a Memoria
+[INFO] 02:31:40:834 CPU/(10516:10517): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 02:31:40:835 CPU/(10516:10517): ID CPU: 1 conectado a Memoria
+[INFO] 02:31:43:877 CPU/(10516:10518): Rafaga concluida. PID 3
+[INFO] 02:31:43:878 CPU/(10516:10517): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 02:31:44:878 CPU/(10516:10517): Rafaga concluida. PID 3.
+[INFO] 02:31:49:880 CPU/(10516:10517): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 02:31:49:880 CPU/(10516:10517): ID CPU: 1 conectado a Memoria
+[INFO] 02:31:50:883 CPU/(10516:10517): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 02:31:50:883 CPU/(10516:10517): ID CPU: 1 conectado a Memoria
+[INFO] 02:31:51:921 CPU/(10516:10518): Rafaga concluida. PID 3
+[INFO] 02:31:51:921 CPU/(10516:10517): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 02:31:51:922 CPU/(10516:10517): ID CPU: 1 conectado a Memoria
+[INFO] 02:31:52:923 CPU/(10516:10517): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 02:31:52:923 CPU/(10516:10517): ID CPU: 1 conectado a Memoria
+[INFO] 02:31:53:924 CPU/(10516:10517): Rafaga concluida. PID 3.
+[INFO] 02:31:57:478 CPU/(10516:10518): Rafaga concluida. PID 3
+[INFO] 02:31:57:478 CPU/(10516:10516): ---------------------FIN---------------------
+[INFO] 02:33:22:51 CPU/(10613:10615): Conectado CPU 4!!
+[INFO] 02:33:22:52 CPU/(10613:10614): Planificador: 5 conectado, viva!!
+[INFO] 02:33:26:55 CPU/(10613:10614): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 02:33:26:55 CPU/(10613:10614): ID CPU: 1 conectado a Memoria
+[INFO] 02:33:27:56 CPU/(10613:10614): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 02:33:27:56 CPU/(10613:10614): ID CPU: 1 conectado a Memoria
+[INFO] 02:33:30:58 CPU/(10613:10615): Rafaga concluida. PID 3
+[INFO] 02:33:30:59 CPU/(10613:10614): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 02:33:30:59 CPU/(10613:10614): ID CPU: 1 conectado a Memoria
+[INFO] 02:33:33:63 CPU/(10613:10614): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 02:33:33:63 CPU/(10613:10614): ID CPU: 1 conectado a Memoria
+[INFO] 02:33:36:105 CPU/(10613:10615): Rafaga concluida. PID 3
+[INFO] 02:33:36:106 CPU/(10613:10614): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 02:33:37:107 CPU/(10613:10614): Rafaga concluida. PID 3.
+[INFO] 02:33:42:109 CPU/(10613:10614): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 02:33:42:109 CPU/(10613:10614): ID CPU: 1 conectado a Memoria
+[INFO] 02:33:43:110 CPU/(10613:10614): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 02:33:43:110 CPU/(10613:10614): ID CPU: 1 conectado a Memoria
+[INFO] 02:33:44:149 CPU/(10613:10615): Rafaga concluida. PID 3
+[INFO] 02:33:44:149 CPU/(10613:10614): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 02:33:44:149 CPU/(10613:10614): ID CPU: 1 conectado a Memoria
+[INFO] 02:33:45:150 CPU/(10613:10614): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 02:33:45:151 CPU/(10613:10614): ID CPU: 1 conectado a Memoria
+[INFO] 02:33:46:153 CPU/(10613:10614): Rafaga concluida. PID 3.
+[INFO] 02:33:51:267 CPU/(10613:10615): Rafaga concluida. PID 3
+[INFO] 02:33:51:267 CPU/(10613:10613): ---------------------FIN---------------------
+[INFO] 02:35:05:395 CPU/(10698:10700): Conectado CPU 4!!
+[INFO] 02:35:05:396 CPU/(10698:10699): Planificador: 5 conectado, viva!!
+[INFO] 02:35:08:901 CPU/(10698:10699): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 02:35:08:901 CPU/(10698:10699): ID CPU: 1 conectado a Memoria
+[INFO] 02:35:09:902 CPU/(10698:10699): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 02:35:09:902 CPU/(10698:10699): ID CPU: 1 conectado a Memoria
+[INFO] 02:35:12:904 CPU/(10698:10700): Rafaga concluida. PID 3
+[INFO] 02:35:12:904 CPU/(10698:10699): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 02:35:12:905 CPU/(10698:10699): ID CPU: 1 conectado a Memoria
+[INFO] 02:35:15:908 CPU/(10698:10699): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 02:35:15:909 CPU/(10698:10699): ID CPU: 1 conectado a Memoria
+[INFO] 02:35:18:949 CPU/(10698:10700): Rafaga concluida. PID 3
+[INFO] 02:35:18:950 CPU/(10698:10699): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 02:35:19:951 CPU/(10698:10699): Rafaga concluida. PID 3.
+[INFO] 02:35:20:375 CPU/(10698:10700): Rafaga concluida. PID 3
+[INFO] 02:35:20:375 CPU/(10698:10698): ---------------------FIN---------------------
+[INFO] 02:37:00:891 CPU/(10805:10807): Conectado CPU 4!!
+[INFO] 02:37:00:892 CPU/(10805:10806): Planificador: 5 conectado, viva!!
+[INFO] 02:37:04:195 CPU/(10805:10806): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 02:37:04:196 CPU/(10805:10806): ID CPU: 1 conectado a Memoria
+[INFO] 02:37:05:198 CPU/(10805:10806): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 02:37:05:199 CPU/(10805:10806): ID CPU: 1 conectado a Memoria
+[INFO] 02:37:08:203 CPU/(10805:10807): Rafaga concluida. PID 3
+[INFO] 02:37:08:204 CPU/(10805:10806): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 02:37:08:204 CPU/(10805:10806): ID CPU: 1 conectado a Memoria
+[INFO] 02:37:11:209 CPU/(10805:10806): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 02:37:11:209 CPU/(10805:10806): ID CPU: 1 conectado a Memoria
+[INFO] 02:37:14:253 CPU/(10805:10807): Rafaga concluida. PID 3
+[INFO] 02:37:14:254 CPU/(10805:10806): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 02:37:15:254 CPU/(10805:10806): Rafaga concluida. PID 3.
+[INFO] 02:37:16:723 CPU/(10805:10807): Rafaga concluida. PID 3
+[INFO] 02:37:16:724 CPU/(10805:10805): ---------------------FIN---------------------
+[INFO] 02:40:08:170 CPU/(10953:10955): Conectado CPU 4!!
+[INFO] 02:40:08:171 CPU/(10953:10954): Planificador: 5 conectado, viva!!
+[INFO] 02:40:11:363 CPU/(10953:10954): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 02:40:11:364 CPU/(10953:10954): ID CPU: 1 conectado a Memoria
+[INFO] 02:40:12:365 CPU/(10953:10954): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 02:40:12:365 CPU/(10953:10954): ID CPU: 1 conectado a Memoria
+[INFO] 02:40:15:369 CPU/(10953:10955): Rafaga concluida. PID 3
+[INFO] 02:40:15:369 CPU/(10953:10954): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 02:40:15:369 CPU/(10953:10954): ID CPU: 1 conectado a Memoria
+[INFO] 02:40:18:371 CPU/(10953:10954): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 02:40:18:372 CPU/(10953:10954): ID CPU: 1 conectado a Memoria
+[INFO] 02:40:21:417 CPU/(10953:10955): Rafaga concluida. PID 3
+[INFO] 02:40:21:417 CPU/(10953:10954): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 02:40:22:419 CPU/(10953:10954): Rafaga concluida. PID 3.
+[INFO] 02:40:24:145 CPU/(10953:10955): Rafaga concluida. PID 3
+[INFO] 02:40:24:145 CPU/(10953:10953): ---------------------FIN---------------------
+[INFO] 02:41:06:171 CPU/(11021:11023): Conectado CPU 4!!
+[INFO] 02:41:06:171 CPU/(11021:11023): Rafaga concluida. PID 4
+[INFO] 02:41:16:52 CPU/(11030:11032): Conectado CPU 4!!
+[INFO] 02:41:16:53 CPU/(11030:11032): Rafaga concluida. PID 4
+[INFO] 02:41:27:270 CPU/(11035:11036): Planificador: 5 conectado, viva!!
+[INFO] 02:41:27:270 CPU/(11035:11037): Conectado CPU 4!!
+[INFO] 02:41:31:394 CPU/(11035:11036): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 02:41:31:394 CPU/(11035:11036): ID CPU: 1 conectado a Memoria
+[INFO] 02:41:32:396 CPU/(11035:11036): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 02:41:32:396 CPU/(11035:11036): ID CPU: 1 conectado a Memoria
+[INFO] 02:41:35:398 CPU/(11035:11037): Rafaga concluida. PID 3
+[INFO] 02:41:35:400 CPU/(11035:11036): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 02:41:35:400 CPU/(11035:11036): ID CPU: 1 conectado a Memoria
+[INFO] 02:41:38:404 CPU/(11035:11036): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 02:41:38:404 CPU/(11035:11036): ID CPU: 1 conectado a Memoria
+[INFO] 02:41:41:445 CPU/(11035:11037): Rafaga concluida. PID 3
+[INFO] 02:41:41:446 CPU/(11035:11036): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 02:41:42:195 CPU/(11035:11037): Rafaga concluida. PID 3
+[INFO] 02:41:42:446 CPU/(11035:11036): Rafaga concluida. PID 3.
+[INFO] 02:42:25:662 CPU/(11105:11107): Conectado CPU 4!!
+[INFO] 02:42:25:663 CPU/(11105:11106): Planificador: 5 conectado, viva!!
+[INFO] 02:42:31:647 CPU/(11105:11106): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 02:42:31:648 CPU/(11105:11106): ID CPU: 1 conectado a Memoria
+[INFO] 02:42:32:649 CPU/(11105:11106): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 02:42:32:650 CPU/(11105:11106): ID CPU: 1 conectado a Memoria
+[INFO] 02:42:35:653 CPU/(11105:11107): Rafaga concluida. PID 3
+[INFO] 02:42:35:653 CPU/(11105:11106): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 02:42:35:654 CPU/(11105:11106): ID CPU: 1 conectado a Memoria
+[INFO] 02:42:38:658 CPU/(11105:11106): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 02:42:38:658 CPU/(11105:11106): ID CPU: 1 conectado a Memoria
+[INFO] 02:42:41:697 CPU/(11105:11107): Rafaga concluida. PID 3
+[INFO] 02:42:41:697 CPU/(11105:11106): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 02:42:42:457 CPU/(11105:11107): Rafaga concluida. PID 3
+[INFO] 02:42:42:698 CPU/(11105:11106): Rafaga concluida. PID 3.
+[INFO] 02:43:51:720 CPU/(11191:11193): Conectado CPU 4!!
+[INFO] 02:43:51:721 CPU/(11191:11192): Planificador: 5 conectado, viva!!
+[INFO] 02:43:55:346 CPU/(11191:11192): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 02:43:55:346 CPU/(11191:11192): ID CPU: 1 conectado a Memoria
+[INFO] 02:43:56:347 CPU/(11191:11192): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 02:43:56:347 CPU/(11191:11192): ID CPU: 1 conectado a Memoria
+[INFO] 02:43:59:350 CPU/(11191:11193): Rafaga concluida. PID 3
+[INFO] 02:43:59:351 CPU/(11191:11192): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 02:43:59:351 CPU/(11191:11192): ID CPU: 1 conectado a Memoria
+[INFO] 02:44:02:354 CPU/(11191:11192): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 02:44:02:354 CPU/(11191:11192): ID CPU: 1 conectado a Memoria
+[INFO] 02:44:05:397 CPU/(11191:11193): Rafaga concluida. PID 3
+[INFO] 02:44:05:398 CPU/(11191:11192): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 02:44:06:398 CPU/(11191:11192): Rafaga concluida. PID 3.
+[INFO] 02:44:10:352 CPU/(11191:11193): Rafaga concluida. PID 3
+[INFO] 02:44:10:352 CPU/(11191:11191): ---------------------FIN---------------------
+[INFO] 02:46:30:141 CPU/(11365:11367): Conectado CPU 4!!
+[INFO] 02:46:30:142 CPU/(11365:11366): Planificador: 5 conectado, viva!!
+[INFO] 02:46:34:239 CPU/(11365:11366): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 02:46:34:240 CPU/(11365:11366): ID CPU: 1 conectado a Memoria
+[INFO] 02:46:35:240 CPU/(11365:11366): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 02:46:35:242 CPU/(11365:11366): ID CPU: 1 conectado a Memoria
+[INFO] 02:46:38:245 CPU/(11365:11367): Rafaga concluida. PID 3
+[INFO] 02:46:38:246 CPU/(11365:11366): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 02:46:38:246 CPU/(11365:11366): ID CPU: 1 conectado a Memoria
+[INFO] 02:46:41:251 CPU/(11365:11366): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 02:46:41:251 CPU/(11365:11366): ID CPU: 1 conectado a Memoria
+[INFO] 02:46:44:293 CPU/(11365:11367): Rafaga concluida. PID 3
+[INFO] 02:46:44:294 CPU/(11365:11366): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 02:46:45:294 CPU/(11365:11366): Rafaga concluida. PID 3.
+[INFO] 02:46:50:297 CPU/(11365:11366): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 02:46:50:298 CPU/(11365:11366): ID CPU: 1 conectado a Memoria
+[INFO] 02:46:51:300 CPU/(11365:11366): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 02:46:51:300 CPU/(11365:11366): ID CPU: 1 conectado a Memoria
+[INFO] 02:46:52:341 CPU/(11365:11367): Rafaga concluida. PID 3
+[INFO] 02:46:52:342 CPU/(11365:11366): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 02:46:52:342 CPU/(11365:11366): ID CPU: 1 conectado a Memoria
+[INFO] 02:46:53:344 CPU/(11365:11366): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 02:46:53:344 CPU/(11365:11366): ID CPU: 1 conectado a Memoria
+[INFO] 02:46:54:345 CPU/(11365:11366): Rafaga concluida. PID 3.
+[INFO] 02:47:25:767 CPU/(11365:11367): Rafaga concluida. PID 3
+[INFO] 02:47:25:768 CPU/(11365:11365): ---------------------FIN---------------------
+[INFO] 02:52:27:439 CPU/(11536:11538): Conectado CPU 4!!
+[INFO] 02:52:27:440 CPU/(11536:11537): Planificador: 5 conectado, viva!!
+[INFO] 02:52:30:997 CPU/(11536:11537): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 02:52:30:998 CPU/(11536:11537): ID CPU: 1 conectado a Memoria
+[INFO] 02:52:31:999 CPU/(11536:11537): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 02:52:31:0 CPU/(11536:11537): ID CPU: 1 conectado a Memoria
+[INFO] 02:52:34:4 CPU/(11536:11538): Rafaga concluida. PID 3
+[INFO] 02:52:34:5 CPU/(11536:11537): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 02:52:34:5 CPU/(11536:11537): ID CPU: 1 conectado a Memoria
+[INFO] 02:52:38:8 CPU/(11536:11537): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 02:52:38:8 CPU/(11536:11537): ID CPU: 1 conectado a Memoria
+[INFO] 02:52:41:49 CPU/(11536:11538): Rafaga concluida. PID 3
+[INFO] 02:52:41:50 CPU/(11536:11537): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 02:52:42:50 CPU/(11536:11537): Rafaga concluida. PID 3.
+[INFO] 02:52:47:51 CPU/(11536:11537): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 02:52:47:51 CPU/(11536:11537): ID CPU: 1 conectado a Memoria
+[INFO] 02:52:48:52 CPU/(11536:11537): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 02:52:48:52 CPU/(11536:11537): ID CPU: 1 conectado a Memoria
+[INFO] 02:52:49:94 CPU/(11536:11538): Rafaga concluida. PID 3
+[INFO] 02:52:49:95 CPU/(11536:11537): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 02:52:49:95 CPU/(11536:11537): ID CPU: 1 conectado a Memoria
+[INFO] 02:52:50:96 CPU/(11536:11537): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 02:52:50:97 CPU/(11536:11537): ID CPU: 1 conectado a Memoria
+[INFO] 02:52:51:99 CPU/(11536:11537): Rafaga concluida. PID 3.
+[INFO] 02:52:54:926 CPU/(11536:11537): Recibido mProc: 4, path:  , puntero: 2
+[INFO] 02:52:54:927 CPU/(11536:11537): ID CPU: 1 conectado a Memoria
+[INFO] 02:52:55:928 CPU/(11536:11537): Recibido mProc: 4, path:  , puntero: 3
+[INFO] 02:52:55:928 CPU/(11536:11537): ID CPU: 1 conectado a Memoria
+[INFO] 02:52:58:970 CPU/(11536:11538): Rafaga concluida. PID 4
+[INFO] 02:52:58:971 CPU/(11536:11537): Recibido mProc: 5, path:  , puntero: 2
+[INFO] 02:52:58:971 CPU/(11536:11537): ID CPU: 1 conectado a Memoria
+[INFO] 02:52:59:972 CPU/(11536:11537): Recibido mProc: 5, path:  , puntero: 3
+[INFO] 02:52:59:972 CPU/(11536:11537): ID CPU: 1 conectado a Memoria
+[INFO] 02:53:03:17 CPU/(11536:11538): Rafaga concluida. PID 5
+[INFO] 02:53:03:18 CPU/(11536:11537): Recibido mProc: 4, path:  , puntero: 4
+[INFO] 02:53:03:18 CPU/(11536:11537): ID CPU: 1 conectado a Memoria
+[INFO] 02:53:06:21 CPU/(11536:11537): Recibido mProc: 4, path:  , puntero: 5
+[INFO] 02:53:06:22 CPU/(11536:11537): ID CPU: 1 conectado a Memoria
+[INFO] 02:53:09:61 CPU/(11536:11538): Rafaga concluida. PID 4
+[INFO] 02:53:09:61 CPU/(11536:11537): Recibido mProc: 5, path:  , puntero: 4
+[INFO] 02:53:09:62 CPU/(11536:11537): ID CPU: 1 conectado a Memoria
+[INFO] 02:53:12:64 CPU/(11536:11537): Recibido mProc: 5, path:  , puntero: 5
+[INFO] 02:53:12:64 CPU/(11536:11537): ID CPU: 1 conectado a Memoria
+[INFO] 02:53:15:106 CPU/(11536:11538): Rafaga concluida. PID 5
+[INFO] 02:53:15:106 CPU/(11536:11537): Recibido mProc: 4, path:  , puntero: 6
+[INFO] 02:53:16:107 CPU/(11536:11537): Rafaga concluida. PID 4.
+[INFO] 02:53:16:108 CPU/(11536:11537): Recibido mProc: 5, path:  , puntero: 6
+[INFO] 02:53:17:109 CPU/(11536:11537): Rafaga concluida. PID 5.
+[INFO] 02:53:21:108 CPU/(11536:11537): Recibido mProc: 4, path:  , puntero: 7
+[INFO] 02:53:21:108 CPU/(11536:11537): ID CPU: 1 conectado a Memoria
+[INFO] 02:53:22:109 CPU/(11536:11537): Recibido mProc: 4, path:  , puntero: 8
+[INFO] 02:53:22:110 CPU/(11536:11537): ID CPU: 1 conectado a Memoria
+[INFO] 02:53:23:149 CPU/(11536:11538): Rafaga concluida. PID 4
+[INFO] 02:53:23:150 CPU/(11536:11537): Recibido mProc: 4, path:  , puntero: 9
+[INFO] 02:53:23:150 CPU/(11536:11537): ID CPU: 1 conectado a Memoria
+[INFO] 02:53:24:151 CPU/(11536:11537): Recibido mProc: 4, path:  , puntero: 10
+[INFO] 02:53:24:151 CPU/(11536:11537): ID CPU: 1 conectado a Memoria
+[INFO] 02:53:25:153 CPU/(11536:11537): Rafaga concluida. PID 4.
+[INFO] 02:53:26:110 CPU/(11536:11537): Recibido mProc: 5, path:  , puntero: 7
+[INFO] 02:53:26:110 CPU/(11536:11537): ID CPU: 1 conectado a Memoria
+[INFO] 02:53:27:113 CPU/(11536:11537): Recibido mProc: 5, path:  , puntero: 8
+[INFO] 02:53:27:113 CPU/(11536:11537): ID CPU: 1 conectado a Memoria
+[INFO] 02:53:28:153 CPU/(11536:11538): Rafaga concluida. PID 5
+[INFO] 02:53:28:154 CPU/(11536:11537): Recibido mProc: 5, path:  , puntero: 9
+[INFO] 02:53:28:155 CPU/(11536:11537): ID CPU: 1 conectado a Memoria
+[INFO] 02:53:29:157 CPU/(11536:11537): Recibido mProc: 5, path:  , puntero: 10
+[INFO] 02:53:29:157 CPU/(11536:11537): ID CPU: 1 conectado a Memoria
+[INFO] 02:53:30:159 CPU/(11536:11537): Rafaga concluida. PID 5.
+[INFO] 02:53:39:375 CPU/(11536:11538): Rafaga concluida. PID 5
+[INFO] 02:53:39:376 CPU/(11536:11536): ---------------------FIN---------------------
+[INFO] 11:15:38:360 CPU/(3417:3419): Conectado CPU 4!!
+[INFO] 11:15:38:361 CPU/(3417:3418): Planificador: 5 conectado, viva!!
+[INFO] 11:16:20:467 CPU/(3417:3418): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 11:16:20:467 CPU/(3417:3418): ID CPU: 1 conectado a Memoria
+[INFO] 11:16:21:468 CPU/(3417:3418): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 11:16:21:468 CPU/(3417:3418): ID CPU: 1 conectado a Memoria
+[INFO] 11:16:24:471 CPU/(3417:3419): Rafaga concluida. PID 3
+[INFO] 11:16:24:474 CPU/(3417:3418): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 11:16:24:474 CPU/(3417:3418): ID CPU: 1 conectado a Memoria
+[INFO] 11:16:27:476 CPU/(3417:3418): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 11:16:27:476 CPU/(3417:3418): ID CPU: 1 conectado a Memoria
+[INFO] 11:16:30:516 CPU/(3417:3419): Rafaga concluida. PID 3
+[INFO] 11:16:30:517 CPU/(3417:3418): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 11:16:31:518 CPU/(3417:3418): Rafaga concluida. PID 3.
+[INFO] 11:16:36:520 CPU/(3417:3418): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 11:16:36:520 CPU/(3417:3418): ID CPU: 1 conectado a Memoria
+[INFO] 11:16:37:521 CPU/(3417:3418): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 11:16:37:521 CPU/(3417:3418): ID CPU: 1 conectado a Memoria
+[INFO] 11:16:38:560 CPU/(3417:3419): Rafaga concluida. PID 3
+[INFO] 11:16:38:561 CPU/(3417:3418): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 11:16:38:561 CPU/(3417:3418): ID CPU: 1 conectado a Memoria
+[INFO] 11:16:39:563 CPU/(3417:3418): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 11:16:39:563 CPU/(3417:3418): ID CPU: 1 conectado a Memoria
+[INFO] 11:16:40:565 CPU/(3417:3418): Rafaga concluida. PID 3.
+[INFO] 11:16:49:380 CPU/(3417:3417): ---------------------FIN---------------------
+[INFO] 11:34:06:789 CPU/(4390:4392): Conectado CPU 4!!
+[INFO] 11:34:06:790 CPU/(4390:4391): Planificador: 5 conectado, viva!!
+[INFO] 11:34:19:976 CPU/(4390:4391): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 11:34:19:976 CPU/(4390:4391): ID CPU: 1 conectado a Memoria
+[INFO] 11:34:20:977 CPU/(4390:4391): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 11:34:20:978 CPU/(4390:4391): ID CPU: 1 conectado a Memoria
+[INFO] 11:34:24:16 CPU/(4390:4392): Rafaga concluida. PID 3
+[INFO] 11:34:24:17 CPU/(4390:4391): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 11:34:24:17 CPU/(4390:4391): ID CPU: 1 conectado a Memoria
+[INFO] 11:34:27:22 CPU/(4390:4391): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 11:34:27:22 CPU/(4390:4391): ID CPU: 1 conectado a Memoria
+[INFO] 11:34:30:64 CPU/(4390:4392): Rafaga concluida. PID 3
+[INFO] 11:34:30:65 CPU/(4390:4391): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 11:34:31:66 CPU/(4390:4391): Rafaga concluida. PID 3.
+[INFO] 11:34:36:67 CPU/(4390:4391): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 11:34:36:68 CPU/(4390:4391): ID CPU: 1 conectado a Memoria
+[INFO] 11:34:37:68 CPU/(4390:4391): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 11:34:37:69 CPU/(4390:4391): ID CPU: 1 conectado a Memoria
+[INFO] 11:34:38:108 CPU/(4390:4392): Rafaga concluida. PID 3
+[INFO] 11:34:38:109 CPU/(4390:4391): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 11:34:38:110 CPU/(4390:4391): ID CPU: 1 conectado a Memoria
+[INFO] 11:34:39:111 CPU/(4390:4391): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 11:34:39:111 CPU/(4390:4391): ID CPU: 1 conectado a Memoria
+[INFO] 11:34:40:113 CPU/(4390:4391): Rafaga concluida. PID 3.
+[INFO] 11:34:47:740 CPU/(4390:4390): ---------------------FIN---------------------
+[INFO] 11:43:56:822 CPU/(4816:4818): Conectado CPU 4!!
+[INFO] 11:43:56:823 CPU/(4816:4817): Planificador: 5 conectado, viva!!
+[INFO] 11:44:02:866 CPU/(4816:4817): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 11:44:02:871 CPU/(4816:4817): ID CPU: 1 conectado a Memoria
+[INFO] 11:44:03:873 CPU/(4816:4817): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 11:44:03:873 CPU/(4816:4817): ID CPU: 1 conectado a Memoria
+[INFO] 11:44:06:875 CPU/(4816:4818): Rafaga concluida. PID 3
+[INFO] 11:44:06:877 CPU/(4816:4817): Recibido mProc: 4, path:  , puntero: 2
+[INFO] 11:44:06:877 CPU/(4816:4817): ID CPU: 1 conectado a Memoria
+[INFO] 11:44:07:878 CPU/(4816:4817): Recibido mProc: 4, path:  , puntero: 3
+[INFO] 11:44:07:879 CPU/(4816:4817): ID CPU: 1 conectado a Memoria
+[INFO] 11:44:10:920 CPU/(4816:4818): Rafaga concluida. PID 4
+[INFO] 11:44:10:921 CPU/(4816:4817): Recibido mProc: 5, path:  , puntero: 2
+[INFO] 11:44:10:921 CPU/(4816:4817): ID CPU: 1 conectado a Memoria
+[INFO] 11:44:11:922 CPU/(4816:4817): Recibido mProc: 5, path:  , puntero: 3
+[INFO] 11:44:11:922 CPU/(4816:4817): ID CPU: 1 conectado a Memoria
+[INFO] 11:44:14:960 CPU/(4816:4818): Rafaga concluida. PID 5
+[INFO] 11:44:14:961 CPU/(4816:4817): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 11:44:14:961 CPU/(4816:4817): ID CPU: 1 conectado a Memoria
+[INFO] 11:44:17:963 CPU/(4816:4817): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 11:44:17:963 CPU/(4816:4817): ID CPU: 1 conectado a Memoria
+[INFO] 11:44:21:4 CPU/(4816:4818): Rafaga concluida. PID 3
+[INFO] 11:44:21:5 CPU/(4816:4817): Recibido mProc: 4, path:  , puntero: 4
+[INFO] 11:44:21:5 CPU/(4816:4817): ID CPU: 1 conectado a Memoria
+[INFO] 11:44:24:8 CPU/(4816:4817): Recibido mProc: 4, path:  , puntero: 5
+[INFO] 11:44:24:8 CPU/(4816:4817): ID CPU: 1 conectado a Memoria
+[INFO] 11:44:27:48 CPU/(4816:4818): Rafaga concluida. PID 4
+[INFO] 11:44:27:50 CPU/(4816:4817): Recibido mProc: 5, path:  , puntero: 4
+[INFO] 11:44:27:50 CPU/(4816:4817): ID CPU: 1 conectado a Memoria
+[INFO] 11:44:30:57 CPU/(4816:4817): Recibido mProc: 5, path:  , puntero: 5
+[INFO] 11:44:30:57 CPU/(4816:4817): ID CPU: 1 conectado a Memoria
+[INFO] 11:44:33:100 CPU/(4816:4818): Rafaga concluida. PID 5
+[INFO] 11:44:33:101 CPU/(4816:4817): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 11:44:34:101 CPU/(4816:4817): Rafaga concluida. PID 3.
+[INFO] 11:44:34:102 CPU/(4816:4817): Recibido mProc: 4, path:  , puntero: 6
+[INFO] 11:44:35:102 CPU/(4816:4817): Rafaga concluida. PID 4.
+[INFO] 11:44:35:140 CPU/(4816:4817): Recibido mProc: 5, path:  , puntero: 6
+[INFO] 11:44:36:142 CPU/(4816:4817): Rafaga concluida. PID 5.
+[INFO] 11:44:39:102 CPU/(4816:4817): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 11:44:39:102 CPU/(4816:4817): ID CPU: 1 conectado a Memoria
+[INFO] 11:44:40:103 CPU/(4816:4817): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 11:44:40:103 CPU/(4816:4817): ID CPU: 1 conectado a Memoria
+[INFO] 11:44:41:144 CPU/(4816:4818): Rafaga concluida. PID 3
+[INFO] 11:44:41:144 CPU/(4816:4817): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 11:44:41:145 CPU/(4816:4817): ID CPU: 1 conectado a Memoria
+[INFO] 11:44:42:145 CPU/(4816:4817): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 11:44:42:145 CPU/(4816:4817): ID CPU: 1 conectado a Memoria
+[INFO] 11:44:43:146 CPU/(4816:4817): Rafaga concluida. PID 3.
+[INFO] 11:44:44:103 CPU/(4816:4817): Recibido mProc: 4, path:  , puntero: 7
+[INFO] 11:44:44:104 CPU/(4816:4817): ID CPU: 1 conectado a Memoria
+[INFO] 11:44:45:104 CPU/(4816:4817): Recibido mProc: 4, path:  , puntero: 8
+[INFO] 11:44:45:105 CPU/(4816:4817): ID CPU: 1 conectado a Memoria
+[INFO] 11:44:46:144 CPU/(4816:4818): Rafaga concluida. PID 4
+[INFO] 11:44:46:145 CPU/(4816:4817): Recibido mProc: 4, path:  , puntero: 9
+[INFO] 11:44:46:145 CPU/(4816:4817): ID CPU: 1 conectado a Memoria
+[INFO] 11:44:47:145 CPU/(4816:4817): Recibido mProc: 4, path:  , puntero: 10
+[INFO] 11:44:47:146 CPU/(4816:4817): ID CPU: 1 conectado a Memoria
+[INFO] 11:44:48:146 CPU/(4816:4817): Rafaga concluida. PID 4.
+[INFO] 11:44:49:103 CPU/(4816:4817): Recibido mProc: 5, path:  , puntero: 7
+[INFO] 11:44:49:103 CPU/(4816:4817): ID CPU: 1 conectado a Memoria
+[INFO] 11:44:50:104 CPU/(4816:4817): Recibido mProc: 5, path:  , puntero: 8
+[INFO] 11:44:50:104 CPU/(4816:4817): ID CPU: 1 conectado a Memoria
+[INFO] 11:44:51:144 CPU/(4816:4818): Rafaga concluida. PID 5
+[INFO] 11:44:51:145 CPU/(4816:4817): Recibido mProc: 5, path:  , puntero: 9
+[INFO] 11:44:51:146 CPU/(4816:4817): ID CPU: 1 conectado a Memoria
+[INFO] 11:44:52:147 CPU/(4816:4817): Recibido mProc: 5, path:  , puntero: 10
+[INFO] 11:44:52:147 CPU/(4816:4817): ID CPU: 1 conectado a Memoria
+[INFO] 11:44:53:149 CPU/(4816:4817): Rafaga concluida. PID 5.
+[INFO] 11:45:03:111 CPU/(4816:4816): ---------------------FIN---------------------
+[INFO] 11:47:16:895 CPU/(4941:4943): Conectado CPU 4!!
+[INFO] 11:47:16:896 CPU/(4941:4942): Planificador: 5 conectado, viva!!
+[INFO] 11:47:24:694 CPU/(4941:4942): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 11:47:24:695 CPU/(4941:4942): ID CPU: 1 conectado a Memoria
+[INFO] 11:47:25:697 CPU/(4941:4942): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 11:47:25:698 CPU/(4941:4942): ID CPU: 1 conectado a Memoria
+[INFO] 11:47:28:701 CPU/(4941:4943): Rafaga concluida. PID 3
+[INFO] 11:47:28:702 CPU/(4941:4942): Recibido mProc: 4, path:  , puntero: 2
+[INFO] 11:47:28:702 CPU/(4941:4942): ID CPU: 1 conectado a Memoria
+[INFO] 11:47:29:703 CPU/(4941:4942): Recibido mProc: 4, path:  , puntero: 3
+[INFO] 11:47:29:704 CPU/(4941:4942): ID CPU: 1 conectado a Memoria
+[INFO] 11:47:32:744 CPU/(4941:4943): Rafaga concluida. PID 4
+[INFO] 11:47:32:745 CPU/(4941:4942): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 11:47:32:745 CPU/(4941:4942): ID CPU: 1 conectado a Memoria
+[INFO] 11:47:35:747 CPU/(4941:4942): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 11:47:35:747 CPU/(4941:4942): ID CPU: 1 conectado a Memoria
+[INFO] 11:47:38:789 CPU/(4941:4943): Rafaga concluida. PID 3
+[INFO] 11:47:38:790 CPU/(4941:4942): Recibido mProc: 4, path:  , puntero: 4
+[INFO] 11:47:38:790 CPU/(4941:4942): ID CPU: 1 conectado a Memoria
+[INFO] 11:47:41:793 CPU/(4941:4942): Recibido mProc: 4, path:  , puntero: 5
+[INFO] 11:47:41:793 CPU/(4941:4942): ID CPU: 1 conectado a Memoria
+[INFO] 11:47:44:835 CPU/(4941:4943): Rafaga concluida. PID 4
+[INFO] 11:47:44:836 CPU/(4941:4942): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 11:47:45:836 CPU/(4941:4942): Rafaga concluida. PID 3.
+[INFO] 11:47:45:837 CPU/(4941:4942): Recibido mProc: 4, path:  , puntero: 6
+[INFO] 11:47:46:838 CPU/(4941:4942): Rafaga concluida. PID 4.
+[INFO] 11:47:50:838 CPU/(4941:4942): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 11:47:50:839 CPU/(4941:4942): ID CPU: 1 conectado a Memoria
+[INFO] 11:47:51:840 CPU/(4941:4942): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 11:47:51:840 CPU/(4941:4942): ID CPU: 1 conectado a Memoria
+[INFO] 11:47:52:881 CPU/(4941:4943): Rafaga concluida. PID 3
+[INFO] 11:47:52:882 CPU/(4941:4942): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 11:47:52:883 CPU/(4941:4942): ID CPU: 1 conectado a Memoria
+[INFO] 11:47:53:884 CPU/(4941:4942): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 11:47:53:885 CPU/(4941:4942): ID CPU: 1 conectado a Memoria
+[INFO] 11:47:54:886 CPU/(4941:4942): Rafaga concluida. PID 3.
+[INFO] 11:47:55:839 CPU/(4941:4942): Recibido mProc: 4, path:  , puntero: 7
+[INFO] 11:47:55:839 CPU/(4941:4942): ID CPU: 1 conectado a Memoria
+[INFO] 11:47:56:840 CPU/(4941:4942): Recibido mProc: 4, path:  , puntero: 8
+[INFO] 11:47:56:840 CPU/(4941:4942): ID CPU: 1 conectado a Memoria
+[INFO] 11:47:57:881 CPU/(4941:4943): Rafaga concluida. PID 4
+[INFO] 11:47:57:882 CPU/(4941:4942): Recibido mProc: 4, path:  , puntero: 9
+[INFO] 11:47:57:882 CPU/(4941:4942): ID CPU: 1 conectado a Memoria
+[INFO] 11:47:58:883 CPU/(4941:4942): Recibido mProc: 4, path:  , puntero: 10
+[INFO] 11:47:58:884 CPU/(4941:4942): ID CPU: 1 conectado a Memoria
+[INFO] 11:47:59:886 CPU/(4941:4942): Rafaga concluida. PID 4.
+[INFO] 11:48:10:765 CPU/(4941:4941): ---------------------FIN---------------------
+[INFO] 11:52:11:272 CPU/(5326:5328): Conectado CPU 4!!
+[INFO] 11:52:11:272 CPU/(5326:5327): Planificador: 5 conectado, viva!!
+[INFO] 11:53:09:99 CPU/(5326:5327): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 11:53:09:99 CPU/(5326:5327): ID CPU: 1 conectado a Memoria
+[INFO] 11:53:14:99 CPU/(5326:5327): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 11:53:14:99 CPU/(5326:5327): ID CPU: 1 conectado a Memoria
+[INFO] 11:53:21:103 CPU/(5326:5327): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 11:53:21:104 CPU/(5326:5327): ID CPU: 1 conectado a Memoria
+[INFO] 11:53:28:107 CPU/(5326:5327): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 11:53:28:108 CPU/(5326:5327): ID CPU: 1 conectado a Memoria
+[INFO] 11:53:35:110 CPU/(5326:5327): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 11:53:40:112 CPU/(5326:5327): Rafaga concluida. PID 3.
+[INFO] 11:54:10:151 CPU/(5326:5327): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 11:54:10:151 CPU/(5326:5327): ID CPU: 1 conectado a Memoria
+[INFO] 11:54:15:151 CPU/(5326:5327): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 11:54:15:152 CPU/(5326:5327): ID CPU: 1 conectado a Memoria
+[INFO] 11:54:20:153 CPU/(5326:5327): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 11:54:20:154 CPU/(5326:5327): ID CPU: 1 conectado a Memoria
+[INFO] 11:54:25:156 CPU/(5326:5327): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 11:54:25:156 CPU/(5326:5327): ID CPU: 1 conectado a Memoria
+[INFO] 11:54:30:157 CPU/(5326:5327): Rafaga concluida. PID 3.
+[INFO] 11:55:05:457 CPU/(5326:5326): ---------------------FIN---------------------
+[INFO] 11:56:23:615 CPU/(5363:5365): Conectado CPU 4!!
+[INFO] 11:56:23:615 CPU/(5363:5364): Planificador: 5 conectado, viva!!
+[INFO] 11:56:24:711 CPU/(5363:5364): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 11:56:24:711 CPU/(5363:5364): ID CPU: 1 conectado a Memoria
+[INFO] 11:56:29:713 CPU/(5363:5364): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 11:56:29:714 CPU/(5363:5364): ID CPU: 1 conectado a Memoria
+[INFO] 11:56:36:717 CPU/(5363:5364): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 11:56:36:719 CPU/(5363:5364): ID CPU: 1 conectado a Memoria
+[INFO] 11:56:43:721 CPU/(5363:5364): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 11:56:43:721 CPU/(5363:5364): ID CPU: 1 conectado a Memoria
+[INFO] 11:56:50:724 CPU/(5363:5364): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 11:56:55:725 CPU/(5363:5364): Rafaga concluida. PID 3.
+[INFO] 11:57:25:766 CPU/(5363:5364): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 11:57:25:767 CPU/(5363:5364): ID CPU: 1 conectado a Memoria
+[INFO] 11:57:30:768 CPU/(5363:5364): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 11:57:30:769 CPU/(5363:5364): ID CPU: 1 conectado a Memoria
+[INFO] 11:57:35:771 CPU/(5363:5364): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 11:57:35:772 CPU/(5363:5364): ID CPU: 1 conectado a Memoria
+[INFO] 11:57:40:773 CPU/(5363:5364): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 11:57:40:774 CPU/(5363:5364): ID CPU: 1 conectado a Memoria
+[INFO] 11:57:45:776 CPU/(5363:5364): Rafaga concluida. PID 3.
+[INFO] 12:05:05:245 CPU/(5363:5363): ---------------------FIN---------------------
+[INFO] 12:05:40:126 CPU/(5397:5399): Conectado CPU 4!!
+[INFO] 12:05:40:127 CPU/(5397:5399): Rafaga concluida. PID 4
+[INFO] 12:06:03:804 CPU/(5404:5406): Conectado CPU 4!!
+[INFO] 12:06:03:805 CPU/(5404:5406): Rafaga concluida. PID 4
+[INFO] 12:06:05:986 CPU/(5408:5410): Conectado CPU 4!!
+[INFO] 12:06:05:986 CPU/(5408:5410): Rafaga concluida. PID 4
+[INFO] 12:06:14:383 CPU/(5415:5417): Conectado CPU 4!!
+[INFO] 12:06:14:383 CPU/(5415:5416): Planificador: 5 conectado, viva!!
+[INFO] 12:07:18:5 CPU/(5415:5416): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 12:07:18:5 CPU/(5415:5416): ID CPU: 1 conectado a Memoria
+[INFO] 12:07:23:6 CPU/(5415:5416): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 12:07:23:6 CPU/(5415:5416): ID CPU: 1 conectado a Memoria
+[INFO] 12:07:30:7 CPU/(5415:5416): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 12:07:30:8 CPU/(5415:5416): ID CPU: 1 conectado a Memoria
+[INFO] 12:07:37:9 CPU/(5415:5416): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 12:07:37:10 CPU/(5415:5416): ID CPU: 1 conectado a Memoria
+[INFO] 12:07:44:14 CPU/(5415:5416): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 12:07:49:15 CPU/(5415:5416): Rafaga concluida. PID 3.
+[INFO] 12:08:19:53 CPU/(5415:5416): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 12:08:19:53 CPU/(5415:5416): ID CPU: 1 conectado a Memoria
+[INFO] 12:08:24:54 CPU/(5415:5416): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 12:08:24:55 CPU/(5415:5416): ID CPU: 1 conectado a Memoria
+[INFO] 12:08:29:56 CPU/(5415:5416): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 12:08:29:56 CPU/(5415:5416): ID CPU: 1 conectado a Memoria
+[INFO] 12:08:34:57 CPU/(5415:5416): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 12:08:34:58 CPU/(5415:5416): ID CPU: 1 conectado a Memoria
+[INFO] 12:08:39:60 CPU/(5415:5416): Rafaga concluida. PID 3.
+[INFO] 12:10:18:511 CPU/(5415:5415): ---------------------FIN---------------------
+[INFO] 12:30:33:935 CPU/(5806:5808): Conectado CPU 4!!
+[INFO] 12:30:33:936 CPU/(5806:5807): Planificador: 5 conectado, viva!!
+[INFO] 12:30:38:388 CPU/(5806:5807): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 12:30:38:389 CPU/(5806:5807): ID CPU: 1 conectado a Memoria
+[INFO] 12:30:43:390 CPU/(5806:5807): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 12:30:43:390 CPU/(5806:5807): ID CPU: 1 conectado a Memoria
+[INFO] 12:30:50:392 CPU/(5806:5807): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 12:30:50:392 CPU/(5806:5807): ID CPU: 1 conectado a Memoria
+[INFO] 12:30:57:395 CPU/(5806:5807): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 12:30:57:396 CPU/(5806:5807): ID CPU: 1 conectado a Memoria
+[INFO] 12:31:04:399 CPU/(5806:5807): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 12:31:09:400 CPU/(5806:5807): Rafaga concluida. PID 3.
+[INFO] 12:31:39:442 CPU/(5806:5807): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 12:31:39:442 CPU/(5806:5807): ID CPU: 1 conectado a Memoria
+[INFO] 12:31:44:443 CPU/(5806:5807): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 12:31:44:443 CPU/(5806:5807): ID CPU: 1 conectado a Memoria
+[INFO] 12:31:49:445 CPU/(5806:5807): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 12:31:49:445 CPU/(5806:5807): ID CPU: 1 conectado a Memoria
+[INFO] 12:31:54:449 CPU/(5806:5807): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 12:31:54:450 CPU/(5806:5807): ID CPU: 1 conectado a Memoria
+[INFO] 12:31:59:451 CPU/(5806:5807): Rafaga concluida. PID 3.
+[INFO] 12:33:43:796 CPU/(5838:5840): Conectado CPU 4!!
+[INFO] 12:33:43:797 CPU/(5838:5839): Planificador: 5 conectado, viva!!
+[INFO] 12:33:45:52 CPU/(5838:5839): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 12:33:45:52 CPU/(5838:5839): ID CPU: 1 conectado a Memoria
+[INFO] 12:33:50:56 CPU/(5838:5839): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 12:33:50:57 CPU/(5838:5839): ID CPU: 1 conectado a Memoria
+[INFO] 12:33:57:61 CPU/(5838:5839): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 12:33:57:61 CPU/(5838:5839): ID CPU: 1 conectado a Memoria
+[INFO] 12:34:04:63 CPU/(5838:5839): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 12:34:04:64 CPU/(5838:5839): ID CPU: 1 conectado a Memoria
+[INFO] 12:34:11:68 CPU/(5838:5839): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 12:34:16:68 CPU/(5838:5839): Rafaga concluida. PID 3.
+[INFO] 12:34:17:208 CPU/(5838:5838): ---------------------FIN---------------------
+[INFO] 12:41:32:680 CPU/(6016:6018): Conectado CPU 4!!
+[INFO] 12:41:32:681 CPU/(6016:6017): Planificador: 5 conectado, viva!!
+[INFO] 12:41:33:644 CPU/(6016:6017): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 12:41:33:644 CPU/(6016:6017): ID CPU: 1 conectado a Memoria
+[INFO] 12:41:38:647 CPU/(6016:6017): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 12:41:38:647 CPU/(6016:6017): ID CPU: 1 conectado a Memoria
+[INFO] 12:41:45:650 CPU/(6016:6017): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 12:41:45:651 CPU/(6016:6017): ID CPU: 1 conectado a Memoria
+[INFO] 12:41:52:658 CPU/(6016:6017): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 12:41:52:658 CPU/(6016:6017): ID CPU: 1 conectado a Memoria
+[INFO] 12:41:59:660 CPU/(6016:6017): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 12:42:04:660 CPU/(6016:6017): Rafaga concluida. PID 3.
+[INFO] 12:42:34:702 CPU/(6016:6017): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 12:42:34:702 CPU/(6016:6017): ID CPU: 1 conectado a Memoria
+[INFO] 12:42:39:703 CPU/(6016:6017): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 12:42:39:704 CPU/(6016:6017): ID CPU: 1 conectado a Memoria
+[INFO] 12:42:44:706 CPU/(6016:6017): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 12:42:44:706 CPU/(6016:6017): ID CPU: 1 conectado a Memoria
+[INFO] 12:42:49:708 CPU/(6016:6017): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 12:42:49:709 CPU/(6016:6017): ID CPU: 1 conectado a Memoria
+[INFO] 12:42:54:711 CPU/(6016:6017): Rafaga concluida. PID 3.
+[INFO] 12:43:41:205 CPU/(6016:6016): ---------------------FIN---------------------
+[INFO] 14:49:45:958 CPU/(2879:2881): Conectado CPU 4!!
+[INFO] 14:49:45:958 CPU/(2879:2880): Planificador: 5 conectado, viva!!
+[INFO] 14:51:11:298 CPU/(2879:2880): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 14:51:11:298 CPU/(2879:2880): ID CPU: 1 conectado a Memoria
+[INFO] 14:51:16:299 CPU/(2879:2880): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 14:51:16:299 CPU/(2879:2880): ID CPU: 1 conectado a Memoria
+[INFO] 14:51:23:300 CPU/(2879:2880): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 14:51:23:301 CPU/(2879:2880): ID CPU: 1 conectado a Memoria
+[INFO] 14:51:30:305 CPU/(2879:2880): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 14:51:30:305 CPU/(2879:2880): ID CPU: 1 conectado a Memoria
+[INFO] 14:51:37:308 CPU/(2879:2880): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 14:51:42:310 CPU/(2879:2880): Rafaga concluida. PID 3.
+[INFO] 14:51:47:350 CPU/(2879:2880): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 14:51:47:350 CPU/(2879:2880): ID CPU: 1 conectado a Memoria
+[INFO] 14:51:52:351 CPU/(2879:2880): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 14:51:52:351 CPU/(2879:2880): ID CPU: 1 conectado a Memoria
+[INFO] 14:51:57:353 CPU/(2879:2880): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 14:51:57:353 CPU/(2879:2880): ID CPU: 1 conectado a Memoria
+[INFO] 14:52:02:354 CPU/(2879:2880): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 14:52:02:354 CPU/(2879:2880): ID CPU: 1 conectado a Memoria
+[INFO] 14:52:07:355 CPU/(2879:2880): Rafaga concluida. PID 3.
+[INFO] 14:53:03:54 CPU/(2879:2881): Rafaga concluida. PID 4
+[INFO] 14:53:03:54 CPU/(2879:2879): ---------------------FIN---------------------
+[INFO] 14:53:41:845 CPU/(3099:3101): Conectado CPU 4!!
+[INFO] 14:53:41:846 CPU/(3099:3101): Rafaga concluida. PID 4
+[INFO] 14:53:41:847 CPU/(3099:3100): Planificador: 5 conectado, viva!!
+[INFO] 14:54:29:445 CPU/(3115:3117): Conectado CPU 4!!
+[INFO] 14:54:29:446 CPU/(3115:3116): Planificador: 5 conectado, viva!!
+[INFO] 14:54:33:549 CPU/(3115:3116): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 14:54:33:549 CPU/(3115:3116): ID CPU: 1 conectado a Memoria
+[INFO] 14:54:38:938 CPU/(3115:3117): Rafaga concluida. PID 4
+[INFO] 14:54:38:939 CPU/(3115:3115): ---------------------FIN---------------------
+[INFO] 15:13:05:755 CPU/(4167:4169): Conectado CPU 4!!
+[INFO] 15:13:05:756 CPU/(4167:4168): Planificador: 5 conectado, viva!!
+[INFO] 15:13:11:339 CPU/(4167:4168): Recibido mProc: 3, path:  , puntero: 2
+[INFO] 15:13:11:340 CPU/(4167:4168): ID CPU: 1 conectado a Memoria
+[INFO] 15:13:16:341 CPU/(4167:4168): Recibido mProc: 3, path:  , puntero: 3
+[INFO] 15:13:16:342 CPU/(4167:4168): ID CPU: 1 conectado a Memoria
+[INFO] 15:13:23:345 CPU/(4167:4168): Recibido mProc: 3, path:  , puntero: 4
+[INFO] 15:13:23:346 CPU/(4167:4168): ID CPU: 1 conectado a Memoria
+[INFO] 15:13:30:349 CPU/(4167:4168): Recibido mProc: 3, path:  , puntero: 5
+[INFO] 15:13:30:349 CPU/(4167:4168): ID CPU: 1 conectado a Memoria
+[INFO] 15:13:37:350 CPU/(4167:4168): Recibido mProc: 3, path:  , puntero: 6
+[INFO] 15:13:42:351 CPU/(4167:4168): Rafaga concluida. PID 3.
+[INFO] 15:13:47:392 CPU/(4167:4168): Recibido mProc: 3, path:  , puntero: 7
+[INFO] 15:13:47:392 CPU/(4167:4168): ID CPU: 1 conectado a Memoria
+[INFO] 15:13:52:394 CPU/(4167:4168): Recibido mProc: 3, path:  , puntero: 8
+[INFO] 15:13:52:395 CPU/(4167:4168): ID CPU: 1 conectado a Memoria
+[INFO] 15:13:57:395 CPU/(4167:4168): Recibido mProc: 3, path:  , puntero: 9
+[INFO] 15:13:57:396 CPU/(4167:4168): ID CPU: 1 conectado a Memoria
+[INFO] 15:14:02:398 CPU/(4167:4168): Recibido mProc: 3, path:  , puntero: 10
+[INFO] 15:14:02:398 CPU/(4167:4168): ID CPU: 1 conectado a Memoria
+[INFO] 15:14:07:400 CPU/(4167:4168): Rafaga concluida. PID 3.
+[INFO] 15:14:17:701 CPU/(4167:4168): Recibido mProc: 4, path:  , puntero: 2
+[INFO] 15:14:17:701 CPU/(4167:4168): ID CPU: 1 conectado a Memoria
+[INFO] 15:14:22:702 CPU/(4167:4168): Recibido mProc: 4, path:  , puntero: 3
+[INFO] 15:14:22:703 CPU/(4167:4168): ID CPU: 1 conectado a Memoria
+[INFO] 15:14:29:706 CPU/(4167:4168): Recibido mProc: 4, path:  , puntero: 4
+[INFO] 15:14:29:706 CPU/(4167:4168): ID CPU: 1 conectado a Memoria
+[INFO] 15:14:36:710 CPU/(4167:4168): Recibido mProc: 4, path:  , puntero: 5
+[INFO] 15:14:36:710 CPU/(4167:4168): ID CPU: 1 conectado a Memoria
+[INFO] 15:14:43:713 CPU/(4167:4168): Recibido mProc: 4, path:  , puntero: 6
+[INFO] 15:14:46:264 CPU/(4167:4169): Rafaga concluida. PID 4
+[INFO] 15:16:51:949 CPU/(4341:4343): Conectado CPU 4!!
+[INFO] 15:16:51:949 CPU/(4341:4342): Planificador: 5 conectado, viva!!
+[INFO] 15:16:57:445 CPU/(4341:4342): Recibido mProc: 3, path: /home/utnso/github/cache13-scripts/corto.cod, puntero: 2
+[INFO] 15:16:57:446 CPU/(4341:4342): ID CPU: 1 conectado a Memoria
+[INFO] 15:17:02:448 CPU/(4341:4342): Recibido mProc: 3, path: /home/utnso/github/cache13-scripts/corto.cod, puntero: 3
+[INFO] 15:17:02:448 CPU/(4341:4342): ID CPU: 1 conectado a Memoria
+[INFO] 15:17:09:454 CPU/(4341:4342): Recibido mProc: 3, path: /home/utnso/github/cache13-scripts/corto.cod, puntero: 4
+[INFO] 15:17:09:455 CPU/(4341:4342): ID CPU: 1 conectado a Memoria
+[INFO] 15:17:16:457 CPU/(4341:4342): Recibido mProc: 3, path: /home/utnso/github/cache13-scripts/corto.cod, puntero: 5
+[INFO] 15:17:16:457 CPU/(4341:4342): ID CPU: 1 conectado a Memoria
+[INFO] 15:17:23:460 CPU/(4341:4342): Recibido mProc: 3, path: /home/utnso/github/cache13-scripts/corto.cod, puntero: 6
+[INFO] 15:17:28:460 CPU/(4341:4342): Rafaga concluida. PID 3.
+[INFO] 15:17:33:503 CPU/(4341:4342): Recibido mProc: 3, path: /home/utnso/github/cache13-scripts/corto.cod, puntero: 7
+[INFO] 15:17:33:504 CPU/(4341:4342): ID CPU: 1 conectado a Memoria
+[INFO] 15:17:38:505 CPU/(4341:4342): Recibido mProc: 3, path: /home/utnso/github/cache13-scripts/corto.cod, puntero: 8
+[INFO] 15:17:38:505 CPU/(4341:4342): ID CPU: 1 conectado a Memoria
+[INFO] 15:17:43:506 CPU/(4341:4342): Recibido mProc: 3, path: /home/utnso/github/cache13-scripts/corto.cod, puntero: 9
+[INFO] 15:17:43:507 CPU/(4341:4342): ID CPU: 1 conectado a Memoria
+[INFO] 15:17:48:507 CPU/(4341:4342): Recibido mProc: 3, path: /home/utnso/github/cache13-scripts/corto.cod, puntero: 10
+[INFO] 15:17:48:508 CPU/(4341:4342): ID CPU: 1 conectado a Memoria
+[INFO] 15:17:53:509 CPU/(4341:4342): Rafaga concluida. PID 3.
+[INFO] 15:18:25:404 CPU/(4341:4342): Recibido mProc: 4, path: /home/utnso/github/cache13-scripts/cpu.cod, puntero: 2
+[INFO] 15:18:25:406 CPU/(4341:4342): ID CPU: 1 conectado a Memoria
+[INFO] 15:18:30:407 CPU/(4341:4342): Recibido mProc: 4, path: /home/utnso/github/cache13-scripts/cpu.cod, puntero: -1
+[INFO] 15:18:30:411 CPU/(4341:4342): ID CPU: 1 conectado a Memoria
+[INFO] 15:18:35:414 CPU/(4341:4342): Rafaga concluida. PID 4.
+[INFO] 15:20:00:681 CPU/(4341:4342): Recibido mProc: 5, path: corto.cod, puntero: 2
+[INFO] 15:20:00:681 CPU/(4341:4342): ID CPU: 1 conectado a Memoria
+[INFO] 15:20:05:682 CPU/(4341:4342): Recibido mProc: 5, path: corto.cod, puntero: 3
+[INFO] 15:20:05:683 CPU/(4341:4342): ID CPU: 1 conectado a Memoria
+[INFO] 15:20:12:686 CPU/(4341:4342): Recibido mProc: 5, path: corto.cod, puntero: 4
+[INFO] 15:20:12:687 CPU/(4341:4342): ID CPU: 1 conectado a Memoria
+[INFO] 15:20:19:689 CPU/(4341:4342): Recibido mProc: 5, path: corto.cod, puntero: 5
+[INFO] 15:20:19:690 CPU/(4341:4342): ID CPU: 1 conectado a Memoria
+[INFO] 15:20:26:692 CPU/(4341:4342): Recibido mProc: 5, path: corto.cod, puntero: 6
+[INFO] 15:20:31:693 CPU/(4341:4342): Rafaga concluida. PID 5.
+[INFO] 15:20:36:735 CPU/(4341:4342): Recibido mProc: 5, path: corto.cod, puntero: 7
+[INFO] 15:20:36:735 CPU/(4341:4342): ID CPU: 1 conectado a Memoria
+[INFO] 15:20:41:736 CPU/(4341:4342): Recibido mProc: 5, path: corto.cod, puntero: 8
+[INFO] 15:20:41:737 CPU/(4341:4342): ID CPU: 1 conectado a Memoria
+[INFO] 15:20:46:740 CPU/(4341:4342): Recibido mProc: 5, path: corto.cod, puntero: 9
+[INFO] 15:20:46:740 CPU/(4341:4342): ID CPU: 1 conectado a Memoria
+[INFO] 15:20:51:741 CPU/(4341:4342): Recibido mProc: 5, path: corto.cod, puntero: 10
+[INFO] 15:20:51:741 CPU/(4341:4342): ID CPU: 1 conectado a Memoria
+[INFO] 15:20:56:742 CPU/(4341:4342): Rafaga concluida. PID 5.
+[INFO] 15:21:12:209 CPU/(4341:4341): ---------------------FIN---------------------
+[INFO] 15:25:33:176 CPU/(4708:4710): Conectado CPU 4!!
+[INFO] 15:25:33:177 CPU/(4708:4709): Planificador: 5 conectado, viva!!
+[INFO] 15:25:41:163 CPU/(4708:4709): Recibido mProc: 3, path: corto.cod, puntero: 2
+[INFO] 15:25:41:164 CPU/(4708:4709): ID CPU: 1 conectado a Memoria
+[INFO] 15:25:46:165 CPU/(4708:4709): Recibido mProc: 3, path: corto.cod, puntero: 3
+[INFO] 15:25:46:165 CPU/(4708:4709): ID CPU: 1 conectado a Memoria
+[INFO] 15:25:53:167 CPU/(4708:4709): Recibido mProc: 3, path: corto.cod, puntero: 4
+[INFO] 15:25:53:168 CPU/(4708:4709): ID CPU: 1 conectado a Memoria
+[INFO] 15:26:00:171 CPU/(4708:4709): Recibido mProc: 3, path: corto.cod, puntero: 5
+[INFO] 15:26:00:172 CPU/(4708:4709): ID CPU: 1 conectado a Memoria
+[INFO] 15:26:07:175 CPU/(4708:4709): Recibido mProc: 3, path: corto.cod, puntero: 6
+[INFO] 15:26:12:175 CPU/(4708:4709): Rafaga concluida. PID 3.
+[INFO] 15:26:17:216 CPU/(4708:4709): Recibido mProc: 3, path: corto.cod, puntero: 7
+[INFO] 15:26:17:216 CPU/(4708:4709): ID CPU: 1 conectado a Memoria
+[INFO] 15:26:22:218 CPU/(4708:4709): Recibido mProc: 3, path: corto.cod, puntero: 8
+[INFO] 15:26:22:219 CPU/(4708:4709): ID CPU: 1 conectado a Memoria
+[INFO] 15:26:27:221 CPU/(4708:4709): Recibido mProc: 3, path: corto.cod, puntero: 9
+[INFO] 15:26:27:222 CPU/(4708:4709): ID CPU: 1 conectado a Memoria
+[INFO] 15:26:32:223 CPU/(4708:4709): Recibido mProc: 3, path: corto.cod, puntero: 10
+[INFO] 15:26:32:223 CPU/(4708:4709): ID CPU: 1 conectado a Memoria
+[INFO] 15:26:37:226 CPU/(4708:4709): Rafaga concluida. PID 3.
+[INFO] 15:26:37:444 CPU/(4708:4710): Rafaga concluida. PID 4
+[INFO] 15:26:37:445 CPU/(4708:4708): ---------------------FIN---------------------
+[INFO] 15:31:40:934 CPU/(4864:4866): Conectado CPU 4!!
+[INFO] 15:31:40:935 CPU/(4864:4865): Planificador: 5 conectado, viva!!
+[INFO] 15:31:48:831 CPU/(4864:4865): Recibido mProc: 3, path: cpu.cod, puntero: 2
+[INFO] 15:31:48:831 CPU/(4864:4865): ID CPU: 1 conectado a Memoria
+[INFO] 15:31:53:833 CPU/(4864:4865): Recibido mProc: 3, path: cpu.cod, puntero: 3
+[INFO] 15:31:53:834 CPU/(4864:4865): ID CPU: 1 conectado a Memoria
+[INFO] 15:32:00:838 CPU/(4864:4865): Recibido mProc: 3, path: cpu.cod, puntero: 4
+[INFO] 15:32:00:839 CPU/(4864:4865): ID CPU: 1 conectado a Memoria
+[INFO] 15:32:05:841 CPU/(4864:4865): Recibido mProc: 3, path: cpu.cod, puntero: 5
+[INFO] 15:32:05:841 CPU/(4864:4865): ID CPU: 1 conectado a Memoria
+[INFO] 15:32:10:842 CPU/(4864:4865): Recibido mProc: 3, path: cpu.cod, puntero: 6
+[INFO] 15:32:10:842 CPU/(4864:4865): ID CPU: 1 conectado a Memoria
+[INFO] 15:32:15:845 CPU/(4864:4865): Recibido mProc: 3, path: cpu.cod, puntero: 7
+[INFO] 15:32:15:845 CPU/(4864:4865): ID CPU: 1 conectado a Memoria
+[INFO] 15:32:20:846 CPU/(4864:4865): Recibido mProc: 3, path: cpu.cod, puntero: 8
+[INFO] 15:32:20:847 CPU/(4864:4865): ID CPU: 1 conectado a Memoria
+[INFO] 15:32:25:849 CPU/(4864:4865): Recibido mProc: 3, path: cpu.cod, puntero: 9
+[INFO] 15:32:25:849 CPU/(4864:4865): ID CPU: 1 conectado a Memoria
+[INFO] 15:32:30:850 CPU/(4864:4865): Recibido mProc: 3, path: cpu.cod, puntero: 10
+[INFO] 15:32:30:851 CPU/(4864:4865): ID CPU: 1 conectado a Memoria
+[INFO] 15:32:35:852 CPU/(4864:4865): Recibido mProc: 3, path: cpu.cod, puntero: 11
+[INFO] 15:32:35:852 CPU/(4864:4865): ID CPU: 1 conectado a Memoria
+[INFO] 15:32:40:853 CPU/(4864:4865): Recibido mProc: 3, path: cpu.cod, puntero: 12
+[INFO] 15:32:40:854 CPU/(4864:4865): ID CPU: 1 conectado a Memoria
+[INFO] 15:32:45:855 CPU/(4864:4865): Recibido mProc: 3, path: cpu.cod, puntero: 13
+[INFO] 15:32:45:856 CPU/(4864:4865): ID CPU: 1 conectado a Memoria
+[INFO] 15:32:50:857 CPU/(4864:4865): Recibido mProc: 3, path: cpu.cod, puntero: 14
+[INFO] 15:32:50:857 CPU/(4864:4865): ID CPU: 1 conectado a Memoria
+[INFO] 15:32:55:858 CPU/(4864:4865): Recibido mProc: 3, path: cpu.cod, puntero: 15
+[INFO] 15:32:55:859 CPU/(4864:4865): ID CPU: 1 conectado a Memoria
+[INFO] 15:33:00:860 CPU/(4864:4865): Recibido mProc: 3, path: cpu.cod, puntero: 16
+[INFO] 15:33:00:861 CPU/(4864:4865): ID CPU: 1 conectado a Memoria
+[INFO] 15:33:05:862 CPU/(4864:4865): Recibido mProc: 3, path: cpu.cod, puntero: 17
+[INFO] 15:33:05:863 CPU/(4864:4865): ID CPU: 1 conectado a Memoria
+[INFO] 15:33:10:865 CPU/(4864:4865): Recibido mProc: 3, path: cpu.cod, puntero: 18
+[INFO] 15:33:10:866 CPU/(4864:4865): ID CPU: 1 conectado a Memoria
+[INFO] 15:33:15:868 CPU/(4864:4865): Recibido mProc: 3, path: cpu.cod, puntero: 19
+[INFO] 15:33:15:868 CPU/(4864:4865): ID CPU: 1 conectado a Memoria
+[INFO] 15:33:20:870 CPU/(4864:4865): Rafaga concluida. PID 3.
+[INFO] 15:33:21:82 CPU/(4864:4866): Rafaga concluida. PID 4
+[INFO] 15:33:21:82 CPU/(4864:4864): ---------------------FIN---------------------
+[INFO] 15:34:05:448 CPU/(4975:4977): Conectado CPU 4!!
+[INFO] 15:34:05:449 CPU/(4975:4977): Rafaga concluida. PID 4
+[INFO] 15:34:47:322 CPU/(4990:4992): Conectado CPU 4!!
+[INFO] 15:34:47:323 CPU/(4990:4991): Planificador: 5 conectado, viva!!
+[INFO] 15:34:58:835 CPU/(4990:4991): Recibido mProc: 3, path: cpu.cod, puntero: 2
+[INFO] 15:34:58:836 CPU/(4990:4991): ID CPU: 1 conectado a Memoria
+[INFO] 15:35:03:839 CPU/(4990:4991): Recibido mProc: 3, path: cpu.cod, puntero: -1
+[INFO] 15:35:03:840 CPU/(4990:4991): ID CPU: 1 conectado a Memoria
+[INFO] 15:35:08:842 CPU/(4990:4991): Rafaga concluida. PID 3.
+[INFO] 15:35:22:880 CPU/(4990:4992): Rafaga concluida. PID 4
+[INFO] 15:35:22:881 CPU/(4990:4990): ---------------------FIN---------------------
+[INFO] 15:37:38:496 CPU/(5123:5125): Conectado CPU 4!!
+[INFO] 15:37:38:497 CPU/(5123:5124): Planificador: 5 conectado, viva!!
+[INFO] 15:37:46:532 CPU/(5123:5124): Recibido mProc: 3, path: corto.cod, puntero: 2
+[INFO] 15:37:46:532 CPU/(5123:5124): ID CPU: 1 conectado a Memoria
+[INFO] 15:37:51:533 CPU/(5123:5124): Recibido mProc: 3, path: corto.cod, puntero: 3
+[INFO] 15:37:51:534 CPU/(5123:5124): ID CPU: 1 conectado a Memoria
+[INFO] 15:37:58:537 CPU/(5123:5124): Recibido mProc: 3, path: corto.cod, puntero: 10
+[INFO] 15:37:58:537 CPU/(5123:5124): ID CPU: 1 conectado a Memoria
+[INFO] 15:38:03:538 CPU/(5123:5124): Rafaga concluida. PID 3.
+[INFO] 15:38:13:718 CPU/(5123:5123): ---------------------FIN---------------------
+[INFO] 22:14:07:952 CPU/(2514:2516): Conectado CPU 4!!
+[INFO] 22:14:07:953 CPU/(2514:2515): Planificador: 5 conectado, viva!!
+[INFO] 22:14:12:759 CPU/(2514:2516): Rafaga concluida. PID 4
+[INFO] 22:14:12:760 CPU/(2514:2514): ---------------------FIN---------------------
