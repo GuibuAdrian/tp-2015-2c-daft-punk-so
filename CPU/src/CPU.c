@@ -315,38 +315,46 @@ void recibirPath1(int serverSocket, int idNodo)
 			char * linea;
 			int puntero = unaPersona.puntero;
 
-			if(unaPersona.puntero == -1)
+			FILE* file;
+			file = txt_open_for_read(unaPersona.path);
+
+			if(file==NULL)
 			{
-				FILE* file;
-				file = txt_open_for_read(unaPersona.path);
-				puntero = txt_total_lines(file) + 1;
-
-				txt_close_file(file);
+				enviarRespuestaPlanificador(serverSocket, unaPersona.pid, -1, -1, "/");
 			}
+			else
+			{
+				if(unaPersona.puntero == -1)
+				{
+					puntero = txt_total_lines(file) + 1;
 
-			linea = obtenerLinea(unaPersona.path, puntero);
+					txt_close_file(file);
+				}
+
+				linea = obtenerLinea(unaPersona.path, puntero);
 
 
-			pthread_mutex_lock(&mutex2);
+				pthread_mutex_lock(&mutex2);
 
-			log_info(logger,"Recibido mProc: %d, path: %s, puntero: %d", unaPersona.pid, unaPersona.path, puntero);
+				log_info(logger,"Recibido mProc: %d, path: %s, puntero: %d", unaPersona.pid, unaPersona.path, puntero);
 
-			interpretarLinea(serverSocket,linea, unaPersona.pid, idNodo);
+				interpretarLinea(serverSocket,linea, unaPersona.pid, idNodo);
 
-			pthread_mutex_unlock(&mutex2);
+				pthread_mutex_unlock(&mutex2);
 
-			pthread_mutex_lock(&mutexCPU);
-			int posCPU = encontrarPosicionCPU(serverSocket);
-			t_cpu* new = buscarCPU(serverSocket);
+				pthread_mutex_lock(&mutexCPU);
+				int posCPU = encontrarPosicionCPU(serverSocket);
+				t_cpu* new = buscarCPU(serverSocket);
 
-			list_replace_and_destroy_element(listaCPUs, posCPU, cpu_create(new->idCPU, new->tiempoUso, new->tiempoUsoActual, new->socketPan) ,(void*) cpu_destroy);
+				list_replace_and_destroy_element(listaCPUs, posCPU, cpu_create(new->idCPU, new->tiempoUso, new->tiempoUsoActual, new->socketPan) ,(void*) cpu_destroy);
 
-			pthread_mutex_unlock(&mutexCPU);
+				pthread_mutex_unlock(&mutexCPU);
 
-			strncpy(unaPersona.path, " ", PACKAGESIZE);
+				strncpy(unaPersona.path, " ", PACKAGESIZE);
 
-			free(linea);
-			free(package2);
+				free(linea);
+				free(package2);
+			}
 		}
 	}
 
