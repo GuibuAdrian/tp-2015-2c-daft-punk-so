@@ -27,13 +27,13 @@ endif
 all: Planificador
 
 dependents:
-	-cd /home/utnso/github/tp-2015-2c-daft-punk-so/commons/Debug && $(MAKE) all
+	-cd /home/utnso/tp-2015-2c-daft-punk-so/commons/Debug && $(MAKE) clean all
 
 # Tool invocations
-Planificador: $(OBJS) $(USER_OBJS) /home/utnso/github/tp-2015-2c-daft-punk-so/commons/Debug/libcommons.so
+Planificador: $(OBJS) $(USER_OBJS) /home/utnso/tp-2015-2c-daft-punk-so/commons/Debug/libcommons.so
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc -L"/home/utnso/github/tp-2015-2c-daft-punk-so/commons/Debug" -o "Planificador" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc -L"/home/utnso/tp-2015-2c-daft-punk-so/commons/Debug" -o "Planificador" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -44,6 +44,6 @@ clean:
 
 .PHONY: all clean dependents
 .SECONDARY:
-/home/utnso/github/tp-2015-2c-daft-punk-so/commons/Debug/libcommons.so:
+/home/utnso/tp-2015-2c-daft-punk-so/commons/Debug/libcommons.so:
 
 -include ../makefile.targets

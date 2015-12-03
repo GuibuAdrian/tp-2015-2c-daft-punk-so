@@ -2,17 +2,10 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-O_SRCS := 
-C_SRCS := 
-S_UPPER_SRCS := 
-OBJ_SRCS := 
-ASM_SRCS := 
-OBJS := 
-C_DEPS := 
-EXECUTABLES := 
+# Add inputs and outputs from these tool invocations to the build variables 
+O_SRCS += \
+../src/src/planificador.o 
 
-# Every subdirectory with source files must be described here
-SUBDIRS := \
-src/src \
-src \
+
+# Each subdirectory must supply rules for building sources it contributes
 
