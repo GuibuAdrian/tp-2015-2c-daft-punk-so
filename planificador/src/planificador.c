@@ -567,6 +567,12 @@ void ROUND_ROBIN(void* args)
 		Q++;
 	}
 
+	pthread_mutex_lock(&mutexCPU);
+	int posCPU = encontrarPosicionHiloCPU(idHiloCPU); //Busco posicion del CPU
+	list_replace_and_destroy_element(listaCPUs, posCPU, hiloCPU_create(idHiloCPU, socketCliente, 1), (void*) hiloCPU_destroy);	//Pongo en Disponible al CPU q usaba
+	pthread_mutex_unlock(&mutexCPU);
+	sem_post(&semCPU);
+
 	if(Q>=QUANTUM)
 	{
 		log_info(logger,"FIN Q");
@@ -592,13 +598,6 @@ void ROUND_ROBIN(void* args)
 
 		sem_post(&semPlani);
 	}
-
-	pthread_mutex_lock(&mutexCPU);
-	int posCPU = encontrarPosicionHiloCPU(idHiloCPU); //Busco posicion del CPU
-	list_replace_and_destroy_element(listaCPUs, posCPU, hiloCPU_create(idHiloCPU, socketCliente, 1), (void*) hiloCPU_destroy);	//Pongo en Disponible al CPU q usaba
-	pthread_mutex_unlock(&mutexCPU);
-	sem_post(&semCPU);
-
 
 	free(path);
 	free(args);

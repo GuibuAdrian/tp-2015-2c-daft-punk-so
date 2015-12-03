@@ -93,7 +93,7 @@ void enviarRespuestaPlanificador(int socketPlanificador, int pid, int orden, int
 t_orden_CPU enviarOrdenAMemoria(int pid, int orden, int paginas, char *content, int idNodo);
 t_orden_CPU recibirRespuestaSwap(int socketMemoria);
 char * obtenerLinea(char path[PACKAGESIZE], int puntero);
-void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo);
+void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, time_t inicioInst);
 char * obtenerLinea(char path[PACKAGESIZE], int puntero);
 void cargaCPU();
 void recibirSolicitudCarga_finQ();
@@ -112,7 +112,7 @@ int main()
 	listaCPUs = list_create();
 	listaRespuestas = list_create();
 
-	logger = log_create("logsTP", "CPU", true, LOG_LEVEL_INFO);
+	logger = log_create("logsTP", "CPU", 0, LOG_LEVEL_INFO);
 
 	t_config* config;
 
@@ -318,6 +318,9 @@ void recibirPath1(int serverSocket, int idNodo)
 			FILE* file;
 			file = txt_open_for_read(unaPersona.path);
 
+			time_t inicioInst;
+			time(&inicioInst);
+
 			if(file==NULL)
 			{
 				enviarRespuestaPlanificador(serverSocket, unaPersona.pid, -1, -1, "/");
@@ -336,9 +339,11 @@ void recibirPath1(int serverSocket, int idNodo)
 
 				pthread_mutex_lock(&mutex2);
 
-				log_info(logger,"Recibido mProc: %d, path: %s, puntero: %d", unaPersona.pid, unaPersona.path, puntero);
+				log_info(logger,"Recibido mProc: %d, path: %s, puntero: %d", unaPersona.pid,
+						unaPersona.path, puntero);
 
-				interpretarLinea(serverSocket,linea, unaPersona.pid, idNodo);
+
+				interpretarLinea(serverSocket,linea, unaPersona.pid, idNodo, inicioInst);
 
 				pthread_mutex_unlock(&mutex2);
 
@@ -346,7 +351,8 @@ void recibirPath1(int serverSocket, int idNodo)
 				int posCPU = encontrarPosicionCPU(serverSocket);
 				t_cpu* new = buscarCPU(serverSocket);
 
-				list_replace_and_destroy_element(listaCPUs, posCPU, cpu_create(new->idCPU, new->tiempoUso, new->tiempoUsoActual, new->socketPan) ,(void*) cpu_destroy);
+				list_replace_and_destroy_element(listaCPUs, posCPU, cpu_create(new->idCPU, new->tiempoUso,
+						new->tiempoUsoActual, new->socketPan) ,(void*) cpu_destroy);
 
 				pthread_mutex_unlock(&mutexCPU);
 
@@ -371,7 +377,8 @@ void enviarRespuestas(int socketPlanificador, int pid)
 		new = list_get(listaRespuestas, i);
 		if(new->pid == pid)
 		{
-			enviarRespuestaPlanificador(socketPlanificador, new->pid, new->orden, new->pagina, new->content);
+			enviarRespuestaPlanificador(socketPlanificador, new->pid, new->orden, new->pagina,
+					new->content);
 		}
 	}
 
@@ -380,14 +387,12 @@ void enviarRespuestas(int socketPlanificador, int pid)
 	removerPID(pid);
 }
 
-void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo)
+void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, time_t inicioInst)
 {
 	char * pch = strtok(linea, " \n");
 	int pagina = 0;
 	t_orden_CPU mensaje;
-	time_t inicioInst;
 
-	time(&inicioInst);
 
 	if (strncmp(pch, "finalizar", 9) == 0)
 	{
@@ -435,14 +440,16 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo)
 
 			if(mensaje.orden!=1)
 			{
-				list_add(listaRespuestas, respuesta_create(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content));
+				list_add(listaRespuestas, respuesta_create(mensaje.pid, mensaje.orden, mensaje.pagina,
+						mensaje.content));
 			}
 
 		}//else iniciar
 	}//else entrada-salida
 
 	sleep(RETARDO);
-	enviarRespuestaPlanificador(socketPlanificador, mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content);
+	enviarRespuestaPlanificador(socketPlanificador, mensaje.pid, mensaje.orden, mensaje.pagina,
+			mensaje.content);
 
 	if((mensaje.orden==3) || (mensaje.orden ==5) )
 	{
@@ -462,6 +469,9 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo)
 
 
 	unCPU->tiempoUsoActual = unCPU->tiempoUsoActual + difftime(finInst, inicioInst);
+
+
+	printf("CPU: %d, %.2f\n", idNodo, unCPU->tiempoUsoActual);
 	list_replace_and_destroy_element(listaCPUs, posCPU, cpu_create(unCPU->idCPU, unCPU->tiempoUso, unCPU->tiempoUsoActual, socketPlanificador) ,(void*) cpu_destroy);
 
 
@@ -561,7 +571,8 @@ void reiniciarCarga()
 		{
 			new = list_get(listaCPUs, i);
 
-			list_replace_and_destroy_element(listaCPUs, i, cpu_create(new->idCPU, new->tiempoUsoActual, 0, new->socketPan) ,(void*) cpu_destroy);
+			list_replace_and_destroy_element(listaCPUs, i, cpu_create(new->idCPU, new->tiempoUsoActual, 0,
+					new->socketPan) ,(void*) cpu_destroy);
 		}
 
 
@@ -598,7 +609,8 @@ void removerPID(int pid)
 			return 0;
 		}
 
-		list_remove_and_destroy_by_condition(listaRespuestas, (void*) compararPorIdentificador2, (void*) respuesta_destroy);
+		list_remove_and_destroy_by_condition(listaRespuestas, (void*) compararPorIdentificador2,
+				(void*) respuesta_destroy);
 
 		new = buscarPID(pid);
 	}
@@ -663,7 +675,8 @@ int tamanioEstructura1(t_pathMensaje unaPersona) {
 
 int tamanioMensajeMemo(t_orden_CPU mensajeMemo)
 {
-	return (sizeof(mensajeMemo.pid)+sizeof(mensajeMemo.pagina)+sizeof(mensajeMemo.orden)+sizeof(mensajeMemo.contentSize)+mensajeMemo.contentSize);
+	return (sizeof(mensajeMemo.pid)+sizeof(mensajeMemo.pagina)+sizeof(mensajeMemo.orden)+
+			sizeof(mensajeMemo.contentSize)+mensajeMemo.contentSize);
 };
 int tamanioEstructura2(t_pathMensaje unaPersona) {
 	return (sizeof(unaPersona.puntero) + sizeof(unaPersona.pathSize)
