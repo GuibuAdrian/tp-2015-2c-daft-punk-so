@@ -29,10 +29,10 @@ dependents:
 	-cd /home/utnso/tp-2015-2c-daft-punk-so/commons/Debug && $(MAKE) all
 
 # Tool invocations
-CPU: $(OBJS) $(USER_OBJS) /home/utnso/tp-2015-2c-daft-punk-so/workspace/commons/Debug/libcommons.so
+CPU: $(OBJS) $(USER_OBJS) /home/utnso/tp-2015-2c-daft-punk-so/commons/Debug/libcommons.so
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc -L"/home/utnso/git/tp-2015-2c-daft-punk-so/workspace/commons/Debug" -o "CPU" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc -L"/home/utnso/git/tp-2015-2c-daft-punk-so/commons/Debug" -o "CPU" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -43,6 +43,6 @@ clean:
 
 .PHONY: all clean dependents
 .SECONDARY:
-/home/utnso/git/tp-2015-2c-daft-punk-so/workspace/commons/Debug/libcommons.so:
+/home/utnso/git/tp-2015-2c-daft-punk-so/commons/Debug/libcommons.so:
 
 -include ../makefile.targets
