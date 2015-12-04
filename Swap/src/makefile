@@ -8,5 +8,5 @@ Swap: socket.o
 	rm -R socket.o
 
 clean:
-	rm -R Swap
-	
+	-$(RM) $(OBJS)$(C_DEPS)$(EXECUTABLES) Swap
+	-@echo ' '

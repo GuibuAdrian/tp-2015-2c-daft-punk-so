@@ -6,6 +6,7 @@ memoria: socket.o
 	gcc -o memoria memoria.o socket.o -lcommons -lpthread 
 	rm -R memoria.o
 	rm -R socket.o
-	
+
 clean:
-	rm -R memoria	
+	-$(RM) $(OBJS)$(C_DEPS)$(EXECUTABLES) Memoria
+	-@echo ' '	
