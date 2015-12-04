@@ -94,7 +94,7 @@ t_list *listaCPUs, *listaPCB, *listaReady, *listaIO;
 sem_t semPlani, semFZ, semCPU, semIO;
 pthread_mutex_t mutexCPU, mutexPCB, mutexReady, mutexIO;
 char *ALGORITMO_PLANIFICACION;
-int pid=2, cantHilos, QUANTUM, socketCPUCarga;
+int pid=0, cantHilos, QUANTUM, socketCPUCarga;
 
 int tamanioMensaje1(t_mensaje1 mensaje);
 int tamanioHiloCPU(t_hiloCPU mensaje);

@@ -1,0 +1,179 @@
+[INFO] 22:13:12:315 PLANIFICADOR/(4064:4064): Recibiendo CPU
+[INFO] 22:13:12:316 PLANIFICADOR/(4064:4064): CPU: 1 Conectado
+[INFO] 22:13:12:316 PLANIFICADOR/(4064:4064): Recibiendo CPU
+[INFO] 22:13:12:316 PLANIFICADOR/(4064:4064): CPU: 2 Conectado
+[INFO] 22:15:06:475 PLANIFICADOR/(4064:4080): Correr algo.cod, mProc: 3, en 1
+[INFO] 22:15:16:514 PLANIFICADOR/(4064:4081): Correr algo.cod, mProc: 4, en 2
+[INFO] 22:15:34:535 PLANIFICADOR/(4064:4080): mProc 3 - Iniciado
+[INFO] 22:15:34:535 PLANIFICADOR/(4064:4080): mProc 3 - Pagina 0 escrita: hola
+[INFO] 22:15:34:535 PLANIFICADOR/(4064:4080): mProc 3 - Pagina 1 escrita: chau
+[INFO] 22:15:34:535 PLANIFICADOR/(4064:4080): mProc 3 - Pagina 4 escrita: si
+[INFO] 22:15:34:535 PLANIFICADOR/(4064:4080): mProc 3 - Pagina 0 leida: chau
+[INFO] 22:15:34:535 PLANIFICADOR/(4064:4080): mProc 3 - Pagina 4 leida: si
+[INFO] 22:15:34:535 PLANIFICADOR/(4064:4080): mProc 3 finalizado
+[INFO] 22:15:34:535 PLANIFICADOR/(4064:4082): Correr algo.cod, mProc: 5, en 1
+[INFO] 22:15:53:551 PLANIFICADOR/(4064:4081): mProc 4 - Iniciado
+[INFO] 22:15:53:551 PLANIFICADOR/(4064:4081): mProc 4 - Pagina 0 escrita: hola
+[INFO] 22:15:53:551 PLANIFICADOR/(4064:4081): mProc 4 - Pagina 1 escrita: chau
+[INFO] 22:15:53:551 PLANIFICADOR/(4064:4081): mProc 4 - Pagina 4 escrita: si
+[INFO] 22:15:53:551 PLANIFICADOR/(4064:4081): mProc 4 - Pagina 0 leida: chau
+[INFO] 22:15:53:551 PLANIFICADOR/(4064:4081): mProc 4 - Pagina 4 leida: si
+[INFO] 22:15:53:551 PLANIFICADOR/(4064:4081): mProc 4 finalizado
+[INFO] 22:15:53:551 PLANIFICADOR/(4064:4083): Correr algo.cod, mProc: 6, en 2
+[INFO] 22:16:12:567 PLANIFICADOR/(4064:4082): mProc 5 - Iniciado
+[INFO] 22:16:12:567 PLANIFICADOR/(4064:4082): mProc 5 - Pagina 0 escrita: hola
+[INFO] 22:16:12:567 PLANIFICADOR/(4064:4082): mProc 5 - Pagina 1 escrita: chau
+[INFO] 22:16:12:567 PLANIFICADOR/(4064:4082): mProc 5 - Pagina 4 escrita: si
+[INFO] 22:16:12:567 PLANIFICADOR/(4064:4082): mProc 5 - Pagina 0 leida: chau
+[INFO] 22:16:12:567 PLANIFICADOR/(4064:4082): mProc 5 - Pagina 4 leida: si
+[INFO] 22:16:12:567 PLANIFICADOR/(4064:4082): mProc 5 finalizado
+[INFO] 22:16:12:567 PLANIFICADOR/(4064:4085): Correr MuyLargo.cod, mProc: 7, en 1
+[INFO] 22:16:17:535 PLANIFICADOR/(4064:4085): mProc 7 - Fallo
+[INFO] 22:16:22:580 PLANIFICADOR/(4064:4085): mProc 7 finalizado
+[INFO] 22:16:22:580 PLANIFICADOR/(4064:4086): Correr MuyLargo.cod, mProc: 8, en 1
+[INFO] 22:16:24:543 PLANIFICADOR/(4064:4086): mProc 8 - Fallo
+[INFO] 22:16:25:583 PLANIFICADOR/(4064:4083): mProc 6 - Iniciado
+[INFO] 22:16:25:584 PLANIFICADOR/(4064:4083): mProc 6 - Pagina 0 escrita: hola
+[INFO] 22:16:25:584 PLANIFICADOR/(4064:4083): mProc 6 - Pagina 1 escrita: chau
+[INFO] 22:16:25:584 PLANIFICADOR/(4064:4083): mProc 6 - Pagina 4 escrita: si
+[INFO] 22:16:25:584 PLANIFICADOR/(4064:4083): mProc 6 - Pagina 0 leida: chau
+[INFO] 22:16:25:584 PLANIFICADOR/(4064:4083): mProc 6 - Pagina 4 leida: si
+[INFO] 22:16:25:584 PLANIFICADOR/(4064:4083): mProc 6 finalizado
+[INFO] 22:16:26:587 PLANIFICADOR/(4064:4086): mProc 8 finalizado
+[INFO] 22:17:58:163 PLANIFICADOR/(4064:4091): Correr MuyLargo.cod, mProc: 9, en 1
+[INFO] 22:17:59:165 PLANIFICADOR/(4064:4091): mProc 9 - Fallo
+[INFO] 22:18:00:207 PLANIFICADOR/(4064:4091): mProc 9 finalizado
+[INFO] 22:18:12:108 PLANIFICADOR/(4064:4093): Correr algo.cod, mProc: 10, en 1
+[INFO] 22:18:14:374 PLANIFICADOR/(4064:4094): Correr algo.cod, mProc: 11, en 2
+[INFO] 22:18:48:176 PLANIFICADOR/(4064:4093): mProc 10 - Iniciado
+[INFO] 22:18:48:176 PLANIFICADOR/(4064:4093): mProc 10 - Pagina 0 escrita: hola
+[INFO] 22:18:48:176 PLANIFICADOR/(4064:4093): mProc 10 - Pagina 1 escrita: chau
+[INFO] 22:18:48:176 PLANIFICADOR/(4064:4093): mProc 10 - Pagina 4 escrita: si
+[INFO] 22:18:48:176 PLANIFICADOR/(4064:4093): mProc 10 - Pagina 0 leida: chau
+[INFO] 22:18:48:176 PLANIFICADOR/(4064:4093): mProc 10 - Pagina 4 leida: si
+[INFO] 22:18:48:176 PLANIFICADOR/(4064:4093): mProc 10 finalizado
+[INFO] 22:18:48:176 PLANIFICADOR/(4064:4095): Correr algo.cod, mProc: 12, en 1
+[INFO] 22:18:51:183 PLANIFICADOR/(4064:4094): mProc 11 - Iniciado
+[INFO] 22:18:51:183 PLANIFICADOR/(4064:4094): mProc 11 - Pagina 0 escrita: hola
+[INFO] 22:18:51:183 PLANIFICADOR/(4064:4094): mProc 11 - Pagina 1 escrita: chau
+[INFO] 22:18:51:183 PLANIFICADOR/(4064:4094): mProc 11 - Pagina 4 escrita: si
+[INFO] 22:18:51:183 PLANIFICADOR/(4064:4094): mProc 11 - Pagina 0 leida: chau
+[INFO] 22:18:51:184 PLANIFICADOR/(4064:4094): mProc 11 - Pagina 4 leida: si
+[INFO] 22:18:51:184 PLANIFICADOR/(4064:4094): mProc 11 finalizado
+[INFO] 22:18:51:184 PLANIFICADOR/(4064:4096): Correr algo.cod, mProc: 13, en 2
+[INFO] 22:19:26:219 PLANIFICADOR/(4064:4095): mProc 12 - Iniciado
+[INFO] 22:19:26:219 PLANIFICADOR/(4064:4095): mProc 12 - Pagina 0 escrita: hola
+[INFO] 22:19:26:219 PLANIFICADOR/(4064:4095): mProc 12 - Pagina 1 escrita: chau
+[INFO] 22:19:26:219 PLANIFICADOR/(4064:4095): mProc 12 - Pagina 4 escrita: si
+[INFO] 22:19:26:219 PLANIFICADOR/(4064:4095): mProc 12 - Pagina 0 leida: chau
+[INFO] 22:19:26:219 PLANIFICADOR/(4064:4095): mProc 12 - Pagina 4 leida: si
+[INFO] 22:19:26:219 PLANIFICADOR/(4064:4095): mProc 12 finalizado
+[INFO] 22:19:26:219 PLANIFICADOR/(4064:4098): Correr algo.cod, mProc: 14, en 1
+[INFO] 22:19:29:224 PLANIFICADOR/(4064:4096): mProc 13 - Iniciado
+[INFO] 22:19:29:225 PLANIFICADOR/(4064:4096): mProc 13 - Pagina 0 escrita: hola
+[INFO] 22:19:29:225 PLANIFICADOR/(4064:4096): mProc 13 - Pagina 1 escrita: chau
+[INFO] 22:19:29:225 PLANIFICADOR/(4064:4096): mProc 13 - Pagina 4 escrita: si
+[INFO] 22:19:29:225 PLANIFICADOR/(4064:4096): mProc 13 - Pagina 0 leida: chau
+[INFO] 22:19:29:225 PLANIFICADOR/(4064:4096): mProc 13 - Pagina 4 leida: si
+[INFO] 22:19:29:225 PLANIFICADOR/(4064:4096): mProc 13 finalizado
+[INFO] 22:19:29:225 PLANIFICADOR/(4064:4099): Correr algo.cod, mProc: 15, en 2
+[INFO] 22:20:04:251 PLANIFICADOR/(4064:4098): mProc 14 - Iniciado
+[INFO] 22:20:04:251 PLANIFICADOR/(4064:4098): mProc 14 - Pagina 0 escrita: hola
+[INFO] 22:20:04:251 PLANIFICADOR/(4064:4098): mProc 14 - Pagina 1 escrita: chau
+[INFO] 22:20:04:251 PLANIFICADOR/(4064:4098): mProc 14 - Pagina 4 escrita: si
+[INFO] 22:20:04:251 PLANIFICADOR/(4064:4098): mProc 14 - Pagina 0 leida: chau
+[INFO] 22:20:04:251 PLANIFICADOR/(4064:4098): mProc 14 - Pagina 4 leida: si
+[INFO] 22:20:04:251 PLANIFICADOR/(4064:4098): mProc 14 finalizado
+[INFO] 22:20:04:252 PLANIFICADOR/(4064:4101): Correr algo.cod, mProc: 16, en 1
+[INFO] 22:20:07:255 PLANIFICADOR/(4064:4099): mProc 15 - Iniciado
+[INFO] 22:20:07:255 PLANIFICADOR/(4064:4099): mProc 15 - Pagina 0 escrita: hola
+[INFO] 22:20:07:255 PLANIFICADOR/(4064:4099): mProc 15 - Pagina 1 escrita: chau
+[INFO] 22:20:07:255 PLANIFICADOR/(4064:4099): mProc 15 - Pagina 4 escrita: si
+[INFO] 22:20:07:255 PLANIFICADOR/(4064:4099): mProc 15 - Pagina 0 leida: chau
+[INFO] 22:20:07:255 PLANIFICADOR/(4064:4099): mProc 15 - Pagina 4 leida: si
+[INFO] 22:20:07:255 PLANIFICADOR/(4064:4099): mProc 15 finalizado
+[INFO] 22:20:07:255 PLANIFICADOR/(4064:4102): Correr algo.cod, mProc: 17, en 2
+[INFO] 22:20:42:283 PLANIFICADOR/(4064:4101): mProc 16 - Iniciado
+[INFO] 22:20:42:283 PLANIFICADOR/(4064:4101): mProc 16 - Pagina 0 escrita: hola
+[INFO] 22:20:42:283 PLANIFICADOR/(4064:4101): mProc 16 - Pagina 1 escrita: chau
+[INFO] 22:20:42:283 PLANIFICADOR/(4064:4101): mProc 16 - Pagina 4 escrita: si
+[INFO] 22:20:42:283 PLANIFICADOR/(4064:4101): mProc 16 - Pagina 0 leida: chau
+[INFO] 22:20:42:283 PLANIFICADOR/(4064:4101): mProc 16 - Pagina 4 leida: si
+[INFO] 22:20:42:283 PLANIFICADOR/(4064:4101): mProc 16 finalizado
+[INFO] 22:20:42:283 PLANIFICADOR/(4064:4103): Correr algo.cod, mProc: 18, en 1
+[INFO] 22:20:45:288 PLANIFICADOR/(4064:4102): mProc 17 - Iniciado
+[INFO] 22:20:45:288 PLANIFICADOR/(4064:4102): mProc 17 - Pagina 0 escrita: hola
+[INFO] 22:20:45:288 PLANIFICADOR/(4064:4102): mProc 17 - Pagina 1 escrita: chau
+[INFO] 22:20:45:288 PLANIFICADOR/(4064:4102): mProc 17 - Pagina 4 escrita: si
+[INFO] 22:20:45:288 PLANIFICADOR/(4064:4102): mProc 17 - Pagina 0 leida: chau
+[INFO] 22:20:45:288 PLANIFICADOR/(4064:4102): mProc 17 - Pagina 4 leida: si
+[INFO] 22:20:45:288 PLANIFICADOR/(4064:4102): mProc 17 finalizado
+[INFO] 22:20:45:288 PLANIFICADOR/(4064:4104): Correr CPU.cod, mProc: 19, en 2
+[INFO] 22:20:45:288 PLANIFICADOR/(4064:4104): El archivo no existe!!
+[INFO] 22:20:45:288 PLANIFICADOR/(4064:4105): Correr caca, mProc: 20, en 2
+[INFO] 22:20:45:288 PLANIFICADOR/(4064:4105): El archivo no existe!!
+[INFO] 22:21:03:307 PLANIFICADOR/(4064:4103): mProc 18 - Iniciado
+[INFO] 22:21:03:307 PLANIFICADOR/(4064:4103): mProc 18 - Pagina 0 escrita: hola
+[INFO] 22:21:03:307 PLANIFICADOR/(4064:4103): mProc 18 - Pagina 1 escrita: chau
+[INFO] 22:21:03:307 PLANIFICADOR/(4064:4103): mProc 18 - Pagina 4 escrita: si
+[INFO] 22:21:03:307 PLANIFICADOR/(4064:4103): mProc 18 - Pagina 0 leida: chau
+[INFO] 22:21:03:307 PLANIFICADOR/(4064:4103): mProc 18 - Pagina 4 leida: si
+[INFO] 22:21:03:307 PLANIFICADOR/(4064:4103): mProc 18 finalizado
+[INFO] 22:34:05:533 PLANIFICADOR/(4139:4139): Recibiendo CPU
+[INFO] 22:34:05:533 PLANIFICADOR/(4139:4139): CPU: 1 Conectado
+[INFO] 22:34:05:533 PLANIFICADOR/(4139:4139): Recibiendo CPU
+[INFO] 22:34:05:533 PLANIFICADOR/(4139:4139): CPU: 2 Conectado
+[INFO] 22:34:12:500 PLANIFICADOR/(4139:4149): Correr algo.cod, mProc: 3, en 1
+[INFO] 22:36:30:312 PLANIFICADOR/(4189:4189): Recibiendo CPU
+[INFO] 22:36:30:438 PLANIFICADOR/(4189:4189): CPU: 2 Conectado
+[INFO] 22:36:30:438 PLANIFICADOR/(4189:4189): Recibiendo CPU
+[INFO] 22:36:30:440 PLANIFICADOR/(4189:4189): CPU: 1 Conectado
+[INFO] 22:36:37:967 PLANIFICADOR/(4189:4203): Correr algo.cod, mProc: 3, en 2
+[INFO] 22:36:41:239 PLANIFICADOR/(4189:4204): Correr algo.cod, mProc: 4, en 1
+[INFO] 22:37:14:219 PLANIFICADOR/(4189:4203): mProc 3 - Iniciado
+[INFO] 22:37:14:219 PLANIFICADOR/(4189:4203): mProc 3 - Pagina 0 escrita: hola
+[INFO] 22:37:14:220 PLANIFICADOR/(4189:4203): mProc 3 - Pagina 1 escrita: chau
+[INFO] 22:37:14:220 PLANIFICADOR/(4189:4203): mProc 3 - Pagina 4 escrita: si
+[INFO] 22:37:14:220 PLANIFICADOR/(4189:4203): mProc 3 - Pagina 0 leida: chau
+[INFO] 22:37:14:220 PLANIFICADOR/(4189:4203): mProc 3 - Pagina 4 leida: si
+[INFO] 22:37:14:220 PLANIFICADOR/(4189:4203): mProc 3 finalizado
+[INFO] 22:37:14:220 PLANIFICADOR/(4189:4205): Correr algo.cod, mProc: 5, en 2
+[INFO] 22:37:17:231 PLANIFICADOR/(4189:4204): mProc 4 - Iniciado
+[INFO] 22:37:17:231 PLANIFICADOR/(4189:4204): mProc 4 - Pagina 0 escrita: hola
+[INFO] 22:37:17:231 PLANIFICADOR/(4189:4204): mProc 4 - Pagina 1 escrita: chau
+[INFO] 22:37:17:231 PLANIFICADOR/(4189:4204): mProc 4 - Pagina 4 escrita: si
+[INFO] 22:37:17:231 PLANIFICADOR/(4189:4204): mProc 4 - Pagina 0 leida: chau
+[INFO] 22:37:17:231 PLANIFICADOR/(4189:4204): mProc 4 - Pagina 4 leida: si
+[INFO] 22:37:17:231 PLANIFICADOR/(4189:4204): mProc 4 finalizado
+[INFO] 22:37:17:232 PLANIFICADOR/(4189:4206): Correr algo.cod, mProc: 6, en 1
+[INFO] 22:37:52:279 PLANIFICADOR/(4189:4205): mProc 5 - Iniciado
+[INFO] 22:37:52:279 PLANIFICADOR/(4189:4205): mProc 5 - Pagina 0 escrita: hola
+[INFO] 22:37:52:279 PLANIFICADOR/(4189:4205): mProc 5 - Pagina 1 escrita: chau
+[INFO] 22:37:52:279 PLANIFICADOR/(4189:4205): mProc 5 - Pagina 4 escrita: si
+[INFO] 22:37:52:279 PLANIFICADOR/(4189:4205): mProc 5 - Pagina 0 leida: chau
+[INFO] 22:37:52:279 PLANIFICADOR/(4189:4205): mProc 5 - Pagina 4 leida: si
+[INFO] 22:37:52:279 PLANIFICADOR/(4189:4205): mProc 5 finalizado
+[INFO] 22:37:52:279 PLANIFICADOR/(4189:4210): Correr benchmark.cod, mProc: 7, en 2
+[INFO] 22:37:54:251 PLANIFICADOR/(4189:4210): mProc 7 - Fallo
+[INFO] 22:37:55:295 PLANIFICADOR/(4189:4206): mProc 6 - Iniciado
+[INFO] 22:37:55:295 PLANIFICADOR/(4189:4206): mProc 6 - Pagina 0 escrita: hola
+[INFO] 22:37:55:295 PLANIFICADOR/(4189:4206): mProc 6 - Pagina 1 escrita: chau
+[INFO] 22:37:55:295 PLANIFICADOR/(4189:4206): mProc 6 - Pagina 4 escrita: si
+[INFO] 22:37:55:295 PLANIFICADOR/(4189:4206): mProc 6 - Pagina 0 leida: chau
+[INFO] 22:37:55:295 PLANIFICADOR/(4189:4206): mProc 6 - Pagina 4 leida: si
+[INFO] 22:37:55:295 PLANIFICADOR/(4189:4206): mProc 6 finalizado
+[INFO] 22:37:55:296 PLANIFICADOR/(4189:4211): Correr benchmark.cod, mProc: 8, en 1
+[INFO] 22:37:56:295 PLANIFICADOR/(4189:4210): mProc 7 finalizado
+[INFO] 22:37:56:295 PLANIFICADOR/(4189:4212): Correr algo.cod, mProc: 9, en 2
+[INFO] 22:37:57:259 PLANIFICADOR/(4189:4211): mProc 8 - Fallo
+[INFO] 22:37:58:303 PLANIFICADOR/(4189:4211): mProc 8 finalizado
+[INFO] 22:38:17:339 PLANIFICADOR/(4189:4212): mProc 9 - Iniciado
+[INFO] 22:38:17:339 PLANIFICADOR/(4189:4212): mProc 9 - Pagina 0 escrita: hola
+[INFO] 22:38:17:339 PLANIFICADOR/(4189:4212): mProc 9 - Pagina 1 escrita: chau
+[INFO] 22:38:17:339 PLANIFICADOR/(4189:4212): mProc 9 - Pagina 4 escrita: si
+[INFO] 22:38:17:339 PLANIFICADOR/(4189:4212): mProc 9 - Pagina 0 leida: chau
+[INFO] 22:38:17:339 PLANIFICADOR/(4189:4212): mProc 9 - Pagina 4 leida: si
+[INFO] 22:38:17:339 PLANIFICADOR/(4189:4212): mProc 9 finalizado
+[INFO] 22:38:46:530 PLANIFICADOR/(4189:4214): Correr benchmark.cod, mProc: 10, en 2
+[INFO] 22:38:47:532 PLANIFICADOR/(4189:4214): mProc 10 - Fallo
+[INFO] 22:38:48:576 PLANIFICADOR/(4189:4214): mProc 10 finalizado
