@@ -443,7 +443,6 @@ int recibirRespuesta(int socketCliente)
 					list_remove_and_destroy_element(listaPCB, posPCB, (void*) PCB_destroy);
 					pthread_mutex_unlock(&mutexPCB);
 
-					printf("Finalizado\n");
 					return -1;
 				}
 				else
@@ -576,7 +575,6 @@ void ROUND_ROBIN(void* args)
 	if(Q>=QUANTUM)
 	{
 		log_info(logger,"FIN Q");
-		printf("FIN Q\n");
 
 		int message = 2;
 		send(socketCPUCarga, &message, sizeof(int), 0);
@@ -879,11 +877,17 @@ void finalizarPID(int pidF)
 {
 	int posPCB =  encontrarPosicionEnPCB(pidF);	//Encontrar pos en listaPCB
 	PCB* unPCB = buscarPCB(pidF);
-
-	sem_post(&semFZ);
-	list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(unPCB->pid,unPCB->path, -2, 1,
-			unPCB->tiempoEjecI, unPCB->tiempoEspeI, unPCB->tiempoEspe, unPCB->tiempoRespI, unPCB->tiempoResp), (void*) PCB_destroy);
-	sem_wait(&semFZ);
+	if(unPCB!=NULL)
+	{
+		sem_post(&semFZ);
+		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(unPCB->pid,unPCB->path, -2, 1,
+				unPCB->tiempoEjecI, unPCB->tiempoEspeI, unPCB->tiempoEspe, unPCB->tiempoRespI, unPCB->tiempoResp), (void*) PCB_destroy);
+		sem_wait(&semFZ);
+	}
+	else
+	{
+		printf("El mProc:%d no existe\n", pidF);
+	}
 
 }
 void mostrarListos()
