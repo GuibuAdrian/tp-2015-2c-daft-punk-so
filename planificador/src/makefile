@@ -8,4 +8,5 @@ Planificador: socket.o
 	rm -R socket.o
 
 clean:
-	rm -R Planificador	
+	-$(RM) $(OBJS)$(C_DEPS)$(EXECUTABLES) Planificador
+	-@echo ' '

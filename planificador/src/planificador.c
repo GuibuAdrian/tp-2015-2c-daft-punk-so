@@ -877,12 +877,21 @@ void finalizarPID(int pidF)
 {
 	int posPCB =  encontrarPosicionEnPCB(pidF);	//Encontrar pos en listaPCB
 	PCB* unPCB = buscarPCB(pidF);
+
 	if(unPCB!=NULL)
 	{
-		sem_post(&semFZ);
-		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(unPCB->pid,unPCB->path, -2, 1,
-				unPCB->tiempoEjecI, unPCB->tiempoEspeI, unPCB->tiempoEspe, unPCB->tiempoRespI, unPCB->tiempoResp), (void*) PCB_destroy);
-		sem_wait(&semFZ);
+		if(unPCB->estado!=2)
+		{
+			sem_post(&semFZ);
+			list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(unPCB->pid,unPCB->path, -2, 1,
+					unPCB->tiempoEjecI, unPCB->tiempoEspeI, unPCB->tiempoEspe, unPCB->tiempoRespI, unPCB->tiempoResp), (void*) PCB_destroy);
+			sem_wait(&semFZ);
+		}
+		else
+		{
+			printf("El mProc:%d esta bloqueado\n", pidF);
+		}
+
 	}
 	else
 	{
