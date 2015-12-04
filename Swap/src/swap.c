@@ -39,7 +39,7 @@ simularPedidoMemoria(80,3,0,null)
 #include <ctype.h>
 
 #include <commons/collections/list.h>
-#include <commons/socket.h>
+#include "socket.h"
 #include <commons/config.h>
 #include <commons/log.h>
 

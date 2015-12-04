@@ -1,0 +1,10 @@
+iniciar 20
+escribir 1 "swap"
+leer 1
+escribir 2 "el"
+leer 2
+escribir 3 "desde"
+leer 3
+escribir 4 "hola"
+leer 4
+finalizar

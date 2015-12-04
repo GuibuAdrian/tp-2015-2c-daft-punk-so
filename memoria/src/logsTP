@@ -2936,3 +2936,655 @@
 [INFO] 15:37:58:537 Memoria/(5133:5133): Proceso 3 Finalizado. Accesos: 1 | Fallos: 1
 [INFO] 15:37:58:537 Memoria/(5133:5133): Proceso 3 finalizado
 [INFO] 15:38:13:719 Memoria/(5133:5133): ---------------------FIN---------------------
+[INFO] 21:42:45:436 Memoria/(3610:3610): Conectado a Swap
+[INFO] 22:13:10:145 Memoria/(4068:4068): Conectado a Swap
+[INFO] 22:14:10:145 Memoria/(4068:4069): Total de accesos: 0. Total de hits: 0. Tasa de aciertos: -nan
+[INFO] 22:15:06:475 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:15:06:475 Memoria/(4068:4068): Proceso 3 iniciado de 5 pags
+[INFO] 22:15:07:476 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:15:07:476 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:15:07:476 Memoria/(4068:4068): mProc: 3, Pag: 0. No esta en memoria principal. Marco asignado: 0
+[INFO] 22:15:07:476 Memoria/(4068:4068): Solicitando mProc: 3 Pag: 0 a SWAP
+[INFO] 22:15:10:147 Memoria/(4068:4069): Total de accesos: 1. Total de hits: 0. Tasa de aciertos: 0.00
+[INFO] 22:15:10:477 Memoria/(4068:4068): Proceso 3 Escribiendo: hola en pag: 0
+[INFO] 22:15:11:478 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:15:11:479 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:15:11:479 Memoria/(4068:4068): mProc: 3, Pag: 1. No esta en memoria principal. Marco asignado: 1
+[INFO] 22:15:11:479 Memoria/(4068:4068): Solicitando mProc: 3 Pag: 1 a SWAP
+[INFO] 22:15:14:481 Memoria/(4068:4068): Proceso 3 Escribiendo: chau en pag: 1
+[INFO] 22:15:15:482 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:15:15:482 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:15:15:482 Memoria/(4068:4068): LRU
+[INFO] 22:15:15:482 Memoria/(4068:4068): Reemplazando pag: 0, por pag: 4 en el marco: 0
+[INFO] 22:15:15:482 Memoria/(4068:4068): mProc: 3, Pag: 4. No esta en memoria principal. Marco asignado: 0
+[INFO] 22:15:15:482 Memoria/(4068:4068): Solicitando mProc: 3 Pag: 4 a SWAP
+[INFO] 22:15:18:483 Memoria/(4068:4068): Proceso 3 Escribiendo: si en pag: 4
+[INFO] 22:15:19:485 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:15:19:485 Memoria/(4068:4068): Proceso 4 iniciado de 5 pags
+[INFO] 22:15:20:486 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:15:20:486 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:15:20:486 Memoria/(4068:4068): LRU
+[INFO] 22:15:20:486 Memoria/(4068:4068): Reemplazando pag: 1, por pag: 0 en el marco: 1
+[INFO] 22:15:20:486 Memoria/(4068:4068): mProc: 3, Pag: 0. No esta en memoria principal. Marco asignado: 1
+[INFO] 22:15:20:486 Memoria/(4068:4068): Solicitando mProc: 3 Pag: 0 a SWAP
+[INFO] 22:15:23:487 Memoria/(4068:4068): Proceso 3 leyendo pag: 0, contenido: chau
+[INFO] 22:15:24:487 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:15:24:487 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:15:24:487 Memoria/(4068:4068): mProc: 4, Pag: 0. No esta en memoria principal. Marco asignado: 2
+[INFO] 22:15:24:487 Memoria/(4068:4068): Solicitando mProc: 4 Pag: 0 a SWAP
+[INFO] 22:15:27:489 Memoria/(4068:4068): Proceso 4 Escribiendo: hola en pag: 0
+[INFO] 22:15:28:490 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:15:28:491 Memoria/(4068:4068): Proc: 3, Pag: 4. Esta en TLB
+[INFO] 22:15:28:491 Memoria/(4068:4068): Proceso 3 leyendo pag: 4. Contenido: si
+[INFO] 22:15:29:491 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:15:29:492 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:15:29:492 Memoria/(4068:4068): mProc: 4, Pag: 1. No esta en memoria principal. Marco asignado: 3
+[INFO] 22:15:29:492 Memoria/(4068:4068): Solicitando mProc: 4 Pag: 1 a SWAP
+[INFO] 22:15:32:494 Memoria/(4068:4068): Proceso 4 Escribiendo: chau en pag: 1
+[INFO] 22:15:33:495 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:15:33:497 Memoria/(4068:4068): Proceso 3 Finalizado. Accesos: 5 | Fallos: 4
+[INFO] 22:15:33:497 Memoria/(4068:4068): Proceso 3 finalizado
+[INFO] 22:15:34:498 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:15:34:498 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:15:34:498 Memoria/(4068:4068): LRU
+[INFO] 22:15:34:498 Memoria/(4068:4068): Reemplazando pag: 0, por pag: 4 en el marco: 2
+[INFO] 22:15:34:498 Memoria/(4068:4068): mProc: 4, Pag: 4. No esta en memoria principal. Marco asignado: 2
+[INFO] 22:15:34:498 Memoria/(4068:4068): Solicitando mProc: 4 Pag: 4 a SWAP
+[INFO] 22:15:37:500 Memoria/(4068:4068): Proceso 4 Escribiendo: si en pag: 4
+[INFO] 22:15:38:501 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:15:38:502 Memoria/(4068:4068): Proceso 5 iniciado de 5 pags
+[INFO] 22:15:39:503 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:15:39:504 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:15:39:504 Memoria/(4068:4068): LRU
+[INFO] 22:15:39:504 Memoria/(4068:4068): Reemplazando pag: 1, por pag: 0 en el marco: 3
+[INFO] 22:15:39:504 Memoria/(4068:4068): mProc: 4, Pag: 0. No esta en memoria principal. Marco asignado: 3
+[INFO] 22:15:39:504 Memoria/(4068:4068): Solicitando mProc: 4 Pag: 0 a SWAP
+[INFO] 22:15:42:504 Memoria/(4068:4068): Proceso 4 leyendo pag: 0, contenido: chau
+[INFO] 22:15:43:506 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:15:43:506 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:15:43:506 Memoria/(4068:4068): mProc: 5, Pag: 0. No esta en memoria principal. Marco asignado: 0
+[INFO] 22:15:43:506 Memoria/(4068:4068): Solicitando mProc: 5 Pag: 0 a SWAP
+[INFO] 22:15:46:508 Memoria/(4068:4068): Proceso 5 Escribiendo: hola en pag: 0
+[INFO] 22:15:47:509 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:15:47:509 Memoria/(4068:4068): Proc: 4, Pag: 4. Esta en TLB
+[INFO] 22:15:47:509 Memoria/(4068:4068): Proceso 4 leyendo pag: 4. Contenido: si
+[INFO] 22:15:48:510 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:15:48:510 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:15:48:510 Memoria/(4068:4068): mProc: 5, Pag: 1. No esta en memoria principal. Marco asignado: 1
+[INFO] 22:15:48:511 Memoria/(4068:4068): Solicitando mProc: 5 Pag: 1 a SWAP
+[INFO] 22:15:51:512 Memoria/(4068:4068): Proceso 5 Escribiendo: chau en pag: 1
+[INFO] 22:15:52:513 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:15:52:513 Memoria/(4068:4068): Proceso 4 Finalizado. Accesos: 5 | Fallos: 4
+[INFO] 22:15:52:513 Memoria/(4068:4068): Proceso 4 finalizado
+[INFO] 22:15:53:514 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:15:53:514 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:15:53:514 Memoria/(4068:4068): LRU
+[INFO] 22:15:53:514 Memoria/(4068:4068): Reemplazando pag: 0, por pag: 4 en el marco: 0
+[INFO] 22:15:53:514 Memoria/(4068:4068): mProc: 5, Pag: 4. No esta en memoria principal. Marco asignado: 0
+[INFO] 22:15:53:514 Memoria/(4068:4068): Solicitando mProc: 5 Pag: 4 a SWAP
+[INFO] 22:15:56:516 Memoria/(4068:4068): Proceso 5 Escribiendo: si en pag: 4
+[INFO] 22:15:57:518 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:15:57:518 Memoria/(4068:4068): Proceso 6 iniciado de 5 pags
+[INFO] 22:15:58:519 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:15:58:519 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:15:58:520 Memoria/(4068:4068): LRU
+[INFO] 22:15:58:520 Memoria/(4068:4068): Reemplazando pag: 1, por pag: 0 en el marco: 1
+[INFO] 22:15:58:520 Memoria/(4068:4068): mProc: 5, Pag: 0. No esta en memoria principal. Marco asignado: 1
+[INFO] 22:15:58:520 Memoria/(4068:4068): Solicitando mProc: 5 Pag: 0 a SWAP
+[INFO] 22:16:01:522 Memoria/(4068:4068): Proceso 5 leyendo pag: 0, contenido: chau
+[INFO] 22:16:02:522 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:16:02:522 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:16:02:522 Memoria/(4068:4068): mProc: 6, Pag: 0. No esta en memoria principal. Marco asignado: 2
+[INFO] 22:16:02:522 Memoria/(4068:4068): Solicitando mProc: 6 Pag: 0 a SWAP
+[INFO] 22:16:05:523 Memoria/(4068:4068): Proceso 6 Escribiendo: hola en pag: 0
+[INFO] 22:16:06:524 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:16:06:524 Memoria/(4068:4068): Proc: 5, Pag: 4. Esta en TLB
+[INFO] 22:16:06:524 Memoria/(4068:4068): Proceso 5 leyendo pag: 4. Contenido: si
+[INFO] 22:16:07:525 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:16:07:525 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:16:07:525 Memoria/(4068:4068): mProc: 6, Pag: 1. No esta en memoria principal. Marco asignado: 3
+[INFO] 22:16:07:526 Memoria/(4068:4068): Solicitando mProc: 6 Pag: 1 a SWAP
+[INFO] 22:16:10:147 Memoria/(4068:4069): Total de accesos: 17. Total de hits: 3. Tasa de aciertos: 0.18
+[INFO] 22:16:10:528 Memoria/(4068:4068): Proceso 6 Escribiendo: chau en pag: 1
+[INFO] 22:16:11:529 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:16:11:529 Memoria/(4068:4068): Proceso 5 Finalizado. Accesos: 5 | Fallos: 4
+[INFO] 22:16:11:529 Memoria/(4068:4068): Proceso 5 finalizado
+[INFO] 22:16:12:529 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:16:12:530 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:16:12:530 Memoria/(4068:4068): LRU
+[INFO] 22:16:12:530 Memoria/(4068:4068): Reemplazando pag: 0, por pag: 4 en el marco: 2
+[INFO] 22:16:12:530 Memoria/(4068:4068): mProc: 6, Pag: 4. No esta en memoria principal. Marco asignado: 2
+[INFO] 22:16:12:530 Memoria/(4068:4068): Solicitando mProc: 6 Pag: 4 a SWAP
+[INFO] 22:16:15:530 Memoria/(4068:4068): Proceso 6 Escribiendo: si en pag: 4
+[INFO] 22:16:16:533 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:16:16:534 Memoria/(4068:4068): Proceso 7 iniciado de 50 pags
+[INFO] 22:16:17:535 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:16:17:536 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:16:17:536 Memoria/(4068:4068): LRU
+[INFO] 22:16:17:536 Memoria/(4068:4068): Reemplazando pag: 1, por pag: 0 en el marco: 3
+[INFO] 22:16:17:536 Memoria/(4068:4068): mProc: 6, Pag: 0. No esta en memoria principal. Marco asignado: 3
+[INFO] 22:16:17:536 Memoria/(4068:4068): Solicitando mProc: 6 Pag: 0 a SWAP
+[INFO] 22:16:20:538 Memoria/(4068:4068): Proceso 6 leyendo pag: 0, contenido: chau
+[INFO] 22:16:21:539 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:16:21:540 Memoria/(4068:4068): Proceso 7 Finalizado. Accesos: 0 | Fallos: 0
+[INFO] 22:16:21:540 Memoria/(4068:4068): Proceso 7 finalizado
+[INFO] 22:16:22:542 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:16:22:542 Memoria/(4068:4068): Proc: 6, Pag: 4. Esta en TLB
+[INFO] 22:16:22:542 Memoria/(4068:4068): Proceso 6 leyendo pag: 4. Contenido: si
+[INFO] 22:16:23:542 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:16:23:543 Memoria/(4068:4068): Proceso 8 iniciado de 50 pags
+[INFO] 22:16:24:544 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:16:24:544 Memoria/(4068:4068): Proceso 6 Finalizado. Accesos: 5 | Fallos: 4
+[INFO] 22:16:24:544 Memoria/(4068:4068): Proceso 6 finalizado
+[INFO] 22:16:25:546 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:16:25:546 Memoria/(4068:4068): Proceso 8 Finalizado. Accesos: 0 | Fallos: 0
+[INFO] 22:16:25:546 Memoria/(4068:4068): Proceso 8 finalizado
+[INFO] 22:17:10:147 Memoria/(4068:4069): Total de accesos: 20. Total de hits: 4. Tasa de aciertos: 0.20
+[INFO] 22:17:58:164 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:17:58:164 Memoria/(4068:4068): Proceso 9 iniciado de 50 pags
+[INFO] 22:17:59:166 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:17:59:166 Memoria/(4068:4068): Proceso 9 Finalizado. Accesos: 0 | Fallos: 0
+[INFO] 22:17:59:166 Memoria/(4068:4068): Proceso 9 finalizado
+[INFO] 22:18:10:147 Memoria/(4068:4069): Total de accesos: 20. Total de hits: 4. Tasa de aciertos: 0.20
+[INFO] 22:18:12:108 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:18:12:108 Memoria/(4068:4068): Proceso 10 iniciado de 5 pags
+[INFO] 22:18:13:109 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:18:13:109 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:18:13:109 Memoria/(4068:4068): mProc: 10, Pag: 0. No esta en memoria principal. Marco asignado: 0
+[INFO] 22:18:13:109 Memoria/(4068:4068): Solicitando mProc: 10 Pag: 0 a SWAP
+[INFO] 22:18:16:110 Memoria/(4068:4068): Proceso 10 Escribiendo: hola en pag: 0
+[INFO] 22:18:17:113 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:18:17:114 Memoria/(4068:4068): Proceso 11 iniciado de 5 pags
+[INFO] 22:18:18:116 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:18:18:116 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:18:18:116 Memoria/(4068:4068): mProc: 10, Pag: 1. No esta en memoria principal. Marco asignado: 1
+[INFO] 22:18:18:116 Memoria/(4068:4068): Solicitando mProc: 10 Pag: 1 a SWAP
+[INFO] 22:18:21:118 Memoria/(4068:4068): Proceso 10 Escribiendo: chau en pag: 1
+[INFO] 22:18:22:119 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:18:22:119 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:18:22:119 Memoria/(4068:4068): mProc: 11, Pag: 0. No esta en memoria principal. Marco asignado: 2
+[INFO] 22:18:22:119 Memoria/(4068:4068): Solicitando mProc: 11 Pag: 0 a SWAP
+[INFO] 22:18:25:121 Memoria/(4068:4068): Proceso 11 Escribiendo: hola en pag: 0
+[INFO] 22:18:26:121 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:18:26:122 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:18:26:122 Memoria/(4068:4068): LRU
+[INFO] 22:18:26:122 Memoria/(4068:4068): Reemplazando pag: 0, por pag: 4 en el marco: 0
+[INFO] 22:18:26:122 Memoria/(4068:4068): mProc: 10, Pag: 4. No esta en memoria principal. Marco asignado: 0
+[INFO] 22:18:26:122 Memoria/(4068:4068): Solicitando mProc: 10 Pag: 4 a SWAP
+[INFO] 22:18:29:123 Memoria/(4068:4068): Proceso 10 Escribiendo: si en pag: 4
+[INFO] 22:18:30:124 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:18:30:124 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:18:30:124 Memoria/(4068:4068): mProc: 11, Pag: 1. No esta en memoria principal. Marco asignado: 3
+[INFO] 22:18:30:124 Memoria/(4068:4068): Solicitando mProc: 11 Pag: 1 a SWAP
+[INFO] 22:18:33:126 Memoria/(4068:4068): Proceso 11 Escribiendo: chau en pag: 1
+[INFO] 22:18:34:128 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:18:34:128 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:18:34:128 Memoria/(4068:4068): LRU
+[INFO] 22:18:34:128 Memoria/(4068:4068): Reemplazando pag: 1, por pag: 0 en el marco: 1
+[INFO] 22:18:34:128 Memoria/(4068:4068): mProc: 10, Pag: 0. No esta en memoria principal. Marco asignado: 1
+[INFO] 22:18:34:128 Memoria/(4068:4068): Solicitando mProc: 10 Pag: 0 a SWAP
+[INFO] 22:18:37:129 Memoria/(4068:4068): Proceso 10 leyendo pag: 0, contenido: chau
+[INFO] 22:18:38:130 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:18:38:130 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:18:38:130 Memoria/(4068:4068): LRU
+[INFO] 22:18:38:130 Memoria/(4068:4068): Reemplazando pag: 0, por pag: 4 en el marco: 2
+[INFO] 22:18:38:130 Memoria/(4068:4068): mProc: 11, Pag: 4. No esta en memoria principal. Marco asignado: 2
+[INFO] 22:18:38:130 Memoria/(4068:4068): Solicitando mProc: 11 Pag: 4 a SWAP
+[INFO] 22:18:41:132 Memoria/(4068:4068): Proceso 11 Escribiendo: si en pag: 4
+[INFO] 22:18:42:132 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:18:42:132 Memoria/(4068:4068): Proc: 10, Pag: 4. Esta en TLB
+[INFO] 22:18:42:132 Memoria/(4068:4068): Proceso 10 leyendo pag: 4. Contenido: si
+[INFO] 22:18:43:134 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:18:43:134 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:18:43:134 Memoria/(4068:4068): LRU
+[INFO] 22:18:43:134 Memoria/(4068:4068): Reemplazando pag: 1, por pag: 0 en el marco: 3
+[INFO] 22:18:43:134 Memoria/(4068:4068): mProc: 11, Pag: 0. No esta en memoria principal. Marco asignado: 3
+[INFO] 22:18:43:134 Memoria/(4068:4068): Solicitando mProc: 11 Pag: 0 a SWAP
+[INFO] 22:18:46:135 Memoria/(4068:4068): Proceso 11 leyendo pag: 0, contenido: chau
+[INFO] 22:18:47:137 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:18:47:138 Memoria/(4068:4068): Proceso 10 Finalizado. Accesos: 5 | Fallos: 4
+[INFO] 22:18:47:138 Memoria/(4068:4068): Proceso 10 finalizado
+[INFO] 22:18:48:139 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:18:48:139 Memoria/(4068:4068): Proc: 11, Pag: 4. Esta en TLB
+[INFO] 22:18:48:139 Memoria/(4068:4068): Proceso 11 leyendo pag: 4. Contenido: si
+[INFO] 22:18:49:140 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:18:49:140 Memoria/(4068:4068): Proceso 12 iniciado de 5 pags
+[INFO] 22:18:50:142 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:18:50:142 Memoria/(4068:4068): Proceso 11 Finalizado. Accesos: 5 | Fallos: 4
+[INFO] 22:18:50:142 Memoria/(4068:4068): Proceso 11 finalizado
+[INFO] 22:18:51:144 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:18:51:145 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:18:51:145 Memoria/(4068:4068): mProc: 12, Pag: 0. No esta en memoria principal. Marco asignado: 0
+[INFO] 22:18:51:145 Memoria/(4068:4068): Solicitando mProc: 12 Pag: 0 a SWAP
+[INFO] 22:18:54:147 Memoria/(4068:4068): Proceso 12 Escribiendo: hola en pag: 0
+[INFO] 22:18:55:148 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:18:55:149 Memoria/(4068:4068): Proceso 13 iniciado de 5 pags
+[INFO] 22:18:56:150 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:18:56:150 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:18:56:150 Memoria/(4068:4068): mProc: 12, Pag: 1. No esta en memoria principal. Marco asignado: 1
+[INFO] 22:18:56:150 Memoria/(4068:4068): Solicitando mProc: 12 Pag: 1 a SWAP
+[INFO] 22:18:59:152 Memoria/(4068:4068): Proceso 12 Escribiendo: chau en pag: 1
+[INFO] 22:19:00:153 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:19:00:153 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:19:00:153 Memoria/(4068:4068): mProc: 13, Pag: 0. No esta en memoria principal. Marco asignado: 2
+[INFO] 22:19:00:153 Memoria/(4068:4068): Solicitando mProc: 13 Pag: 0 a SWAP
+[INFO] 22:19:03:157 Memoria/(4068:4068): Proceso 13 Escribiendo: hola en pag: 0
+[INFO] 22:19:04:158 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:19:04:159 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:19:04:159 Memoria/(4068:4068): LRU
+[INFO] 22:19:04:159 Memoria/(4068:4068): Reemplazando pag: 0, por pag: 4 en el marco: 0
+[INFO] 22:19:04:159 Memoria/(4068:4068): mProc: 12, Pag: 4. No esta en memoria principal. Marco asignado: 0
+[INFO] 22:19:04:159 Memoria/(4068:4068): Solicitando mProc: 12 Pag: 4 a SWAP
+[INFO] 22:19:07:160 Memoria/(4068:4068): Proceso 12 Escribiendo: si en pag: 4
+[INFO] 22:19:08:161 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:19:08:161 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:19:08:161 Memoria/(4068:4068): mProc: 13, Pag: 1. No esta en memoria principal. Marco asignado: 3
+[INFO] 22:19:08:161 Memoria/(4068:4068): Solicitando mProc: 13 Pag: 1 a SWAP
+[INFO] 22:19:10:148 Memoria/(4068:4069): Total de accesos: 35. Total de hits: 6. Tasa de aciertos: 0.17
+[INFO] 22:19:11:162 Memoria/(4068:4068): Proceso 13 Escribiendo: chau en pag: 1
+[INFO] 22:19:12:164 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:19:12:164 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:19:12:164 Memoria/(4068:4068): LRU
+[INFO] 22:19:12:164 Memoria/(4068:4068): Reemplazando pag: 1, por pag: 0 en el marco: 1
+[INFO] 22:19:12:164 Memoria/(4068:4068): mProc: 12, Pag: 0. No esta en memoria principal. Marco asignado: 1
+[INFO] 22:19:12:164 Memoria/(4068:4068): Solicitando mProc: 12 Pag: 0 a SWAP
+[INFO] 22:19:15:167 Memoria/(4068:4068): Proceso 12 leyendo pag: 0, contenido: chau
+[INFO] 22:19:16:168 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:19:16:168 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:19:16:168 Memoria/(4068:4068): LRU
+[INFO] 22:19:16:168 Memoria/(4068:4068): Reemplazando pag: 0, por pag: 4 en el marco: 2
+[INFO] 22:19:16:168 Memoria/(4068:4068): mProc: 13, Pag: 4. No esta en memoria principal. Marco asignado: 2
+[INFO] 22:19:16:168 Memoria/(4068:4068): Solicitando mProc: 13 Pag: 4 a SWAP
+[INFO] 22:19:19:170 Memoria/(4068:4068): Proceso 13 Escribiendo: si en pag: 4
+[INFO] 22:19:20:171 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:19:20:171 Memoria/(4068:4068): Proc: 12, Pag: 4. Esta en TLB
+[INFO] 22:19:20:171 Memoria/(4068:4068): Proceso 12 leyendo pag: 4. Contenido: si
+[INFO] 22:19:21:173 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:19:21:174 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:19:21:174 Memoria/(4068:4068): LRU
+[INFO] 22:19:21:174 Memoria/(4068:4068): Reemplazando pag: 1, por pag: 0 en el marco: 3
+[INFO] 22:19:21:174 Memoria/(4068:4068): mProc: 13, Pag: 0. No esta en memoria principal. Marco asignado: 3
+[INFO] 22:19:21:174 Memoria/(4068:4068): Solicitando mProc: 13 Pag: 0 a SWAP
+[INFO] 22:19:24:176 Memoria/(4068:4068): Proceso 13 leyendo pag: 0, contenido: chau
+[INFO] 22:19:25:177 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:19:25:177 Memoria/(4068:4068): Proceso 12 Finalizado. Accesos: 5 | Fallos: 4
+[INFO] 22:19:25:177 Memoria/(4068:4068): Proceso 12 finalizado
+[INFO] 22:19:26:179 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:19:26:179 Memoria/(4068:4068): Proc: 13, Pag: 4. Esta en TLB
+[INFO] 22:19:26:179 Memoria/(4068:4068): Proceso 13 leyendo pag: 4. Contenido: si
+[INFO] 22:19:27:180 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:19:27:181 Memoria/(4068:4068): Proceso 14 iniciado de 5 pags
+[INFO] 22:19:28:183 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:19:28:183 Memoria/(4068:4068): Proceso 13 Finalizado. Accesos: 5 | Fallos: 4
+[INFO] 22:19:28:183 Memoria/(4068:4068): Proceso 13 finalizado
+[INFO] 22:19:29:184 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:19:29:184 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:19:29:184 Memoria/(4068:4068): mProc: 14, Pag: 0. No esta en memoria principal. Marco asignado: 0
+[INFO] 22:19:29:184 Memoria/(4068:4068): Solicitando mProc: 14 Pag: 0 a SWAP
+[INFO] 22:19:32:185 Memoria/(4068:4068): Proceso 14 Escribiendo: hola en pag: 0
+[INFO] 22:19:33:186 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:19:33:187 Memoria/(4068:4068): Proceso 15 iniciado de 5 pags
+[INFO] 22:19:34:187 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:19:34:188 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:19:34:188 Memoria/(4068:4068): mProc: 14, Pag: 1. No esta en memoria principal. Marco asignado: 1
+[INFO] 22:19:34:188 Memoria/(4068:4068): Solicitando mProc: 14 Pag: 1 a SWAP
+[INFO] 22:19:37:190 Memoria/(4068:4068): Proceso 14 Escribiendo: chau en pag: 1
+[INFO] 22:19:38:192 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:19:38:192 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:19:38:192 Memoria/(4068:4068): mProc: 15, Pag: 0. No esta en memoria principal. Marco asignado: 2
+[INFO] 22:19:38:192 Memoria/(4068:4068): Solicitando mProc: 15 Pag: 0 a SWAP
+[INFO] 22:19:41:194 Memoria/(4068:4068): Proceso 15 Escribiendo: hola en pag: 0
+[INFO] 22:19:42:194 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:19:42:195 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:19:42:195 Memoria/(4068:4068): LRU
+[INFO] 22:19:42:195 Memoria/(4068:4068): Reemplazando pag: 0, por pag: 4 en el marco: 0
+[INFO] 22:19:42:195 Memoria/(4068:4068): mProc: 14, Pag: 4. No esta en memoria principal. Marco asignado: 0
+[INFO] 22:19:42:195 Memoria/(4068:4068): Solicitando mProc: 14 Pag: 4 a SWAP
+[INFO] 22:19:45:198 Memoria/(4068:4068): Proceso 14 Escribiendo: si en pag: 4
+[INFO] 22:19:46:199 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:19:46:200 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:19:46:200 Memoria/(4068:4068): mProc: 15, Pag: 1. No esta en memoria principal. Marco asignado: 3
+[INFO] 22:19:46:200 Memoria/(4068:4068): Solicitando mProc: 15 Pag: 1 a SWAP
+[INFO] 22:19:49:201 Memoria/(4068:4068): Proceso 15 Escribiendo: chau en pag: 1
+[INFO] 22:19:50:202 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:19:50:203 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:19:50:203 Memoria/(4068:4068): LRU
+[INFO] 22:19:50:203 Memoria/(4068:4068): Reemplazando pag: 1, por pag: 0 en el marco: 1
+[INFO] 22:19:50:204 Memoria/(4068:4068): mProc: 14, Pag: 0. No esta en memoria principal. Marco asignado: 1
+[INFO] 22:19:50:204 Memoria/(4068:4068): Solicitando mProc: 14 Pag: 0 a SWAP
+[INFO] 22:19:53:204 Memoria/(4068:4068): Proceso 14 leyendo pag: 0, contenido: chau
+[INFO] 22:19:54:206 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:19:54:206 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:19:54:206 Memoria/(4068:4068): LRU
+[INFO] 22:19:54:206 Memoria/(4068:4068): Reemplazando pag: 0, por pag: 4 en el marco: 2
+[INFO] 22:19:54:207 Memoria/(4068:4068): mProc: 15, Pag: 4. No esta en memoria principal. Marco asignado: 2
+[INFO] 22:19:54:207 Memoria/(4068:4068): Solicitando mProc: 15 Pag: 4 a SWAP
+[INFO] 22:19:57:207 Memoria/(4068:4068): Proceso 15 Escribiendo: si en pag: 4
+[INFO] 22:19:58:208 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:19:58:208 Memoria/(4068:4068): Proc: 14, Pag: 4. Esta en TLB
+[INFO] 22:19:58:208 Memoria/(4068:4068): Proceso 14 leyendo pag: 4. Contenido: si
+[INFO] 22:19:59:209 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:19:59:210 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:19:59:210 Memoria/(4068:4068): LRU
+[INFO] 22:19:59:210 Memoria/(4068:4068): Reemplazando pag: 1, por pag: 0 en el marco: 3
+[INFO] 22:19:59:210 Memoria/(4068:4068): mProc: 15, Pag: 0. No esta en memoria principal. Marco asignado: 3
+[INFO] 22:19:59:210 Memoria/(4068:4068): Solicitando mProc: 15 Pag: 0 a SWAP
+[INFO] 22:20:02:211 Memoria/(4068:4068): Proceso 15 leyendo pag: 0, contenido: chau
+[INFO] 22:20:03:212 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:20:03:212 Memoria/(4068:4068): Proceso 14 Finalizado. Accesos: 5 | Fallos: 4
+[INFO] 22:20:03:212 Memoria/(4068:4068): Proceso 14 finalizado
+[INFO] 22:20:04:213 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:20:04:214 Memoria/(4068:4068): Proc: 15, Pag: 4. Esta en TLB
+[INFO] 22:20:04:214 Memoria/(4068:4068): Proceso 15 leyendo pag: 4. Contenido: si
+[INFO] 22:20:05:215 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:20:05:215 Memoria/(4068:4068): Proceso 16 iniciado de 5 pags
+[INFO] 22:20:06:216 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:20:06:216 Memoria/(4068:4068): Proceso 15 Finalizado. Accesos: 5 | Fallos: 4
+[INFO] 22:20:06:216 Memoria/(4068:4068): Proceso 15 finalizado
+[INFO] 22:20:07:219 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:20:07:219 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:20:07:219 Memoria/(4068:4068): mProc: 16, Pag: 0. No esta en memoria principal. Marco asignado: 0
+[INFO] 22:20:07:219 Memoria/(4068:4068): Solicitando mProc: 16 Pag: 0 a SWAP
+[INFO] 22:20:10:148 Memoria/(4068:4069): Total de accesos: 51. Total de hits: 10. Tasa de aciertos: 0.20
+[INFO] 22:20:10:221 Memoria/(4068:4068): Proceso 16 Escribiendo: hola en pag: 0
+[INFO] 22:20:11:222 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:20:11:222 Memoria/(4068:4068): Proceso 17 iniciado de 5 pags
+[INFO] 22:20:12:223 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:20:12:224 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:20:12:224 Memoria/(4068:4068): mProc: 16, Pag: 1. No esta en memoria principal. Marco asignado: 1
+[INFO] 22:20:12:224 Memoria/(4068:4068): Solicitando mProc: 16 Pag: 1 a SWAP
+[INFO] 22:20:15:225 Memoria/(4068:4068): Proceso 16 Escribiendo: chau en pag: 1
+[INFO] 22:20:16:227 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:20:16:228 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:20:16:228 Memoria/(4068:4068): mProc: 17, Pag: 0. No esta en memoria principal. Marco asignado: 2
+[INFO] 22:20:16:228 Memoria/(4068:4068): Solicitando mProc: 17 Pag: 0 a SWAP
+[INFO] 22:20:19:228 Memoria/(4068:4068): Proceso 17 Escribiendo: hola en pag: 0
+[INFO] 22:20:20:229 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:20:20:230 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:20:20:230 Memoria/(4068:4068): LRU
+[INFO] 22:20:20:230 Memoria/(4068:4068): Reemplazando pag: 0, por pag: 4 en el marco: 0
+[INFO] 22:20:20:230 Memoria/(4068:4068): mProc: 16, Pag: 4. No esta en memoria principal. Marco asignado: 0
+[INFO] 22:20:20:230 Memoria/(4068:4068): Solicitando mProc: 16 Pag: 4 a SWAP
+[INFO] 22:20:23:231 Memoria/(4068:4068): Proceso 16 Escribiendo: si en pag: 4
+[INFO] 22:20:24:231 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:20:24:232 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:20:24:232 Memoria/(4068:4068): mProc: 17, Pag: 1. No esta en memoria principal. Marco asignado: 3
+[INFO] 22:20:24:232 Memoria/(4068:4068): Solicitando mProc: 17 Pag: 1 a SWAP
+[INFO] 22:20:27:232 Memoria/(4068:4068): Proceso 17 Escribiendo: chau en pag: 1
+[INFO] 22:20:28:233 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:20:28:234 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:20:28:234 Memoria/(4068:4068): LRU
+[INFO] 22:20:28:234 Memoria/(4068:4068): Reemplazando pag: 1, por pag: 0 en el marco: 1
+[INFO] 22:20:28:234 Memoria/(4068:4068): mProc: 16, Pag: 0. No esta en memoria principal. Marco asignado: 1
+[INFO] 22:20:28:234 Memoria/(4068:4068): Solicitando mProc: 16 Pag: 0 a SWAP
+[INFO] 22:20:31:234 Memoria/(4068:4068): Proceso 16 leyendo pag: 0, contenido: chau
+[INFO] 22:20:32:236 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:20:32:236 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:20:32:236 Memoria/(4068:4068): LRU
+[INFO] 22:20:32:236 Memoria/(4068:4068): Reemplazando pag: 0, por pag: 4 en el marco: 2
+[INFO] 22:20:32:237 Memoria/(4068:4068): mProc: 17, Pag: 4. No esta en memoria principal. Marco asignado: 2
+[INFO] 22:20:32:237 Memoria/(4068:4068): Solicitando mProc: 17 Pag: 4 a SWAP
+[INFO] 22:20:35:239 Memoria/(4068:4068): Proceso 17 Escribiendo: si en pag: 4
+[INFO] 22:20:36:239 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:20:36:240 Memoria/(4068:4068): Proc: 16, Pag: 4. Esta en TLB
+[INFO] 22:20:36:240 Memoria/(4068:4068): Proceso 16 leyendo pag: 4. Contenido: si
+[INFO] 22:20:37:241 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:20:37:241 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:20:37:242 Memoria/(4068:4068): LRU
+[INFO] 22:20:37:242 Memoria/(4068:4068): Reemplazando pag: 1, por pag: 0 en el marco: 3
+[INFO] 22:20:37:242 Memoria/(4068:4068): mProc: 17, Pag: 0. No esta en memoria principal. Marco asignado: 3
+[INFO] 22:20:37:242 Memoria/(4068:4068): Solicitando mProc: 17 Pag: 0 a SWAP
+[INFO] 22:20:40:242 Memoria/(4068:4068): Proceso 17 leyendo pag: 0, contenido: chau
+[INFO] 22:20:41:243 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:20:41:244 Memoria/(4068:4068): Proceso 16 Finalizado. Accesos: 5 | Fallos: 4
+[INFO] 22:20:41:244 Memoria/(4068:4068): Proceso 16 finalizado
+[INFO] 22:20:42:245 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:20:42:245 Memoria/(4068:4068): Proc: 17, Pag: 4. Esta en TLB
+[INFO] 22:20:42:245 Memoria/(4068:4068): Proceso 17 leyendo pag: 4. Contenido: si
+[INFO] 22:20:43:246 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:20:43:246 Memoria/(4068:4068): Proceso 18 iniciado de 5 pags
+[INFO] 22:20:44:247 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:20:44:248 Memoria/(4068:4068): Proceso 17 Finalizado. Accesos: 5 | Fallos: 4
+[INFO] 22:20:44:248 Memoria/(4068:4068): Proceso 17 finalizado
+[INFO] 22:20:45:249 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:20:45:250 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:20:45:250 Memoria/(4068:4068): mProc: 18, Pag: 0. No esta en memoria principal. Marco asignado: 0
+[INFO] 22:20:45:250 Memoria/(4068:4068): Solicitando mProc: 18 Pag: 0 a SWAP
+[INFO] 22:20:48:251 Memoria/(4068:4068): Proceso 18 Escribiendo: hola en pag: 0
+[INFO] 22:20:49:252 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:20:49:253 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:20:49:253 Memoria/(4068:4068): mProc: 18, Pag: 1. No esta en memoria principal. Marco asignado: 1
+[INFO] 22:20:49:253 Memoria/(4068:4068): Solicitando mProc: 18 Pag: 1 a SWAP
+[INFO] 22:20:52:255 Memoria/(4068:4068): Proceso 18 Escribiendo: chau en pag: 1
+[INFO] 22:20:53:256 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:20:53:257 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:20:53:257 Memoria/(4068:4068): LRU
+[INFO] 22:20:53:257 Memoria/(4068:4068): Reemplazando pag: 0, por pag: 4 en el marco: 0
+[INFO] 22:20:53:257 Memoria/(4068:4068): mProc: 18, Pag: 4. No esta en memoria principal. Marco asignado: 0
+[INFO] 22:20:53:257 Memoria/(4068:4068): Solicitando mProc: 18 Pag: 4 a SWAP
+[INFO] 22:20:56:258 Memoria/(4068:4068): Proceso 18 Escribiendo: si en pag: 4
+[INFO] 22:20:57:262 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:20:57:262 Memoria/(4068:4068): No esta en TLB
+[INFO] 22:20:57:262 Memoria/(4068:4068): LRU
+[INFO] 22:20:57:262 Memoria/(4068:4068): Reemplazando pag: 1, por pag: 0 en el marco: 1
+[INFO] 22:20:57:262 Memoria/(4068:4068): mProc: 18, Pag: 0. No esta en memoria principal. Marco asignado: 1
+[INFO] 22:20:57:262 Memoria/(4068:4068): Solicitando mProc: 18 Pag: 0 a SWAP
+[INFO] 22:21:00:264 Memoria/(4068:4068): Proceso 18 leyendo pag: 0, contenido: chau
+[INFO] 22:21:01:265 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:21:01:265 Memoria/(4068:4068): Proc: 18, Pag: 4. Esta en TLB
+[INFO] 22:21:01:265 Memoria/(4068:4068): Proceso 18 leyendo pag: 4. Contenido: si
+[INFO] 22:21:02:268 Memoria/(4068:4068): Conectado al CPU, urra!
+[INFO] 22:21:02:268 Memoria/(4068:4068): Proceso 18 Finalizado. Accesos: 5 | Fallos: 4
+[INFO] 22:21:02:269 Memoria/(4068:4068): Proceso 18 finalizado
+[INFO] 22:21:10:148 Memoria/(4068:4069): Total de accesos: 65. Total de hits: 13. Tasa de aciertos: 0.20
+[INFO] 22:22:10:149 Memoria/(4068:4069): Total de accesos: 65. Total de hits: 13. Tasa de aciertos: 0.20
+[INFO] 22:22:54:963 Memoria/(4068:4068): ---------------------FIN---------------------
+[INFO] 22:34:03:290 Memoria/(4140:4140): Conectado a Swap
+[INFO] 22:34:12:501 Memoria/(4140:4140): Conectado al CPU, urra!
+[INFO] 22:34:12:501 Memoria/(4140:4140): Proceso 3 iniciado de 5 pags
+[INFO] 22:35:05:512 Memoria/(4159:4159): Conectado a Swap
+[INFO] 22:36:24:11 Memoria/(4194:4194): Conectado a Swap
+[INFO] 22:36:38:7 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:36:38:10 Memoria/(4194:4194): Proceso 3 iniciado de 5 pags
+[INFO] 22:36:39:100 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:36:39:101 Memoria/(4194:4194): No esta en TLB
+[INFO] 22:36:39:102 Memoria/(4194:4194): mProc: 3, Pag: 0. No esta en memoria principal. Marco asignado: 0
+[INFO] 22:36:39:102 Memoria/(4194:4194): Solicitando mProc: 3 Pag: 0 a SWAP
+[INFO] 22:36:42:102 Memoria/(4194:4194): Proceso 3 Escribiendo: hola en pag: 0
+[INFO] 22:36:43:109 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:36:43:114 Memoria/(4194:4194): Proceso 4 iniciado de 5 pags
+[INFO] 22:36:44:118 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:36:44:119 Memoria/(4194:4194): No esta en TLB
+[INFO] 22:36:44:119 Memoria/(4194:4194): mProc: 3, Pag: 1. No esta en memoria principal. Marco asignado: 1
+[INFO] 22:36:44:119 Memoria/(4194:4194): Solicitando mProc: 3 Pag: 1 a SWAP
+[INFO] 22:36:47:121 Memoria/(4194:4194): Proceso 3 Escribiendo: chau en pag: 1
+[INFO] 22:36:48:132 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:36:48:132 Memoria/(4194:4194): No esta en TLB
+[INFO] 22:36:48:132 Memoria/(4194:4194): mProc: 4, Pag: 0. No esta en memoria principal. Marco asignado: 2
+[INFO] 22:36:48:132 Memoria/(4194:4194): Solicitando mProc: 4 Pag: 0 a SWAP
+[INFO] 22:36:51:135 Memoria/(4194:4194): Proceso 4 Escribiendo: hola en pag: 0
+[INFO] 22:36:52:138 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:36:52:140 Memoria/(4194:4194): No esta en TLB
+[INFO] 22:36:52:140 Memoria/(4194:4194): LRU
+[INFO] 22:36:52:140 Memoria/(4194:4194): Reemplazando pag: 0, por pag: 4 en el marco: 0
+[INFO] 22:36:52:140 Memoria/(4194:4194): mProc: 3, Pag: 4. No esta en memoria principal. Marco asignado: 0
+[INFO] 22:36:52:140 Memoria/(4194:4194): Solicitando mProc: 3 Pag: 4 a SWAP
+[INFO] 22:36:55:142 Memoria/(4194:4194): Proceso 3 Escribiendo: si en pag: 4
+[INFO] 22:36:56:144 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:36:56:145 Memoria/(4194:4194): No esta en TLB
+[INFO] 22:36:56:145 Memoria/(4194:4194): mProc: 4, Pag: 1. No esta en memoria principal. Marco asignado: 3
+[INFO] 22:36:56:145 Memoria/(4194:4194): Solicitando mProc: 4 Pag: 1 a SWAP
+[INFO] 22:36:59:147 Memoria/(4194:4194): Proceso 4 Escribiendo: chau en pag: 1
+[INFO] 22:37:00:155 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:37:00:157 Memoria/(4194:4194): No esta en TLB
+[INFO] 22:37:00:157 Memoria/(4194:4194): LRU
+[INFO] 22:37:00:157 Memoria/(4194:4194): Reemplazando pag: 1, por pag: 0 en el marco: 1
+[INFO] 22:37:00:157 Memoria/(4194:4194): mProc: 3, Pag: 0. No esta en memoria principal. Marco asignado: 1
+[INFO] 22:37:00:157 Memoria/(4194:4194): Solicitando mProc: 3 Pag: 0 a SWAP
+[INFO] 22:37:03:159 Memoria/(4194:4194): Proceso 3 leyendo pag: 0, contenido: chau
+[INFO] 22:37:04:162 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:37:04:162 Memoria/(4194:4194): No esta en TLB
+[INFO] 22:37:04:163 Memoria/(4194:4194): LRU
+[INFO] 22:37:04:163 Memoria/(4194:4194): Reemplazando pag: 0, por pag: 4 en el marco: 2
+[INFO] 22:37:04:163 Memoria/(4194:4194): mProc: 4, Pag: 4. No esta en memoria principal. Marco asignado: 2
+[INFO] 22:37:04:163 Memoria/(4194:4194): Solicitando mProc: 4 Pag: 4 a SWAP
+[INFO] 22:37:07:164 Memoria/(4194:4194): Proceso 4 Escribiendo: si en pag: 4
+[INFO] 22:37:08:165 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:37:08:166 Memoria/(4194:4194): Proc: 3, Pag: 4. Esta en TLB
+[INFO] 22:37:08:166 Memoria/(4194:4194): Proceso 3 leyendo pag: 4. Contenido: si
+[INFO] 22:37:09:167 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:37:09:168 Memoria/(4194:4194): No esta en TLB
+[INFO] 22:37:09:168 Memoria/(4194:4194): LRU
+[INFO] 22:37:09:168 Memoria/(4194:4194): Reemplazando pag: 1, por pag: 0 en el marco: 3
+[INFO] 22:37:09:168 Memoria/(4194:4194): mProc: 4, Pag: 0. No esta en memoria principal. Marco asignado: 3
+[INFO] 22:37:09:168 Memoria/(4194:4194): Solicitando mProc: 4 Pag: 0 a SWAP
+[INFO] 22:37:12:169 Memoria/(4194:4194): Proceso 4 leyendo pag: 0, contenido: chau
+[INFO] 22:37:13:170 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:37:13:171 Memoria/(4194:4194): Proceso 3 Finalizado. Accesos: 5 | Fallos: 4
+[INFO] 22:37:13:171 Memoria/(4194:4194): Proceso 3 finalizado
+[INFO] 22:37:14:182 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:37:14:182 Memoria/(4194:4194): Proc: 4, Pag: 4. Esta en TLB
+[INFO] 22:37:14:182 Memoria/(4194:4194): Proceso 4 leyendo pag: 4. Contenido: si
+[INFO] 22:37:15:185 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:37:15:187 Memoria/(4194:4194): Proceso 5 iniciado de 5 pags
+[INFO] 22:37:16:190 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:37:16:190 Memoria/(4194:4194): Proceso 4 Finalizado. Accesos: 5 | Fallos: 4
+[INFO] 22:37:16:190 Memoria/(4194:4194): Proceso 4 finalizado
+[INFO] 22:37:17:194 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:37:17:194 Memoria/(4194:4194): No esta en TLB
+[INFO] 22:37:17:194 Memoria/(4194:4194): mProc: 5, Pag: 0. No esta en memoria principal. Marco asignado: 0
+[INFO] 22:37:17:194 Memoria/(4194:4194): Solicitando mProc: 5 Pag: 0 a SWAP
+[INFO] 22:37:20:195 Memoria/(4194:4194): Proceso 5 Escribiendo: hola en pag: 0
+[INFO] 22:37:21:196 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:37:21:197 Memoria/(4194:4194): Proceso 6 iniciado de 5 pags
+[INFO] 22:37:22:198 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:37:22:199 Memoria/(4194:4194): No esta en TLB
+[INFO] 22:37:22:199 Memoria/(4194:4194): mProc: 5, Pag: 1. No esta en memoria principal. Marco asignado: 1
+[INFO] 22:37:22:199 Memoria/(4194:4194): Solicitando mProc: 5 Pag: 1 a SWAP
+[INFO] 22:37:24:12 Memoria/(4194:4195): Total de accesos: 12. Total de hits: 2. Tasa de aciertos: 0.17
+[INFO] 22:37:25:200 Memoria/(4194:4194): Proceso 5 Escribiendo: chau en pag: 1
+[INFO] 22:37:26:201 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:37:26:202 Memoria/(4194:4194): No esta en TLB
+[INFO] 22:37:26:202 Memoria/(4194:4194): mProc: 6, Pag: 0. No esta en memoria principal. Marco asignado: 2
+[INFO] 22:37:26:202 Memoria/(4194:4194): Solicitando mProc: 6 Pag: 0 a SWAP
+[INFO] 22:37:29:205 Memoria/(4194:4194): Proceso 6 Escribiendo: hola en pag: 0
+[INFO] 22:37:30:207 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:37:30:208 Memoria/(4194:4194): No esta en TLB
+[INFO] 22:37:30:208 Memoria/(4194:4194): LRU
+[INFO] 22:37:30:208 Memoria/(4194:4194): Reemplazando pag: 0, por pag: 4 en el marco: 0
+[INFO] 22:37:30:208 Memoria/(4194:4194): mProc: 5, Pag: 4. No esta en memoria principal. Marco asignado: 0
+[INFO] 22:37:30:208 Memoria/(4194:4194): Solicitando mProc: 5 Pag: 4 a SWAP
+[INFO] 22:37:33:210 Memoria/(4194:4194): Proceso 5 Escribiendo: si en pag: 4
+[INFO] 22:37:34:214 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:37:34:215 Memoria/(4194:4194): No esta en TLB
+[INFO] 22:37:34:215 Memoria/(4194:4194): mProc: 6, Pag: 1. No esta en memoria principal. Marco asignado: 3
+[INFO] 22:37:34:215 Memoria/(4194:4194): Solicitando mProc: 6 Pag: 1 a SWAP
+[INFO] 22:37:37:218 Memoria/(4194:4194): Proceso 6 Escribiendo: chau en pag: 1
+[INFO] 22:37:38:221 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:37:38:222 Memoria/(4194:4194): No esta en TLB
+[INFO] 22:37:38:222 Memoria/(4194:4194): LRU
+[INFO] 22:37:38:222 Memoria/(4194:4194): Reemplazando pag: 1, por pag: 0 en el marco: 1
+[INFO] 22:37:38:222 Memoria/(4194:4194): mProc: 5, Pag: 0. No esta en memoria principal. Marco asignado: 1
+[INFO] 22:37:38:222 Memoria/(4194:4194): Solicitando mProc: 5 Pag: 0 a SWAP
+[INFO] 22:37:41:224 Memoria/(4194:4194): Proceso 5 leyendo pag: 0, contenido: chau
+[INFO] 22:37:42:228 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:37:42:228 Memoria/(4194:4194): No esta en TLB
+[INFO] 22:37:42:229 Memoria/(4194:4194): LRU
+[INFO] 22:37:42:229 Memoria/(4194:4194): Reemplazando pag: 0, por pag: 4 en el marco: 2
+[INFO] 22:37:42:229 Memoria/(4194:4194): mProc: 6, Pag: 4. No esta en memoria principal. Marco asignado: 2
+[INFO] 22:37:42:229 Memoria/(4194:4194): Solicitando mProc: 6 Pag: 4 a SWAP
+[INFO] 22:37:45:229 Memoria/(4194:4194): Proceso 6 Escribiendo: si en pag: 4
+[INFO] 22:37:46:231 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:37:46:232 Memoria/(4194:4194): Proc: 5, Pag: 4. Esta en TLB
+[INFO] 22:37:46:232 Memoria/(4194:4194): Proceso 5 leyendo pag: 4. Contenido: si
+[INFO] 22:37:47:234 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:37:47:235 Memoria/(4194:4194): No esta en TLB
+[INFO] 22:37:47:235 Memoria/(4194:4194): LRU
+[INFO] 22:37:47:235 Memoria/(4194:4194): Reemplazando pag: 1, por pag: 0 en el marco: 3
+[INFO] 22:37:47:235 Memoria/(4194:4194): mProc: 6, Pag: 0. No esta en memoria principal. Marco asignado: 3
+[INFO] 22:37:47:235 Memoria/(4194:4194): Solicitando mProc: 6 Pag: 0 a SWAP
+[INFO] 22:37:50:236 Memoria/(4194:4194): Proceso 6 leyendo pag: 0, contenido: chau
+[INFO] 22:37:51:238 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:37:51:239 Memoria/(4194:4194): Proceso 5 Finalizado. Accesos: 5 | Fallos: 4
+[INFO] 22:37:51:240 Memoria/(4194:4194): Proceso 5 finalizado
+[INFO] 22:37:52:242 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:37:52:243 Memoria/(4194:4194): Proc: 6, Pag: 4. Esta en TLB
+[INFO] 22:37:52:243 Memoria/(4194:4194): Proceso 6 leyendo pag: 4. Contenido: si
+[INFO] 22:37:53:246 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:37:53:247 Memoria/(4194:4194): Proceso 7 iniciado de 60 pags
+[INFO] 22:37:54:251 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:37:54:252 Memoria/(4194:4194): Proceso 6 Finalizado. Accesos: 5 | Fallos: 4
+[INFO] 22:37:54:252 Memoria/(4194:4194): Proceso 6 finalizado
+[INFO] 22:37:55:255 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:37:55:255 Memoria/(4194:4194): Proceso 7 Finalizado. Accesos: 0 | Fallos: 0
+[INFO] 22:37:55:255 Memoria/(4194:4194): Proceso 7 finalizado
+[INFO] 22:37:56:258 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:37:56:258 Memoria/(4194:4194): Proceso 8 iniciado de 60 pags
+[INFO] 22:37:57:260 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:37:57:261 Memoria/(4194:4194): Proceso 8 Finalizado. Accesos: 0 | Fallos: 0
+[INFO] 22:37:57:261 Memoria/(4194:4194): Proceso 8 finalizado
+[INFO] 22:37:58:263 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:37:58:264 Memoria/(4194:4194): Proceso 9 iniciado de 5 pags
+[INFO] 22:37:59:267 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:37:59:267 Memoria/(4194:4194): No esta en TLB
+[INFO] 22:37:59:275 Memoria/(4194:4194): mProc: 9, Pag: 0. No esta en memoria principal. Marco asignado: 0
+[INFO] 22:37:59:275 Memoria/(4194:4194): Solicitando mProc: 9 Pag: 0 a SWAP
+[INFO] 22:38:02:277 Memoria/(4194:4194): Proceso 9 Escribiendo: hola en pag: 0
+[INFO] 22:38:03:280 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:38:03:281 Memoria/(4194:4194): No esta en TLB
+[INFO] 22:38:03:281 Memoria/(4194:4194): mProc: 9, Pag: 1. No esta en memoria principal. Marco asignado: 1
+[INFO] 22:38:03:281 Memoria/(4194:4194): Solicitando mProc: 9 Pag: 1 a SWAP
+[INFO] 22:38:06:284 Memoria/(4194:4194): Proceso 9 Escribiendo: chau en pag: 1
+[INFO] 22:38:07:287 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:38:07:287 Memoria/(4194:4194): No esta en TLB
+[INFO] 22:38:07:287 Memoria/(4194:4194): LRU
+[INFO] 22:38:07:287 Memoria/(4194:4194): Reemplazando pag: 0, por pag: 4 en el marco: 0
+[INFO] 22:38:07:287 Memoria/(4194:4194): mProc: 9, Pag: 4. No esta en memoria principal. Marco asignado: 0
+[INFO] 22:38:07:287 Memoria/(4194:4194): Solicitando mProc: 9 Pag: 4 a SWAP
+[INFO] 22:38:10:289 Memoria/(4194:4194): Proceso 9 Escribiendo: si en pag: 4
+[INFO] 22:38:11:292 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:38:11:292 Memoria/(4194:4194): No esta en TLB
+[INFO] 22:38:11:292 Memoria/(4194:4194): LRU
+[INFO] 22:38:11:292 Memoria/(4194:4194): Reemplazando pag: 1, por pag: 0 en el marco: 1
+[INFO] 22:38:11:292 Memoria/(4194:4194): mProc: 9, Pag: 0. No esta en memoria principal. Marco asignado: 1
+[INFO] 22:38:11:292 Memoria/(4194:4194): Solicitando mProc: 9 Pag: 0 a SWAP
+[INFO] 22:38:14:293 Memoria/(4194:4194): Proceso 9 leyendo pag: 0, contenido: chau
+[INFO] 22:38:15:296 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:38:15:296 Memoria/(4194:4194): Proc: 9, Pag: 4. Esta en TLB
+[INFO] 22:38:15:296 Memoria/(4194:4194): Proceso 9 leyendo pag: 4. Contenido: si
+[INFO] 22:38:16:298 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:38:16:299 Memoria/(4194:4194): Proceso 9 Finalizado. Accesos: 5 | Fallos: 4
+[INFO] 22:38:16:299 Memoria/(4194:4194): Proceso 9 finalizado
+[INFO] 22:38:24:12 Memoria/(4194:4195): Total de accesos: 25. Total de hits: 5. Tasa de aciertos: 0.20
+[INFO] 22:38:46:531 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:38:46:531 Memoria/(4194:4194): Proceso 10 iniciado de 60 pags
+[INFO] 22:38:47:534 Memoria/(4194:4194): Conectado al CPU, urra!
+[INFO] 22:38:47:534 Memoria/(4194:4194): Proceso 10 Finalizado. Accesos: 0 | Fallos: 0
+[INFO] 22:38:47:534 Memoria/(4194:4194): Proceso 10 finalizado
+[INFO] 22:39:24:12 Memoria/(4194:4195): Total de accesos: 25. Total de hits: 5. Tasa de aciertos: 0.20
+[INFO] 22:40:24:13 Memoria/(4194:4195): Total de accesos: 25. Total de hits: 5. Tasa de aciertos: 0.20
+[INFO] 22:41:24:14 Memoria/(4194:4195): Total de accesos: 25. Total de hits: 5. Tasa de aciertos: 0.20
+[INFO] 22:42:24:14 Memoria/(4194:4195): Total de accesos: 25. Total de hits: 5. Tasa de aciertos: 0.20
+[INFO] 22:43:24:15 Memoria/(4194:4195): Total de accesos: 25. Total de hits: 5. Tasa de aciertos: 0.20
+[INFO] 22:44:24:15 Memoria/(4194:4195): Total de accesos: 25. Total de hits: 5. Tasa de aciertos: 0.20
+[INFO] 22:45:24:16 Memoria/(4194:4195): Total de accesos: 25. Total de hits: 5. Tasa de aciertos: 0.20
+[INFO] 22:46:24:16 Memoria/(4194:4195): Total de accesos: 25. Total de hits: 5. Tasa de aciertos: 0.20
+[INFO] 22:47:09:510 Memoria/(4194:4194): ---------------------FIN---------------------
+[INFO] 22:48:02:612 Memoria/(4242:4242): Conectado a Swap
+[INFO] 22:49:02:724 Memoria/(4242:4243): Total de accesos: 0. Total de hits: 0. Tasa de aciertos: -nan
+[INFO] 22:50:02:729 Memoria/(4242:4243): Total de accesos: 0. Total de hits: 0. Tasa de aciertos: -nan
+[INFO] 22:51:02:730 Memoria/(4242:4243): Total de accesos: 0. Total de hits: 0. Tasa de aciertos: -nan
+[INFO] 22:52:02:731 Memoria/(4242:4243): Total de accesos: 0. Total de hits: 0. Tasa de aciertos: -nan
+[INFO] 22:53:02:733 Memoria/(4242:4243): Total de accesos: 0. Total de hits: 0. Tasa de aciertos: -nan
+[INFO] 22:54:02:735 Memoria/(4242:4243): Total de accesos: 0. Total de hits: 0. Tasa de aciertos: -nan
+[INFO] 22:55:02:735 Memoria/(4242:4243): Total de accesos: 0. Total de hits: 0. Tasa de aciertos: -nan
+[INFO] 22:56:02:737 Memoria/(4242:4243): Total de accesos: 0. Total de hits: 0. Tasa de aciertos: -nan
+[INFO] 22:57:02:738 Memoria/(4242:4243): Total de accesos: 0. Total de hits: 0. Tasa de aciertos: -nan
+[INFO] 22:58:02:741 Memoria/(4242:4243): Total de accesos: 0. Total de hits: 0. Tasa de aciertos: -nan
+[INFO] 22:59:02:742 Memoria/(4242:4243): Total de accesos: 0. Total de hits: 0. Tasa de aciertos: -nan
+[INFO] 23:00:02:743 Memoria/(4242:4243): Total de accesos: 0. Total de hits: 0. Tasa de aciertos: -nan
+[INFO] 23:01:02:745 Memoria/(4242:4243): Total de accesos: 0. Total de hits: 0. Tasa de aciertos: -nan
+[INFO] 23:02:02:746 Memoria/(4242:4243): Total de accesos: 0. Total de hits: 0. Tasa de aciertos: -nan
+[INFO] 23:03:02:748 Memoria/(4242:4243): Total de accesos: 0. Total de hits: 0. Tasa de aciertos: -nan
+[INFO] 23:04:02:748 Memoria/(4242:4243): Total de accesos: 0. Total de hits: 0. Tasa de aciertos: -nan
+[INFO] 23:05:02:749 Memoria/(4242:4243): Total de accesos: 0. Total de hits: 0. Tasa de aciertos: -nan

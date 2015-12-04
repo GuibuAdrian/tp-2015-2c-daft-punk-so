@@ -1,0 +1,31 @@
+iniciar 50
+escribir 0 "Hola"
+escribir 1 "Seguro?"
+escribir 9 "Noooooo"
+escribir 10 "ERROR"
+escribir 12 "PorFavooor"
+escribir 19 "No?"
+escribir 33 "LoVemosEl28deNov"
+escribir 45 "chau"
+escribir 46 "Aprobas?"
+leer 0
+leer 1
+leer 0
+leer 45
+entrada-salida 2
+entrada-salida 2
+entrada-salida 2
+entrada-salida 4
+leer 46
+leer 9
+leer 1
+escribir 0 "Seh"
+entrada-salida 15
+leer 10
+leer 46
+leer 9
+leer 1
+leer 0
+leer 12
+leer 33
+finalizar

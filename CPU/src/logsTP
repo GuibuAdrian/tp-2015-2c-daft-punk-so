@@ -2421,3 +2421,341 @@
 [INFO] 22:14:07:953 CPU/(2514:2515): Planificador: 5 conectado, viva!!
 [INFO] 22:14:12:759 CPU/(2514:2516): Rafaga concluida. PID 4
 [INFO] 22:14:12:760 CPU/(2514:2514): ---------------------FIN---------------------
+[INFO] 21:45:23:3 CPU/(3653:3656): Conectado CPU 4!!
+[INFO] 21:45:23:34 CPU/(3653:3656): Rafaga concluida. PID 4
+[INFO] 22:10:04:574 CPU/(3998:4001): Conectado CPU 4!!
+[INFO] 22:10:04:574 CPU/(3998:4001): Rafaga concluida. PID 4
+[INFO] 22:13:12:315 CPU/(4070:4073): Conectado CPU 4!!
+[INFO] 22:13:12:315 CPU/(4070:4072): Planificador: 5 conectado, viva!!
+[INFO] 22:13:12:316 CPU/(4070:4071): Planificador: 6 conectado, viva!!
+[INFO] 22:15:06:475 CPU/(4070:4072): Recibido mProc: 3, path: algo.cod, puntero: 2
+[INFO] 22:15:06:475 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:15:07:476 CPU/(4070:4072): Recibido mProc: 3, path: algo.cod, puntero: 3
+[INFO] 22:15:07:476 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:15:11:478 CPU/(4070:4072): Recibido mProc: 3, path: algo.cod, puntero: 4
+[INFO] 22:15:11:478 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:15:15:481 CPU/(4070:4072): Recibido mProc: 3, path: algo.cod, puntero: 5
+[INFO] 22:15:15:482 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:15:19:485 CPU/(4070:4071): Recibido mProc: 4, path: algo.cod, puntero: 2
+[INFO] 22:15:19:485 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:15:20:486 CPU/(4070:4072): Recibido mProc: 3, path: algo.cod, puntero: 6
+[INFO] 22:15:20:486 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:15:24:487 CPU/(4070:4071): Recibido mProc: 4, path: algo.cod, puntero: 3
+[INFO] 22:15:24:487 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:15:28:490 CPU/(4070:4072): Recibido mProc: 3, path: algo.cod, puntero: 7
+[INFO] 22:15:28:491 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:15:29:491 CPU/(4070:4071): Recibido mProc: 4, path: algo.cod, puntero: 4
+[INFO] 22:15:29:491 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:15:33:494 CPU/(4070:4072): Recibido mProc: 3, path: algo.cod, puntero: 8
+[INFO] 22:15:33:496 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:15:34:497 CPU/(4070:4072): Rafaga concluida. PID 3.
+[INFO] 22:15:34:498 CPU/(4070:4071): Recibido mProc: 4, path: algo.cod, puntero: 5
+[INFO] 22:15:34:498 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:15:38:501 CPU/(4070:4072): Recibido mProc: 5, path: algo.cod, puntero: 2
+[INFO] 22:15:38:501 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:15:39:503 CPU/(4070:4071): Recibido mProc: 4, path: algo.cod, puntero: 6
+[INFO] 22:15:39:503 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:15:43:506 CPU/(4070:4072): Recibido mProc: 5, path: algo.cod, puntero: 3
+[INFO] 22:15:43:506 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:15:47:509 CPU/(4070:4071): Recibido mProc: 4, path: algo.cod, puntero: 7
+[INFO] 22:15:47:509 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:15:48:510 CPU/(4070:4072): Recibido mProc: 5, path: algo.cod, puntero: 4
+[INFO] 22:15:48:510 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:15:52:513 CPU/(4070:4071): Recibido mProc: 4, path: algo.cod, puntero: 8
+[INFO] 22:15:52:513 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:15:53:513 CPU/(4070:4071): Rafaga concluida. PID 4.
+[INFO] 22:15:53:513 CPU/(4070:4072): Recibido mProc: 5, path: algo.cod, puntero: 5
+[INFO] 22:15:53:514 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:15:57:518 CPU/(4070:4071): Recibido mProc: 6, path: algo.cod, puntero: 2
+[INFO] 22:15:57:518 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:15:58:519 CPU/(4070:4072): Recibido mProc: 5, path: algo.cod, puntero: 6
+[INFO] 22:15:58:519 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:16:02:522 CPU/(4070:4071): Recibido mProc: 6, path: algo.cod, puntero: 3
+[INFO] 22:16:02:522 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:16:06:523 CPU/(4070:4072): Recibido mProc: 5, path: algo.cod, puntero: 7
+[INFO] 22:16:06:524 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:16:07:525 CPU/(4070:4071): Recibido mProc: 6, path: algo.cod, puntero: 4
+[INFO] 22:16:07:525 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:16:11:528 CPU/(4070:4072): Recibido mProc: 5, path: algo.cod, puntero: 8
+[INFO] 22:16:11:529 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:16:12:529 CPU/(4070:4072): Rafaga concluida. PID 5.
+[INFO] 22:16:12:529 CPU/(4070:4071): Recibido mProc: 6, path: algo.cod, puntero: 5
+[INFO] 22:16:12:529 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:16:16:532 CPU/(4070:4072): Recibido mProc: 7, path: MuyLargo.cod, puntero: 2
+[INFO] 22:16:16:533 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:16:17:535 CPU/(4070:4071): Recibido mProc: 6, path: algo.cod, puntero: 6
+[INFO] 22:16:17:535 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:16:21:539 CPU/(4070:4072): Recibido mProc: 7, path: MuyLargo.cod, puntero: 32
+[INFO] 22:16:21:539 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:16:22:542 CPU/(4070:4072): Rafaga concluida. PID 7.
+[INFO] 22:16:22:542 CPU/(4070:4071): Recibido mProc: 6, path: algo.cod, puntero: 7
+[INFO] 22:16:22:542 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:16:23:542 CPU/(4070:4072): Recibido mProc: 8, path: MuyLargo.cod, puntero: 2
+[INFO] 22:16:23:543 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:16:24:543 CPU/(4070:4071): Recibido mProc: 6, path: algo.cod, puntero: 8
+[INFO] 22:16:24:544 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:16:25:545 CPU/(4070:4071): Rafaga concluida. PID 6.
+[INFO] 22:16:25:546 CPU/(4070:4072): Recibido mProc: 8, path: MuyLargo.cod, puntero: 32
+[INFO] 22:16:25:546 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:16:26:547 CPU/(4070:4072): Rafaga concluida. PID 8.
+[INFO] 22:17:58:163 CPU/(4070:4072): Recibido mProc: 9, path: MuyLargo.cod, puntero: 2
+[INFO] 22:17:58:164 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:17:59:165 CPU/(4070:4072): Recibido mProc: 9, path: MuyLargo.cod, puntero: 32
+[INFO] 22:17:59:166 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:18:00:167 CPU/(4070:4072): Rafaga concluida. PID 9.
+[INFO] 22:18:12:108 CPU/(4070:4072): Recibido mProc: 10, path: algo.cod, puntero: 2
+[INFO] 22:18:12:108 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:18:13:109 CPU/(4070:4072): Recibido mProc: 10, path: algo.cod, puntero: 3
+[INFO] 22:18:13:109 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:18:17:112 CPU/(4070:4071): Recibido mProc: 11, path: algo.cod, puntero: 2
+[INFO] 22:18:17:113 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:18:18:116 CPU/(4070:4072): Recibido mProc: 10, path: algo.cod, puntero: 4
+[INFO] 22:18:18:116 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:18:22:118 CPU/(4070:4071): Recibido mProc: 11, path: algo.cod, puntero: 3
+[INFO] 22:18:22:119 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:18:26:121 CPU/(4070:4072): Recibido mProc: 10, path: algo.cod, puntero: 5
+[INFO] 22:18:26:122 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:18:30:123 CPU/(4070:4071): Recibido mProc: 11, path: algo.cod, puntero: 4
+[INFO] 22:18:30:124 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:18:34:127 CPU/(4070:4072): Recibido mProc: 10, path: algo.cod, puntero: 6
+[INFO] 22:18:34:128 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:18:38:129 CPU/(4070:4071): Recibido mProc: 11, path: algo.cod, puntero: 5
+[INFO] 22:18:38:130 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:18:42:132 CPU/(4070:4072): Recibido mProc: 10, path: algo.cod, puntero: 7
+[INFO] 22:18:42:132 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:18:43:134 CPU/(4070:4071): Recibido mProc: 11, path: algo.cod, puntero: 6
+[INFO] 22:18:43:134 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:18:47:137 CPU/(4070:4072): Recibido mProc: 10, path: algo.cod, puntero: 8
+[INFO] 22:18:47:137 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:18:48:138 CPU/(4070:4072): Rafaga concluida. PID 10.
+[INFO] 22:18:48:138 CPU/(4070:4071): Recibido mProc: 11, path: algo.cod, puntero: 7
+[INFO] 22:18:48:139 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:18:49:140 CPU/(4070:4072): Recibido mProc: 12, path: algo.cod, puntero: 2
+[INFO] 22:18:49:140 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:18:50:141 CPU/(4070:4071): Recibido mProc: 11, path: algo.cod, puntero: 8
+[INFO] 22:18:50:142 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:18:51:144 CPU/(4070:4071): Rafaga concluida. PID 11.
+[INFO] 22:18:51:144 CPU/(4070:4072): Recibido mProc: 12, path: algo.cod, puntero: 3
+[INFO] 22:18:51:145 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:18:55:148 CPU/(4070:4071): Recibido mProc: 13, path: algo.cod, puntero: 2
+[INFO] 22:18:55:149 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:18:56:149 CPU/(4070:4072): Recibido mProc: 12, path: algo.cod, puntero: 4
+[INFO] 22:18:56:150 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:19:00:152 CPU/(4070:4071): Recibido mProc: 13, path: algo.cod, puntero: 3
+[INFO] 22:19:00:153 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:19:04:158 CPU/(4070:4072): Recibido mProc: 12, path: algo.cod, puntero: 5
+[INFO] 22:19:04:159 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:19:08:161 CPU/(4070:4071): Recibido mProc: 13, path: algo.cod, puntero: 4
+[INFO] 22:19:08:161 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:19:12:163 CPU/(4070:4072): Recibido mProc: 12, path: algo.cod, puntero: 6
+[INFO] 22:19:12:164 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:19:16:168 CPU/(4070:4071): Recibido mProc: 13, path: algo.cod, puntero: 5
+[INFO] 22:19:16:168 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:19:20:171 CPU/(4070:4072): Recibido mProc: 12, path: algo.cod, puntero: 7
+[INFO] 22:19:20:171 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:19:21:172 CPU/(4070:4071): Recibido mProc: 13, path: algo.cod, puntero: 6
+[INFO] 22:19:21:173 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:19:25:176 CPU/(4070:4072): Recibido mProc: 12, path: algo.cod, puntero: 8
+[INFO] 22:19:25:177 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:19:26:179 CPU/(4070:4072): Rafaga concluida. PID 12.
+[INFO] 22:19:26:179 CPU/(4070:4071): Recibido mProc: 13, path: algo.cod, puntero: 7
+[INFO] 22:19:26:179 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:19:27:180 CPU/(4070:4072): Recibido mProc: 14, path: algo.cod, puntero: 2
+[INFO] 22:19:27:181 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:19:28:183 CPU/(4070:4071): Recibido mProc: 13, path: algo.cod, puntero: 8
+[INFO] 22:19:28:183 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:19:29:183 CPU/(4070:4071): Rafaga concluida. PID 13.
+[INFO] 22:19:29:184 CPU/(4070:4072): Recibido mProc: 14, path: algo.cod, puntero: 3
+[INFO] 22:19:29:184 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:19:33:186 CPU/(4070:4071): Recibido mProc: 15, path: algo.cod, puntero: 2
+[INFO] 22:19:33:186 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:19:34:187 CPU/(4070:4072): Recibido mProc: 14, path: algo.cod, puntero: 4
+[INFO] 22:19:34:188 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:19:38:192 CPU/(4070:4071): Recibido mProc: 15, path: algo.cod, puntero: 3
+[INFO] 22:19:38:192 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:19:42:194 CPU/(4070:4072): Recibido mProc: 14, path: algo.cod, puntero: 5
+[INFO] 22:19:42:194 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:19:46:198 CPU/(4070:4071): Recibido mProc: 15, path: algo.cod, puntero: 4
+[INFO] 22:19:46:199 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:19:50:202 CPU/(4070:4072): Recibido mProc: 14, path: algo.cod, puntero: 6
+[INFO] 22:19:50:202 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:19:54:205 CPU/(4070:4071): Recibido mProc: 15, path: algo.cod, puntero: 5
+[INFO] 22:19:54:206 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:19:58:208 CPU/(4070:4072): Recibido mProc: 14, path: algo.cod, puntero: 7
+[INFO] 22:19:58:208 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:19:59:209 CPU/(4070:4071): Recibido mProc: 15, path: algo.cod, puntero: 6
+[INFO] 22:19:59:209 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:20:03:211 CPU/(4070:4072): Recibido mProc: 14, path: algo.cod, puntero: 8
+[INFO] 22:20:03:212 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:20:04:213 CPU/(4070:4072): Rafaga concluida. PID 14.
+[INFO] 22:20:04:213 CPU/(4070:4071): Recibido mProc: 15, path: algo.cod, puntero: 7
+[INFO] 22:20:04:213 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:20:05:214 CPU/(4070:4072): Recibido mProc: 16, path: algo.cod, puntero: 2
+[INFO] 22:20:05:215 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:20:06:216 CPU/(4070:4071): Recibido mProc: 15, path: algo.cod, puntero: 8
+[INFO] 22:20:06:216 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:20:07:218 CPU/(4070:4071): Rafaga concluida. PID 15.
+[INFO] 22:20:07:218 CPU/(4070:4072): Recibido mProc: 16, path: algo.cod, puntero: 3
+[INFO] 22:20:07:219 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:20:11:222 CPU/(4070:4071): Recibido mProc: 17, path: algo.cod, puntero: 2
+[INFO] 22:20:11:222 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:20:12:223 CPU/(4070:4072): Recibido mProc: 16, path: algo.cod, puntero: 4
+[INFO] 22:20:12:224 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:20:16:227 CPU/(4070:4071): Recibido mProc: 17, path: algo.cod, puntero: 3
+[INFO] 22:20:16:228 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:20:20:229 CPU/(4070:4072): Recibido mProc: 16, path: algo.cod, puntero: 5
+[INFO] 22:20:20:230 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:20:24:231 CPU/(4070:4071): Recibido mProc: 17, path: algo.cod, puntero: 4
+[INFO] 22:20:24:232 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:20:28:233 CPU/(4070:4072): Recibido mProc: 16, path: algo.cod, puntero: 6
+[INFO] 22:20:28:233 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:20:32:236 CPU/(4070:4071): Recibido mProc: 17, path: algo.cod, puntero: 5
+[INFO] 22:20:32:236 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:20:36:239 CPU/(4070:4072): Recibido mProc: 16, path: algo.cod, puntero: 7
+[INFO] 22:20:36:240 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:20:37:241 CPU/(4070:4071): Recibido mProc: 17, path: algo.cod, puntero: 6
+[INFO] 22:20:37:241 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:20:41:243 CPU/(4070:4072): Recibido mProc: 16, path: algo.cod, puntero: 8
+[INFO] 22:20:41:244 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:20:42:244 CPU/(4070:4072): Rafaga concluida. PID 16.
+[INFO] 22:20:42:244 CPU/(4070:4071): Recibido mProc: 17, path: algo.cod, puntero: 7
+[INFO] 22:20:42:245 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:20:43:245 CPU/(4070:4072): Recibido mProc: 18, path: algo.cod, puntero: 2
+[INFO] 22:20:43:246 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:20:44:246 CPU/(4070:4071): Recibido mProc: 17, path: algo.cod, puntero: 8
+[INFO] 22:20:44:247 CPU/(4070:4071): ID CPU: 2 conectado a Memoria
+[INFO] 22:20:45:249 CPU/(4070:4071): Rafaga concluida. PID 17.
+[INFO] 22:20:45:249 CPU/(4070:4072): Recibido mProc: 18, path: algo.cod, puntero: 3
+[INFO] 22:20:45:249 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:20:49:252 CPU/(4070:4072): Recibido mProc: 18, path: algo.cod, puntero: 4
+[INFO] 22:20:49:253 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:20:53:255 CPU/(4070:4072): Recibido mProc: 18, path: algo.cod, puntero: 5
+[INFO] 22:20:53:256 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:20:57:262 CPU/(4070:4072): Recibido mProc: 18, path: algo.cod, puntero: 6
+[INFO] 22:20:57:262 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:21:01:265 CPU/(4070:4072): Recibido mProc: 18, path: algo.cod, puntero: 7
+[INFO] 22:21:01:265 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:21:02:268 CPU/(4070:4072): Recibido mProc: 18, path: algo.cod, puntero: 8
+[INFO] 22:21:02:268 CPU/(4070:4072): ID CPU: 1 conectado a Memoria
+[INFO] 22:21:03:270 CPU/(4070:4072): Rafaga concluida. PID 18.
+[INFO] 22:22:54:958 CPU/(4070:4070): ---------------------FIN---------------------
+[INFO] 22:34:05:533 CPU/(4142:4145): Conectado CPU 4!!
+[INFO] 22:34:05:533 CPU/(4142:4144): Planificador: 5 conectado, viva!!
+[INFO] 22:34:05:533 CPU/(4142:4143): Planificador: 6 conectado, viva!!
+[INFO] 22:34:12:501 CPU/(4142:4144): Recibido mProc: 3, path: algo.cod, puntero: 2
+[INFO] 22:34:12:501 CPU/(4142:4144): ID CPU: 1 conectado a Memoria
+[INFO] 22:34:13:779 CPU/(4142:4145): Rafaga concluida. PID 4
+[INFO] 22:34:13:780 CPU/(4142:4142): ---------------------FIN---------------------
+[INFO] 22:35:08:997 CPU/(4161:4164): Conectado CPU 4!!
+[INFO] 22:35:08:997 CPU/(4161:4164): Rafaga concluida. PID 4
+[INFO] 22:35:12:865 CPU/(4166:4169): Conectado CPU 4!!
+[INFO] 22:35:12:865 CPU/(4166:4169): Rafaga concluida. PID 4
+[INFO] 22:35:17:436 CPU/(4171:4174): Conectado CPU 4!!
+[INFO] 22:35:17:436 CPU/(4171:4174): Rafaga concluida. PID 4
+[INFO] 22:35:24:747 CPU/(4178:4181): Conectado CPU 4!!
+[INFO] 22:35:24:747 CPU/(4178:4181): Rafaga concluida. PID 4
+[INFO] 22:35:36:318 CPU/(4183:4186): Conectado CPU 4!!
+[INFO] 22:35:36:341 CPU/(4183:4185): Planificador: 6 conectado, viva!!
+[INFO] 22:35:36:342 CPU/(4183:4184): Planificador: 5 conectado, viva!!
+[INFO] 22:36:30:409 CPU/(4196:4197): Planificador: 5 conectado, viva!!
+[INFO] 22:36:30:429 CPU/(4196:4198): Planificador: 6 conectado, viva!!
+[INFO] 22:36:30:429 CPU/(4196:4199): Conectado CPU 4!!
+[INFO] 22:36:37:993 CPU/(4196:4197): Recibido mProc: 3, path: algo.cod, puntero: 2
+[INFO] 22:36:38:9 CPU/(4196:4197): ID CPU: 2 conectado a Memoria
+[INFO] 22:36:39:93 CPU/(4196:4197): Recibido mProc: 3, path: algo.cod, puntero: 3
+[INFO] 22:36:39:101 CPU/(4196:4197): ID CPU: 2 conectado a Memoria
+[INFO] 22:36:43:109 CPU/(4196:4198): Recibido mProc: 4, path: algo.cod, puntero: 2
+[INFO] 22:36:43:110 CPU/(4196:4198): ID CPU: 1 conectado a Memoria
+[INFO] 22:36:44:117 CPU/(4196:4197): Recibido mProc: 3, path: algo.cod, puntero: 4
+[INFO] 22:36:44:119 CPU/(4196:4197): ID CPU: 2 conectado a Memoria
+[INFO] 22:36:48:131 CPU/(4196:4198): Recibido mProc: 4, path: algo.cod, puntero: 3
+[INFO] 22:36:48:132 CPU/(4196:4198): ID CPU: 1 conectado a Memoria
+[INFO] 22:36:52:137 CPU/(4196:4197): Recibido mProc: 3, path: algo.cod, puntero: 5
+[INFO] 22:36:52:139 CPU/(4196:4197): ID CPU: 2 conectado a Memoria
+[INFO] 22:36:56:144 CPU/(4196:4198): Recibido mProc: 4, path: algo.cod, puntero: 4
+[INFO] 22:36:56:144 CPU/(4196:4198): ID CPU: 1 conectado a Memoria
+[INFO] 22:37:00:149 CPU/(4196:4197): Recibido mProc: 3, path: algo.cod, puntero: 6
+[INFO] 22:37:00:156 CPU/(4196:4197): ID CPU: 2 conectado a Memoria
+[INFO] 22:37:04:161 CPU/(4196:4198): Recibido mProc: 4, path: algo.cod, puntero: 5
+[INFO] 22:37:04:162 CPU/(4196:4198): ID CPU: 1 conectado a Memoria
+[INFO] 22:37:08:165 CPU/(4196:4197): Recibido mProc: 3, path: algo.cod, puntero: 7
+[INFO] 22:37:08:166 CPU/(4196:4197): ID CPU: 2 conectado a Memoria
+[INFO] 22:37:09:167 CPU/(4196:4198): Recibido mProc: 4, path: algo.cod, puntero: 6
+[INFO] 22:37:09:167 CPU/(4196:4198): ID CPU: 1 conectado a Memoria
+[INFO] 22:37:13:170 CPU/(4196:4197): Recibido mProc: 3, path: algo.cod, puntero: 8
+[INFO] 22:37:13:171 CPU/(4196:4197): ID CPU: 2 conectado a Memoria
+[INFO] 22:37:14:172 CPU/(4196:4197): Rafaga concluida. PID 3.
+[INFO] 22:37:14:181 CPU/(4196:4198): Recibido mProc: 4, path: algo.cod, puntero: 7
+[INFO] 22:37:14:182 CPU/(4196:4198): ID CPU: 1 conectado a Memoria
+[INFO] 22:37:15:185 CPU/(4196:4197): Recibido mProc: 5, path: algo.cod, puntero: 2
+[INFO] 22:37:15:187 CPU/(4196:4197): ID CPU: 2 conectado a Memoria
+[INFO] 22:37:16:189 CPU/(4196:4198): Recibido mProc: 4, path: algo.cod, puntero: 8
+[INFO] 22:37:16:190 CPU/(4196:4198): ID CPU: 1 conectado a Memoria
+[INFO] 22:37:17:192 CPU/(4196:4198): Rafaga concluida. PID 4.
+[INFO] 22:37:17:193 CPU/(4196:4197): Recibido mProc: 5, path: algo.cod, puntero: 3
+[INFO] 22:37:17:194 CPU/(4196:4197): ID CPU: 2 conectado a Memoria
+[INFO] 22:37:21:195 CPU/(4196:4198): Recibido mProc: 6, path: algo.cod, puntero: 2
+[INFO] 22:37:21:196 CPU/(4196:4198): ID CPU: 1 conectado a Memoria
+[INFO] 22:37:22:198 CPU/(4196:4197): Recibido mProc: 5, path: algo.cod, puntero: 4
+[INFO] 22:37:22:198 CPU/(4196:4197): ID CPU: 2 conectado a Memoria
+[INFO] 22:37:26:201 CPU/(4196:4198): Recibido mProc: 6, path: algo.cod, puntero: 3
+[INFO] 22:37:26:202 CPU/(4196:4198): ID CPU: 1 conectado a Memoria
+[INFO] 22:37:30:207 CPU/(4196:4197): Recibido mProc: 5, path: algo.cod, puntero: 5
+[INFO] 22:37:30:208 CPU/(4196:4197): ID CPU: 2 conectado a Memoria
+[INFO] 22:37:34:213 CPU/(4196:4198): Recibido mProc: 6, path: algo.cod, puntero: 4
+[INFO] 22:37:34:214 CPU/(4196:4198): ID CPU: 1 conectado a Memoria
+[INFO] 22:37:38:220 CPU/(4196:4197): Recibido mProc: 5, path: algo.cod, puntero: 6
+[INFO] 22:37:38:221 CPU/(4196:4197): ID CPU: 2 conectado a Memoria
+[INFO] 22:37:42:226 CPU/(4196:4198): Recibido mProc: 6, path: algo.cod, puntero: 5
+[INFO] 22:37:42:228 CPU/(4196:4198): ID CPU: 1 conectado a Memoria
+[INFO] 22:37:46:230 CPU/(4196:4197): Recibido mProc: 5, path: algo.cod, puntero: 7
+[INFO] 22:37:46:232 CPU/(4196:4197): ID CPU: 2 conectado a Memoria
+[INFO] 22:37:47:233 CPU/(4196:4198): Recibido mProc: 6, path: algo.cod, puntero: 6
+[INFO] 22:37:47:234 CPU/(4196:4198): ID CPU: 1 conectado a Memoria
+[INFO] 22:37:51:238 CPU/(4196:4197): Recibido mProc: 5, path: algo.cod, puntero: 8
+[INFO] 22:37:51:239 CPU/(4196:4197): ID CPU: 2 conectado a Memoria
+[INFO] 22:37:52:241 CPU/(4196:4197): Rafaga concluida. PID 5.
+[INFO] 22:37:52:242 CPU/(4196:4198): Recibido mProc: 6, path: algo.cod, puntero: 7
+[INFO] 22:37:52:242 CPU/(4196:4198): ID CPU: 1 conectado a Memoria
+[INFO] 22:37:53:245 CPU/(4196:4197): Recibido mProc: 7, path: benchmark.cod, puntero: 2
+[INFO] 22:37:53:247 CPU/(4196:4197): ID CPU: 2 conectado a Memoria
+[INFO] 22:37:54:250 CPU/(4196:4198): Recibido mProc: 6, path: algo.cod, puntero: 8
+[INFO] 22:37:54:251 CPU/(4196:4198): ID CPU: 1 conectado a Memoria
+[INFO] 22:37:55:254 CPU/(4196:4198): Rafaga concluida. PID 6.
+[INFO] 22:37:55:254 CPU/(4196:4197): Recibido mProc: 7, path: benchmark.cod, puntero: 10
+[INFO] 22:37:55:255 CPU/(4196:4197): ID CPU: 2 conectado a Memoria
+[INFO] 22:37:56:257 CPU/(4196:4197): Rafaga concluida. PID 7.
+[INFO] 22:37:56:257 CPU/(4196:4198): Recibido mProc: 8, path: benchmark.cod, puntero: 2
+[INFO] 22:37:56:258 CPU/(4196:4198): ID CPU: 1 conectado a Memoria
+[INFO] 22:37:57:260 CPU/(4196:4198): Recibido mProc: 8, path: benchmark.cod, puntero: 10
+[INFO] 22:37:57:261 CPU/(4196:4198): ID CPU: 1 conectado a Memoria
+[INFO] 22:37:58:262 CPU/(4196:4198): Rafaga concluida. PID 8.
+[INFO] 22:37:58:263 CPU/(4196:4197): Recibido mProc: 9, path: algo.cod, puntero: 2
+[INFO] 22:37:58:263 CPU/(4196:4197): ID CPU: 2 conectado a Memoria
+[INFO] 22:37:59:266 CPU/(4196:4197): Recibido mProc: 9, path: algo.cod, puntero: 3
+[INFO] 22:37:59:267 CPU/(4196:4197): ID CPU: 2 conectado a Memoria
+[INFO] 22:38:03:280 CPU/(4196:4197): Recibido mProc: 9, path: algo.cod, puntero: 4
+[INFO] 22:38:03:281 CPU/(4196:4197): ID CPU: 2 conectado a Memoria
+[INFO] 22:38:07:287 CPU/(4196:4197): Recibido mProc: 9, path: algo.cod, puntero: 5
+[INFO] 22:38:07:287 CPU/(4196:4197): ID CPU: 2 conectado a Memoria
+[INFO] 22:38:11:291 CPU/(4196:4197): Recibido mProc: 9, path: algo.cod, puntero: 6
+[INFO] 22:38:11:292 CPU/(4196:4197): ID CPU: 2 conectado a Memoria
+[INFO] 22:38:15:295 CPU/(4196:4197): Recibido mProc: 9, path: algo.cod, puntero: 7
+[INFO] 22:38:15:296 CPU/(4196:4197): ID CPU: 2 conectado a Memoria
+[INFO] 22:38:16:298 CPU/(4196:4197): Recibido mProc: 9, path: algo.cod, puntero: 8
+[INFO] 22:38:16:299 CPU/(4196:4197): ID CPU: 2 conectado a Memoria
+[INFO] 22:38:17:300 CPU/(4196:4197): Rafaga concluida. PID 9.
+[INFO] 22:38:46:531 CPU/(4196:4197): Recibido mProc: 10, path: benchmark.cod, puntero: 2
+[INFO] 22:38:46:531 CPU/(4196:4197): ID CPU: 2 conectado a Memoria
+[INFO] 22:38:47:533 CPU/(4196:4197): Recibido mProc: 10, path: benchmark.cod, puntero: 10
+[INFO] 22:38:47:534 CPU/(4196:4197): ID CPU: 2 conectado a Memoria
+[INFO] 22:38:48:536 CPU/(4196:4197): Rafaga concluida. PID 10.
+[INFO] 22:47:09:367 CPU/(4196:4196): ---------------------FIN---------------------
+[INFO] 22:48:06:712 CPU/(4244:4247): Conectado CPU 4!!
+[INFO] 22:48:06:733 CPU/(4244:4246): Planificador: 6 conectado, viva!!
+[INFO] 22:48:06:734 CPU/(4244:4245): Planificador: 5 conectado, viva!!
+[INFO] 22:48:30:334 CPU/(4250:4251): Planificador: 6 conectado, viva!!
+[INFO] 22:48:30:363 CPU/(4250:4252): Planificador: 5 conectado, viva!!
+[INFO] 22:49:16:520 CPU/(4255:4256): Planificador: 6 conectado, viva!!
+[INFO] 22:49:16:559 CPU/(4255:4257): Planificador: 5 conectado, viva!!
+[INFO] 22:49:16:560 CPU/(4255:4258): Conectado CPU 4!!

@@ -1,0 +1,9 @@
+iniciar 8
+escribir 4 "TLB"
+leer 4
+leer 4
+leer 4
+leer 4
+leer 4
+escribir 5 "fallo"
+finalizar

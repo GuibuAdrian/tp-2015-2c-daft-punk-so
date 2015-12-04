@@ -758,3 +758,159 @@
 [INFO] 15:37:58:537 Swap/(5130:5130): Finalizando proceso 3. Total Paginas leidas: 0, escritas 1
 [INFO] 15:37:58:537 Swap/(5130:5130): Finalizando mProc: 3
 [INFO] 15:38:13:719 Swap/(5130:5130): ---------------------FIN---------------------
+[INFO] 22:13:10:145 Swap/(4065:4065): Memoria conectado
+[INFO] 22:15:06:475 Swap/(4065:4065): Iniciando mProc: 3 de 5 paginas
+[INFO] 22:15:08:476 Swap/(4065:4065): Escribiendo mProc: 3. Pagina: 0. Contenido: hola 
+[INFO] 22:15:12:479 Swap/(4065:4065): Escribiendo mProc: 3. Pagina: 1. Contenido: chau 
+[INFO] 22:15:16:482 Swap/(4065:4065): Escribiendo mProc: 3. Pagina: 4. Contenido: si 
+[INFO] 22:15:19:485 Swap/(4065:4065): Iniciando mProc: 4 de 5 paginas
+[INFO] 22:15:21:486 Swap/(4065:4065): Leyendo mProc: 3. Pagina 0: hola 
+[INFO] 22:15:25:489 Swap/(4065:4065): Escribiendo mProc: 4. Pagina: 0. Contenido: hola 
+[INFO] 22:15:30:492 Swap/(4065:4065): Escribiendo mProc: 4. Pagina: 1. Contenido: chau 
+[INFO] 22:15:33:497 Swap/(4065:4065): Finalizando proceso 3. Total Paginas leidas: 1, escritas 3
+[INFO] 22:15:33:497 Swap/(4065:4065): Finalizando mProc: 3
+[INFO] 22:15:35:500 Swap/(4065:4065): Escribiendo mProc: 4. Pagina: 4. Contenido: si 
+[INFO] 22:15:38:502 Swap/(4065:4065): Iniciando mProc: 5 de 5 paginas
+[INFO] 22:15:40:504 Swap/(4065:4065): Leyendo mProc: 4. Pagina 0: hola 
+[INFO] 22:15:44:508 Swap/(4065:4065): Escribiendo mProc: 5. Pagina: 0. Contenido: hola 
+[INFO] 22:15:49:511 Swap/(4065:4065): Escribiendo mProc: 5. Pagina: 1. Contenido: chau 
+[INFO] 22:15:52:513 Swap/(4065:4065): Finalizando proceso 4. Total Paginas leidas: 1, escritas 3
+[INFO] 22:15:52:513 Swap/(4065:4065): Finalizando mProc: 4
+[INFO] 22:15:54:515 Swap/(4065:4065): Escribiendo mProc: 5. Pagina: 4. Contenido: si 
+[INFO] 22:15:57:518 Swap/(4065:4065): Iniciando mProc: 6 de 5 paginas
+[INFO] 22:15:59:520 Swap/(4065:4065): Leyendo mProc: 5. Pagina 0: hola 
+[INFO] 22:16:03:523 Swap/(4065:4065): Escribiendo mProc: 6. Pagina: 0. Contenido: hola 
+[INFO] 22:16:08:526 Swap/(4065:4065): Escribiendo mProc: 6. Pagina: 1. Contenido: chau 
+[INFO] 22:16:11:529 Swap/(4065:4065): Finalizando proceso 5. Total Paginas leidas: 1, escritas 3
+[INFO] 22:16:11:529 Swap/(4065:4065): Finalizando mProc: 5
+[INFO] 22:16:13:530 Swap/(4065:4065): Escribiendo mProc: 6. Pagina: 4. Contenido: si 
+[INFO] 22:16:16:534 Swap/(4065:4065): Iniciando mProc: 7 de 50 paginas
+[INFO] 22:16:16:534 Swap/(4065:4065): No hay espacio para mProc: 7
+[INFO] 22:16:18:537 Swap/(4065:4065): Leyendo mProc: 6. Pagina 0: hola 
+[INFO] 22:16:21:540 Swap/(4065:4065): Finalizando proceso 7. Total Paginas leidas: 0, escritas 0
+[INFO] 22:16:21:540 Swap/(4065:4065): Finalizando mProc: 7
+[INFO] 22:16:23:543 Swap/(4065:4065): Iniciando mProc: 8 de 50 paginas
+[INFO] 22:16:23:543 Swap/(4065:4065): No hay espacio para mProc: 8
+[INFO] 22:16:24:544 Swap/(4065:4065): Finalizando proceso 6. Total Paginas leidas: 1, escritas 3
+[INFO] 22:16:24:544 Swap/(4065:4065): Finalizando mProc: 6
+[INFO] 22:16:25:546 Swap/(4065:4065): Finalizando proceso 8. Total Paginas leidas: 0, escritas 0
+[INFO] 22:16:25:546 Swap/(4065:4065): Finalizando mProc: 8
+[INFO] 22:17:58:164 Swap/(4065:4065): Iniciando mProc: 9 de 50 paginas
+[INFO] 22:17:58:164 Swap/(4065:4065): No hay espacio para mProc: 9
+[INFO] 22:17:59:166 Swap/(4065:4065): Finalizando proceso 9. Total Paginas leidas: 0, escritas 0
+[INFO] 22:17:59:166 Swap/(4065:4065): Finalizando mProc: 9
+[INFO] 22:18:12:108 Swap/(4065:4065): Iniciando mProc: 10 de 5 paginas
+[INFO] 22:18:14:109 Swap/(4065:4065): Escribiendo mProc: 10. Pagina: 0. Contenido: hola 
+[INFO] 22:18:17:114 Swap/(4065:4065): Iniciando mProc: 11 de 5 paginas
+[INFO] 22:18:19:116 Swap/(4065:4065): Escribiendo mProc: 10. Pagina: 1. Contenido: chau 
+[INFO] 22:18:23:120 Swap/(4065:4065): Escribiendo mProc: 11. Pagina: 0. Contenido: hola 
+[INFO] 22:18:27:122 Swap/(4065:4065): Escribiendo mProc: 10. Pagina: 4. Contenido: si 
+[INFO] 22:18:31:125 Swap/(4065:4065): Escribiendo mProc: 11. Pagina: 1. Contenido: chau 
+[INFO] 22:18:35:129 Swap/(4065:4065): Leyendo mProc: 10. Pagina 0: hola 
+[INFO] 22:18:39:130 Swap/(4065:4065): Escribiendo mProc: 11. Pagina: 4. Contenido: si 
+[INFO] 22:18:44:135 Swap/(4065:4065): Leyendo mProc: 11. Pagina 0: hola 
+[INFO] 22:18:47:138 Swap/(4065:4065): Finalizando proceso 10. Total Paginas leidas: 1, escritas 3
+[INFO] 22:18:47:138 Swap/(4065:4065): Finalizando mProc: 10
+[INFO] 22:18:49:140 Swap/(4065:4065): Iniciando mProc: 12 de 5 paginas
+[INFO] 22:18:50:142 Swap/(4065:4065): Finalizando proceso 11. Total Paginas leidas: 1, escritas 3
+[INFO] 22:18:50:142 Swap/(4065:4065): Finalizando mProc: 11
+[INFO] 22:18:52:146 Swap/(4065:4065): Escribiendo mProc: 12. Pagina: 0. Contenido: hola 
+[INFO] 22:18:55:149 Swap/(4065:4065): Iniciando mProc: 13 de 5 paginas
+[INFO] 22:18:57:151 Swap/(4065:4065): Escribiendo mProc: 12. Pagina: 1. Contenido: chau 
+[INFO] 22:19:01:155 Swap/(4065:4065): Escribiendo mProc: 13. Pagina: 0. Contenido: hola 
+[INFO] 22:19:05:159 Swap/(4065:4065): Escribiendo mProc: 12. Pagina: 4. Contenido: si 
+[INFO] 22:19:09:162 Swap/(4065:4065): Escribiendo mProc: 13. Pagina: 1. Contenido: chau 
+[INFO] 22:19:13:165 Swap/(4065:4065): Leyendo mProc: 12. Pagina 0: hola 
+[INFO] 22:19:17:169 Swap/(4065:4065): Escribiendo mProc: 13. Pagina: 4. Contenido: si 
+[INFO] 22:19:22:175 Swap/(4065:4065): Leyendo mProc: 13. Pagina 0: hola 
+[INFO] 22:19:25:177 Swap/(4065:4065): Finalizando proceso 12. Total Paginas leidas: 1, escritas 3
+[INFO] 22:19:25:177 Swap/(4065:4065): Finalizando mProc: 12
+[INFO] 22:19:27:181 Swap/(4065:4065): Iniciando mProc: 14 de 5 paginas
+[INFO] 22:19:28:183 Swap/(4065:4065): Finalizando proceso 13. Total Paginas leidas: 1, escritas 3
+[INFO] 22:19:28:183 Swap/(4065:4065): Finalizando mProc: 13
+[INFO] 22:19:30:185 Swap/(4065:4065): Escribiendo mProc: 14. Pagina: 0. Contenido: hola 
+[INFO] 22:19:33:187 Swap/(4065:4065): Iniciando mProc: 15 de 5 paginas
+[INFO] 22:19:35:189 Swap/(4065:4065): Escribiendo mProc: 14. Pagina: 1. Contenido: chau 
+[INFO] 22:19:39:193 Swap/(4065:4065): Escribiendo mProc: 15. Pagina: 0. Contenido: hola 
+[INFO] 22:19:43:196 Swap/(4065:4065): Escribiendo mProc: 14. Pagina: 4. Contenido: si 
+[INFO] 22:19:47:200 Swap/(4065:4065): Escribiendo mProc: 15. Pagina: 1. Contenido: chau 
+[INFO] 22:19:51:204 Swap/(4065:4065): Leyendo mProc: 14. Pagina 0: hola 
+[INFO] 22:19:55:207 Swap/(4065:4065): Escribiendo mProc: 15. Pagina: 4. Contenido: si 
+[INFO] 22:20:00:210 Swap/(4065:4065): Leyendo mProc: 15. Pagina 0: hola 
+[INFO] 22:20:03:212 Swap/(4065:4065): Finalizando proceso 14. Total Paginas leidas: 1, escritas 3
+[INFO] 22:20:03:212 Swap/(4065:4065): Finalizando mProc: 14
+[INFO] 22:20:05:215 Swap/(4065:4065): Iniciando mProc: 16 de 5 paginas
+[INFO] 22:20:06:216 Swap/(4065:4065): Finalizando proceso 15. Total Paginas leidas: 1, escritas 3
+[INFO] 22:20:06:216 Swap/(4065:4065): Finalizando mProc: 15
+[INFO] 22:20:08:220 Swap/(4065:4065): Escribiendo mProc: 16. Pagina: 0. Contenido: hola 
+[INFO] 22:20:11:223 Swap/(4065:4065): Iniciando mProc: 17 de 5 paginas
+[INFO] 22:20:13:225 Swap/(4065:4065): Escribiendo mProc: 16. Pagina: 1. Contenido: chau 
+[INFO] 22:20:17:228 Swap/(4065:4065): Escribiendo mProc: 17. Pagina: 0. Contenido: hola 
+[INFO] 22:20:21:230 Swap/(4065:4065): Escribiendo mProc: 16. Pagina: 4. Contenido: si 
+[INFO] 22:20:25:232 Swap/(4065:4065): Escribiendo mProc: 17. Pagina: 1. Contenido: chau 
+[INFO] 22:20:29:234 Swap/(4065:4065): Leyendo mProc: 16. Pagina 0: hola 
+[INFO] 22:20:33:238 Swap/(4065:4065): Escribiendo mProc: 17. Pagina: 4. Contenido: si 
+[INFO] 22:20:38:242 Swap/(4065:4065): Leyendo mProc: 17. Pagina 0: hola 
+[INFO] 22:20:41:244 Swap/(4065:4065): Finalizando proceso 16. Total Paginas leidas: 1, escritas 3
+[INFO] 22:20:41:244 Swap/(4065:4065): Finalizando mProc: 16
+[INFO] 22:20:43:246 Swap/(4065:4065): Iniciando mProc: 18 de 5 paginas
+[INFO] 22:20:44:248 Swap/(4065:4065): Finalizando proceso 17. Total Paginas leidas: 1, escritas 3
+[INFO] 22:20:44:248 Swap/(4065:4065): Finalizando mProc: 17
+[INFO] 22:20:46:250 Swap/(4065:4065): Escribiendo mProc: 18. Pagina: 0. Contenido: hola 
+[INFO] 22:20:50:254 Swap/(4065:4065): Escribiendo mProc: 18. Pagina: 1. Contenido: chau 
+[INFO] 22:20:54:257 Swap/(4065:4065): Escribiendo mProc: 18. Pagina: 4. Contenido: si 
+[INFO] 22:20:58:262 Swap/(4065:4065): Leyendo mProc: 18. Pagina 0: hola 
+[INFO] 22:21:02:269 Swap/(4065:4065): Finalizando proceso 18. Total Paginas leidas: 1, escritas 3
+[INFO] 22:21:02:269 Swap/(4065:4065): Finalizando mProc: 18
+[INFO] 22:22:54:961 Swap/(4065:4065): ---------------------FIN---------------------
+[INFO] 22:34:41:73 Swap/(4136:4136): ---------------------FIN---------------------
+[INFO] 22:36:03:960 Swap/(4156:4156): ---------------------FIN---------------------
+[INFO] 22:36:24:11 Swap/(4191:4191): Memoria conectado
+[INFO] 22:36:38:10 Swap/(4191:4191): Iniciando mProc: 3 de 5 paginas
+[INFO] 22:36:40:102 Swap/(4191:4191): Escribiendo mProc: 3. Pagina: 0. Contenido: hola 
+[INFO] 22:36:43:114 Swap/(4191:4191): Iniciando mProc: 4 de 5 paginas
+[INFO] 22:36:45:121 Swap/(4191:4191): Escribiendo mProc: 3. Pagina: 1. Contenido: chau 
+[INFO] 22:36:49:134 Swap/(4191:4191): Escribiendo mProc: 4. Pagina: 0. Contenido: hola 
+[INFO] 22:36:53:140 Swap/(4191:4191): Escribiendo mProc: 3. Pagina: 4. Contenido: si 
+[INFO] 22:36:57:146 Swap/(4191:4191): Escribiendo mProc: 4. Pagina: 1. Contenido: chau 
+[INFO] 22:37:01:158 Swap/(4191:4191): Leyendo mProc: 3. Pagina 0: hola 
+[INFO] 22:37:05:164 Swap/(4191:4191): Escribiendo mProc: 4. Pagina: 4. Contenido: si 
+[INFO] 22:37:10:168 Swap/(4191:4191): Leyendo mProc: 4. Pagina 0: hola 
+[INFO] 22:37:13:171 Swap/(4191:4191): Finalizando proceso 3. Total Paginas leidas: 1, escritas 3
+[INFO] 22:37:13:171 Swap/(4191:4191): Finalizando mProc: 3
+[INFO] 22:37:15:187 Swap/(4191:4191): Iniciando mProc: 5 de 5 paginas
+[INFO] 22:37:16:190 Swap/(4191:4191): Finalizando proceso 4. Total Paginas leidas: 1, escritas 3
+[INFO] 22:37:16:190 Swap/(4191:4191): Finalizando mProc: 4
+[INFO] 22:37:18:194 Swap/(4191:4191): Escribiendo mProc: 5. Pagina: 0. Contenido: hola 
+[INFO] 22:37:21:197 Swap/(4191:4191): Iniciando mProc: 6 de 5 paginas
+[INFO] 22:37:23:199 Swap/(4191:4191): Escribiendo mProc: 5. Pagina: 1. Contenido: chau 
+[INFO] 22:37:27:202 Swap/(4191:4191): Escribiendo mProc: 6. Pagina: 0. Contenido: hola 
+[INFO] 22:37:31:209 Swap/(4191:4191): Escribiendo mProc: 5. Pagina: 4. Contenido: si 
+[INFO] 22:37:35:216 Swap/(4191:4191): Escribiendo mProc: 6. Pagina: 1. Contenido: chau 
+[INFO] 22:37:39:223 Swap/(4191:4191): Leyendo mProc: 5. Pagina 0: hola 
+[INFO] 22:37:43:229 Swap/(4191:4191): Escribiendo mProc: 6. Pagina: 4. Contenido: si 
+[INFO] 22:37:48:235 Swap/(4191:4191): Leyendo mProc: 6. Pagina 0: hola 
+[INFO] 22:37:51:240 Swap/(4191:4191): Finalizando proceso 5. Total Paginas leidas: 1, escritas 3
+[INFO] 22:37:51:240 Swap/(4191:4191): Finalizando mProc: 5
+[INFO] 22:37:53:248 Swap/(4191:4191): Iniciando mProc: 7 de 60 paginas
+[INFO] 22:37:53:248 Swap/(4191:4191): No hay espacio para mProc: 7
+[INFO] 22:37:54:252 Swap/(4191:4191): Finalizando proceso 6. Total Paginas leidas: 1, escritas 3
+[INFO] 22:37:54:252 Swap/(4191:4191): Finalizando mProc: 6
+[INFO] 22:37:55:255 Swap/(4191:4191): Finalizando proceso 7. Total Paginas leidas: 0, escritas 0
+[INFO] 22:37:55:255 Swap/(4191:4191): Finalizando mProc: 7
+[INFO] 22:37:56:258 Swap/(4191:4191): Iniciando mProc: 8 de 60 paginas
+[INFO] 22:37:56:258 Swap/(4191:4191): No hay espacio para mProc: 8
+[INFO] 22:37:57:261 Swap/(4191:4191): Finalizando proceso 8. Total Paginas leidas: 0, escritas 0
+[INFO] 22:37:57:261 Swap/(4191:4191): Finalizando mProc: 8
+[INFO] 22:37:58:264 Swap/(4191:4191): Iniciando mProc: 9 de 5 paginas
+[INFO] 22:38:00:275 Swap/(4191:4191): Escribiendo mProc: 9. Pagina: 0. Contenido: hola 
+[INFO] 22:38:04:282 Swap/(4191:4191): Escribiendo mProc: 9. Pagina: 1. Contenido: chau 
+[INFO] 22:38:08:288 Swap/(4191:4191): Escribiendo mProc: 9. Pagina: 4. Contenido: si 
+[INFO] 22:38:12:293 Swap/(4191:4191): Leyendo mProc: 9. Pagina 0: hola 
+[INFO] 22:38:16:299 Swap/(4191:4191): Finalizando proceso 9. Total Paginas leidas: 1, escritas 3
+[INFO] 22:38:16:299 Swap/(4191:4191): Finalizando mProc: 9
+[INFO] 22:38:46:531 Swap/(4191:4191): Iniciando mProc: 10 de 60 paginas
+[INFO] 22:38:46:531 Swap/(4191:4191): No hay espacio para mProc: 10
+[INFO] 22:38:47:535 Swap/(4191:4191): Finalizando proceso 10. Total Paginas leidas: 0, escritas 0
+[INFO] 22:38:47:535 Swap/(4191:4191): Finalizando mProc: 10
+[INFO] 22:47:09:510 Swap/(4191:4191): ---------------------FIN---------------------

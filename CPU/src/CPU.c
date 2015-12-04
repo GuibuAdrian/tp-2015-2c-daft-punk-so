@@ -19,8 +19,9 @@
 #include <pthread.h>
 
 #include <commons/collections/list.h>
-#include <commons/socket.h>
+#include "socket.h"
 #include <commons/config.h>
+#include "txt.h"
 #include <commons/txt.h>
 #include <commons/log.h>
 
