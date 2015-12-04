@@ -57,9 +57,11 @@ typedef struct
 typedef struct
 {
 	int idCPU;
-	double tiempoUso;
 	double tiempoUsoActual;
+	double tiempoUso;
 	int socketPan; //Le puse Pan aproposito :P
+    int disponible; // 1 = Disponible, 0 = NO Disponible
+	time_t tiempoIni;
 } t_cpu;
 
 typedef struct
@@ -70,13 +72,13 @@ typedef struct
 
 t_log* logger;
 t_list *listaHilos, *listaCPUs, *listaRespuestas;
+pthread_mutex_t mutexCPU, mutex2;
 char *ipPlanificador, *puertoPlanificador, *ipMemoria, *puertoMemoria;
 int id = 0, RETARDO, numeroHilos, socketPlanCarga;
-pthread_mutex_t mutexCPU, mutex2;
 
 static t_hilos *hilo_create(pthread_t unHilo);
 static void hilo_destroy(t_hilos *self);
-static t_cpu *cpu_create(int idCPU, double uso, double usoActual, int socketPlan);
+static t_cpu *cpu_create(int idCPU, double uso, double usoActual, int socketPlan, int disp, time_t inicio);
 static void cpu_destroy(t_cpu *self);
 static t_orden_CPU *respuesta_create(int pid, int orden, int pagina, char content[PACKAGESIZE]);
 static void respuesta_destroy(t_orden_CPU *self);
@@ -183,7 +185,7 @@ void conectarHilos1()
 	t_idHilo mensaje;
 	pthread_mutex_lock(&mutexCPU);
 	id++;
-	list_add(listaCPUs,cpu_create(id,0,0,serverSocket));
+	list_add(listaCPUs,cpu_create(id,0,0,serverSocket,1,0));
 
 	pthread_mutex_unlock(&mutexCPU);
 	mensaje.idNodo = id;
@@ -241,13 +243,13 @@ void recibirSolicitudCarga_finQ()
 						new = list_get(listaCPUs,i);
 						mensaje.idNodo = new->idCPU;
 
-						if(new->tiempoUso==0)
+
+						mensaje.cantHilos = porcentajeUsoCPU(new->tiempoUso);
+
+
+						if(mensaje.cantHilos>100)
 						{
-							mensaje.cantHilos = porcentajeUsoCPU(new->tiempoUsoActual);
-						}
-						else
-						{
-							mensaje.cantHilos = porcentajeUsoCPU(new->tiempoUso);
+							mensaje.cantHilos = 100;
 						}
 					}
 					else
@@ -353,7 +355,7 @@ void recibirPath1(int serverSocket, int idNodo)
 				t_cpu* new = buscarCPU(serverSocket);
 
 				list_replace_and_destroy_element(listaCPUs, posCPU, cpu_create(new->idCPU, new->tiempoUso,
-						new->tiempoUsoActual, new->socketPan) ,(void*) cpu_destroy);
+						new->tiempoUsoActual, new->socketPan,0, inicioInst) ,(void*) cpu_destroy);
 
 				pthread_mutex_unlock(&mutexCPU);
 
@@ -473,7 +475,7 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, 
 
 
 	printf("CPU: %d, %.2f\n", idNodo, unCPU->tiempoUsoActual);
-	list_replace_and_destroy_element(listaCPUs, posCPU, cpu_create(unCPU->idCPU, unCPU->tiempoUso, unCPU->tiempoUsoActual, socketPlanificador) ,(void*) cpu_destroy);
+	list_replace_and_destroy_element(listaCPUs, posCPU, cpu_create(unCPU->idCPU, unCPU->tiempoUso, unCPU->tiempoUsoActual, socketPlanificador, 1, 0) ,(void*) cpu_destroy);
 
 
 	pthread_mutex_unlock(&mutexCPU);
@@ -565,6 +567,7 @@ void reiniciarCarga()
 
 		pthread_mutex_lock(&mutexCPU);
 
+		printf("\n----REINICIADO----\n");
 		int i;
 		t_cpu *new;
 
@@ -572,14 +575,27 @@ void reiniciarCarga()
 		{
 			new = list_get(listaCPUs, i);
 
-			list_replace_and_destroy_element(listaCPUs, i, cpu_create(new->idCPU, new->tiempoUsoActual, 0,
-					new->socketPan) ,(void*) cpu_destroy);
+			if(new->disponible==0)
+			{
+				time_t finInst;
+				time(&finInst);
+
+				new->tiempoUsoActual = new->tiempoUsoActual + difftime(finInst, new->tiempoIni);
+
+				list_replace_and_destroy_element(listaCPUs, i, cpu_create(new->idCPU, new->tiempoUsoActual, 0,
+									new->socketPan, new->disponible, time(&new->tiempoIni)) ,(void*) cpu_destroy);
+			}
+			else
+			{
+				printf("Reinicio 0\n");
+				list_replace_and_destroy_element(listaCPUs, i, cpu_create(new->idCPU, 0, 0,
+						new->socketPan, new->disponible, new->tiempoIni) ,(void*) cpu_destroy);
+			}
 		}
 
 
 		pthread_mutex_unlock(&mutexCPU);
 
-		printf("\n----REINICIO----\n");
 	}
 }
 
@@ -695,7 +711,7 @@ static void hilo_destroy(t_hilos *self)
 {
     free(self);
 }
-static t_cpu *cpu_create(int idCPU, double uso, double usoActual, int socketPlan)
+static t_cpu *cpu_create(int idCPU, double uso, double usoActual, int socketPlan, int disp, time_t inicio)
 {
 	t_cpu *new = malloc(sizeof(t_cpu));
 
@@ -703,6 +719,8 @@ static t_cpu *cpu_create(int idCPU, double uso, double usoActual, int socketPlan
 	 new->tiempoUso = uso;
 	 new->tiempoUsoActual = usoActual;
 	 new->socketPan = socketPlan;
+	 new->disponible = disp;
+	 new->tiempoIni = inicio;
 
 	 return new;
 }

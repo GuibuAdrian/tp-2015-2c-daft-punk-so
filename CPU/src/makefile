@@ -8,7 +8,9 @@ CPU: socket.o txt.o
 	rm -R txt.o
 	rm -R socket.o
 	rm -R CPU.o
-	
+
 clean:
-	rm -R CPU	
+	-$(RM) $(OBJS)$(C_DEPS)$(EXECUTABLES) CPU
+	-@echo ' '
+
 
