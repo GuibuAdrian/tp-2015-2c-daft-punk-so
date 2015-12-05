@@ -116,7 +116,7 @@ int main()
 	listaCPUs = list_create();
 	listaRespuestas = list_create();
 
-	logger = log_create("logsTP", "CPU", 1, LOG_LEVEL_INFO);
+	logger = log_create("logsTP", "CPU", 0, LOG_LEVEL_INFO);
 
 	t_config* config;
 
