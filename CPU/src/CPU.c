@@ -11,11 +11,12 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <time.h>
+#include <stdbool.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>
 #include <unistd.h>
+#include <time.h>
 #include <pthread.h>
 
 #include <commons/collections/list.h>
@@ -119,7 +120,7 @@ int main()
 
 	t_config* config;
 
-	config = config_create("config.cfg");
+	config = config_create("cpu.conf");
 
 	ipPlanificador = config_get_string_value(config, "IP_PLANIFICADOR");
 	puertoPlanificador = config_get_string_value(config, "PUERTO_PLANIFICADOR");
@@ -243,14 +244,13 @@ void recibirSolicitudCarga_finQ()
 						new = list_get(listaCPUs,i);
 						mensaje.idNodo = new->idCPU;
 
-
 						mensaje.cantHilos = porcentajeUsoCPU(new->tiempoUso);
-
 
 						if(mensaje.cantHilos>100)
 						{
 							mensaje.cantHilos = 100;
 						}
+
 					}
 					else
 					{
@@ -345,11 +345,6 @@ void recibirPath1(int serverSocket, int idNodo)
 				log_info(logger,"Recibido mProc: %d, path: %s, puntero: %d", unaPersona.pid,
 						unaPersona.path, puntero);
 
-
-				interpretarLinea(serverSocket,linea, unaPersona.pid, idNodo, inicioInst);
-
-				pthread_mutex_unlock(&mutex2);
-
 				pthread_mutex_lock(&mutexCPU);
 				int posCPU = encontrarPosicionCPU(serverSocket);
 				t_cpu* new = buscarCPU(serverSocket);
@@ -358,6 +353,10 @@ void recibirPath1(int serverSocket, int idNodo)
 						new->tiempoUsoActual, new->socketPan,0, inicioInst) ,(void*) cpu_destroy);
 
 				pthread_mutex_unlock(&mutexCPU);
+
+				interpretarLinea(serverSocket,linea, unaPersona.pid, idNodo, inicioInst);
+
+				pthread_mutex_unlock(&mutex2);
 
 				strncpy(unaPersona.path, " ", PACKAGESIZE);
 
@@ -451,15 +450,6 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, 
 	}//else entrada-salida
 
 	sleep(RETARDO);
-	enviarRespuestaPlanificador(socketPlanificador, mensaje.pid, mensaje.orden, mensaje.pagina,
-			mensaje.content);
-
-	if((mensaje.orden==3) || (mensaje.orden ==5) )
-	{
-		log_info(logger, "Rafaga concluida. PID %d.", mensaje.pid);
-
-		enviarRespuestas(socketPlanificador, mensaje.pid);
-	}
 
 	time_t finInst;
 	time(&finInst);
@@ -474,11 +464,23 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, 
 	unCPU->tiempoUsoActual = unCPU->tiempoUsoActual + difftime(finInst, inicioInst);
 
 
-	printf("CPU: %d, %.2f\n", idNodo, unCPU->tiempoUsoActual);
-	list_replace_and_destroy_element(listaCPUs, posCPU, cpu_create(unCPU->idCPU, unCPU->tiempoUso, unCPU->tiempoUsoActual, socketPlanificador, 1, 0) ,(void*) cpu_destroy);
+	list_replace_and_destroy_element(listaCPUs, posCPU, cpu_create(unCPU->idCPU, unCPU->tiempoUso, unCPU->tiempoUsoActual, socketPlanificador, 1, 0)
+			,(void*) cpu_destroy);
 
+	unCPU = list_get(listaCPUs, posCPU);
 
 	pthread_mutex_unlock(&mutexCPU);
+
+	enviarRespuestaPlanificador(socketPlanificador, mensaje.pid, mensaje.orden, mensaje.pagina,
+			mensaje.content);
+
+	if((mensaje.orden==3) || (mensaje.orden ==5) )
+	{
+		log_info(logger, "Rafaga concluida. PID %d.", mensaje.pid);
+
+		enviarRespuestas(socketPlanificador, mensaje.pid);
+	}
+
 }
 
 t_orden_CPU recibirRespuestaSwap(int socketMemoria)
@@ -558,7 +560,6 @@ t_orden_CPU enviarOrdenAMemoria(int pid, int orden, int paginas, char *content, 
 	return recibirRespuestaSwap(socketMemoria);
 }
 
-
 void reiniciarCarga()
 {
 	while(1)
@@ -587,12 +588,12 @@ void reiniciarCarga()
 			}
 			else
 			{
-				printf("Reinicio 0\n");
-				list_replace_and_destroy_element(listaCPUs, i, cpu_create(new->idCPU, 0, 0,
+				list_replace_and_destroy_element(listaCPUs, i, cpu_create(new->idCPU, new->tiempoUsoActual, 0,
 						new->socketPan, new->disponible, new->tiempoIni) ,(void*) cpu_destroy);
 			}
-		}
 
+			new = list_get(listaCPUs, i);
+		}
 
 		pthread_mutex_unlock(&mutexCPU);
 

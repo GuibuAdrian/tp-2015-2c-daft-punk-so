@@ -139,7 +139,7 @@ int main()
 
 	t_config* config;
 
-	config = config_create("config.cfg");
+	config = config_create("admin_swap.conf");
 	char *nombreSwap = config_get_string_value( config, "NOMBRE_SWAP");
 	cantPagSwap = config_get_int_value( config, "CANTIDAD_PAGINAS");
 	tamanioPagSwap = config_get_int_value( config, "TAMANIO_PAGINA");

@@ -144,7 +144,7 @@ int main()
 
 	t_config* config;
 
-	config = config_create("config.cfg");
+	config = config_create("planificador.conf");
 
 	char * PUERTO_ESCUCHA = config_get_string_value(config, "PUERTO_ESCUCHA");
 	ALGORITMO_PLANIFICACION = config_get_string_value(config, "ALGORITMO_PLANIFICACION");
@@ -323,13 +323,17 @@ void recibirCjtoRespuestas(int pid1, int socketCliente)
 
 	pthread_mutex_lock(&mutexPCB);
 
-	printf("Recibiendo mProc:%d.\n", pid1);
-
 	PCB *pcb = buscarReadyEnPCB(pid1);
 	int posPCB =  encontrarPosicionEnPCB(pcb->pid);	//Encontrar pos en listaPCB
 	time_t tiempoAhora;
 	double resp = pcb->tiempoResp;
 	time(&tiempoAhora);
+
+	struct tm* tm_info;
+
+	tm_info = localtime(&tiempoAhora);
+
+//	printf("Recibiendo mProc: %d, %d:%d\n", pid1, tm_info->tm_min, tm_info->tm_sec);
 
 	resp = resp + difftime(tiempoAhora, pcb->tiempoRespI);
 
@@ -365,7 +369,6 @@ int recibirRespuesta(int socketCliente)
 
 	if( (respuesta.mensajeSize)==-1 )
 	{
-		log_info(logger, "El archivo no existe!!");
 		printf("El archivo no existe!!\n");
 
 		pthread_mutex_lock(&mutexPCB);
@@ -379,19 +382,7 @@ int recibirRespuesta(int socketCliente)
 	}
 	if( (respuesta.mensajeSize)==0 )
 	{
-		pthread_mutex_lock(&mutexPCB);
 
-		pcb = buscarReadyEnPCB(respuesta.pid);
-		int posPCB =  encontrarPosicionEnPCB(pcb->pid);	//Encontrar pos en listaPCB
-		time_t ejecI;
-
-		time(&ejecI);
-
-		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcb->pid, pcb->path, pcb->puntero, pcb->estado,
-				ejecI, pcb->tiempoEspeI, pcb->tiempoEspe, pcb->tiempoRespI, pcb->tiempoResp), (void*)PCB_destroy);//Pongo al mProc en bloqueado
-
-
-		pthread_mutex_unlock(&mutexPCB);
 	}
 	else
 	{
@@ -430,11 +421,11 @@ int recibirRespuesta(int socketCliente)
 
 					timeinfo = localtime( &ejecI );
 
-					printf("\nInicio mProc:%d %d:%d\n", respuesta.pid, timeinfo->tm_min, timeinfo->tm_sec);
+				//	printf("\nInicio mProc:%d %d:%d\n", respuesta.pid, timeinfo->tm_min, timeinfo->tm_sec);
 
 					timeinfo = localtime( &ejecF );
 
-					printf("\nFIN mProc:%d %d:%d\n", respuesta.pid, timeinfo->tm_min, timeinfo->tm_sec);
+				//	printf("\nFIN mProc:%d %d:%d\n", respuesta.pid, timeinfo->tm_min, timeinfo->tm_sec);
 
 					double tiempoEjec = difftime(ejecF, pcb->tiempoEjecI);
 
@@ -518,8 +509,11 @@ void ROUND_ROBIN(void* args)
 	log_info(logger, "Correr %s, mProc: %d, en %d", path, pidReady, idHiloCPU);
 
 	time(&tiempoAhora);
+	struct tm* tm_info;
 
-	printf("Correr %s, mProc: %d, en %d\n", path, pidReady, idHiloCPU);
+	tm_info = localtime(&tiempoAhora);
+
+//	printf("Correr %s, mProc: %d, en %d %d:%d\n", path, pidReady, idHiloCPU, tm_info->tm_min, tm_info->tm_sec);
 
 	espe = espe + difftime(tiempoAhora, espeI);
 
@@ -626,8 +620,11 @@ void FIFO(void *args)
 	log_info(logger, "Correr %s, mProc: %d, en %d", path, pidReady, idHiloCPU);
 
 	time(&tiempoAhora);
+	struct tm* tm_info;
 
-	printf("Correr %s, mProc: %d, en %d\n", path, pidReady, idHiloCPU);
+	tm_info = localtime(&tiempoAhora);
+
+//	printf("Correr %s, mProc: %d, en %d %d:%d\n", path, pidReady, idHiloCPU, tm_info->tm_min, tm_info->tm_sec);
 
 	espe = espe + difftime(tiempoAhora, espeI);
 
@@ -798,10 +795,13 @@ void correrPath(char * pch)
 	pid++;
 
 	time_t espeI;
+	time_t ejecI;
+
+	time(&ejecI);
 
 	list_add(listaReady, ready_create(pid)); //Agrego el proceso NUEVO a Ready
 
-	list_add(listaPCB, PCB_create(pid, pch, 2, 0, 0, time(&espeI), 0, 0, 0));	//Agrego el proceso NUEVO al PCB
+	list_add(listaPCB, PCB_create(pid, pch, 2, 0, ejecI, time(&espeI), 0, 0, 0));	//Agrego el proceso NUEVO al PCB
 
 	sem_post(&semPlani);
 
@@ -836,19 +836,10 @@ void PS()
 }
 void CPU()
 {
-	t_hiloCPU* new2;
 	t_mensaje1 mensaje;
 
-	int i, cpu = 0;
+	int cpu = 0;
 
-	for(i=0;i<list_size(listaCPUs);i++)
-	{
-		new2 = list_get(listaCPUs,i);
-
-		printf("Disponible %d\n",new2->disponible);
-		printf("Socket %d\n",new2->socketCliente);
-		printf("PID %d\n",new2->idHilo);
-	}
 	int message = 1;
 	send(socketCPUCarga, &message, sizeof(int), 0);
 
@@ -867,7 +858,7 @@ void CPU()
 		}
 		else
 		{
-			printf("CPU: %d, Carga: %d\n", mensaje.idHilo, mensaje.cantHilos);
+			printf("CPU: %d, Carga: %d%%\n", mensaje.idHilo, mensaje.cantHilos);
 		}
 	}
 

@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netdb.h>
@@ -125,11 +126,11 @@ int main() {
 	signal(SIGUSR2, rutinaLimpiarMemoriaPrincipal);
 	signal(SIGPOLL, dumpMemoriaPrincipal);
 
-	logger = log_create("logsTP", "Memoria", true, LOG_LEVEL_INFO);
+	logger = log_create("logsTP", "Memoria", 0, LOG_LEVEL_INFO);
 
 	t_config* config;
 
-	config = config_create("config.cfg");
+	config = config_create("admin_memoria.conf");
 
 	char *IP = config_get_string_value(config, "IP_SWAP");
 	char * PUERTO_SWAP = config_get_string_value(config, "PUERTO_SWAP");

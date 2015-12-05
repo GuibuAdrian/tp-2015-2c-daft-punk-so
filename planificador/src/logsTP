@@ -439,3 +439,1063 @@
 [INFO] 16:33:35:338 PLANIFICADOR/(6898:6914): mProc 1 - Pagina 2 escrita: si
 [INFO] 16:33:35:338 PLANIFICADOR/(6898:6914): mProc 1 finalizado
 [INFO] 16:34:30:896 PLANIFICADOR/(6898:6898): ---------------------FIN---------------------
+[INFO] 17:39:41:325 PLANIFICADOR/(3362:3362): Recibiendo CPU
+[INFO] 17:39:41:325 PLANIFICADOR/(3362:3362): CPU: 1 Conectado
+[INFO] 17:39:41:325 PLANIFICADOR/(3362:3362): Recibiendo CPU
+[INFO] 17:39:41:325 PLANIFICADOR/(3362:3362): CPU: 2 Conectado
+[INFO] 17:39:48:124 PLANIFICADOR/(3362:3378): Correr localidad.cod, mProc: 1, en 1
+[INFO] 17:40:46:230 PLANIFICADOR/(3362:3378): mProc 1 - Iniciado
+[INFO] 17:40:46:230 PLANIFICADOR/(3362:3378): mProc 1 - Pagina 0 escrita: 0
+[INFO] 17:40:46:230 PLANIFICADOR/(3362:3378): mProc 1 - Pagina 1 escrita: 1
+[INFO] 17:40:46:230 PLANIFICADOR/(3362:3378): mProc 1 - Pagina 2 escrita: 2
+[INFO] 17:40:46:230 PLANIFICADOR/(3362:3378): mProc 1 - Pagina 3 escrita: 3
+[INFO] 17:40:46:230 PLANIFICADOR/(3362:3378): mProc 1 - Pagina 4 escrita: 4
+[INFO] 17:40:46:230 PLANIFICADOR/(3362:3378): mProc 1 - Pagina 0 escrita: 00
+[INFO] 17:40:46:230 PLANIFICADOR/(3362:3378): mProc 1 - Pagina 1 escrita: 11
+[INFO] 17:40:46:230 PLANIFICADOR/(3362:3378): mProc 1 - Pagina 2 escrita: 22
+[INFO] 17:40:46:230 PLANIFICADOR/(3362:3378): mProc 1 - Pagina 0 escrita: 000
+[INFO] 17:40:46:230 PLANIFICADOR/(3362:3378): mProc 1 - Pagina 1 escrita: 111
+[INFO] 17:40:46:230 PLANIFICADOR/(3362:3378): mProc 1 - Pagina 2 escrita: 222
+[INFO] 17:40:46:230 PLANIFICADOR/(3362:3378): mProc 1 - Pagina 0 escrita: 0000
+[INFO] 17:40:46:230 PLANIFICADOR/(3362:3378): mProc 1 - Pagina 1 escrita: 1111
+[INFO] 17:40:46:230 PLANIFICADOR/(3362:3378): mProc 1 - Pagina 2 escrita: 2222
+[INFO] 17:40:46:230 PLANIFICADOR/(3362:3378): mProc 1 en entrada-salida de tiempo 60
+[INFO] 17:41:46:232 PLANIFICADOR/(3362:3396): Correr localidad.cod, mProc: 1, en 1
+[INFO] 17:41:47:234 PLANIFICADOR/(3362:3396): mProc 1 finalizado
+[INFO] 17:43:20:2 PLANIFICADOR/(3362:3362): ---------------------FIN---------------------
+[INFO] 17:48:46:919 PLANIFICADOR/(3538:3538): Recibiendo CPU
+[INFO] 17:48:46:919 PLANIFICADOR/(3538:3538): CPU: 1 Conectado
+[INFO] 17:48:46:919 PLANIFICADOR/(3538:3538): Recibiendo CPU
+[INFO] 17:48:46:919 PLANIFICADOR/(3538:3538): CPU: 2 Conectado
+[INFO] 17:48:49:673 PLANIFICADOR/(3538:3551): Correr otro.cod, mProc: 1, en 1
+[INFO] 17:49:27:799 PLANIFICADOR/(3538:3551): mProc 1 - Iniciado
+[INFO] 17:49:27:799 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 3 escrita: hola
+[INFO] 17:49:27:799 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 2 escrita: si
+[INFO] 17:49:27:799 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 3 escrita: hola
+[INFO] 17:49:27:799 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 2 escrita: sila
+[INFO] 17:49:27:799 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 3 escrita: hola
+[INFO] 17:49:27:799 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 2 escrita: sila
+[INFO] 17:49:27:799 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 3 escrita: hola
+[INFO] 17:49:27:799 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 2 escrita: sila
+[INFO] 17:49:27:799 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 3 escrita: hola
+[INFO] 17:49:27:799 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 2 escrita: sila
+[INFO] 17:49:27:799 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 3 escrita: hola
+[INFO] 17:49:27:799 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 2 escrita: sila
+[INFO] 17:49:27:799 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 3 escrita: hola
+[INFO] 17:49:27:799 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 2 escrita: sila
+[INFO] 17:49:27:800 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 3 escrita: hola
+[INFO] 17:49:27:800 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 2 escrita: sila
+[INFO] 17:49:27:800 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 3 escrita: hola
+[INFO] 17:49:27:800 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 2 escrita: sila
+[INFO] 17:49:27:800 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 3 escrita: hola
+[INFO] 17:49:27:800 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 2 escrita: sila
+[INFO] 17:49:27:800 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 3 escrita: hola
+[INFO] 17:49:27:800 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 2 escrita: sila
+[INFO] 17:49:27:800 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 3 escrita: hola
+[INFO] 17:49:27:800 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 2 escrita: sila
+[INFO] 17:49:27:800 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 3 escrita: hola
+[INFO] 17:49:27:800 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 2 escrita: sila
+[INFO] 17:49:27:800 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 3 escrita: hola
+[INFO] 17:49:27:800 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 2 escrita: sila
+[INFO] 17:49:27:800 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 3 escrita: hola
+[INFO] 17:49:27:800 PLANIFICADOR/(3538:3551): mProc 1 - Pagina 2 escrita: sila
+[INFO] 17:49:27:800 PLANIFICADOR/(3538:3551): mProc 1 finalizado
+[INFO] 17:52:59:390 PLANIFICADOR/(3538:3538): ---------------------FIN---------------------
+[INFO] 17:59:31:32 PLANIFICADOR/(3641:3641): Recibiendo CPU
+[INFO] 17:59:31:33 PLANIFICADOR/(3641:3641): CPU: 1 Conectado
+[INFO] 17:59:31:33 PLANIFICADOR/(3641:3641): Recibiendo CPU
+[INFO] 17:59:31:34 PLANIFICADOR/(3641:3641): CPU: 2 Conectado
+[INFO] 17:59:35:47 PLANIFICADOR/(3641:3656): Correr otro.cod, mProc: 1, en 1
+[INFO] 18:00:13:171 PLANIFICADOR/(3641:3656): mProc 1 - Iniciado
+[INFO] 18:00:13:171 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:00:13:171 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 2 escrita: si
+[INFO] 18:00:13:171 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:00:13:171 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:00:13:171 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:00:13:171 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:00:13:171 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:00:13:171 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:00:13:171 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:00:13:171 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:00:13:171 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:00:13:171 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:00:13:171 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:00:13:171 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:00:13:171 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:00:13:172 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:00:13:172 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:00:13:172 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:00:13:172 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:00:13:172 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:00:13:172 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:00:13:172 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:00:13:172 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:00:13:172 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:00:13:172 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:00:13:172 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:00:13:172 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:00:13:172 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:00:13:172 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:00:13:172 PLANIFICADOR/(3641:3656): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:00:13:172 PLANIFICADOR/(3641:3656): mProc 1 finalizado
+[INFO] 18:00:47:965 PLANIFICADOR/(3641:3641): ---------------------FIN---------------------
+[INFO] 18:02:09:198 PLANIFICADOR/(3744:3744): Recibiendo CPU
+[INFO] 18:02:09:198 PLANIFICADOR/(3744:3744): CPU: 1 Conectado
+[INFO] 18:02:09:198 PLANIFICADOR/(3744:3744): Recibiendo CPU
+[INFO] 18:02:09:198 PLANIFICADOR/(3744:3744): CPU: 2 Conectado
+[INFO] 18:02:12:370 PLANIFICADOR/(3744:3759): Correr otro.cod, mProc: 1, en 1
+[INFO] 18:02:50:503 PLANIFICADOR/(3744:3759): mProc 1 - Iniciado
+[INFO] 18:02:50:503 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:02:50:504 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 2 escrita: si
+[INFO] 18:02:50:504 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:02:50:504 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:02:50:504 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:02:50:504 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:02:50:504 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:02:50:504 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:02:50:504 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:02:50:504 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:02:50:504 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:02:50:504 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:02:50:504 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:02:50:504 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:02:50:504 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:02:50:504 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:02:50:504 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:02:50:504 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:02:50:505 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:02:50:505 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:02:50:505 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:02:50:505 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:02:50:505 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:02:50:505 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:02:50:505 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:02:50:505 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:02:50:505 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:02:50:505 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:02:50:505 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:02:50:505 PLANIFICADOR/(3744:3759): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:02:50:505 PLANIFICADOR/(3744:3759): mProc 1 finalizado
+[INFO] 18:04:14:192 PLANIFICADOR/(3744:3744): ---------------------FIN---------------------
+[INFO] 18:10:07:0 PLANIFICADOR/(3836:3836): Recibiendo CPU
+[INFO] 18:10:07:0 PLANIFICADOR/(3836:3836): CPU: 1 Conectado
+[INFO] 18:10:07:1 PLANIFICADOR/(3836:3836): Recibiendo CPU
+[INFO] 18:10:07:1 PLANIFICADOR/(3836:3836): CPU: 2 Conectado
+[INFO] 18:10:13:449 PLANIFICADOR/(3836:3851): Correr otro.cod, mProc: 1, en 1
+[INFO] 18:10:51:578 PLANIFICADOR/(3836:3851): mProc 1 - Iniciado
+[INFO] 18:10:51:578 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:10:51:578 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 2 escrita: si
+[INFO] 18:10:51:578 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:10:51:578 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:10:51:578 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:10:51:578 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:10:51:578 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:10:51:578 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:10:51:578 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:10:51:579 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:10:51:579 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:10:51:579 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:10:51:579 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:10:51:579 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:10:51:579 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:10:51:579 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:10:51:579 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:10:51:579 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:10:51:579 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:10:51:579 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:10:51:579 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:10:51:579 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:10:51:579 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:10:51:579 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:10:51:579 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:10:51:579 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:10:51:579 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:10:51:579 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:10:51:579 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:10:51:579 PLANIFICADOR/(3836:3851): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:10:51:579 PLANIFICADOR/(3836:3851): mProc 1 finalizado
+[INFO] 18:11:33:316 PLANIFICADOR/(3836:3836): ---------------------FIN---------------------
+[INFO] 18:17:09:721 PLANIFICADOR/(4018:4018): Recibiendo CPU
+[INFO] 18:17:09:721 PLANIFICADOR/(4018:4018): CPU: 1 Conectado
+[INFO] 18:17:09:721 PLANIFICADOR/(4018:4018): Recibiendo CPU
+[INFO] 18:17:09:721 PLANIFICADOR/(4018:4018): CPU: 2 Conectado
+[INFO] 18:17:12:561 PLANIFICADOR/(4018:4031): Correr otro.cod, mProc: 1, en 1
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Iniciado
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 2 escrita: si
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:17:50:678 PLANIFICADOR/(4018:4031): mProc 1 finalizado
+[INFO] 18:18:35:410 PLANIFICADOR/(4018:4018): ---------------------FIN---------------------
+[INFO] 18:20:06:226 PLANIFICADOR/(4085:4085): Recibiendo CPU
+[INFO] 18:20:06:226 PLANIFICADOR/(4085:4085): CPU: 1 Conectado
+[INFO] 18:20:06:226 PLANIFICADOR/(4085:4085): Recibiendo CPU
+[INFO] 18:20:06:226 PLANIFICADOR/(4085:4085): CPU: 2 Conectado
+[INFO] 18:20:08:922 PLANIFICADOR/(4085:4098): Correr otro.cod, mProc: 1, en 1
+[INFO] 18:20:47:55 PLANIFICADOR/(4085:4098): mProc 1 - Iniciado
+[INFO] 18:20:47:55 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:20:47:56 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 2 escrita: si
+[INFO] 18:20:47:56 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:20:47:56 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:20:47:56 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:20:47:56 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:20:47:56 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:20:47:56 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:20:47:56 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:20:47:56 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:20:47:56 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:20:47:56 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:20:47:56 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:20:47:56 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:20:47:56 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:20:47:56 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:20:47:56 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:20:47:56 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:20:47:56 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:20:47:56 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:20:47:56 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:20:47:56 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:20:47:57 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:20:47:57 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:20:47:57 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:20:47:57 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:20:47:57 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:20:47:57 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:20:47:57 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:20:47:57 PLANIFICADOR/(4085:4098): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:20:47:57 PLANIFICADOR/(4085:4098): mProc 1 finalizado
+[INFO] 18:21:23:136 PLANIFICADOR/(4085:4085): ---------------------FIN---------------------
+[INFO] 18:23:39:653 PLANIFICADOR/(4183:4183): Recibiendo CPU
+[INFO] 18:23:39:653 PLANIFICADOR/(4183:4183): CPU: 1 Conectado
+[INFO] 18:23:39:653 PLANIFICADOR/(4183:4183): Recibiendo CPU
+[INFO] 18:23:39:653 PLANIFICADOR/(4183:4183): CPU: 2 Conectado
+[INFO] 18:23:42:504 PLANIFICADOR/(4183:4196): Correr otro.cod, mProc: 1, en 1
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Iniciado
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 2 escrita: si
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:24:20:630 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:24:20:631 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:24:20:631 PLANIFICADOR/(4183:4196): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:24:20:631 PLANIFICADOR/(4183:4196): mProc 1 finalizado
+[INFO] 18:25:45:935 PLANIFICADOR/(4183:4183): ---------------------FIN---------------------
+[INFO] 18:28:15:738 PLANIFICADOR/(4283:4283): Recibiendo CPU
+[INFO] 18:28:15:739 PLANIFICADOR/(4283:4283): CPU: 1 Conectado
+[INFO] 18:28:15:739 PLANIFICADOR/(4283:4283): Recibiendo CPU
+[INFO] 18:28:15:739 PLANIFICADOR/(4283:4283): CPU: 2 Conectado
+[INFO] 18:28:23:62 PLANIFICADOR/(4283:4298): Correr otro.cod, mProc: 1, en 1
+[INFO] 18:29:01:202 PLANIFICADOR/(4283:4298): mProc 1 - Iniciado
+[INFO] 18:29:01:202 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:29:01:202 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 2 escrita: si
+[INFO] 18:29:01:202 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:29:01:202 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:29:01:202 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:29:01:202 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:29:01:202 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:29:01:202 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:29:01:202 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:29:01:202 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:29:01:203 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:29:01:203 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:29:01:203 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:29:01:203 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:29:01:203 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:29:01:203 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:29:01:203 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:29:01:203 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:29:01:203 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:29:01:203 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:29:01:203 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:29:01:203 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:29:01:203 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:29:01:203 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:29:01:203 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:29:01:203 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:29:01:203 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:29:01:203 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:29:01:203 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:29:01:203 PLANIFICADOR/(4283:4298): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:29:01:203 PLANIFICADOR/(4283:4298): mProc 1 finalizado
+[INFO] 18:29:27:11 PLANIFICADOR/(4283:4283): ---------------------FIN---------------------
+[INFO] 18:32:06:336 PLANIFICADOR/(4429:4429): Recibiendo CPU
+[INFO] 18:32:06:337 PLANIFICADOR/(4429:4429): CPU: 1 Conectado
+[INFO] 18:32:06:337 PLANIFICADOR/(4429:4429): Recibiendo CPU
+[INFO] 18:32:06:337 PLANIFICADOR/(4429:4429): CPU: 2 Conectado
+[INFO] 18:32:10:56 PLANIFICADOR/(4429:4439): Correr otro.cod, mProc: 1, en 1
+[INFO] 18:32:48:188 PLANIFICADOR/(4429:4439): mProc 1 - Iniciado
+[INFO] 18:32:48:188 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:32:48:188 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 2 escrita: si
+[INFO] 18:32:48:188 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:32:48:188 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:32:48:188 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:32:48:188 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:32:48:188 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:32:48:188 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:32:48:188 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:32:48:188 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:32:48:188 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:32:48:188 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:32:48:188 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:32:48:188 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:32:48:188 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:32:48:189 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:32:48:189 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:32:48:189 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:32:48:189 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:32:48:189 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:32:48:189 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:32:48:189 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:32:48:189 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:32:48:189 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:32:48:189 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:32:48:189 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:32:48:189 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:32:48:189 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:32:48:189 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:32:48:189 PLANIFICADOR/(4429:4439): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:32:48:189 PLANIFICADOR/(4429:4439): mProc 1 finalizado
+[INFO] 18:33:18:139 PLANIFICADOR/(4429:4429): ---------------------FIN---------------------
+[INFO] 18:34:36:749 PLANIFICADOR/(4518:4518): Recibiendo CPU
+[INFO] 18:34:36:749 PLANIFICADOR/(4518:4518): CPU: 1 Conectado
+[INFO] 18:34:36:750 PLANIFICADOR/(4518:4518): Recibiendo CPU
+[INFO] 18:34:36:750 PLANIFICADOR/(4518:4518): CPU: 2 Conectado
+[INFO] 18:34:39:624 PLANIFICADOR/(4518:4531): Correr otro.cod, mProc: 1, en 1
+[INFO] 18:35:17:747 PLANIFICADOR/(4518:4531): mProc 1 - Iniciado
+[INFO] 18:35:17:747 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:35:17:747 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 2 escrita: si
+[INFO] 18:35:17:747 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:35:17:747 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:35:17:747 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:35:17:747 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:35:17:748 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:35:17:748 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:35:17:748 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:35:17:748 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:35:17:748 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:35:17:748 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:35:17:748 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:35:17:748 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:35:17:748 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:35:17:748 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:35:17:748 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:35:17:748 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:35:17:748 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:35:17:748 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:35:17:748 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:35:17:748 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:35:17:748 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:35:17:748 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:35:17:748 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:35:17:749 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:35:17:749 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:35:17:749 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:35:17:749 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:35:17:749 PLANIFICADOR/(4518:4531): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:35:17:749 PLANIFICADOR/(4518:4531): mProc 1 finalizado
+[INFO] 18:37:35:310 PLANIFICADOR/(4518:4518): ---------------------FIN---------------------
+[INFO] 18:38:39:520 PLANIFICADOR/(4645:4645): Recibiendo CPU
+[INFO] 18:38:39:520 PLANIFICADOR/(4645:4645): CPU: 1 Conectado
+[INFO] 18:38:39:520 PLANIFICADOR/(4645:4645): Recibiendo CPU
+[INFO] 18:38:39:520 PLANIFICADOR/(4645:4645): CPU: 2 Conectado
+[INFO] 18:38:52:18 PLANIFICADOR/(4645:4645): ---------------------FIN---------------------
+[INFO] 18:40:02:463 PLANIFICADOR/(4758:4758): Recibiendo CPU
+[INFO] 18:40:02:463 PLANIFICADOR/(4758:4758): CPU: 1 Conectado
+[INFO] 18:40:02:463 PLANIFICADOR/(4758:4758): Recibiendo CPU
+[INFO] 18:40:02:463 PLANIFICADOR/(4758:4758): CPU: 2 Conectado
+[INFO] 18:40:06:205 PLANIFICADOR/(4758:4768): Correr otro.cod, mProc: 1, en 1
+[INFO] 18:40:44:330 PLANIFICADOR/(4758:4768): mProc 1 - Iniciado
+[INFO] 18:40:44:330 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:40:44:330 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 2 escrita: si
+[INFO] 18:40:44:330 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:40:44:330 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:40:44:330 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:40:44:330 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:40:44:330 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:40:44:330 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:40:44:330 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:40:44:330 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:40:44:330 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:40:44:330 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:40:44:330 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:40:44:330 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:40:44:330 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:40:44:330 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:40:44:330 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:40:44:331 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:40:44:331 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:40:44:331 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:40:44:331 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:40:44:331 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:40:44:331 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:40:44:331 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:40:44:331 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:40:44:331 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:40:44:331 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:40:44:331 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:40:44:331 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:40:44:331 PLANIFICADOR/(4758:4768): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:40:44:331 PLANIFICADOR/(4758:4768): mProc 1 finalizado
+[INFO] 18:40:56:82 PLANIFICADOR/(4758:4758): ---------------------FIN---------------------
+[INFO] 18:46:50:778 PLANIFICADOR/(4899:4899): Recibiendo CPU
+[INFO] 18:46:50:778 PLANIFICADOR/(4899:4899): CPU: 1 Conectado
+[INFO] 18:46:50:778 PLANIFICADOR/(4899:4899): Recibiendo CPU
+[INFO] 18:46:50:778 PLANIFICADOR/(4899:4899): CPU: 2 Conectado
+[INFO] 18:46:53:982 PLANIFICADOR/(4899:4913): Correr otro.cod, mProc: 1, en 1
+[INFO] 18:47:32:104 PLANIFICADOR/(4899:4913): mProc 1 - Iniciado
+[INFO] 18:47:32:104 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:47:32:104 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 2 escrita: si
+[INFO] 18:47:32:104 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:47:32:104 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:47:32:104 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:47:32:104 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:47:32:104 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:47:32:104 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:47:32:104 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:47:32:104 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:47:32:104 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:47:32:104 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:47:32:104 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:47:32:104 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:47:32:105 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:47:32:105 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:47:32:105 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:47:32:105 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:47:32:105 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:47:32:105 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:47:32:105 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:47:32:105 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:47:32:105 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:47:32:105 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:47:32:105 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:47:32:105 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:47:32:105 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:47:32:105 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:47:32:105 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:47:32:105 PLANIFICADOR/(4899:4913): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:47:32:105 PLANIFICADOR/(4899:4913): mProc 1 finalizado
+[INFO] 18:48:07:793 PLANIFICADOR/(4899:4899): ---------------------FIN---------------------
+[INFO] 18:52:54:126 PLANIFICADOR/(5053:5053): Recibiendo CPU
+[INFO] 18:52:54:127 PLANIFICADOR/(5053:5053): CPU: 1 Conectado
+[INFO] 18:52:54:127 PLANIFICADOR/(5053:5053): Recibiendo CPU
+[INFO] 18:52:54:127 PLANIFICADOR/(5053:5053): CPU: 2 Conectado
+[INFO] 18:52:59:126 PLANIFICADOR/(5053:5069): Correr otro.cod, mProc: 1, en 1
+[INFO] 18:53:37:251 PLANIFICADOR/(5053:5069): mProc 1 - Iniciado
+[INFO] 18:53:37:251 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:53:37:252 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 2 escrita: si
+[INFO] 18:53:37:252 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:53:37:252 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:53:37:252 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:53:37:252 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:53:37:252 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:53:37:252 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:53:37:252 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:53:37:252 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:53:37:252 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:53:37:252 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:53:37:252 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:53:37:252 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:53:37:252 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:53:37:252 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:53:37:252 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:53:37:252 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:53:37:253 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:53:37:253 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:53:37:253 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:53:37:253 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:53:37:253 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:53:37:253 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:53:37:253 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:53:37:253 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:53:37:253 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:53:37:253 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:53:37:253 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:53:37:253 PLANIFICADOR/(5053:5069): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:53:37:253 PLANIFICADOR/(5053:5069): mProc 1 finalizado
+[INFO] 18:54:04:309 PLANIFICADOR/(5053:5053): ---------------------FIN---------------------
+[INFO] 18:55:49:830 PLANIFICADOR/(5161:5161): Recibiendo CPU
+[INFO] 18:55:49:830 PLANIFICADOR/(5161:5161): CPU: 1 Conectado
+[INFO] 18:55:49:830 PLANIFICADOR/(5161:5161): Recibiendo CPU
+[INFO] 18:55:49:830 PLANIFICADOR/(5161:5161): CPU: 2 Conectado
+[INFO] 18:56:00:444 PLANIFICADOR/(5161:5175): Correr otro.cod, mProc: 1, en 1
+[INFO] 18:56:38:567 PLANIFICADOR/(5161:5175): mProc 1 - Iniciado
+[INFO] 18:56:38:567 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:56:38:567 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 2 escrita: si
+[INFO] 18:56:38:567 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:56:38:568 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:56:38:568 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:56:38:568 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:56:38:568 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:56:38:568 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:56:38:568 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:56:38:568 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:56:38:568 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:56:38:568 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:56:38:568 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:56:38:568 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:56:38:568 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:56:38:568 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:56:38:568 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:56:38:568 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:56:38:569 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:56:38:569 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:56:38:569 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:56:38:569 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:56:38:569 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:56:38:569 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:56:38:569 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:56:38:569 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:56:38:569 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:56:38:569 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:56:38:569 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:56:38:569 PLANIFICADOR/(5161:5175): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:56:38:569 PLANIFICADOR/(5161:5175): mProc 1 finalizado
+[INFO] 18:56:54:18 PLANIFICADOR/(5161:5161): ---------------------FIN---------------------
+[INFO] 18:58:51:664 PLANIFICADOR/(5265:5265): Recibiendo CPU
+[INFO] 18:58:51:664 PLANIFICADOR/(5265:5265): CPU: 1 Conectado
+[INFO] 18:58:51:664 PLANIFICADOR/(5265:5265): Recibiendo CPU
+[INFO] 18:58:51:664 PLANIFICADOR/(5265:5265): CPU: 2 Conectado
+[INFO] 18:58:59:645 PLANIFICADOR/(5265:5279): Correr otro.cod, mProc: 1, en 1
+[INFO] 18:59:37:767 PLANIFICADOR/(5265:5279): mProc 1 - Iniciado
+[INFO] 18:59:37:768 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:59:37:768 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 2 escrita: si
+[INFO] 18:59:37:768 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:59:37:768 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:59:37:768 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:59:37:768 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:59:37:768 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:59:37:768 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:59:37:768 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:59:37:768 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:59:37:768 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:59:37:768 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:59:37:768 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:59:37:768 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:59:37:769 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:59:37:769 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:59:37:769 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:59:37:769 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:59:37:769 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:59:37:769 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:59:37:769 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:59:37:769 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:59:37:769 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:59:37:769 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:59:37:769 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:59:37:769 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:59:37:769 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:59:37:769 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:59:37:769 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 3 escrita: hola
+[INFO] 18:59:37:769 PLANIFICADOR/(5265:5279): mProc 1 - Pagina 2 escrita: sila
+[INFO] 18:59:37:769 PLANIFICADOR/(5265:5279): mProc 1 finalizado
+[INFO] 19:00:17:284 PLANIFICADOR/(5265:5265): ---------------------FIN---------------------
+[INFO] 19:01:28:294 PLANIFICADOR/(5346:5346): Recibiendo CPU
+[INFO] 19:01:28:294 PLANIFICADOR/(5346:5346): CPU: 1 Conectado
+[INFO] 19:01:28:294 PLANIFICADOR/(5346:5346): Recibiendo CPU
+[INFO] 19:01:28:294 PLANIFICADOR/(5346:5346): CPU: 2 Conectado
+[INFO] 19:01:36:203 PLANIFICADOR/(5346:5356): Correr otro.cod, mProc: 1, en 1
+[INFO] 19:02:14:330 PLANIFICADOR/(5346:5356): mProc 1 - Iniciado
+[INFO] 19:02:14:330 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:02:14:330 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 2 escrita: si
+[INFO] 19:02:14:330 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:02:14:330 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:02:14:330 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:02:14:330 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:02:14:330 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:02:14:330 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:02:14:330 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:02:14:330 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:02:14:330 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:02:14:331 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:02:14:331 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:02:14:331 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:02:14:331 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:02:14:331 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:02:14:331 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:02:14:331 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:02:14:331 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:02:14:331 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:02:14:331 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:02:14:331 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:02:14:331 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:02:14:331 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:02:14:331 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:02:14:331 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:02:14:331 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:02:14:331 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:02:14:331 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:02:14:331 PLANIFICADOR/(5346:5356): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:02:14:331 PLANIFICADOR/(5346:5356): mProc 1 finalizado
+[INFO] 19:02:35:996 PLANIFICADOR/(5346:5346): ---------------------FIN---------------------
+[INFO] 19:04:00:547 PLANIFICADOR/(5424:5424): Recibiendo CPU
+[INFO] 19:04:00:548 PLANIFICADOR/(5424:5424): CPU: 1 Conectado
+[INFO] 19:04:04:763 PLANIFICADOR/(5424:5440): Correr otro.cod, mProc: 1, en 1
+[INFO] 19:04:42:891 PLANIFICADOR/(5424:5440): mProc 1 - Iniciado
+[INFO] 19:04:42:891 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:04:42:891 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 2 escrita: si
+[INFO] 19:04:42:891 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:04:42:891 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:04:42:892 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:04:42:892 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:04:42:892 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:04:42:892 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:04:42:892 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:04:42:892 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:04:42:892 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:04:42:892 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:04:42:892 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:04:42:892 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:04:42:892 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:04:42:892 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:04:42:892 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:04:42:892 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:04:42:892 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:04:42:892 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:04:42:892 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:04:42:892 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:04:42:892 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:04:42:892 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:04:42:892 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:04:42:893 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:04:42:893 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:04:42:893 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:04:42:893 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:04:42:893 PLANIFICADOR/(5424:5440): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:04:42:893 PLANIFICADOR/(5424:5440): mProc 1 finalizado
+[INFO] 19:04:58:252 PLANIFICADOR/(5424:5424): ---------------------FIN---------------------
+[INFO] 19:06:42:367 PLANIFICADOR/(5529:5529): Recibiendo CPU
+[INFO] 19:06:42:368 PLANIFICADOR/(5529:5529): CPU: 1 Conectado
+[INFO] 19:06:45:261 PLANIFICADOR/(5529:5542): Correr otro.cod, mProc: 1, en 1
+[INFO] 19:07:05:342 PLANIFICADOR/(5529:5542): mProc 1 - Iniciado
+[INFO] 19:07:05:342 PLANIFICADOR/(5529:5542): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:07:05:342 PLANIFICADOR/(5529:5542): mProc 1 - Pagina 2 escrita: si
+[INFO] 19:07:05:342 PLANIFICADOR/(5529:5542): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:07:05:342 PLANIFICADOR/(5529:5542): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:07:05:342 PLANIFICADOR/(5529:5542): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:07:05:342 PLANIFICADOR/(5529:5542): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:07:05:342 PLANIFICADOR/(5529:5542): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:07:05:343 PLANIFICADOR/(5529:5542): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:07:05:343 PLANIFICADOR/(5529:5542): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:07:05:343 PLANIFICADOR/(5529:5542): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:07:05:343 PLANIFICADOR/(5529:5542): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:07:05:343 PLANIFICADOR/(5529:5542): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:07:05:343 PLANIFICADOR/(5529:5542): mProc 1 finalizado
+[INFO] 19:07:07:46 PLANIFICADOR/(5529:5529): ---------------------FIN---------------------
+[INFO] 19:08:40:618 PLANIFICADOR/(5622:5622): Recibiendo CPU
+[INFO] 19:08:40:618 PLANIFICADOR/(5622:5622): CPU: 1 Conectado
+[INFO] 19:08:46:98 PLANIFICADOR/(5622:5635): Correr otro.cod, mProc: 1, en 1
+[INFO] 19:09:24:227 PLANIFICADOR/(5622:5635): mProc 1 - Iniciado
+[INFO] 19:09:24:228 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:09:24:228 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 2 escrita: si
+[INFO] 19:09:24:228 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:09:24:228 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:09:24:229 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:09:24:229 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:09:24:229 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:09:24:230 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:09:24:230 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:09:24:230 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:09:24:230 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:09:24:230 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:09:24:230 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:09:24:230 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:09:24:230 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:09:24:230 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:09:24:230 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:09:24:230 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:09:24:230 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:09:24:230 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:09:24:230 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:09:24:231 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:09:24:231 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:09:24:231 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:09:24:231 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:09:24:231 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:09:24:231 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:09:24:231 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:09:24:231 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:09:24:231 PLANIFICADOR/(5622:5635): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:09:24:231 PLANIFICADOR/(5622:5635): mProc 1 finalizado
+[INFO] 19:10:47:547 PLANIFICADOR/(5622:5622): ---------------------FIN---------------------
+[INFO] 19:12:55:805 PLANIFICADOR/(5736:5736): Recibiendo CPU
+[INFO] 19:12:55:805 PLANIFICADOR/(5736:5736): CPU: 1 Conectado
+[INFO] 19:13:02:775 PLANIFICADOR/(5736:5750): Correr otro.cod, mProc: 1, en 1
+[INFO] 19:13:40:895 PLANIFICADOR/(5736:5750): mProc 1 - Iniciado
+[INFO] 19:13:40:895 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:13:40:895 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 2 escrita: si
+[INFO] 19:13:40:895 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:13:40:895 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:13:40:896 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:13:40:896 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:13:40:896 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:13:40:896 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:13:40:896 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:13:40:896 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:13:40:896 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:13:40:896 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:13:40:896 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:13:40:896 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:13:40:896 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:13:40:896 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:13:40:896 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:13:40:896 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:13:40:896 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:13:40:896 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:13:40:897 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:13:40:897 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:13:40:897 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:13:40:897 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:13:40:897 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:13:40:897 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:13:40:897 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:13:40:897 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:13:40:897 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 3 escrita: hola
+[INFO] 19:13:40:897 PLANIFICADOR/(5736:5750): mProc 1 - Pagina 2 escrita: sila
+[INFO] 19:13:40:897 PLANIFICADOR/(5736:5750): mProc 1 finalizado
+[INFO] 19:15:30:435 PLANIFICADOR/(5736:5736): ---------------------FIN---------------------
+[INFO] 19:20:35:542 PLANIFICADOR/(5971:5971): Recibiendo CPU
+[INFO] 19:20:35:615 PLANIFICADOR/(5971:5971): CPU: 1 Conectado
+[INFO] 19:20:35:615 PLANIFICADOR/(5971:5971): Recibiendo CPU
+[INFO] 19:20:35:615 PLANIFICADOR/(5971:5971): CPU: 2 Conectado
+[INFO] 19:20:35:615 PLANIFICADOR/(5971:5971): Recibiendo CPU
+[INFO] 19:20:35:615 PLANIFICADOR/(5971:5971): CPU: 3 Conectado
+[INFO] 19:20:35:615 PLANIFICADOR/(5971:5971): Recibiendo CPU
+[INFO] 19:20:35:615 PLANIFICADOR/(5971:5971): CPU: 4 Conectado
+[INFO] 19:20:35:615 PLANIFICADOR/(5971:5971): Recibiendo CPU
+[INFO] 19:20:35:615 PLANIFICADOR/(5971:5971): CPU: 5 Conectado
+[INFO] 19:20:38:219 PLANIFICADOR/(5971:5985): Correr corto.cod, mProc: 1, en 1
+[INFO] 19:20:42:261 PLANIFICADOR/(5971:5988): Correr nosoy.cod, mProc: 2, en 2
+[INFO] 19:20:44:688 PLANIFICADOR/(5971:5989): Correr corto.cod, mProc: 3, en 3
+[INFO] 19:20:49:594 PLANIFICADOR/(5971:5992): Correr nosoy.cod, mProc: 4, en 4
+[INFO] 19:20:52:386 PLANIFICADOR/(5971:5993): Correr corto.cod, mProc: 5, en 5
+[INFO] 19:23:17:19 PLANIFICADOR/(6039:6039): Recibiendo CPU
+[INFO] 19:23:17:19 PLANIFICADOR/(6039:6039): CPU: 1 Conectado
+[INFO] 19:23:17:19 PLANIFICADOR/(6039:6039): Recibiendo CPU
+[INFO] 19:23:17:19 PLANIFICADOR/(6039:6039): CPU: 2 Conectado
+[INFO] 19:23:17:19 PLANIFICADOR/(6039:6039): Recibiendo CPU
+[INFO] 19:23:17:19 PLANIFICADOR/(6039:6039): CPU: 3 Conectado
+[INFO] 19:23:17:19 PLANIFICADOR/(6039:6039): Recibiendo CPU
+[INFO] 19:23:17:19 PLANIFICADOR/(6039:6039): CPU: 4 Conectado
+[INFO] 19:23:17:20 PLANIFICADOR/(6039:6039): Recibiendo CPU
+[INFO] 19:23:17:20 PLANIFICADOR/(6039:6039): CPU: 5 Conectado
+[INFO] 19:23:20:454 PLANIFICADOR/(6039:6052): Correr corto.cod, mProc: 1, en 1
+[INFO] 19:23:23:540 PLANIFICADOR/(6039:6053): Correr nosoy.cod, mProc: 2, en 2
+[INFO] 19:23:26:561 PLANIFICADOR/(6039:6055): Correr corto.cod, mProc: 3, en 3
+[INFO] 19:23:30:9 PLANIFICADOR/(6039:6057): Correr nosoy.cod, mProc: 4, en 4
+[INFO] 19:23:32:99 PLANIFICADOR/(6039:6058): Correr corto.cod, mProc: 5, en 5
+[INFO] 19:23:54:542 PLANIFICADOR/(6039:6052): mProc 1 - Iniciado
+[INFO] 19:23:54:542 PLANIFICADOR/(6039:6052): mProc 1 - Pagina 0 escrita: Corto
+[INFO] 19:23:54:542 PLANIFICADOR/(6039:6052): mProc 1 - Pagina 1 escrita: Corto
+[INFO] 19:23:54:543 PLANIFICADOR/(6039:6052): mProc 1 - Pagina 2 escrita: Corto
+[INFO] 19:23:54:543 PLANIFICADOR/(6039:6052): mProc 1 en entrada-salida de tiempo 5
+[INFO] 19:23:54:543 PLANIFICADOR/(6039:6064): Correr cpu.cod, mProc: 6, en 1
+[INFO] 19:24:19:534 PLANIFICADOR/(6039:6053): FIN Q
+[INFO] 19:24:19:534 PLANIFICADOR/(6039:6071): Correr corto.cod, mProc: 1, en 2
+[INFO] 19:24:19:574 PLANIFICADOR/(6039:6053): mProc 2 - Iniciado
+[INFO] 19:24:19:574 PLANIFICADOR/(6039:6053): mProc 2 - Pagina 0 escrita: NoSoy
+[INFO] 19:24:19:574 PLANIFICADOR/(6039:6053): mProc 2 - Pagina 1 escrita: NoSoy
+[INFO] 19:24:19:574 PLANIFICADOR/(6039:6053): mProc 2 - Pagina 2 escrita: NoSoy
+[INFO] 19:24:19:574 PLANIFICADOR/(6039:6053): mProc 2 - Pagina 3 escrita: NoSoy
+[INFO] 19:24:28:548 PLANIFICADOR/(6039:6064): mProc 6 - Fallo
+[INFO] 19:24:36:598 PLANIFICADOR/(6039:6055): mProc 3 - Iniciado
+[INFO] 19:24:36:598 PLANIFICADOR/(6039:6055): mProc 3 - Pagina 0 escrita: Corto
+[INFO] 19:24:36:598 PLANIFICADOR/(6039:6055): mProc 3 - Pagina 1 escrita: Corto
+[INFO] 19:24:36:598 PLANIFICADOR/(6039:6055): mProc 3 - Pagina 2 escrita: Corto
+[INFO] 19:24:36:598 PLANIFICADOR/(6039:6055): mProc 3 en entrada-salida de tiempo 5
+[INFO] 19:24:36:598 PLANIFICADOR/(6039:6075): Correr nosoy.cod, mProc: 2, en 3
+[INFO] 19:24:40:562 PLANIFICADOR/(6039:6057): FIN Q
+[INFO] 19:24:40:602 PLANIFICADOR/(6039:6057): mProc 4 - Iniciado
+[INFO] 19:24:40:602 PLANIFICADOR/(6039:6057): mProc 4 - Pagina 0 escrita: NoSoy
+[INFO] 19:24:40:603 PLANIFICADOR/(6039:6057): mProc 4 - Pagina 1 escrita: NoSoy
+[INFO] 19:24:40:603 PLANIFICADOR/(6039:6057): mProc 4 - Pagina 2 escrita: NoSoy
+[INFO] 19:24:40:603 PLANIFICADOR/(6039:6057): mProc 4 - Pagina 3 escrita: NoSoy
+[INFO] 19:24:40:603 PLANIFICADOR/(6039:6079): Correr nosoy.cod, mProc: 4, en 4
+[INFO] 19:24:41:602 PLANIFICADOR/(6039:6064): mProc 6 - Iniciado
+[INFO] 19:24:41:602 PLANIFICADOR/(6039:6064): mProc 6 finalizado
+[INFO] 19:24:41:603 PLANIFICADOR/(6039:6080): Correr corto.cod, mProc: 3, en 1
+[INFO] 19:24:42:606 PLANIFICADOR/(6039:6058): mProc 5 - Iniciado
+[INFO] 19:24:42:606 PLANIFICADOR/(6039:6058): mProc 5 - Pagina 0 escrita: Corto
+[INFO] 19:24:42:606 PLANIFICADOR/(6039:6058): mProc 5 - Pagina 1 escrita: Corto
+[INFO] 19:24:42:606 PLANIFICADOR/(6039:6058): mProc 5 - Pagina 2 escrita: Corto
+[INFO] 19:24:42:606 PLANIFICADOR/(6039:6058): mProc 5 en entrada-salida de tiempo 5
+[INFO] 19:24:47:607 PLANIFICADOR/(6039:6082): Correr corto.cod, mProc: 5, en 5
+[INFO] 19:25:05:630 PLANIFICADOR/(6039:6075): mProc 2 - Pagina 4 escrita: NoSoy
+[INFO] 19:25:05:630 PLANIFICADOR/(6039:6075): mProc 2 en entrada-salida de tiempo 60
+[INFO] 19:25:06:630 PLANIFICADOR/(6039:6079): mProc 4 - Pagina 4 escrita: NoSoy
+[INFO] 19:25:06:630 PLANIFICADOR/(6039:6079): mProc 4 en entrada-salida de tiempo 60
+[INFO] 19:25:11:634 PLANIFICADOR/(6039:6071): mProc 1 - Pagina 0 leida: Corto
+[INFO] 19:25:11:634 PLANIFICADOR/(6039:6071): mProc 1 - Pagina 1 leida: Corto
+[INFO] 19:25:11:634 PLANIFICADOR/(6039:6071): mProc 1 - Pagina 2 leida: Corto
+[INFO] 19:25:11:634 PLANIFICADOR/(6039:6071): mProc 1 finalizado
+[INFO] 19:25:24:650 PLANIFICADOR/(6039:6080): mProc 3 - Pagina 0 leida: Corto
+[INFO] 19:25:24:650 PLANIFICADOR/(6039:6080): mProc 3 - Pagina 1 leida: Corto
+[INFO] 19:25:24:650 PLANIFICADOR/(6039:6080): mProc 3 - Pagina 2 leida: Corto
+[INFO] 19:25:24:650 PLANIFICADOR/(6039:6080): mProc 3 finalizado
+[INFO] 19:25:25:650 PLANIFICADOR/(6039:6082): mProc 5 - Pagina 0 leida: Corto
+[INFO] 19:25:25:650 PLANIFICADOR/(6039:6082): mProc 5 - Pagina 1 leida: Corto
+[INFO] 19:25:25:650 PLANIFICADOR/(6039:6082): mProc 5 - Pagina 2 leida: Corto
+[INFO] 19:25:25:650 PLANIFICADOR/(6039:6082): mProc 5 finalizado
+[INFO] 19:26:05:631 PLANIFICADOR/(6039:6095): Correr nosoy.cod, mProc: 2, en 1
+[INFO] 19:26:06:634 PLANIFICADOR/(6039:6095): mProc 2 finalizado
+[INFO] 19:27:05:632 PLANIFICADOR/(6039:6101): Correr nosoy.cod, mProc: 4, en 1
+[INFO] 19:27:06:636 PLANIFICADOR/(6039:6101): mProc 4 finalizado
+[INFO] 19:27:28:470 PLANIFICADOR/(6039:6039): ---------------------FIN---------------------
+[INFO] 19:48:19:580 PLANIFICADOR/(6462:6462): Recibiendo CPU
+[INFO] 19:48:19:580 PLANIFICADOR/(6462:6462): CPU: 1 Conectado
+[INFO] 19:48:19:580 PLANIFICADOR/(6462:6462): Recibiendo CPU
+[INFO] 19:48:19:580 PLANIFICADOR/(6462:6462): CPU: 2 Conectado
+[INFO] 19:48:19:581 PLANIFICADOR/(6462:6462): Recibiendo CPU
+[INFO] 19:48:19:581 PLANIFICADOR/(6462:6462): CPU: 3 Conectado
+[INFO] 19:48:19:581 PLANIFICADOR/(6462:6462): Recibiendo CPU
+[INFO] 19:48:19:581 PLANIFICADOR/(6462:6462): CPU: 4 Conectado
+[INFO] 19:48:19:581 PLANIFICADOR/(6462:6462): Recibiendo CPU
+[INFO] 19:48:19:581 PLANIFICADOR/(6462:6462): CPU: 5 Conectado
+[INFO] 19:48:22:104 PLANIFICADOR/(6462:6481): Correr localidad.cod, mProc: 1, en 1
+[INFO] 19:48:23:50 PLANIFICADOR/(6462:6482): Correr localidad.cod, mProc: 2, en 2
+[INFO] 19:48:23:130 PLANIFICADOR/(6462:6481): FIN Q
+[INFO] 19:48:23:131 PLANIFICADOR/(6462:6481): mProc 1 - Iniciado
+[INFO] 19:48:23:131 PLANIFICADOR/(6462:6483): Correr localidad.cod, mProc: 1, en 1
+[INFO] 19:48:23:871 PLANIFICADOR/(6462:6484): Correr localidad.cod, mProc: 3, en 3
+[INFO] 19:48:24:132 PLANIFICADOR/(6462:6482): FIN Q
+[INFO] 19:48:24:171 PLANIFICADOR/(6462:6482): mProc 2 - Iniciado
+[INFO] 19:48:24:172 PLANIFICADOR/(6462:6485): Correr localidad.cod, mProc: 2, en 2
+[INFO] 19:48:24:794 PLANIFICADOR/(6462:6486): Correr localidad.cod, mProc: 4, en 4
+[INFO] 19:48:40:219 PLANIFICADOR/(6462:6483): FIN Q
+[INFO] 19:48:40:258 PLANIFICADOR/(6462:6483): mProc 1 - Pagina 0 escrita: 0
+[INFO] 19:48:40:259 PLANIFICADOR/(6462:6490): Correr localidad.cod, mProc: 1, en 1
+[INFO] 19:48:41:221 PLANIFICADOR/(6462:6484): FIN Q
+[INFO] 19:48:41:258 PLANIFICADOR/(6462:6484): mProc 3 - Iniciado
+[INFO] 19:48:41:259 PLANIFICADOR/(6462:6491): Correr localidad.cod, mProc: 3, en 3
+[INFO] 19:48:57:224 PLANIFICADOR/(6462:6485): FIN Q
+[INFO] 19:48:57:262 PLANIFICADOR/(6462:6485): mProc 2 - Pagina 0 escrita: 0
+[INFO] 19:48:57:262 PLANIFICADOR/(6462:6496): Correr localidad.cod, mProc: 2, en 2
+[INFO] 19:48:58:227 PLANIFICADOR/(6462:6486): FIN Q
+[INFO] 19:48:58:266 PLANIFICADOR/(6462:6486): mProc 4 - Iniciado
+[INFO] 19:48:58:266 PLANIFICADOR/(6462:6497): Correr localidad.cod, mProc: 4, en 4
+[INFO] 19:49:14:231 PLANIFICADOR/(6462:6490): FIN Q
+[INFO] 19:49:14:270 PLANIFICADOR/(6462:6490): mProc 1 - Pagina 1 escrita: 1
+[INFO] 19:49:14:271 PLANIFICADOR/(6462:6502): Correr localidad.cod, mProc: 1, en 1
+[INFO] 19:49:30:235 PLANIFICADOR/(6462:6491): FIN Q
+[INFO] 19:49:30:274 PLANIFICADOR/(6462:6491): mProc 3 - Pagina 0 escrita: 0
+[INFO] 19:49:30:275 PLANIFICADOR/(6462:6505): Correr localidad.cod, mProc: 3, en 3
+[INFO] 19:49:46:238 PLANIFICADOR/(6462:6496): FIN Q
+[INFO] 19:49:46:278 PLANIFICADOR/(6462:6496): mProc 2 - Pagina 1 escrita: 1
+[INFO] 19:49:46:278 PLANIFICADOR/(6462:6508): Correr localidad.cod, mProc: 2, en 2
+[INFO] 19:50:02:242 PLANIFICADOR/(6462:6497): FIN Q
+[INFO] 19:50:02:282 PLANIFICADOR/(6462:6497): mProc 4 - Pagina 0 escrita: 0
+[INFO] 19:50:02:282 PLANIFICADOR/(6462:6512): Correr localidad.cod, mProc: 4, en 4
+[INFO] 19:50:18:246 PLANIFICADOR/(6462:6502): FIN Q
+[INFO] 19:50:18:287 PLANIFICADOR/(6462:6502): mProc 1 - Pagina 2 escrita: 2
+[INFO] 19:50:18:288 PLANIFICADOR/(6462:6515): Correr localidad.cod, mProc: 1, en 1
+[INFO] 19:50:34:250 PLANIFICADOR/(6462:6505): FIN Q
+[INFO] 19:50:34:290 PLANIFICADOR/(6462:6505): mProc 3 - Pagina 1 escrita: 1
+[INFO] 19:50:34:290 PLANIFICADOR/(6462:6518): Correr localidad.cod, mProc: 3, en 3
+[INFO] 19:50:50:255 PLANIFICADOR/(6462:6508): FIN Q
+[INFO] 19:50:50:296 PLANIFICADOR/(6462:6508): mProc 2 - Pagina 2 escrita: 2
+[INFO] 19:50:50:296 PLANIFICADOR/(6462:6521): Correr localidad.cod, mProc: 2, en 2
+[INFO] 19:51:06:258 PLANIFICADOR/(6462:6512): FIN Q
+[INFO] 19:51:06:298 PLANIFICADOR/(6462:6512): mProc 4 - Pagina 1 escrita: 1
+[INFO] 19:51:06:299 PLANIFICADOR/(6462:6525): Correr localidad.cod, mProc: 4, en 4
+[INFO] 19:51:22:263 PLANIFICADOR/(6462:6515): FIN Q
+[INFO] 19:51:22:303 PLANIFICADOR/(6462:6515): mProc 1 - Pagina 3 escrita: 3
+[INFO] 19:51:22:303 PLANIFICADOR/(6462:6528): Correr localidad.cod, mProc: 1, en 1
+[INFO] 19:51:38:267 PLANIFICADOR/(6462:6518): FIN Q
+[INFO] 19:51:38:306 PLANIFICADOR/(6462:6518): mProc 3 - Pagina 2 escrita: 2
+[INFO] 19:51:38:307 PLANIFICADOR/(6462:6531): Correr localidad.cod, mProc: 3, en 3
+[INFO] 19:51:54:272 PLANIFICADOR/(6462:6521): FIN Q
+[INFO] 19:51:54:310 PLANIFICADOR/(6462:6521): mProc 2 - Pagina 3 escrita: 3
+[INFO] 19:51:54:311 PLANIFICADOR/(6462:6534): Correr localidad.cod, mProc: 2, en 2
+[INFO] 19:52:10:277 PLANIFICADOR/(6462:6525): FIN Q
+[INFO] 19:52:10:315 PLANIFICADOR/(6462:6525): mProc 4 - Pagina 2 escrita: 2
+[INFO] 19:52:10:316 PLANIFICADOR/(6462:6538): Correr localidad.cod, mProc: 4, en 4
+[INFO] 19:52:26:281 PLANIFICADOR/(6462:6528): FIN Q
+[INFO] 19:52:26:319 PLANIFICADOR/(6462:6528): mProc 1 - Pagina 4 escrita: 4
+[INFO] 19:52:26:319 PLANIFICADOR/(6462:6541): Correr localidad.cod, mProc: 1, en 1
+[INFO] 19:52:42:284 PLANIFICADOR/(6462:6531): FIN Q
+[INFO] 19:52:42:323 PLANIFICADOR/(6462:6531): mProc 3 - Pagina 3 escrita: 3
+[INFO] 19:52:42:324 PLANIFICADOR/(6462:6544): Correr localidad.cod, mProc: 3, en 3
+[INFO] 19:52:58:290 PLANIFICADOR/(6462:6534): FIN Q
+[INFO] 19:52:58:330 PLANIFICADOR/(6462:6534): mProc 2 - Pagina 4 escrita: 4
+[INFO] 19:52:58:331 PLANIFICADOR/(6462:6549): Correr localidad.cod, mProc: 2, en 2
+[INFO] 19:53:14:296 PLANIFICADOR/(6462:6538): FIN Q
+[INFO] 19:53:14:336 PLANIFICADOR/(6462:6538): mProc 4 - Pagina 3 escrita: 3
+[INFO] 19:53:14:336 PLANIFICADOR/(6462:6552): Correr localidad.cod, mProc: 4, en 4
+[INFO] 19:53:30:299 PLANIFICADOR/(6462:6541): FIN Q
+[INFO] 19:53:30:338 PLANIFICADOR/(6462:6541): mProc 1 - Pagina 0 escrita: 00
+[INFO] 19:53:30:339 PLANIFICADOR/(6462:6555): Correr localidad.cod, mProc: 1, en 1
+[INFO] 19:53:46:303 PLANIFICADOR/(6462:6544): FIN Q
+[INFO] 19:53:46:342 PLANIFICADOR/(6462:6544): mProc 3 - Pagina 4 escrita: 4
+[INFO] 19:53:46:343 PLANIFICADOR/(6462:6558): Correr localidad.cod, mProc: 3, en 3
+[INFO] 19:54:02:307 PLANIFICADOR/(6462:6549): FIN Q
+[INFO] 19:54:02:347 PLANIFICADOR/(6462:6549): mProc 2 - Pagina 0 escrita: 00
+[INFO] 19:54:02:347 PLANIFICADOR/(6462:6562): Correr localidad.cod, mProc: 2, en 2
+[INFO] 19:54:18:312 PLANIFICADOR/(6462:6552): FIN Q
+[INFO] 19:54:18:350 PLANIFICADOR/(6462:6552): mProc 4 - Pagina 4 escrita: 4
+[INFO] 19:54:18:350 PLANIFICADOR/(6462:6565): Correr localidad.cod, mProc: 4, en 4
+[INFO] 19:54:34:316 PLANIFICADOR/(6462:6555): FIN Q
+[INFO] 19:54:34:356 PLANIFICADOR/(6462:6555): mProc 1 - Pagina 1 escrita: 11
+[INFO] 19:54:34:356 PLANIFICADOR/(6462:6571): Correr localidad.cod, mProc: 1, en 1
+[INFO] 19:54:50:319 PLANIFICADOR/(6462:6558): FIN Q
+[INFO] 19:54:50:359 PLANIFICADOR/(6462:6558): mProc 3 - Pagina 0 escrita: 00
+[INFO] 19:54:50:359 PLANIFICADOR/(6462:6580): Correr localidad.cod, mProc: 3, en 3
+[INFO] 19:55:06:322 PLANIFICADOR/(6462:6562): FIN Q
+[INFO] 19:55:06:362 PLANIFICADOR/(6462:6562): mProc 2 - Pagina 1 escrita: 11
+[INFO] 19:55:06:363 PLANIFICADOR/(6462:6617): Correr localidad.cod, mProc: 2, en 2
+[INFO] 19:55:22:326 PLANIFICADOR/(6462:6565): FIN Q
+[INFO] 19:55:22:366 PLANIFICADOR/(6462:6565): mProc 4 - Pagina 0 escrita: 00
+[INFO] 19:55:22:367 PLANIFICADOR/(6462:6620): Correr localidad.cod, mProc: 4, en 4
+[INFO] 19:55:38:330 PLANIFICADOR/(6462:6571): FIN Q
+[INFO] 19:55:38:371 PLANIFICADOR/(6462:6571): mProc 1 - Pagina 2 escrita: 22
+[INFO] 19:55:38:372 PLANIFICADOR/(6462:6623): Correr localidad.cod, mProc: 1, en 1
+[INFO] 19:55:54:334 PLANIFICADOR/(6462:6580): FIN Q
+[INFO] 19:55:54:374 PLANIFICADOR/(6462:6580): mProc 3 - Pagina 1 escrita: 11
+[INFO] 19:55:54:375 PLANIFICADOR/(6462:6626): Correr localidad.cod, mProc: 3, en 3
+[INFO] 19:56:10:339 PLANIFICADOR/(6462:6617): FIN Q
+[INFO] 19:56:10:380 PLANIFICADOR/(6462:6617): mProc 2 - Pagina 2 escrita: 22
+[INFO] 19:56:10:381 PLANIFICADOR/(6462:6630): Correr localidad.cod, mProc: 2, en 2
+[INFO] 19:56:26:343 PLANIFICADOR/(6462:6620): FIN Q
+[INFO] 19:56:26:383 PLANIFICADOR/(6462:6620): mProc 4 - Pagina 1 escrita: 11
+[INFO] 19:56:26:384 PLANIFICADOR/(6462:6633): Correr localidad.cod, mProc: 4, en 4
+[INFO] 19:56:42:348 PLANIFICADOR/(6462:6623): FIN Q
+[INFO] 19:56:42:386 PLANIFICADOR/(6462:6623): mProc 1 - Pagina 1 escrita: 000
+[INFO] 19:56:42:387 PLANIFICADOR/(6462:6647): Correr localidad.cod, mProc: 1, en 1
+[INFO] 19:56:58:353 PLANIFICADOR/(6462:6626): FIN Q
+[INFO] 19:56:58:390 PLANIFICADOR/(6462:6626): mProc 3 - Pagina 2 escrita: 22
+[INFO] 19:56:58:390 PLANIFICADOR/(6462:6654): Correr localidad.cod, mProc: 3, en 3
+[INFO] 19:57:14:358 PLANIFICADOR/(6462:6630): FIN Q
+[INFO] 19:57:14:399 PLANIFICADOR/(6462:6630): mProc 2 - Pagina 1 escrita: 000
+[INFO] 19:57:14:400 PLANIFICADOR/(6462:6670): Correr localidad.cod, mProc: 2, en 2
+[INFO] 19:57:30:363 PLANIFICADOR/(6462:6633): FIN Q
+[INFO] 19:57:30:402 PLANIFICADOR/(6462:6633): mProc 4 - Pagina 2 escrita: 22
+[INFO] 19:57:30:402 PLANIFICADOR/(6462:6673): Correr localidad.cod, mProc: 4, en 4
+[INFO] 19:57:31:365 PLANIFICADOR/(6462:6647): FIN Q
+[INFO] 19:57:31:402 PLANIFICADOR/(6462:6647): mProc 1 - Pagina 1 escrita: 111
+[INFO] 19:57:31:403 PLANIFICADOR/(6462:6674): Correr localidad.cod, mProc: 1, en 1
+[INFO] 19:57:56:372 PLANIFICADOR/(6462:6654): FIN Q
+[INFO] 19:57:56:411 PLANIFICADOR/(6462:6654): mProc 3 - Pagina 0 escrita: 000
+[INFO] 19:57:56:411 PLANIFICADOR/(6462:6677): Correr localidad.cod, mProc: 3, en 3
+[INFO] 19:57:57:373 PLANIFICADOR/(6462:6670): FIN Q
+[INFO] 19:57:57:415 PLANIFICADOR/(6462:6670): mProc 2 - Pagina 1 escrita: 111
+[INFO] 19:57:57:416 PLANIFICADOR/(6462:6678): Correr localidad.cod, mProc: 2, en 2
+[INFO] 19:58:22:379 PLANIFICADOR/(6462:6673): FIN Q
+[INFO] 19:58:22:419 PLANIFICADOR/(6462:6673): mProc 4 - Pagina 0 escrita: 000
+[INFO] 19:58:22:420 PLANIFICADOR/(6462:6682): Correr localidad.cod, mProc: 4, en 4
+[INFO] 19:58:38:381 PLANIFICADOR/(6462:6674): FIN Q
+[INFO] 19:58:38:424 PLANIFICADOR/(6462:6674): mProc 1 - Pagina 2 escrita: 222
+[INFO] 19:58:38:424 PLANIFICADOR/(6462:6685): Correr localidad.cod, mProc: 1, en 1
+[INFO] 19:58:39:384 PLANIFICADOR/(6462:6677): mProc 3 finalizado
+[INFO] 19:58:40:387 PLANIFICADOR/(6462:6678): mProc 2 finalizado
+[INFO] 19:58:41:389 PLANIFICADOR/(6462:6682): mProc 4 finalizado
+[INFO] 19:58:42:393 PLANIFICADOR/(6462:6685): mProc 1 finalizado
+[INFO] 20:01:26:81 PLANIFICADOR/(6462:6462): ---------------------FIN---------------------
+[INFO] 20:15:52:501 PLANIFICADOR/(7224:7224): Recibiendo CPU
+[INFO] 20:15:52:501 PLANIFICADOR/(7224:7224): CPU: 1 Conectado
+[INFO] 20:15:56:832 PLANIFICADOR/(7224:7232): Correr algo.cod, mProc: 1, en 1
+[INFO] 20:16:51:855 PLANIFICADOR/(7224:7232): FIN Q
+[INFO] 20:16:51:855 PLANIFICADOR/(7224:7242): Correr algo.cod, mProc: 2, en 1
+[INFO] 20:16:51:856 PLANIFICADOR/(7224:7232): mProc 1 - Iniciado
+[INFO] 20:16:51:857 PLANIFICADOR/(7224:7232): mProc 1 - Pagina 0 escrita: hola
+[INFO] 20:16:51:857 PLANIFICADOR/(7224:7232): mProc 1 - Pagina 1 escrita: chau
+[INFO] 20:16:51:857 PLANIFICADOR/(7224:7232): mProc 1 - Pagina 4 escrita: si
+[INFO] 20:16:51:857 PLANIFICADOR/(7224:7232): mProc 1 - Pagina 0 leida: hola
+[INFO] 20:17:12:906 PLANIFICADOR/(7224:7242): mProc 2 - Iniciado
+[INFO] 20:17:12:906 PLANIFICADOR/(7224:7242): mProc 2 - Pagina 0 escrita: hola
+[INFO] 20:17:12:906 PLANIFICADOR/(7224:7242): mProc 2 finalizado
+[INFO] 20:17:12:908 PLANIFICADOR/(7224:7249): Correr algo.cod, mProc: 1, en 1
+[INFO] 20:17:14:952 PLANIFICADOR/(7224:7249): mProc 1 finalizado
+[INFO] 20:17:17:560 PLANIFICADOR/(7224:7224): ---------------------FIN---------------------
+[INFO] 20:21:08:31 PLANIFICADOR/(7393:7393): Recibiendo CPU
+[INFO] 20:21:08:31 PLANIFICADOR/(7393:7393): CPU: 1 Conectado
+[INFO] 20:21:13:991 PLANIFICADOR/(7393:7408): Correr algo.cod, mProc: 1, en 1
+[INFO] 20:22:09:7 PLANIFICADOR/(7393:7408): FIN Q
+[INFO] 20:22:09:8 PLANIFICADOR/(7393:7417): Correr algo.cod, mProc: 2, en 1
+[INFO] 20:22:09:47 PLANIFICADOR/(7393:7408): mProc 1 - Iniciado
+[INFO] 20:22:09:47 PLANIFICADOR/(7393:7408): mProc 1 - Pagina 0 escrita: hola
+[INFO] 20:22:09:47 PLANIFICADOR/(7393:7408): mProc 1 - Pagina 1 escrita: chau
+[INFO] 20:22:09:47 PLANIFICADOR/(7393:7408): mProc 1 - Pagina 4 escrita: si
+[INFO] 20:22:09:47 PLANIFICADOR/(7393:7408): mProc 1 - Pagina 0 leida: hola
+[INFO] 20:23:04:30 PLANIFICADOR/(7393:7417): FIN Q
+[INFO] 20:23:04:30 PLANIFICADOR/(7393:7426): Correr algo.cod, mProc: 1, en 1
+[INFO] 20:23:04:72 PLANIFICADOR/(7393:7417): mProc 2 - Iniciado
+[INFO] 20:23:04:72 PLANIFICADOR/(7393:7417): mProc 2 - Pagina 0 escrita: hola
+[INFO] 20:23:04:72 PLANIFICADOR/(7393:7417): mProc 2 - Pagina 1 escrita: chau
+[INFO] 20:23:04:72 PLANIFICADOR/(7393:7417): mProc 2 - Pagina 4 escrita: si
+[INFO] 20:23:04:72 PLANIFICADOR/(7393:7417): mProc 2 - Pagina 0 leida: hola
+[INFO] 20:23:08:74 PLANIFICADOR/(7393:7426): mProc 1 - Pagina 4 leida: si
+[INFO] 20:23:08:74 PLANIFICADOR/(7393:7426): mProc 1 finalizado
+[INFO] 20:23:08:75 PLANIFICADOR/(7393:7427): Correr algo.cod, mProc: 2, en 1
+[INFO] 20:23:12:119 PLANIFICADOR/(7393:7427): mProc 2 - Pagina 4 leida: si
+[INFO] 20:23:12:119 PLANIFICADOR/(7393:7427): mProc 2 finalizado
+[INFO] 20:29:36:436 PLANIFICADOR/(7393:7393): ---------------------FIN---------------------
+[INFO] 20:44:43:998 PLANIFICADOR/(7626:7626): Recibiendo CPU
+[INFO] 20:44:43:998 PLANIFICADOR/(7626:7626): CPU: 1 Conectado
+[INFO] 20:44:51:100 PLANIFICADOR/(7626:7640): Correr algo.cod, mProc: 1, en 1
+[INFO] 20:45:46:117 PLANIFICADOR/(7626:7640): FIN Q
+[INFO] 20:45:46:117 PLANIFICADOR/(7626:7643): Correr algo.cod, mProc: 2, en 1
+[INFO] 20:45:46:119 PLANIFICADOR/(7626:7640): mProc 1 - Iniciado
+[INFO] 20:45:46:119 PLANIFICADOR/(7626:7640): mProc 1 - Pagina 0 escrita: hola
+[INFO] 20:45:46:119 PLANIFICADOR/(7626:7640): mProc 1 - Pagina 1 escrita: chau
+[INFO] 20:45:46:120 PLANIFICADOR/(7626:7640): mProc 1 - Pagina 4 escrita: si
+[INFO] 20:45:46:120 PLANIFICADOR/(7626:7640): mProc 1 - Pagina 0 leida: hola
+[INFO] 20:46:41:133 PLANIFICADOR/(7626:7643): FIN Q
+[INFO] 20:46:41:133 PLANIFICADOR/(7626:7650): Correr algo.cod, mProc: 1, en 1
+[INFO] 20:46:41:215 PLANIFICADOR/(7626:7643): mProc 2 - Iniciado
+[INFO] 20:46:41:215 PLANIFICADOR/(7626:7643): mProc 2 - Pagina 0 escrita: hola
+[INFO] 20:46:41:215 PLANIFICADOR/(7626:7643): mProc 2 - Pagina 1 escrita: chau
+[INFO] 20:46:41:215 PLANIFICADOR/(7626:7643): mProc 2 - Pagina 4 escrita: si
+[INFO] 20:46:41:215 PLANIFICADOR/(7626:7643): mProc 2 - Pagina 0 leida: hola
+[INFO] 20:46:45:258 PLANIFICADOR/(7626:7650): mProc 1 - Pagina 4 leida: si
+[INFO] 20:46:45:258 PLANIFICADOR/(7626:7650): mProc 1 finalizado
+[INFO] 20:46:45:260 PLANIFICADOR/(7626:7653): Correr algo.cod, mProc: 2, en 1
+[INFO] 20:46:49:302 PLANIFICADOR/(7626:7653): mProc 2 - Pagina 4 leida: si
+[INFO] 20:46:49:302 PLANIFICADOR/(7626:7653): mProc 2 finalizado
+[INFO] 20:49:21:126 PLANIFICADOR/(7626:7626): ---------------------FIN---------------------
