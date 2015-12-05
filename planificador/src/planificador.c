@@ -330,9 +330,7 @@ void recibirCjtoRespuestas(int pid1, int socketCliente)
 	time(&tiempoAhora);
 /*
 	struct tm* tm_info;
-
 	tm_info = localtime(&tiempoAhora);
-
 	printf("Recibiendo mProc: %d, %d:%d\n", pid1, tm_info->tm_min, tm_info->tm_sec);
 */
 	resp = resp + difftime(tiempoAhora, pcb->tiempoRespI);
@@ -422,13 +420,9 @@ int recibirRespuesta(int socketCliente)
 
 					time(&ejecF);
 /*					struct tm * timeinfo;
-
 					timeinfo = localtime( &ejecI );
-
 					printf("\nInicio mProc:%d %d:%d\n", respuesta.pid, timeinfo->tm_min, timeinfo->tm_sec);
-
 					timeinfo = localtime( &ejecF );
-
 					printf("\nFIN mProc:%d %d:%d\n", respuesta.pid, timeinfo->tm_min, timeinfo->tm_sec);
 */
 					double tiempoEjec = difftime(ejecF, pcb->tiempoEjecI);
@@ -515,7 +509,6 @@ void ROUND_ROBIN(void* args)
 
 	time(&tiempoAhora);
 /*	struct tm* tm_info;
-
 	tm_info = localtime(&tiempoAhora);
 */
 //	printf("Correr %s, mProc: %d, en %d %d:%d\n", path, pidReady, idHiloCPU, tm_info->tm_min, tm_info->tm_sec);
@@ -623,7 +616,6 @@ void FIFO(void *args)
 
 	time(&tiempoAhora);
 /*	struct tm* tm_info;
-
 	tm_info = localtime(&tiempoAhora);
 */
 //	printf("Correr %s, mProc: %d, en %d %d:%d\n", path, pidReady, idHiloCPU, tm_info->tm_min, tm_info->tm_sec);
