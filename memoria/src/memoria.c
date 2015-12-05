@@ -126,7 +126,7 @@ int main() {
 	signal(SIGUSR2, rutinaLimpiarMemoriaPrincipal);
 	signal(SIGPOLL, dumpMemoriaPrincipal);
 
-	logger = log_create("logsTP", "Memoria", 1, LOG_LEVEL_INFO);
+	logger = log_create("logsTP", "Memoria", 0, LOG_LEVEL_INFO);
 
 	t_config* config;
 
