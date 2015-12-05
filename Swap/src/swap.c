@@ -150,7 +150,7 @@ int main()
 	debugMode = config_get_int_value(config, "DEBUG_MODE");
 
 
-	logger = log_create("logsTP", "Swap", 0, LOG_LEVEL_INFO);  //si debugMode = 1 muestra los logs por pantalla
+	logger = log_create("logsTP", "Swap", 1, LOG_LEVEL_INFO);  //si debugMode = 1 muestra los logs por pantalla
 
 	listaLibres = list_create();
 	listaOcupados = list_create();
@@ -199,7 +199,7 @@ int main()
 
 			recvall(socket_memoria,(void*) package2, ordenMemoria.contentSize, 0); //campo longitud(NO SIZEOF DE LONGITUD)
 			memcpy(&ordenMemoria.content, package2, ordenMemoria.contentSize);
-
+			printf("%d,%d,%d,%d,%s",ordenMemoria.pid,ordenMemoria.paginas,ordenMemoria.orden,ordenMemoria.contentSize,ordenMemoria.content);
 			procesarOrden(ordenMemoria, NETWORKMODE);
 
 			free(package);

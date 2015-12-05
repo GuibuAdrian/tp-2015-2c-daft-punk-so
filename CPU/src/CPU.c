@@ -116,7 +116,7 @@ int main()
 	listaCPUs = list_create();
 	listaRespuestas = list_create();
 
-	logger = log_create("logsTP", "CPU", 0, LOG_LEVEL_INFO);
+	logger = log_create("logsTP", "CPU", 1, LOG_LEVEL_INFO);
 
 	t_config* config;
 
@@ -549,6 +549,8 @@ t_orden_CPU enviarOrdenAMemoria(int pid, int orden, int paginas, char *content, 
 	memcpy(mensajeMemoPackage+sizeof(mensajeMemoria.pid)+sizeof(mensajeMemoria.orden), &mensajeMemoria.pagina, sizeof(mensajeMemoria.pagina));
 	memcpy(mensajeMemoPackage+sizeof(mensajeMemoria.pid)+sizeof(mensajeMemoria.orden)+sizeof(mensajeMemoria.pagina), &mensajeMemoria.contentSize, sizeof(mensajeMemoria.contentSize));
 	memcpy(mensajeMemoPackage+sizeof(mensajeMemoria.pid)+sizeof(mensajeMemoria.orden)+sizeof(mensajeMemoria.pagina)+sizeof(mensajeMemoria.contentSize), &mensajeMemoria.content, mensajeMemoria.contentSize);
+
+	printf("%d,%d,%d,%d,%d,%s", idNodo,mensajeMemoria.pid,mensajeMemoria.pagina,mensajeMemoria.orden,mensajeMemoria.contentSize,mensajeMemoria.content);
 
 	log_info(logger, "ID CPU: %d conectado a Memoria", idNodo);
 

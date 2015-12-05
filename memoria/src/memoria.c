@@ -35,6 +35,7 @@ typedef struct {
 	int marco;
 	int bitReferencia;  //Funcion: para LRU para saber la ultima ref || para CLOCK para saber BIT de USO
 	int bitModificado;
+	char puntero;
 } t_tablaPags;
 
 typedef struct {
@@ -75,7 +76,7 @@ static t_tablaDeProcesos *tablaProc_create(int pid, int pagina);
 static void tablaProc_destroy(t_tablaDeProcesos *self);
 static t_fallosPid *fallos_create(int pid, int fallos, int accesos);
 static void fallos_destroy(t_fallosPid *self);
-static t_tablaPags *tablaPag_create(int pagina, int marco, int referencia, int modificado);
+static t_tablaPags *tablaPag_create(int pagina, int marco, int referencia, int modificado, char puntero);
 static void tablaPag_destroy(t_tablaPags *self);
 static t_TLB *TLB_create(int pid, int pagina, int marco);
 static void TLB_destroy(t_TLB *self);
@@ -97,6 +98,7 @@ int encontrarPosicionEnTablaDePags(int pag, t_list *listaTablaPags);
 int encontrarPosReferencia(t_list *listaTablaPags, int ref);
 int encontrarPosUsoYModificado_cero(t_list *listaTablaPags);
 int encontrarPosUso_cero_YModificado_uno(t_list *listaTablaPags);
+int encontrarPuntero(t_list *tablaDePaginas);
 
 void recibirConexiones1(char * PUERTO_CPU);
 t_orden_CPU enviarOrdenASwap(int pid, int orden, int paginas, char *content);
@@ -126,7 +128,7 @@ int main() {
 	signal(SIGUSR2, rutinaLimpiarMemoriaPrincipal);
 	signal(SIGPOLL, dumpMemoriaPrincipal);
 
-	logger = log_create("logsTP", "Memoria", 0, LOG_LEVEL_INFO);
+	logger = log_create("logsTP", "Memoria", 1, LOG_LEVEL_INFO);
 
 	t_config* config;
 
@@ -316,9 +318,9 @@ void actualizarTLB(int pid, int pag, int marco)
 	list_add(listaTLB, TLB_create(pid, pag, marco));
 }
 
-t_tablaPags* clockMejorado(t_list *listaTablaPags, int pag, int pid, int orden)
+t_tablaPags* clockMejorado(t_list* listaTablaPags, int pag, int pid, int orden)
 {
-	t_tablaPags* new2;
+	t_tablaPags* new2, *new3;
 	int posEncontrado;
 
 	posEncontrado = encontrarPosUsoYModificado_cero(listaTablaPags);
@@ -342,12 +344,104 @@ t_tablaPags* clockMejorado(t_list *listaTablaPags, int pag, int pid, int orden)
 
 	if(orden == 1)
 	{
-		list_add(listaTablaPags, tablaPag_create(pag, new2->marco, 1, 0));
+		list_add(listaTablaPags, tablaPag_create(pag, new2->marco, 1, 0,1));
 	}
 	else
 	{
-		list_add(listaTablaPags, tablaPag_create(pag, new2->marco, 1, 1));
+		list_add(listaTablaPags, tablaPag_create(pag, new2->marco, 1, 1,1));
 	}
+
+//	int i=0, encontrado=0;
+//	printf("CLOCK\n");
+//	int posPuntero = encontrarPuntero(new->tablaDePaginas);
+//	printf("%d",posPuntero);
+//
+//	while(encontrado == 0)
+//	{
+//	while(i<list_size(new->tablaDePaginas))
+//	{
+//		new2 = list_get(new->tablaDePaginas, posPuntero);
+//		printf("%d,%d,%d", new2->pagina, new2->bitReferencia,new2->bitModificado);
+//		if((new2->bitReferencia==0) && (new2->bitModificado==0))
+//		{
+//			list_replace_and_destroy_element(new->tablaDePaginas, posPuntero, tablaPag_create(new2->pagina, new2->marco, new2->bitReferencia, new2->bitModificado, 0), (void*) tablaPag_destroy);
+//
+//			if(list_get(new->tablaDePaginas, posPuntero+1)==NULL)
+//			{
+//				new3 = list_get(new->tablaDePaginas, 0);
+//				list_replace_and_destroy_element(new->tablaDePaginas, 0, tablaPag_create(new3->pagina, new3->marco, new3->bitReferencia, new3->bitModificado, 1), (void*) tablaPag_destroy);
+//			}
+//			else
+//			{
+//				new3 = list_get(new->tablaDePaginas, posPuntero+1);
+//				list_replace_and_destroy_element(new->tablaDePaginas, posPuntero+1, tablaPag_create(new3->pagina, new3->marco, new3->bitReferencia, new3->bitModificado, 1), (void*) tablaPag_destroy);
+//			}
+//			encontrado=1;
+//			break;
+//		}else
+//		{
+//			if(list_get(new->tablaDePaginas, posPuntero+1)==NULL)
+//			{
+//				posPuntero = 0;
+//			}
+//			else
+//			{
+//				posPuntero++;
+//			}
+//		}
+//
+//		i++;
+//	}
+//
+//	if(encontrado==0)
+//	{
+//		posPuntero = encontrarPuntero(new->tablaDePaginas);
+//
+//		while(i<list_size(new->tablaDePaginas))
+//		{
+//			new2 = list_get(new->tablaDePaginas, posPuntero);
+//
+//			if((new2->bitReferencia==0) && (new2->bitModificado==1))
+//			{
+//				list_replace_and_destroy_element(new->tablaDePaginas, posPuntero, tablaPag_create(new2->pagina, new2->marco, new2->bitReferencia, new2->bitModificado, 0), (void*) tablaPag_destroy);
+//
+//				if(list_get(new->tablaDePaginas, posPuntero+1)==NULL)
+//				{
+//					list_replace_and_destroy_element(new->tablaDePaginas, 0, tablaPag_create(new2->pagina, new2->marco, new2->bitReferencia, new2->bitModificado, 1), (void*) tablaPag_destroy);
+//				}
+//				else
+//				{
+//					list_replace_and_destroy_element(new->tablaDePaginas, posPuntero+1, tablaPag_create(new2->pagina, new2->marco, new2->bitReferencia, new2->bitModificado, 1), (void*) tablaPag_destroy);
+//				}
+//				encontrado=1;
+//				break;
+//			}else
+//			{
+//				list_replace_and_destroy_element(new->tablaDePaginas, posPuntero, tablaPag_create(new2->pagina, new2->marco, 0, new2->bitModificado, 0), (void*) tablaPag_destroy);
+//
+//				if(list_get(new->tablaDePaginas, posPuntero+1)==NULL)
+//				{
+//					new3 = list_get(new->tablaDePaginas, 0);
+//					list_replace_and_destroy_element(new->tablaDePaginas, 0, tablaPag_create(new3->pagina, new3->marco, new3->bitReferencia, new3->bitModificado, 1), (void*) tablaPag_destroy);
+//
+//					posPuntero = 0;
+//				}
+//				else
+//				{
+//					new3 = list_get(new->tablaDePaginas, posPuntero+1);
+//					list_replace_and_destroy_element(new->tablaDePaginas, posPuntero+1,
+//							tablaPag_create(new3->pagina, new3->marco, new3->bitReferencia,
+//									new3->bitModificado, 1), (void*) tablaPag_destroy);
+//
+//					posPuntero++;
+//				}
+//			}
+//
+//			i++;
+//		}
+//
+//	}
+//	}
 
 	return new2;
 }
@@ -364,7 +458,7 @@ t_tablaPags* lru(t_list *listaTablaPags, int pag, int pid)
 
 	new2 = list_remove(listaTablaPags, posRemove);
 
-	list_add(listaTablaPags, tablaPag_create(pag, new2->marco, 0, -1));
+	list_add(listaTablaPags, tablaPag_create(pag, new2->marco, 0, -1,-1));
 
 	return new2;
 }
@@ -375,7 +469,7 @@ t_tablaPags* fifo(t_list *listaTablaPags, int pag)
 
 	new2 = list_remove(listaTablaPags, 0);
 
-	list_add(listaTablaPags, tablaPag_create(pag, new2->marco, 0, -1));
+	list_add(listaTablaPags, tablaPag_create(pag, new2->marco, 0, -1,-1));
 
 	return new2;
 }
@@ -488,6 +582,7 @@ int actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag, int orden)
 	if (totalPag == maxMarcos) //Si la cantidad de marcos ocupados es MAX entonces empiezo a reemplazar
 	{
 		marco = reemplazarPagina(new, pag, orden);
+		mostrarTablaDePags(new->pid);
 	}
 	else
 	{
@@ -498,6 +593,7 @@ int actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag, int orden)
 			if(!list_is_empty(new->tablaDePaginas)) // Si tiene al menos 1 una pag en memoria la reemplazo
 			{
 				marco = reemplazarPagina(new, pag, orden);
+				mostrarTablaDePags(new->pid);
 			}
 			else
 			{
@@ -508,7 +604,7 @@ int actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag, int orden)
 		{
 			if(strncmp(politicaDeReemplazo, "FIFO",3)==0)
 			{
-				list_add(new->tablaDePaginas, tablaPag_create(pag, marco, -1, -1));
+				list_add(new->tablaDePaginas, tablaPag_create(pag, marco, -1, -1,-1));
 			}
 			else
 			{
@@ -516,17 +612,23 @@ int actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag, int orden)
 				{
 					aumentarBitReferencia(new->tablaDePaginas);
 
-					list_add(new->tablaDePaginas, tablaPag_create(pag, marco, 0, -1));
+					list_add(new->tablaDePaginas, tablaPag_create(pag, marco, 0, -1,-1));
 				}
 				else
 				{
+					int puntero = 0;
+
+					if(list_is_empty(new->tablaDePaginas))
+					{
+						puntero = 1;
+					}
 					if(orden == 1)
 					{
-						list_add(new->tablaDePaginas, tablaPag_create(pag, marco, 1, 0));
+						list_add(new->tablaDePaginas, tablaPag_create(pag, marco, 1, 0, puntero));
 					}
 					else
 					{
-						list_add(new->tablaDePaginas, tablaPag_create(pag, marco, 1, 1));
+						list_add(new->tablaDePaginas, tablaPag_create(pag, marco, 1, 1, puntero));
 					}
 				}
 			}
@@ -637,7 +739,7 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 
 						log_info(logger, "Proceso %d Escribiendo: %s en pag: %d", mensaje.pid, memoriaPrincipal + marco * tamMarcos, mensaje.pagina);
 
-						respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, new2->pagina, mensaje.content); //Le aviso al SWAP del nuevo contenido//Le aviso al SWAP del nuevo contenido
+						respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content); //Le aviso al SWAP del nuevo contenido//Le aviso al SWAP del nuevo contenido
 						enviarRespuestaCPU(respuestaSwap, socketCPU); //Le devuelvo el contenido del marco al CPU
 
 						enviarRespuestaCPU(mensaje, socketCPU);
@@ -856,11 +958,11 @@ void cambiarBitUsoYModificado(int pid, int pagina, int orden, int marco)
 
 	if(orden == 1)
 	{
-		list_replace_and_destroy_element(new->tablaDePaginas, posPag, tablaPag_create(pagina, marco, 1, 0), (void*) tablaPag_destroy);
+		list_replace_and_destroy_element(new->tablaDePaginas, posPag, tablaPag_create(pagina, marco, 1, 0, -1), (void*) tablaPag_destroy);
 	}
 	else
 	{
-		list_replace_and_destroy_element(new->tablaDePaginas, posPag, tablaPag_create(pagina, marco, 1, 1), (void*) tablaPag_destroy);
+		list_replace_and_destroy_element(new->tablaDePaginas, posPag, tablaPag_create(pagina, marco, 1, 1, -1), (void*) tablaPag_destroy);
 	}
 }
 
@@ -873,7 +975,7 @@ void aumentarBitReferencia(t_list* new)
 	{
 		new2 = list_get(new, i);
 
-		list_replace_and_destroy_element(new, i, tablaPag_create(new2->pagina, new2->marco, new2->bitReferencia+1, -1), (void*) tablaPag_destroy);
+		list_replace_and_destroy_element(new, i, tablaPag_create(new2->pagina, new2->marco, new2->bitReferencia+1, -1, -1), (void*) tablaPag_destroy);
 	}
 }
 
@@ -888,7 +990,7 @@ void cambiarBitReferencia(int pid, int pagina)
 	int posPag = encontrarPosicionEnTablaDePags(pagina, new->tablaDePaginas);
 	new2 = list_get(new->tablaDePaginas, posPag);
 
-	list_replace_and_destroy_element(new->tablaDePaginas, posPag, tablaPag_create(new2->pagina, new2->marco, 0, -1), (void*) tablaPag_destroy);
+	list_replace_and_destroy_element(new->tablaDePaginas, posPag, tablaPag_create(new2->pagina, new2->marco, 0, -1, -1), (void*) tablaPag_destroy);
 }
 
 void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU) {
@@ -976,25 +1078,24 @@ t_orden_CPU enviarOrdenASwap(int pid, int orden, int paginas, char *content) {
 	void* mensajeSwapPackage = malloc(
 			tamanioOrdenCPU(mensajeSwap) + mensajeSwap.contentSize);
 
-	memcpy(mensajeSwapPackage, &mensajeSwap.pid, sizeof(mensajeSwap.pid));
+	memcpy(mensajeSwapPackage, &pid, sizeof(mensajeSwap.pid));
 	memcpy(mensajeSwapPackage + sizeof(mensajeSwap.pid), &mensajeSwap.orden,
 			sizeof(mensajeSwap.orden));
 	memcpy(
 			mensajeSwapPackage + sizeof(mensajeSwap.pid)
-					+ sizeof(mensajeSwap.orden), &mensajeSwap.pagina,
+					+ sizeof(mensajeSwap.orden), &paginas,
 			sizeof(mensajeSwap.pagina));
 	memcpy(
 			mensajeSwapPackage + sizeof(mensajeSwap.pid)
 					+ sizeof(mensajeSwap.orden) + sizeof(mensajeSwap.pagina),
-			&mensajeSwap.contentSize, sizeof(mensajeSwap.contentSize));
+					&mensajeSwap.contentSize, sizeof(mensajeSwap.contentSize));
 	memcpy(
 			mensajeSwapPackage + sizeof(mensajeSwap.pid)
 					+ sizeof(mensajeSwap.orden) + sizeof(mensajeSwap.pagina)
-					+ sizeof(mensajeSwap.contentSize), &mensajeSwap.content,
+					+ sizeof(mensajeSwap.contentSize), &content,
 			mensajeSwap.contentSize);
-
+	printf("%d,%d,%d,%d,%s",mensajeSwap.pid,mensajeSwap.pagina,mensajeSwap.orden,mensajeSwap.contentSize,mensajeSwap.content);
 	send(socketSwap, mensajeSwapPackage, tamanioOrdenCPU(mensajeSwap), 0);
-
 	free(mensajeSwapPackage);
 
 	return recibirRespuestaSwap(socketSwap);
@@ -1154,6 +1255,35 @@ int encontrarPosicionEnTLB(int pid, int pagina)
 	return i;
 }
 
+int encontrarPuntero(t_list *tablaDePaginas)
+{
+	t_tablaPags *new;
+
+	int i=0;
+	int encontrado = 1;
+
+	while( (i<list_size(tablaDePaginas)) && encontrado!=0)
+	{
+		new = list_get(tablaDePaginas,i);
+
+		if(new->puntero == 1)
+		{
+			encontrado = 0;
+		}
+		else
+		{
+			i++;
+		}
+	}
+
+	if(encontrado)
+	{
+		return -1;
+	}
+	return i;
+}
+
+
 int encontrarPosicionEnProcesos(int pid)
 {
 	t_tablaDeProcesos* new;
@@ -1264,7 +1394,7 @@ int encontrarPosUso_cero_YModificado_uno(t_list *listaTablaPags)
 		}
 		else
 		{
-			list_replace_and_destroy_element(listaTablaPags, i, tablaPag_create(new->pagina, new->marco, 0, new->bitModificado), (void*) tablaPag_destroy);
+			list_replace_and_destroy_element(listaTablaPags, i, tablaPag_create(new->pagina, new->marco, 0, new->bitModificado, -1), (void*) tablaPag_destroy);
 
 			i++;
 		}
@@ -1450,14 +1580,14 @@ void mostrarMemoriaPpal()
 	}
 }
 
-static t_tablaPags *tablaPag_create(int pagina, int marco, int referencia, int modificado)
+static t_tablaPags *tablaPag_create(int pagina, int marco, int referencia, int modificado, char puntero)
 {
 	t_tablaPags *new = malloc(sizeof(t_tablaPags));
 	new->pagina = pagina;
 	new->marco = marco;
 	new->bitReferencia = referencia;
 	new->bitModificado = modificado;
-
+	new->puntero = puntero;
 	return new;
 }
 
