@@ -272,7 +272,7 @@ void recibirCjtoRespuestas(int pid1, int socketCliente)
 	int cpu=1;
 
 
-	while(respuesta.pid !=-1)
+	while(cpu !=-1)
 	{
 		recv(socketCliente,(void*)package, sizeof(respuesta.pid), 0);
 		memcpy(&respuesta.pid,package,sizeof(respuesta.pid));
