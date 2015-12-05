@@ -713,7 +713,6 @@ void planificador()
 		unaPersona->idHilo = idHiloCPU;
 		unaPersona->socketCliente = socketCliente;
 
-		printf("Hilo!!!!!!!!!\n");
 
 		if (strncmp(ALGORITMO_PLANIFICACION,"FIFO", 4) == 0)
 		{
