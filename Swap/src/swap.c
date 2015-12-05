@@ -150,7 +150,7 @@ int main()
 	debugMode = config_get_int_value(config, "DEBUG_MODE");
 
 
-	logger = log_create("logsTP", "Swap", 1, LOG_LEVEL_INFO);  //si debugMode = 1 muestra los logs por pantalla
+	logger = log_create("logsTP", "Swap", 0, LOG_LEVEL_INFO);  //si debugMode = 1 muestra los logs por pantalla
 
 	listaLibres = list_create();
 	listaOcupados = list_create();
