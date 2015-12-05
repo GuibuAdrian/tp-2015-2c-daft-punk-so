@@ -126,7 +126,7 @@ int main() {
 	signal(SIGUSR2, rutinaLimpiarMemoriaPrincipal);
 	signal(SIGPOLL, dumpMemoriaPrincipal);
 
-	logger = log_create("logsTP", "Memoria", 0, LOG_LEVEL_INFO);
+	logger = log_create("logsTP", "Memoria", 1, LOG_LEVEL_INFO);
 
 	t_config* config;
 
@@ -592,7 +592,7 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 				}
 				else
 				{
-					if(strncmp(politicaDeReemplazo, "CLOCK",3)==0)
+					if(strncmp(politicaDeReemplazo, "CLOCK",5)==0)
 					{
 						cambiarBitUsoYModificado(mensaje.pid, mensaje.pagina, mensaje.orden, marco);
 					}
@@ -897,8 +897,7 @@ void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU) {
 	mensajeSwap.pid = respuestaMemoria.pid;
 	mensajeSwap.orden = respuestaMemoria.orden;
 	mensajeSwap.pagina = respuestaMemoria.pagina;
-	mensajeSwap.contentSize = strlen(respuestaMemoria.content) + 1;
-	strcpy(mensajeSwap.content, respuestaMemoria.content);
+	mensajeSwap.contentSize = respuestaMemoria.contentSize;
 
 	void* mensajeSwapPackage = malloc(tamanioOrdenCPU(mensajeSwap));
 
@@ -916,7 +915,7 @@ void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU) {
 	memcpy(
 			mensajeSwapPackage + sizeof(mensajeSwap.pid)
 					+ sizeof(mensajeSwap.orden) + sizeof(mensajeSwap.pagina)
-					+ sizeof(mensajeSwap.contentSize), &mensajeSwap.content,
+					+ sizeof(mensajeSwap.contentSize), &respuestaMemoria.content,
 			mensajeSwap.contentSize);
 
 	send(socketCPU, mensajeSwapPackage, tamanioOrdenCPU(mensajeSwap), 0);

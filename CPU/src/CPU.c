@@ -116,7 +116,7 @@ int main()
 	listaCPUs = list_create();
 	listaRespuestas = list_create();
 
-	logger = log_create("logsTP", "CPU", 0, LOG_LEVEL_INFO);
+	logger = log_create("logsTP", "CPU", 1, LOG_LEVEL_INFO);
 
 	t_config* config;
 
@@ -516,7 +516,6 @@ void enviarRespuestaPlanificador(int socketPlanificador, int pid, int orden, int
 	respuestaPlan.orden = orden;
 	respuestaPlan.pagina = pagina;
 	respuestaPlan.contentSize = strlen(content)+1;
-	strcpy(respuestaPlan.content, content);
 
 	void* respuestaPackage = malloc(tamanioMensajeMemo(respuestaPlan));
 
@@ -524,7 +523,7 @@ void enviarRespuestaPlanificador(int socketPlanificador, int pid, int orden, int
 	memcpy(respuestaPackage+sizeof(respuestaPlan.pid), &respuestaPlan.orden, sizeof(respuestaPlan.orden));
 	memcpy(respuestaPackage+sizeof(respuestaPlan.pid)+sizeof(respuestaPlan.orden), &respuestaPlan.pagina, sizeof(respuestaPlan.pagina));
 	memcpy(respuestaPackage+sizeof(respuestaPlan.pid)+sizeof(respuestaPlan.orden)+sizeof(respuestaPlan.pagina), &respuestaPlan.contentSize, sizeof(respuestaPlan.contentSize));
-	memcpy(respuestaPackage+sizeof(respuestaPlan.pid)+sizeof(respuestaPlan.orden)+sizeof(respuestaPlan.pagina)+sizeof(respuestaPlan.contentSize), &respuestaPlan.content, respuestaPlan.contentSize);
+	memcpy(respuestaPackage+sizeof(respuestaPlan.pid)+sizeof(respuestaPlan.orden)+sizeof(respuestaPlan.pagina)+sizeof(respuestaPlan.contentSize), content, respuestaPlan.contentSize);
 
 	send(socketPlanificador, respuestaPackage, tamanioMensajeMemo(respuestaPlan), 0);
 

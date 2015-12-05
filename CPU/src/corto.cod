@@ -4,6 +4,4 @@ escribir 1 "Corto";
 escribir 2 "Corto";
 entrada-salida 5;
 leer 0;
-leer 1;
-leer 2;
 finalizar;

@@ -328,13 +328,13 @@ void recibirCjtoRespuestas(int pid1, int socketCliente)
 	time_t tiempoAhora;
 	double resp = pcb->tiempoResp;
 	time(&tiempoAhora);
-
+/*
 	struct tm* tm_info;
 
 	tm_info = localtime(&tiempoAhora);
 
-//	printf("Recibiendo mProc: %d, %d:%d\n", pid1, tm_info->tm_min, tm_info->tm_sec);
-
+	printf("Recibiendo mProc: %d, %d:%d\n", pid1, tm_info->tm_min, tm_info->tm_sec);
+*/
 	resp = resp + difftime(tiempoAhora, pcb->tiempoRespI);
 
 	list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcb->pid, pcb->path, pcb->puntero+1, 2,
@@ -378,6 +378,9 @@ int recibirRespuesta(int socketCliente)
 		list_remove_and_destroy_element(listaPCB, posPCB, (void*) PCB_destroy);
 		pthread_mutex_unlock(&mutexPCB);
 
+		free(package);
+		free(package2);
+
 		return -1;
 	}
 	if( (respuesta.mensajeSize)==0 )
@@ -412,27 +415,31 @@ int recibirRespuesta(int socketCliente)
 					pcb = buscarReadyEnPCB(respuesta.pid);
 					int posPCB =  encontrarPosicionEnPCB(pcb->pid);	//Encontrar pos en listaPCB
 
-					time_t ejecF, ejecI;
+					time_t ejecF;
+					//time_t ejecI;
 
-					ejecI = pcb->tiempoEjecI;
+					//ejecI = pcb->tiempoEjecI;
 
 					time(&ejecF);
-					struct tm * timeinfo;
+/*					struct tm * timeinfo;
 
 					timeinfo = localtime( &ejecI );
 
-				//	printf("\nInicio mProc:%d %d:%d\n", respuesta.pid, timeinfo->tm_min, timeinfo->tm_sec);
+					printf("\nInicio mProc:%d %d:%d\n", respuesta.pid, timeinfo->tm_min, timeinfo->tm_sec);
 
 					timeinfo = localtime( &ejecF );
 
-				//	printf("\nFIN mProc:%d %d:%d\n", respuesta.pid, timeinfo->tm_min, timeinfo->tm_sec);
-
+					printf("\nFIN mProc:%d %d:%d\n", respuesta.pid, timeinfo->tm_min, timeinfo->tm_sec);
+*/
 					double tiempoEjec = difftime(ejecF, pcb->tiempoEjecI);
 
 					printf("\nmProc:%d. Ejec :%.2f. Espera: %.2f. Resp: %.2f\n", respuesta.pid, tiempoEjec, pcb->tiempoEspe, pcb->tiempoResp);
 
 					list_remove_and_destroy_element(listaPCB, posPCB, (void*) PCB_destroy);
 					pthread_mutex_unlock(&mutexPCB);
+
+					free(package);
+					free(package2);
 
 					return -1;
 				}
@@ -487,8 +494,7 @@ int recibirRespuesta(int socketCliente)
 void ROUND_ROBIN(void* args)
 {
 	time_t tiempoAhora;
-	t_enviarProceso *mensaje;
-	mensaje = (t_enviarProceso*) args;
+	t_enviarProceso *mensaje = args;
 
 	int pidReady = mensaje->pcbReady;
 
@@ -498,7 +504,6 @@ void ROUND_ROBIN(void* args)
 	int socketCliente = mensaje->socketCliente;
 	int IO;
 	int puntero = pcbReady->puntero;
-	char* path = strdup(pcbReady->path);
 	time_t ejecI = pcbReady->tiempoEjecI;
 	time_t espeI = pcbReady->tiempoEspeI;
 	time_t respI = pcbReady->tiempoRespI;
@@ -506,19 +511,19 @@ void ROUND_ROBIN(void* args)
 	double resp = pcbReady->tiempoResp;
 
 	pthread_mutex_lock(&mutexPCB);
-	log_info(logger, "Correr %s, mProc: %d, en %d", path, pidReady, idHiloCPU);
+	log_info(logger, "Correr %s, mProc: %d, en %d", pcbReady->path, pidReady, idHiloCPU);
 
 	time(&tiempoAhora);
-	struct tm* tm_info;
+/*	struct tm* tm_info;
 
 	tm_info = localtime(&tiempoAhora);
-
+*/
 //	printf("Correr %s, mProc: %d, en %d %d:%d\n", path, pidReady, idHiloCPU, tm_info->tm_min, tm_info->tm_sec);
 
 	espe = espe + difftime(tiempoAhora, espeI);
 
 	int posPCB =  encontrarPosicionEnPCB(pidReady);	//Encontrar pos en listaPCB
-	list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, path, puntero, 1,
+	list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, pcbReady->path, puntero, 1,
 			ejecI, espeI ,espe, time(&respI), resp), (void*)PCB_destroy);
 
 	pthread_mutex_unlock(&mutexPCB);
@@ -551,7 +556,7 @@ void ROUND_ROBIN(void* args)
 		pthread_mutex_lock(&mutexPCB);
 		posPCB =  encontrarPosicionEnPCB(pidReady);	//Encontrar pos en listaPCB
 
-		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, path, puntero, 1,
+		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, pcbReady->path, puntero, 1,
 						pcbReady->tiempoEjecI, pcbReady->tiempoEspeI, pcbReady->tiempoEspe, pcbReady->tiempoRespI, pcbReady->tiempoResp), (void*)PCB_destroy);
 		pthread_mutex_unlock(&mutexPCB);
 
@@ -568,7 +573,7 @@ void ROUND_ROBIN(void* args)
 
 	if(Q>=QUANTUM)
 	{
-		log_info(logger,"FIN Q");
+		log_info(logger,"FIN Q: %d", pidReady);
 
 		int message = 2;
 		send(socketCPUCarga, &message, sizeof(int), 0);
@@ -583,7 +588,7 @@ void ROUND_ROBIN(void* args)
 		pcbReady = buscarReadyEnPCB(pidReady);
 		posPCB =  encontrarPosicionEnPCB(pidReady);	//Encontrar pos en listaPCB
 
-		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, path, puntero, 0,
+		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, pcbReady->path, puntero, 0,
 				pcbReady->tiempoEjecI, time(&pcbReady->tiempoEspeI), pcbReady->tiempoEspe, pcbReady->tiempoRespI, pcbReady->tiempoResp), (void*)PCB_destroy);
 
 		pthread_mutex_unlock(&mutexPCB);
@@ -591,15 +596,13 @@ void ROUND_ROBIN(void* args)
 		sem_post(&semPlani);
 	}
 
-	free(path);
-	free(args);
+	free(mensaje);
 }
 
 void FIFO(void *args)
 {
 	time_t tiempoAhora;
-	t_enviarProceso *mensaje;
-	mensaje = (t_enviarProceso*) args;
+	t_enviarProceso *mensaje = args;
 
 	int pidReady = mensaje->pcbReady;
 
@@ -609,7 +612,6 @@ void FIFO(void *args)
 	int socketCliente = mensaje->socketCliente;
 	int IO;
 	int puntero = pcbReady->puntero;
-	char* path = strdup(pcbReady->path);
 	time_t ejecI = pcbReady->tiempoEjecI;
 	time_t espeI = pcbReady->tiempoEspeI;
 	time_t respI = pcbReady->tiempoRespI;
@@ -617,19 +619,19 @@ void FIFO(void *args)
 	double resp = pcbReady->tiempoResp;
 
 	pthread_mutex_lock(&mutexPCB);
-	log_info(logger, "Correr %s, mProc: %d, en %d", path, pidReady, idHiloCPU);
+	log_info(logger, "Correr %s, mProc: %d, en %d", pcbReady->path, pidReady, idHiloCPU);
 
 	time(&tiempoAhora);
-	struct tm* tm_info;
+/*	struct tm* tm_info;
 
 	tm_info = localtime(&tiempoAhora);
-
+*/
 //	printf("Correr %s, mProc: %d, en %d %d:%d\n", path, pidReady, idHiloCPU, tm_info->tm_min, tm_info->tm_sec);
 
 	espe = espe + difftime(tiempoAhora, espeI);
 
 	int posPCB =  encontrarPosicionEnPCB(pidReady);	//Encontrar pos en listaPCB
-	list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, path, puntero, 1, ejecI, espeI ,espe, time(&respI), resp), (void*)PCB_destroy);
+	list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, pcbReady->path, puntero, 1, ejecI, espeI ,espe, time(&respI), resp), (void*)PCB_destroy);
 
 	pthread_mutex_unlock(&mutexPCB);
 
@@ -637,7 +639,7 @@ void FIFO(void *args)
 	{
 		pcbReady = buscarReadyEnPCB(pidReady);
 
-		IO = enviarPath(socketCliente, pidReady, path, pcbReady->puntero);
+		IO = enviarPath(socketCliente, pidReady, pcbReady->path, pcbReady->puntero);
 
 		if(IO>0)
 		{
@@ -657,7 +659,7 @@ void FIFO(void *args)
 
 		pthread_mutex_lock(&mutexPCB);
 		posPCB =  encontrarPosicionEnPCB(pidReady);	//Encontrar pos en listaPCB
-		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, path, puntero, 1,
+		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, pcbReady->path, puntero, 1,
 				pcbReady->tiempoEjecI, pcbReady->tiempoEspeI, pcbReady->tiempoEspe, pcbReady->tiempoRespI, pcbReady->tiempoResp), (void*)PCB_destroy);
 		pthread_mutex_unlock(&mutexPCB);
 
@@ -672,8 +674,7 @@ void FIFO(void *args)
 	pthread_mutex_unlock(&mutexCPU);
 	sem_post(&semCPU);
 
-	free(path);
-	free(args);
+	free(mensaje);
 }
 
 void planificador()
@@ -707,21 +708,20 @@ void planificador()
 
 		pthread_t hilo;
 
-		t_enviarProceso *unaPersona;	//Creo la estructura a enviar
-
-		unaPersona = (t_enviarProceso *)malloc(sizeof(t_enviarProceso));
+		t_enviarProceso *unaPersona = malloc(sizeof*unaPersona);
 		unaPersona->pcbReady = pidReady;
 		unaPersona->idHilo = idHiloCPU;
 		unaPersona->socketCliente = socketCliente;
 
+		printf("Hilo!!!!!!!!!\n");
 
 		if (strncmp(ALGORITMO_PLANIFICACION,"FIFO", 4) == 0)
 		{
-			pthread_create(&hilo, NULL, (void*) FIFO, (void*) unaPersona);
+			pthread_create(&hilo, NULL, (void*) FIFO, unaPersona);
 		}
 		else
 		{
-			pthread_create(&hilo, NULL, (void*) ROUND_ROBIN, (void*) unaPersona);
+			pthread_create(&hilo, NULL, (void*) ROUND_ROBIN, unaPersona);
 		}
 
 	}
@@ -768,8 +768,7 @@ int enviarPath(int socketCliente, int pid1, char * path, int punteroProx)
 {
 	t_pathMensaje unaPersona;
 	unaPersona.pid = pid1;
-	unaPersona.pathSize=strlen(path);
-	unaPersona.path = strdup(path);
+	unaPersona.pathSize=strlen(path)+1;
 	unaPersona.puntero = punteroProx;
 
 	void* package = malloc(tamanioEstructuraAEnviar(unaPersona));
@@ -777,13 +776,11 @@ int enviarPath(int socketCliente, int pid1, char * path, int punteroProx)
 	memcpy(package,&unaPersona.pid,sizeof(unaPersona.pid));
 	memcpy(package+sizeof(unaPersona.pid),&unaPersona.puntero,sizeof(unaPersona.puntero));
 	memcpy(package+sizeof(unaPersona.pid)+sizeof(unaPersona.puntero), &unaPersona.pathSize, sizeof(unaPersona.pathSize));
-	memcpy(package+sizeof(unaPersona.pid)+sizeof(unaPersona.puntero)+sizeof(unaPersona.pathSize), unaPersona.path, unaPersona.pathSize);
+	memcpy(package+sizeof(unaPersona.pid)+sizeof(unaPersona.puntero)+sizeof(unaPersona.pathSize), path, unaPersona.pathSize);
 
 	send(socketCliente,package, tamanioEstructuraAEnviar(unaPersona),0);
 
 	int IO = recibirRespuesta(socketCliente);
-
-	free(unaPersona.path);
 
 	free(package);
 
@@ -1118,7 +1115,7 @@ int tamanioready(t_ready mensaje)
 };
 int tamanioEstructuraAEnviar(t_pathMensaje unaPersona)
 {
-	return (sizeof(unaPersona.pid)+sizeof(unaPersona.puntero)+sizeof(unaPersona.pathSize)+strlen(unaPersona.path));
+	return (sizeof(unaPersona.pid)+sizeof(unaPersona.puntero)+sizeof(unaPersona.pathSize)+unaPersona.pathSize);
 };
 int tamanioRespuesta(t_respuesta unaRespuesta)
 {
