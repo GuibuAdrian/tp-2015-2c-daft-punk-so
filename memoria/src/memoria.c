@@ -96,12 +96,13 @@ int encontrarPosicionEnProcesos(int pid);
 int encontrarPosicionEnFallos(int pid);
 int encontrarPosicionEnTablaDePags(int pag, t_list *listaTablaPags);
 int encontrarPosReferencia(t_list *listaTablaPags, int ref);
-int encontrarPosUsoYModificado_cero(t_list *listaTablaPags);
-int encontrarPosUso_cero_YModificado_uno(t_list *listaTablaPags);
+int encontrarPosUsoYModificado_cero(t_list *listaTablaPags,int posicionPuntero);
+int encontrarPosUso_cero_YModificado_uno(t_list *listaTablaPags, int posicionPuntero);
 int encontrarPuntero(t_list *tablaDePaginas);
 
 void recibirConexiones1(char * PUERTO_CPU);
 t_orden_CPU enviarOrdenASwap(int pid, int orden, int paginas, char *content);
+t_tablaPags* clockMejorado(t_list* listaTablaPags, int pag, int pid, int orden);
 void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU);
 void procesarOrden(t_orden_CPU mensaje, int socketCPU);
 void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU);
@@ -322,13 +323,15 @@ t_tablaPags* clockMejorado(t_list* listaTablaPags, int pag, int pid, int orden)
 {
 	t_tablaPags* new2/*, *new3*/;
 	int posEncontrado = -1;
+	int posicionPuntero = 0;
 
 	while(posEncontrado == -1){
-		posEncontrado = encontrarPosUsoYModificado_cero(listaTablaPags);
+		posicionPuntero = encontrarPuntero(listaTablaPags);
+		posEncontrado = encontrarPosUsoYModificado_cero(listaTablaPags, posicionPuntero);
 
 		if(posEncontrado == -1)
 		{
-			posEncontrado = encontrarPosUso_cero_YModificado_uno(listaTablaPags);
+			posEncontrado = encontrarPosUso_cero_YModificado_uno(listaTablaPags, posicionPuntero);
 		}
 	}
 
@@ -1369,17 +1372,21 @@ int encontrarPosReferencia(t_list *listaTablaPags, int ref)
 	return i;
 }
 
-int encontrarPosUso_cero_YModificado_uno(t_list *listaTablaPags)
+int encontrarPosUso_cero_YModificado_uno(t_list *listaTablaPags, int posPuntero)
 {
+	printf("Arrancan las variable \n");
 	t_tablaPags *new;
-
 	int i=0;
 	int encontrado = -1;
+	i = posPuntero;
 
+	printf("Antes del While \n");
 	while( (i<list_size(listaTablaPags)) && encontrado!=0)
 	{
+		printf("obtenemos elemnto de la lista \n");
 		new = list_get(listaTablaPags,i);
 
+		printf("comparamos valores \n");
 		if( (new->bitReferencia == 0) && (new->bitModificado == 1) )
 		{
 			encontrado = 0;
@@ -1395,35 +1402,90 @@ int encontrarPosUso_cero_YModificado_uno(t_list *listaTablaPags)
 	if(encontrado == 0)
 	{
 		return i;
+	}else{
+		i=0;
+		while( (i<posPuntero) && encontrado!=0)
+		{
+			new = list_get(listaTablaPags,i);
+
+			if( (new->bitReferencia == 0) && (new->bitModificado == 1) )
+			{
+				encontrado = 0;
+			}
+			else
+			{
+				list_replace_and_destroy_element(listaTablaPags, i, tablaPag_create(new->pagina, new->marco, 0, new->bitModificado, -1), (void*) tablaPag_destroy);
+
+				i++;
+			}
+		}
+
+		if(encontrado == 0)
+		{
+			return i;
+		}
 	}
 
 	return -1;
 }
 
-int encontrarPosUsoYModificado_cero(t_list *listaTablaPags)
+int encontrarPosUsoYModificado_cero(t_list *listaTablaPags, int posPuntero)
 {
-	t_tablaPags *new;
-
-	int i=0;
+	printf("Arrancan las variable \n");
+	t_tablaPags *new = malloc(sizeof(t_tablaPags));
+	new->bitModificado = 0;
+	new->bitReferencia = 0;
+	new->marco = 0;
+	new->pagina = 0;
+	new->puntero = 0;
+	int i = 0;
 	int encontrado = -1;
+	i = posPuntero;
 
+	printf("Antes del While \n");
 	while( (i<list_size(listaTablaPags)) && encontrado!=0)
 	{
+		printf("obtenemos elemnto de la lista \n");
 		new = list_get(listaTablaPags,i);
+//TODO hay que ver porque rompe luego de hacer la asignacion a new de lo que devuelve list_get y luego trabajar con sus datos.
+		printf("%d \n",new->pagina);
 
+		printf("comparamos valores \n");
 		if( (new->bitReferencia == 0) && (new->bitModificado == 0) )
 		{
+			printf("Encontramos un valor");
 			encontrado = 0;
 		}
 		else
 		{
+			printf("Seguimos buscando");
 			i++;
 		}
 	}
 
 	if(encontrado == 0)
 	{
+		printf("Encontramos y enviamos uno YAY!");
 		return i;
+	}else{
+		i=0;
+		printf("Buscamos en lo que queda de la tabla");
+		while((i<posPuntero) && encontrado!=0){
+			new = list_get(listaTablaPags,i);
+
+			if( (new->bitReferencia == 0) && (new->bitModificado == 0) )
+			{
+				encontrado = 0;
+			}
+			else
+			{
+				i++;
+			}
+		}
+		if(encontrado == 0)
+		{
+			return i;
+		}
 	}
 
 	return -1;

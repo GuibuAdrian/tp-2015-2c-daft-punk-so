@@ -7975,3 +7975,724 @@
 [INFO] 17:00:30:172 Memoria/(6648:6649): Total de accesos: 14. Total de hits: 6. Tasa de aciertos: 0.43
 [INFO] 17:01:30:174 Memoria/(6648:6649): Total de accesos: 14. Total de hits: 6. Tasa de aciertos: 0.43
 [INFO] 17:02:30:174 Memoria/(6648:6649): Total de accesos: 14. Total de hits: 6. Tasa de aciertos: 0.43
+[INFO] 17:03:30:174 Memoria/(6648:6649): Total de accesos: 14. Total de hits: 6. Tasa de aciertos: 0.43
+[INFO] 09:47:43:582 Memoria/(2717:2717): Conectado a Swap
+[INFO] 09:47:54:448 Memoria/(2717:2717): Conectado al CPU, urra!
+[INFO] 09:47:54:448 Memoria/(2717:2717): Proceso 1 iniciado de 6 pags
+[INFO] 09:47:59:450 Memoria/(2717:2717): Conectado al CPU, urra!
+[INFO] 09:47:59:450 Memoria/(2717:2717): No esta en TLB
+[INFO] 09:47:59:450 Memoria/(2717:2717): mProc: 1, Pag: 2. No esta en memoria principal. Marco asignado: 0
+[INFO] 09:47:59:450 Memoria/(2717:2717): Solicitando mProc: 1 Pag: 2 a SWAP
+[INFO] 09:48:01:451 Memoria/(2717:2717): Proceso 1 Escribiendo: dos en pag: 2
+[INFO] 09:48:06:452 Memoria/(2717:2717): Conectado al CPU, urra!
+[INFO] 09:48:06:453 Memoria/(2717:2717): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 09:48:06:453 Memoria/(2717:2717): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 09:48:11:455 Memoria/(2717:2717): Conectado al CPU, urra!
+[INFO] 09:48:11:455 Memoria/(2717:2717): No esta en TLB
+[INFO] 09:48:11:455 Memoria/(2717:2717): mProc: 1, Pag: 3. No esta en memoria principal. Marco asignado: 1
+[INFO] 09:48:11:455 Memoria/(2717:2717): Solicitando mProc: 1 Pag: 3 a SWAP
+[INFO] 09:48:13:456 Memoria/(2717:2717): Proceso 1 Escribiendo: tres en pag: 3
+[INFO] 09:48:18:458 Memoria/(2717:2717): Conectado al CPU, urra!
+[INFO] 09:48:18:458 Memoria/(2717:2717): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 09:48:18:458 Memoria/(2717:2717): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 09:48:23:460 Memoria/(2717:2717): Conectado al CPU, urra!
+[INFO] 09:48:23:461 Memoria/(2717:2717): No esta en TLB
+[INFO] 09:48:23:461 Memoria/(2717:2717): mProc: 1, Pag: 1. No esta en memoria principal. Marco asignado: 2
+[INFO] 09:48:23:461 Memoria/(2717:2717): Solicitando mProc: 1 Pag: 1 a SWAP
+[INFO] 09:48:25:462 Memoria/(2717:2717): Proceso 1 Escribiendo: uno en pag: 1
+[INFO] 09:48:30:463 Memoria/(2717:2717): Conectado al CPU, urra!
+[INFO] 09:48:30:463 Memoria/(2717:2717): Proc: 1, Pag: 1. Esta en TLB
+[INFO] 09:48:30:463 Memoria/(2717:2717): Proceso 1 leyendo pag: 1. Contenido: uno
+[INFO] 09:48:35:465 Memoria/(2717:2717): Conectado al CPU, urra!
+[INFO] 09:48:35:465 Memoria/(2717:2717): No esta en TLB
+[INFO] 09:48:35:465 Memoria/(2717:2717): FIFO
+[INFO] 09:48:35:466 Memoria/(2717:2717): Reemplazando pag: 2, por pag: 5 en el marco: 0
+[INFO] 09:48:35:466 Memoria/(2717:2717): mProc: 1
+[INFO] 09:48:35:466 Memoria/(2717:2717): Pag  Marco  Posicion  Referencia  Modificado
+[INFO] 09:48:35:466 Memoria/(2717:2717):    3        1            1                -1                  -1
+[INFO] 09:48:35:466 Memoria/(2717:2717):    1        2            2                -1                  -1
+[INFO] 09:48:35:466 Memoria/(2717:2717):    5        0            3                 0                  -1
+[INFO] 09:48:35:466 Memoria/(2717:2717): mProc: 1, Pag: 5. No esta en memoria principal. Marco asignado: 0
+[INFO] 09:48:35:466 Memoria/(2717:2717): Solicitando mProc: 1 Pag: 5 a SWAP
+[INFO] 09:48:37:468 Memoria/(2717:2717): Proceso 1 Escribiendo: cinco en pag: 5
+[INFO] 09:48:42:469 Memoria/(2717:2717): Conectado al CPU, urra!
+[INFO] 09:48:42:469 Memoria/(2717:2717): No esta en TLB
+[INFO] 09:48:42:469 Memoria/(2717:2717): FIFO
+[INFO] 09:48:42:469 Memoria/(2717:2717): Reemplazando pag: 3, por pag: 2 en el marco: 1
+[INFO] 09:48:42:470 Memoria/(2717:2717): mProc: 1
+[INFO] 09:48:42:470 Memoria/(2717:2717): Pag  Marco  Posicion  Referencia  Modificado
+[INFO] 09:48:42:470 Memoria/(2717:2717):    1        2            1                -1                  -1
+[INFO] 09:48:42:470 Memoria/(2717:2717):    5        0            2                 0                  -1
+[INFO] 09:48:42:470 Memoria/(2717:2717):    2        1            3                 0                  -1
+[INFO] 09:48:42:470 Memoria/(2717:2717): mProc: 1, Pag: 2. No esta en memoria principal. Marco asignado: 1
+[INFO] 09:48:42:470 Memoria/(2717:2717): Solicitando mProc: 1 Pag: 2 a SWAP
+[INFO] 09:48:43:669 Memoria/(2717:2718): Total de accesos: 8. Total de hits: 3. Tasa de aciertos: 0.38
+[INFO] 09:48:44:471 Memoria/(2717:2717): Proceso 1 leyendo pag: 2, contenido: tres
+[INFO] 09:48:49:473 Memoria/(2717:2717): Conectado al CPU, urra!
+[INFO] 09:48:49:473 Memoria/(2717:2717): No esta en TLB
+[INFO] 09:48:49:473 Memoria/(2717:2717): FIFO
+[INFO] 09:48:49:473 Memoria/(2717:2717): Reemplazando pag: 1, por pag: 4 en el marco: 2
+[INFO] 09:48:49:473 Memoria/(2717:2717): mProc: 1
+[INFO] 09:48:49:473 Memoria/(2717:2717): Pag  Marco  Posicion  Referencia  Modificado
+[INFO] 09:48:49:473 Memoria/(2717:2717):    5        0            1                 0                  -1
+[INFO] 09:48:49:473 Memoria/(2717:2717):    2        1            2                 0                  -1
+[INFO] 09:48:49:473 Memoria/(2717:2717):    4        2            3                 0                  -1
+[INFO] 09:48:49:473 Memoria/(2717:2717): mProc: 1, Pag: 4. No esta en memoria principal. Marco asignado: 2
+[INFO] 09:48:49:473 Memoria/(2717:2717): Solicitando mProc: 1 Pag: 4 a SWAP
+[INFO] 09:48:51:475 Memoria/(2717:2717): Proceso 1 Escribiendo: cuatro en pag: 4
+[INFO] 09:48:56:477 Memoria/(2717:2717): Conectado al CPU, urra!
+[INFO] 09:48:56:477 Memoria/(2717:2717): Proc: 1, Pag: 5. Esta en TLB
+[INFO] 09:48:56:477 Memoria/(2717:2717): Proceso 1 leyendo pag: 5. Contenido: cinco
+[INFO] 09:49:01:478 Memoria/(2717:2717): Conectado al CPU, urra!
+[INFO] 09:49:01:479 Memoria/(2717:2717): No esta en TLB
+[INFO] 09:49:01:479 Memoria/(2717:2717): FIFO
+[INFO] 09:49:01:479 Memoria/(2717:2717): Reemplazando pag: 5, por pag: 3 en el marco: 0
+[INFO] 09:49:01:479 Memoria/(2717:2717): mProc: 1
+[INFO] 09:49:01:479 Memoria/(2717:2717): Pag  Marco  Posicion  Referencia  Modificado
+[INFO] 09:49:01:479 Memoria/(2717:2717):    2        1            1                 0                  -1
+[INFO] 09:49:01:479 Memoria/(2717:2717):    4        2            2                 0                  -1
+[INFO] 09:49:01:479 Memoria/(2717:2717):    3        0            3                 0                  -1
+[INFO] 09:49:01:479 Memoria/(2717:2717): mProc: 1, Pag: 3. No esta en memoria principal. Marco asignado: 0
+[INFO] 09:49:01:479 Memoria/(2717:2717): Solicitando mProc: 1 Pag: 3 a SWAP
+[INFO] 09:49:03:481 Memoria/(2717:2717): Proceso 1 leyendo pag: 3, contenido: cinco
+[INFO] 09:49:08:483 Memoria/(2717:2717): Conectado al CPU, urra!
+[INFO] 09:49:08:483 Memoria/(2717:2717): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 09:49:08:483 Memoria/(2717:2717): Proceso 1 Escribiendo: dos en pag: 2
+[INFO] 09:49:13:484 Memoria/(2717:2717): Conectado al CPU, urra!
+[INFO] 09:49:13:485 Memoria/(2717:2717): No esta en TLB
+[INFO] 09:49:13:485 Memoria/(2717:2717): FIFO
+[INFO] 09:49:13:485 Memoria/(2717:2717): Reemplazando pag: 2, por pag: 5 en el marco: 1
+[INFO] 09:49:13:485 Memoria/(2717:2717): mProc: 1
+[INFO] 09:49:13:485 Memoria/(2717:2717): Pag  Marco  Posicion  Referencia  Modificado
+[INFO] 09:49:13:485 Memoria/(2717:2717):    4        2            1                 0                  -1
+[INFO] 09:49:13:486 Memoria/(2717:2717):    3        0            2                 0                  -1
+[INFO] 09:49:13:486 Memoria/(2717:2717):    5        1            3                 0                  -1
+[INFO] 09:49:13:486 Memoria/(2717:2717): mProc: 1, Pag: 5. No esta en memoria principal. Marco asignado: 1
+[INFO] 09:49:13:486 Memoria/(2717:2717): Solicitando mProc: 1 Pag: 5 a SWAP
+[INFO] 09:49:15:487 Memoria/(2717:2717): Proceso 1 leyendo pag: 5, contenido: dos
+[INFO] 09:49:20:490 Memoria/(2717:2717): Conectado al CPU, urra!
+[INFO] 09:49:20:490 Memoria/(2717:2717): No esta en TLB
+[INFO] 09:49:20:490 Memoria/(2717:2717): FIFO
+[INFO] 09:49:20:490 Memoria/(2717:2717): Reemplazando pag: 4, por pag: 2 en el marco: 2
+[INFO] 09:49:20:490 Memoria/(2717:2717): mProc: 1
+[INFO] 09:49:20:490 Memoria/(2717:2717): Pag  Marco  Posicion  Referencia  Modificado
+[INFO] 09:49:20:491 Memoria/(2717:2717):    3        0            1                 0                  -1
+[INFO] 09:49:20:491 Memoria/(2717:2717):    5        1            2                 0                  -1
+[INFO] 09:49:20:491 Memoria/(2717:2717):    2        2            3                 0                  -1
+[INFO] 09:49:20:491 Memoria/(2717:2717): mProc: 1, Pag: 2. No esta en memoria principal. Marco asignado: 2
+[INFO] 09:49:20:491 Memoria/(2717:2717): Solicitando mProc: 1 Pag: 2 a SWAP
+[INFO] 09:49:22:491 Memoria/(2717:2717): Proceso 1 leyendo pag: 2, contenido: cuatro
+[INFO] 09:49:43:669 Memoria/(2717:2718): Total de accesos: 14. Total de hits: 5. Tasa de aciertos: 0.36
+[INFO] 09:49:52:534 Memoria/(2717:2717): Conectado al CPU, urra!
+[INFO] 09:49:52:535 Memoria/(2717:2717): Proceso 1 Finalizado. Accesos: 14 | Fallos: 9
+[INFO] 09:49:52:535 Memoria/(2717:2717): Proceso 1 finalizado
+[INFO] 09:50:19:379 Memoria/(2717:2717): ---------------------FIN---------------------
+[INFO] 09:58:49:403 Memoria/(2774:2774): Conectado a Swap
+[INFO] 09:58:57:371 Memoria/(2774:2774): Conectado al CPU, urra!
+[INFO] 09:58:57:371 Memoria/(2774:2774): Proceso 1 iniciado de 6 pags
+[INFO] 09:59:02:373 Memoria/(2774:2774): Conectado al CPU, urra!
+[INFO] 09:59:02:373 Memoria/(2774:2774): No esta en TLB
+[INFO] 09:59:02:373 Memoria/(2774:2774): mProc: 1, Pag: 2. No esta en memoria principal. Marco asignado: 0
+[INFO] 09:59:02:373 Memoria/(2774:2774): Solicitando mProc: 1 Pag: 2 a SWAP
+[INFO] 09:59:04:375 Memoria/(2774:2774): Proceso 1 Escribiendo: dos en pag: 2
+[INFO] 09:59:09:376 Memoria/(2774:2774): Conectado al CPU, urra!
+[INFO] 09:59:09:376 Memoria/(2774:2774): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 09:59:09:376 Memoria/(2774:2774): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 09:59:14:378 Memoria/(2774:2774): Conectado al CPU, urra!
+[INFO] 09:59:14:379 Memoria/(2774:2774): No esta en TLB
+[INFO] 09:59:14:379 Memoria/(2774:2774): mProc: 1, Pag: 3. No esta en memoria principal. Marco asignado: 1
+[INFO] 09:59:14:379 Memoria/(2774:2774): Solicitando mProc: 1 Pag: 3 a SWAP
+[INFO] 09:59:16:380 Memoria/(2774:2774): Proceso 1 Escribiendo: tres en pag: 3
+[INFO] 09:59:21:381 Memoria/(2774:2774): Conectado al CPU, urra!
+[INFO] 09:59:21:382 Memoria/(2774:2774): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 09:59:21:382 Memoria/(2774:2774): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 09:59:26:383 Memoria/(2774:2774): Conectado al CPU, urra!
+[INFO] 09:59:26:384 Memoria/(2774:2774): No esta en TLB
+[INFO] 09:59:26:384 Memoria/(2774:2774): mProc: 1, Pag: 1. No esta en memoria principal. Marco asignado: 2
+[INFO] 09:59:26:384 Memoria/(2774:2774): Solicitando mProc: 1 Pag: 1 a SWAP
+[INFO] 09:59:28:386 Memoria/(2774:2774): Proceso 1 Escribiendo: uno en pag: 1
+[INFO] 09:59:33:387 Memoria/(2774:2774): Conectado al CPU, urra!
+[INFO] 09:59:33:388 Memoria/(2774:2774): Proc: 1, Pag: 1. Esta en TLB
+[INFO] 09:59:33:388 Memoria/(2774:2774): Proceso 1 leyendo pag: 1. Contenido: uno
+[INFO] 09:59:38:389 Memoria/(2774:2774): Conectado al CPU, urra!
+[INFO] 09:59:38:390 Memoria/(2774:2774): No esta en TLB
+[INFO] 09:59:38:390 Memoria/(2774:2774): CLOCK MEJORADO
+[INFO] 09:59:38:390 Memoria/(2774:2774): Reemplazando pag: 2, por pag: 5 en el marco: 0
+[INFO] 09:59:38:390 Memoria/(2774:2774): mProc: 1
+[INFO] 09:59:38:390 Memoria/(2774:2774): Pag  Marco  Posicion  Referencia  Modificado
+[INFO] 09:59:38:390 Memoria/(2774:2774):    3        1            1                 0                   1
+[INFO] 09:59:38:390 Memoria/(2774:2774):    1        2            2                 0                   0
+[INFO] 09:59:38:390 Memoria/(2774:2774):    5        0            3                 1                   1
+[INFO] 09:59:38:390 Memoria/(2774:2774): mProc: 1, Pag: 5. No esta en memoria principal. Marco asignado: 0
+[INFO] 09:59:38:390 Memoria/(2774:2774): Solicitando mProc: 1 Pag: 5 a SWAP
+[INFO] 09:59:40:391 Memoria/(2774:2774): Proceso 1 Escribiendo: cinco en pag: 5
+[INFO] 09:59:45:393 Memoria/(2774:2774): Conectado al CPU, urra!
+[INFO] 09:59:45:393 Memoria/(2774:2774): No esta en TLB
+[INFO] 09:59:45:393 Memoria/(2774:2774): CLOCK MEJORADO
+[INFO] 09:59:45:393 Memoria/(2774:2774): Reemplazando pag: 1, por pag: 2 en el marco: 2
+[INFO] 09:59:45:393 Memoria/(2774:2774): mProc: 1
+[INFO] 09:59:45:393 Memoria/(2774:2774): Pag  Marco  Posicion  Referencia  Modificado
+[INFO] 09:59:45:393 Memoria/(2774:2774):    3        1            1                 0                   1
+[INFO] 09:59:45:393 Memoria/(2774:2774):    5        0            2                 1                   1
+[INFO] 09:59:45:393 Memoria/(2774:2774):    2        2            3                 1                   0
+[INFO] 09:59:45:393 Memoria/(2774:2774): mProc: 1, Pag: 2. No esta en memoria principal. Marco asignado: 2
+[INFO] 09:59:45:393 Memoria/(2774:2774): Solicitando mProc: 1 Pag: 2 a SWAP
+[INFO] 09:59:47:396 Memoria/(2774:2774): Proceso 1 leyendo pag: 2, contenido: uno
+[INFO] 09:59:49:403 Memoria/(2774:2775): Total de accesos: 8. Total de hits: 3. Tasa de aciertos: 0.38
+[INFO] 09:59:52:398 Memoria/(2774:2774): Conectado al CPU, urra!
+[INFO] 09:59:52:398 Memoria/(2774:2774): No esta en TLB
+[INFO] 09:59:52:398 Memoria/(2774:2774): CLOCK MEJORADO
+[INFO] 09:59:52:398 Memoria/(2774:2774): Reemplazando pag: 3, por pag: 4 en el marco: 1
+[INFO] 09:59:52:399 Memoria/(2774:2774): mProc: 1
+[INFO] 09:59:52:399 Memoria/(2774:2774): Pag  Marco  Posicion  Referencia  Modificado
+[INFO] 09:59:52:399 Memoria/(2774:2774):    5        0            1                 1                   1
+[INFO] 09:59:52:399 Memoria/(2774:2774):    2        2            2                 1                   0
+[INFO] 09:59:52:399 Memoria/(2774:2774):    4        1            3                 1                   1
+[INFO] 09:59:52:399 Memoria/(2774:2774): mProc: 1, Pag: 4. No esta en memoria principal. Marco asignado: 1
+[INFO] 09:59:52:399 Memoria/(2774:2774): Solicitando mProc: 1 Pag: 4 a SWAP
+[INFO] 09:59:54:402 Memoria/(2774:2774): Proceso 1 Escribiendo: cuatro en pag: 4
+[INFO] 09:59:59:404 Memoria/(2774:2774): Conectado al CPU, urra!
+[INFO] 09:59:59:404 Memoria/(2774:2774): Proc: 1, Pag: 5. Esta en TLB
+[INFO] 09:59:59:404 Memoria/(2774:2774): Proceso 1 leyendo pag: 5. Contenido: cinco
+[INFO] 10:00:04:405 Memoria/(2774:2774): Conectado al CPU, urra!
+[INFO] 10:00:04:406 Memoria/(2774:2774): No esta en TLB
+[INFO] 10:00:04:406 Memoria/(2774:2774): CLOCK MEJORADO
+[INFO] 10:00:04:406 Memoria/(2774:2774): Reemplazando pag: 5, por pag: 3 en el marco: 0
+[INFO] 10:00:04:406 Memoria/(2774:2774): mProc: 1
+[INFO] 10:00:04:406 Memoria/(2774:2774): Pag  Marco  Posicion  Referencia  Modificado
+[INFO] 10:00:04:406 Memoria/(2774:2774):    2        2            1                 0                   0
+[INFO] 10:00:04:406 Memoria/(2774:2774):    4        1            2                 0                   1
+[INFO] 10:00:04:406 Memoria/(2774:2774):    3        0            3                 1                   0
+[INFO] 10:00:04:406 Memoria/(2774:2774): mProc: 1, Pag: 3. No esta en memoria principal. Marco asignado: 0
+[INFO] 10:00:04:406 Memoria/(2774:2774): Solicitando mProc: 1 Pag: 3 a SWAP
+[INFO] 10:00:06:407 Memoria/(2774:2774): Proceso 1 leyendo pag: 3, contenido: cinco
+[INFO] 10:00:11:408 Memoria/(2774:2774): Conectado al CPU, urra!
+[INFO] 10:00:11:408 Memoria/(2774:2774): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 10:00:11:408 Memoria/(2774:2774): Proceso 1 Escribiendo: dos en pag: 2
+[INFO] 10:00:16:410 Memoria/(2774:2774): Conectado al CPU, urra!
+[INFO] 10:00:16:410 Memoria/(2774:2774): No esta en TLB
+[INFO] 10:00:16:410 Memoria/(2774:2774): CLOCK MEJORADO
+[INFO] 10:00:16:410 Memoria/(2774:2774): Reemplazando pag: 4, por pag: 5 en el marco: 1
+[INFO] 10:00:16:410 Memoria/(2774:2774): mProc: 1
+[INFO] 10:00:16:410 Memoria/(2774:2774): Pag  Marco  Posicion  Referencia  Modificado
+[INFO] 10:00:16:410 Memoria/(2774:2774):    2        2            1                 0                   1
+[INFO] 10:00:16:410 Memoria/(2774:2774):    3        0            2                 1                   0
+[INFO] 10:00:16:410 Memoria/(2774:2774):    5        1            3                 1                   0
+[INFO] 10:00:16:410 Memoria/(2774:2774): mProc: 1, Pag: 5. No esta en memoria principal. Marco asignado: 1
+[INFO] 10:00:16:410 Memoria/(2774:2774): Solicitando mProc: 1 Pag: 5 a SWAP
+[INFO] 10:00:18:411 Memoria/(2774:2774): Proceso 1 leyendo pag: 5, contenido: cuatro
+[INFO] 10:00:23:413 Memoria/(2774:2774): Conectado al CPU, urra!
+[INFO] 10:00:23:413 Memoria/(2774:2774): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 10:00:23:413 Memoria/(2774:2774): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 10:00:49:403 Memoria/(2774:2775): Total de accesos: 14. Total de hits: 6. Tasa de aciertos: 0.43
+[INFO] 10:00:53:457 Memoria/(2774:2774): Conectado al CPU, urra!
+[INFO] 10:00:53:457 Memoria/(2774:2774): Proceso 1 Finalizado. Accesos: 14 | Fallos: 8
+[INFO] 10:00:53:457 Memoria/(2774:2774): Proceso 1 finalizado
+[INFO] 10:01:49:406 Memoria/(2774:2775): Total de accesos: 14. Total de hits: 6. Tasa de aciertos: 0.43
+[INFO] 10:02:49:406 Memoria/(2774:2775): Total de accesos: 14. Total de hits: 6. Tasa de aciertos: 0.43
+[INFO] 10:03:49:407 Memoria/(2774:2775): Total de accesos: 14. Total de hits: 6. Tasa de aciertos: 0.43
+[INFO] 10:04:49:407 Memoria/(2774:2775): Total de accesos: 14. Total de hits: 6. Tasa de aciertos: 0.43
+[INFO] 10:05:49:408 Memoria/(2774:2775): Total de accesos: 14. Total de hits: 6. Tasa de aciertos: 0.43
+[INFO] 10:06:49:408 Memoria/(2774:2775): Total de accesos: 14. Total de hits: 6. Tasa de aciertos: 0.43
+[INFO] 10:07:49:409 Memoria/(2774:2775): Total de accesos: 14. Total de hits: 6. Tasa de aciertos: 0.43
+[INFO] 10:12:45:10 Memoria/(2234:2234): Conectado a Swap
+[INFO] 10:12:52:222 Memoria/(2234:2234): Conectado al CPU, urra!
+[INFO] 10:12:52:222 Memoria/(2234:2234): Proceso 1 iniciado de 6 pags
+[INFO] 10:12:57:224 Memoria/(2234:2234): Conectado al CPU, urra!
+[INFO] 10:12:57:224 Memoria/(2234:2234): No esta en TLB
+[INFO] 10:12:57:224 Memoria/(2234:2234): mProc: 1, Pag: 2. No esta en memoria principal. Marco asignado: 0
+[INFO] 10:12:57:224 Memoria/(2234:2234): Solicitando mProc: 1 Pag: 2 a SWAP
+[INFO] 10:12:59:228 Memoria/(2234:2234): Proceso 1 Escribiendo: dos en pag: 2
+[INFO] 10:13:04:229 Memoria/(2234:2234): Conectado al CPU, urra!
+[INFO] 10:13:04:229 Memoria/(2234:2234): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 10:13:04:229 Memoria/(2234:2234): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 10:13:09:231 Memoria/(2234:2234): Conectado al CPU, urra!
+[INFO] 10:13:09:232 Memoria/(2234:2234): No esta en TLB
+[INFO] 10:13:09:232 Memoria/(2234:2234): mProc: 1, Pag: 3. No esta en memoria principal. Marco asignado: 1
+[INFO] 10:13:09:232 Memoria/(2234:2234): Solicitando mProc: 1 Pag: 3 a SWAP
+[INFO] 10:13:11:233 Memoria/(2234:2234): Proceso 1 Escribiendo: tres en pag: 3
+[INFO] 10:13:16:234 Memoria/(2234:2234): Conectado al CPU, urra!
+[INFO] 10:13:16:234 Memoria/(2234:2234): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 10:13:16:234 Memoria/(2234:2234): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 10:13:21:237 Memoria/(2234:2234): Conectado al CPU, urra!
+[INFO] 10:13:21:237 Memoria/(2234:2234): No esta en TLB
+[INFO] 10:13:21:238 Memoria/(2234:2234): mProc: 1, Pag: 1. No esta en memoria principal. Marco asignado: 2
+[INFO] 10:13:21:238 Memoria/(2234:2234): Solicitando mProc: 1 Pag: 1 a SWAP
+[INFO] 10:13:23:239 Memoria/(2234:2234): Proceso 1 Escribiendo: uno en pag: 1
+[INFO] 10:13:28:243 Memoria/(2234:2234): Conectado al CPU, urra!
+[INFO] 10:13:28:243 Memoria/(2234:2234): Proc: 1, Pag: 1. Esta en TLB
+[INFO] 10:13:28:243 Memoria/(2234:2234): Proceso 1 leyendo pag: 1. Contenido: uno
+[INFO] 10:13:33:247 Memoria/(2234:2234): Conectado al CPU, urra!
+[INFO] 10:13:33:248 Memoria/(2234:2234): No esta en TLB
+[INFO] 10:13:33:248 Memoria/(2234:2234): CLOCK MEJORADO
+[INFO] 10:13:33:248 Memoria/(2234:2234): Reemplazando pag: 2, por pag: 5 en el marco: 0
+[INFO] 10:13:33:248 Memoria/(2234:2234): mProc: 1
+[INFO] 10:13:33:248 Memoria/(2234:2234): Pag  Marco  Posicion  Referencia  Modificado
+[INFO] 10:13:33:248 Memoria/(2234:2234):    3        1            1                 0                   1
+[INFO] 10:13:33:248 Memoria/(2234:2234):    1        2            2                 0                   0
+[INFO] 10:13:33:248 Memoria/(2234:2234):    5        0            3                 1                   1
+[INFO] 10:13:33:248 Memoria/(2234:2234): mProc: 1, Pag: 5. No esta en memoria principal. Marco asignado: 0
+[INFO] 10:13:33:248 Memoria/(2234:2234): Solicitando mProc: 1 Pag: 5 a SWAP
+[INFO] 10:13:35:249 Memoria/(2234:2234): Proceso 1 Escribiendo: cinco en pag: 5
+[INFO] 10:13:40:250 Memoria/(2234:2234): Conectado al CPU, urra!
+[INFO] 10:13:40:251 Memoria/(2234:2234): No esta en TLB
+[INFO] 10:13:40:251 Memoria/(2234:2234): CLOCK MEJORADO
+[INFO] 10:13:40:251 Memoria/(2234:2234): Reemplazando pag: 1, por pag: 2 en el marco: 2
+[INFO] 10:13:40:251 Memoria/(2234:2234): mProc: 1
+[INFO] 10:13:40:251 Memoria/(2234:2234): Pag  Marco  Posicion  Referencia  Modificado
+[INFO] 10:13:40:251 Memoria/(2234:2234):    3        1            1                 0                   1
+[INFO] 10:13:40:251 Memoria/(2234:2234):    5        0            2                 1                   1
+[INFO] 10:13:40:251 Memoria/(2234:2234):    2        2            3                 1                   0
+[INFO] 10:13:40:251 Memoria/(2234:2234): mProc: 1, Pag: 2. No esta en memoria principal. Marco asignado: 2
+[INFO] 10:13:40:251 Memoria/(2234:2234): Solicitando mProc: 1 Pag: 2 a SWAP
+[INFO] 10:13:42:253 Memoria/(2234:2234): Proceso 1 leyendo pag: 2, contenido: uno
+[INFO] 10:13:45:42 Memoria/(2234:2235): Total de accesos: 8. Total de hits: 3. Tasa de aciertos: 0.38
+[INFO] 10:13:47:255 Memoria/(2234:2234): Conectado al CPU, urra!
+[INFO] 10:13:47:255 Memoria/(2234:2234): No esta en TLB
+[INFO] 10:13:47:255 Memoria/(2234:2234): CLOCK MEJORADO
+[INFO] 10:13:47:255 Memoria/(2234:2234): Reemplazando pag: 3, por pag: 4 en el marco: 1
+[INFO] 10:13:47:255 Memoria/(2234:2234): mProc: 1
+[INFO] 10:13:47:255 Memoria/(2234:2234): Pag  Marco  Posicion  Referencia  Modificado
+[INFO] 10:13:47:255 Memoria/(2234:2234):    5        0            1                 1                   1
+[INFO] 10:13:47:255 Memoria/(2234:2234):    2        2            2                 1                   0
+[INFO] 10:13:47:256 Memoria/(2234:2234):    4        1            3                 1                   1
+[INFO] 10:13:47:256 Memoria/(2234:2234): mProc: 1, Pag: 4. No esta en memoria principal. Marco asignado: 1
+[INFO] 10:13:47:256 Memoria/(2234:2234): Solicitando mProc: 1 Pag: 4 a SWAP
+[INFO] 10:13:49:257 Memoria/(2234:2234): Proceso 1 Escribiendo: cuatro en pag: 4
+[INFO] 10:13:54:259 Memoria/(2234:2234): Conectado al CPU, urra!
+[INFO] 10:13:54:260 Memoria/(2234:2234): Proc: 1, Pag: 5. Esta en TLB
+[INFO] 10:13:54:260 Memoria/(2234:2234): Proceso 1 leyendo pag: 5. Contenido: cinco
+[INFO] 10:13:59:262 Memoria/(2234:2234): Conectado al CPU, urra!
+[INFO] 10:13:59:263 Memoria/(2234:2234): No esta en TLB
+[INFO] 10:13:59:263 Memoria/(2234:2234): CLOCK MEJORADO
+[INFO] 10:13:59:263 Memoria/(2234:2234): Reemplazando pag: 5, por pag: 3 en el marco: 0
+[INFO] 10:13:59:263 Memoria/(2234:2234): mProc: 1
+[INFO] 10:13:59:263 Memoria/(2234:2234): Pag  Marco  Posicion  Referencia  Modificado
+[INFO] 10:13:59:263 Memoria/(2234:2234):    2        2            1                 0                   0
+[INFO] 10:13:59:263 Memoria/(2234:2234):    4        1            2                 0                   1
+[INFO] 10:13:59:263 Memoria/(2234:2234):    3        0            3                 1                   0
+[INFO] 10:13:59:263 Memoria/(2234:2234): mProc: 1, Pag: 3. No esta en memoria principal. Marco asignado: 0
+[INFO] 10:13:59:263 Memoria/(2234:2234): Solicitando mProc: 1 Pag: 3 a SWAP
+[INFO] 10:14:01:265 Memoria/(2234:2234): Proceso 1 leyendo pag: 3, contenido: cinco
+[INFO] 10:14:06:266 Memoria/(2234:2234): Conectado al CPU, urra!
+[INFO] 10:14:06:266 Memoria/(2234:2234): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 10:14:06:266 Memoria/(2234:2234): Proceso 1 Escribiendo: dos en pag: 2
+[INFO] 10:14:11:268 Memoria/(2234:2234): Conectado al CPU, urra!
+[INFO] 10:14:11:268 Memoria/(2234:2234): No esta en TLB
+[INFO] 10:14:11:269 Memoria/(2234:2234): CLOCK MEJORADO
+[INFO] 10:14:11:269 Memoria/(2234:2234): Reemplazando pag: 4, por pag: 5 en el marco: 1
+[INFO] 10:14:11:269 Memoria/(2234:2234): mProc: 1
+[INFO] 10:14:11:269 Memoria/(2234:2234): Pag  Marco  Posicion  Referencia  Modificado
+[INFO] 10:14:11:269 Memoria/(2234:2234):    2        2            1                 0                   1
+[INFO] 10:14:11:269 Memoria/(2234:2234):    3        0            2                 1                   0
+[INFO] 10:14:11:269 Memoria/(2234:2234):    5        1            3                 1                   0
+[INFO] 10:14:11:269 Memoria/(2234:2234): mProc: 1, Pag: 5. No esta en memoria principal. Marco asignado: 1
+[INFO] 10:14:11:269 Memoria/(2234:2234): Solicitando mProc: 1 Pag: 5 a SWAP
+[INFO] 10:14:13:270 Memoria/(2234:2234): Proceso 1 leyendo pag: 5, contenido: cuatro
+[INFO] 10:14:18:271 Memoria/(2234:2234): Conectado al CPU, urra!
+[INFO] 10:14:18:271 Memoria/(2234:2234): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 10:14:18:271 Memoria/(2234:2234): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 10:14:45:44 Memoria/(2234:2235): Total de accesos: 14. Total de hits: 6. Tasa de aciertos: 0.43
+[INFO] 10:14:48:319 Memoria/(2234:2234): Conectado al CPU, urra!
+[INFO] 10:14:48:319 Memoria/(2234:2234): Proceso 1 Finalizado. Accesos: 14 | Fallos: 8
+[INFO] 10:14:48:319 Memoria/(2234:2234): Proceso 1 finalizado
+[INFO] 10:15:45:44 Memoria/(2234:2235): Total de accesos: 14. Total de hits: 6. Tasa de aciertos: 0.43
+[INFO] 10:16:45:44 Memoria/(2234:2235): Total de accesos: 14. Total de hits: 6. Tasa de aciertos: 0.43
+[INFO] 10:17:45:45 Memoria/(2234:2235): Total de accesos: 14. Total de hits: 6. Tasa de aciertos: 0.43
+[INFO] 10:18:21:328 Memoria/(2234:2234): ---------------------FIN---------------------
+[INFO] 10:58:15:105 Memoria/(3248:3248): Conectado a Swap
+[INFO] 10:58:20:449 Memoria/(3248:3248): Conectado al CPU, urra!
+[INFO] 10:58:20:449 Memoria/(3248:3248): Proceso 1 iniciado de 6 pags
+[INFO] 10:58:25:451 Memoria/(3248:3248): Conectado al CPU, urra!
+[INFO] 10:58:25:452 Memoria/(3248:3248): No esta en TLB
+[INFO] 10:58:25:452 Memoria/(3248:3248): mProc: 1, Pag: 2. No esta en memoria principal. Marco asignado: 0
+[INFO] 10:58:25:452 Memoria/(3248:3248): Solicitando mProc: 1 Pag: 2 a SWAP
+[INFO] 10:58:27:454 Memoria/(3248:3248): Proceso 1 Escribiendo: dos en pag: 2
+[INFO] 10:58:32:457 Memoria/(3248:3248): Conectado al CPU, urra!
+[INFO] 10:58:32:457 Memoria/(3248:3248): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 10:58:32:457 Memoria/(3248:3248): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 10:58:37:458 Memoria/(3248:3248): Conectado al CPU, urra!
+[INFO] 10:58:37:458 Memoria/(3248:3248): No esta en TLB
+[INFO] 10:58:37:458 Memoria/(3248:3248): mProc: 1, Pag: 3. No esta en memoria principal. Marco asignado: 1
+[INFO] 10:58:37:458 Memoria/(3248:3248): Solicitando mProc: 1 Pag: 3 a SWAP
+[INFO] 10:58:39:460 Memoria/(3248:3248): Proceso 1 Escribiendo: tres en pag: 3
+[INFO] 10:58:44:461 Memoria/(3248:3248): Conectado al CPU, urra!
+[INFO] 10:58:44:461 Memoria/(3248:3248): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 10:58:44:461 Memoria/(3248:3248): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 10:58:49:463 Memoria/(3248:3248): Conectado al CPU, urra!
+[INFO] 10:58:49:464 Memoria/(3248:3248): No esta en TLB
+[INFO] 10:58:49:464 Memoria/(3248:3248): mProc: 1, Pag: 1. No esta en memoria principal. Marco asignado: 2
+[INFO] 10:58:49:464 Memoria/(3248:3248): Solicitando mProc: 1 Pag: 1 a SWAP
+[INFO] 10:58:51:466 Memoria/(3248:3248): Proceso 1 Escribiendo: uno en pag: 1
+[INFO] 10:58:56:468 Memoria/(3248:3248): Conectado al CPU, urra!
+[INFO] 10:58:56:468 Memoria/(3248:3248): Proc: 1, Pag: 1. Esta en TLB
+[INFO] 10:58:56:468 Memoria/(3248:3248): Proceso 1 leyendo pag: 1. Contenido: uno
+[INFO] 10:59:01:470 Memoria/(3248:3248): Conectado al CPU, urra!
+[INFO] 10:59:01:470 Memoria/(3248:3248): No esta en TLB
+[INFO] 10:59:01:470 Memoria/(3248:3248): CLOCK MEJORADO
+[INFO] 11:01:08:687 Memoria/(3304:3304): Conectado a Swap
+[INFO] 11:01:26:861 Memoria/(3304:3304): Conectado al CPU, urra!
+[INFO] 11:01:26:880 Memoria/(3304:3304): Proceso 1 iniciado de 6 pags
+[INFO] 11:01:31:896 Memoria/(3304:3304): Conectado al CPU, urra!
+[INFO] 11:01:31:898 Memoria/(3304:3304): No esta en TLB
+[INFO] 11:01:31:924 Memoria/(3304:3304): mProc: 1, Pag: 2. No esta en memoria principal. Marco asignado: 0
+[INFO] 11:01:31:934 Memoria/(3304:3304): Solicitando mProc: 1 Pag: 2 a SWAP
+[INFO] 11:01:33:949 Memoria/(3304:3304): Proceso 1 Escribiendo: dos en pag: 2
+[INFO] 11:01:38:954 Memoria/(3304:3304): Conectado al CPU, urra!
+[INFO] 11:01:38:958 Memoria/(3304:3304): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 11:01:38:985 Memoria/(3304:3304): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 11:01:43:991 Memoria/(3304:3304): Conectado al CPU, urra!
+[INFO] 11:01:43:992 Memoria/(3304:3304): No esta en TLB
+[INFO] 11:01:43:999 Memoria/(3304:3304): mProc: 1, Pag: 3. No esta en memoria principal. Marco asignado: 1
+[INFO] 11:01:43:0 Memoria/(3304:3304): Solicitando mProc: 1 Pag: 3 a SWAP
+[INFO] 11:01:45:3 Memoria/(3304:3304): Proceso 1 Escribiendo: tres en pag: 3
+[INFO] 11:01:51:6 Memoria/(3304:3304): Conectado al CPU, urra!
+[INFO] 11:01:51:6 Memoria/(3304:3304): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 11:01:51:8 Memoria/(3304:3304): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 11:01:56:9 Memoria/(3304:3304): Conectado al CPU, urra!
+[INFO] 11:01:56:10 Memoria/(3304:3304): No esta en TLB
+[INFO] 11:01:56:13 Memoria/(3304:3304): mProc: 1, Pag: 1. No esta en memoria principal. Marco asignado: 2
+[INFO] 11:01:56:15 Memoria/(3304:3304): Solicitando mProc: 1 Pag: 1 a SWAP
+[INFO] 11:01:58:17 Memoria/(3304:3304): Proceso 1 Escribiendo: uno en pag: 1
+[INFO] 11:02:03:18 Memoria/(3304:3304): Conectado al CPU, urra!
+[INFO] 11:02:03:19 Memoria/(3304:3304): Proc: 1, Pag: 1. Esta en TLB
+[INFO] 11:02:03:21 Memoria/(3304:3304): Proceso 1 leyendo pag: 1. Contenido: uno
+[INFO] 11:02:08:25 Memoria/(3304:3304): Conectado al CPU, urra!
+[INFO] 11:02:08:26 Memoria/(3304:3304): No esta en TLB
+[INFO] 11:02:08:31 Memoria/(3304:3304): CLOCK MEJORADO
+[INFO] 11:06:16:686 Memoria/(3435:3435): Conectado a Swap
+[INFO] 11:06:21:492 Memoria/(3435:3435): Conectado al CPU, urra!
+[INFO] 11:06:21:492 Memoria/(3435:3435): Proceso 1 iniciado de 6 pags
+[INFO] 11:06:26:493 Memoria/(3435:3435): Conectado al CPU, urra!
+[INFO] 11:06:26:494 Memoria/(3435:3435): No esta en TLB
+[INFO] 11:06:26:494 Memoria/(3435:3435): mProc: 1, Pag: 2. No esta en memoria principal. Marco asignado: 0
+[INFO] 11:06:26:494 Memoria/(3435:3435): Solicitando mProc: 1 Pag: 2 a SWAP
+[INFO] 11:06:28:496 Memoria/(3435:3435): Proceso 1 Escribiendo: dos en pag: 2
+[INFO] 11:06:33:498 Memoria/(3435:3435): Conectado al CPU, urra!
+[INFO] 11:06:33:544 Memoria/(3435:3435): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 11:06:33:544 Memoria/(3435:3435): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 11:06:38:545 Memoria/(3435:3435): Conectado al CPU, urra!
+[INFO] 11:06:38:545 Memoria/(3435:3435): No esta en TLB
+[INFO] 11:06:38:545 Memoria/(3435:3435): mProc: 1, Pag: 3. No esta en memoria principal. Marco asignado: 1
+[INFO] 11:06:38:546 Memoria/(3435:3435): Solicitando mProc: 1 Pag: 3 a SWAP
+[INFO] 11:06:40:548 Memoria/(3435:3435): Proceso 1 Escribiendo: tres en pag: 3
+[INFO] 11:06:45:549 Memoria/(3435:3435): Conectado al CPU, urra!
+[INFO] 11:06:45:550 Memoria/(3435:3435): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 11:06:45:550 Memoria/(3435:3435): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 11:06:50:551 Memoria/(3435:3435): Conectado al CPU, urra!
+[INFO] 11:06:50:551 Memoria/(3435:3435): No esta en TLB
+[INFO] 11:06:50:551 Memoria/(3435:3435): mProc: 1, Pag: 1. No esta en memoria principal. Marco asignado: 2
+[INFO] 11:06:50:551 Memoria/(3435:3435): Solicitando mProc: 1 Pag: 1 a SWAP
+[INFO] 11:06:52:552 Memoria/(3435:3435): Proceso 1 Escribiendo: uno en pag: 1
+[INFO] 11:06:57:554 Memoria/(3435:3435): Conectado al CPU, urra!
+[INFO] 11:06:57:554 Memoria/(3435:3435): Proc: 1, Pag: 1. Esta en TLB
+[INFO] 11:06:57:554 Memoria/(3435:3435): Proceso 1 leyendo pag: 1. Contenido: uno
+[INFO] 11:07:02:556 Memoria/(3435:3435): Conectado al CPU, urra!
+[INFO] 11:07:02:557 Memoria/(3435:3435): No esta en TLB
+[INFO] 11:07:02:557 Memoria/(3435:3435): CLOCK MEJORADO
+[INFO] 11:18:33:287 Memoria/(3739:3739): Conectado a Swap
+[INFO] 11:18:37:461 Memoria/(3739:3739): Conectado al CPU, urra!
+[INFO] 11:18:37:477 Memoria/(3739:3739): Proceso 1 iniciado de 6 pags
+[INFO] 11:18:42:490 Memoria/(3739:3739): Conectado al CPU, urra!
+[INFO] 11:18:42:493 Memoria/(3739:3739): No esta en TLB
+[INFO] 11:18:42:518 Memoria/(3739:3739): mProc: 1, Pag: 2. No esta en memoria principal. Marco asignado: 0
+[INFO] 11:18:42:526 Memoria/(3739:3739): Solicitando mProc: 1 Pag: 2 a SWAP
+[INFO] 11:18:44:540 Memoria/(3739:3739): Proceso 1 Escribiendo: dos en pag: 2
+[INFO] 11:18:49:545 Memoria/(3739:3739): Conectado al CPU, urra!
+[INFO] 11:18:49:546 Memoria/(3739:3739): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 11:18:49:552 Memoria/(3739:3739): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 11:18:54:554 Memoria/(3739:3739): Conectado al CPU, urra!
+[INFO] 11:18:54:556 Memoria/(3739:3739): No esta en TLB
+[INFO] 11:18:54:562 Memoria/(3739:3739): mProc: 1, Pag: 3. No esta en memoria principal. Marco asignado: 1
+[INFO] 11:18:54:564 Memoria/(3739:3739): Solicitando mProc: 1 Pag: 3 a SWAP
+[INFO] 11:18:56:567 Memoria/(3739:3739): Proceso 1 Escribiendo: tres en pag: 3
+[INFO] 11:19:01:569 Memoria/(3739:3739): Conectado al CPU, urra!
+[INFO] 11:19:01:571 Memoria/(3739:3739): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 11:19:01:574 Memoria/(3739:3739): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 11:19:06:576 Memoria/(3739:3739): Conectado al CPU, urra!
+[INFO] 11:19:06:578 Memoria/(3739:3739): No esta en TLB
+[INFO] 11:19:06:581 Memoria/(3739:3739): mProc: 1, Pag: 1. No esta en memoria principal. Marco asignado: 2
+[INFO] 11:19:06:582 Memoria/(3739:3739): Solicitando mProc: 1 Pag: 1 a SWAP
+[INFO] 11:19:08:584 Memoria/(3739:3739): Proceso 1 Escribiendo: uno en pag: 1
+[INFO] 11:19:13:586 Memoria/(3739:3739): Conectado al CPU, urra!
+[INFO] 11:19:13:586 Memoria/(3739:3739): Proc: 1, Pag: 1. Esta en TLB
+[INFO] 11:19:13:588 Memoria/(3739:3739): Proceso 1 leyendo pag: 1. Contenido: uno
+[INFO] 11:19:18:590 Memoria/(3739:3739): Conectado al CPU, urra!
+[INFO] 11:19:18:591 Memoria/(3739:3739): No esta en TLB
+[INFO] 11:19:18:594 Memoria/(3739:3739): CLOCK MEJORADO
+[INFO] 11:22:27:923 Memoria/(3841:3841): Conectado a Swap
+[INFO] 11:23:19:51 Memoria/(3868:3868): Conectado a Swap
+[INFO] 11:23:30:635 Memoria/(3868:3868): Conectado al CPU, urra!
+[INFO] 11:23:30:653 Memoria/(3868:3868): Proceso 1 iniciado de 6 pags
+[INFO] 11:24:05:926 Memoria/(3887:3887): Conectado a Swap
+[INFO] 11:27:06:935 Memoria/(3978:3978): Conectado a Swap
+[INFO] 11:27:11:868 Memoria/(3978:3978): Conectado al CPU, urra!
+[INFO] 11:27:11:891 Memoria/(3978:3978): Proceso 1 iniciado de 6 pags
+[INFO] 11:27:17:43 Memoria/(3978:3978): Conectado al CPU, urra!
+[INFO] 11:27:17:46 Memoria/(3978:3978): No esta en TLB
+[INFO] 11:27:17:80 Memoria/(3978:3978): mProc: 1, Pag: 2. No esta en memoria principal. Marco asignado: 0
+[INFO] 11:27:17:85 Memoria/(3978:3978): Solicitando mProc: 1 Pag: 2 a SWAP
+[INFO] 11:27:19:98 Memoria/(3978:3978): Proceso 1 Escribiendo: dos en pag: 2
+[INFO] 11:27:24:102 Memoria/(3978:3978): Conectado al CPU, urra!
+[INFO] 11:27:24:105 Memoria/(3978:3978): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 11:27:24:126 Memoria/(3978:3978): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 11:27:29:129 Memoria/(3978:3978): Conectado al CPU, urra!
+[INFO] 11:27:29:131 Memoria/(3978:3978): No esta en TLB
+[INFO] 11:27:29:137 Memoria/(3978:3978): mProc: 1, Pag: 3. No esta en memoria principal. Marco asignado: 1
+[INFO] 11:27:29:139 Memoria/(3978:3978): Solicitando mProc: 1 Pag: 3 a SWAP
+[INFO] 11:27:31:142 Memoria/(3978:3978): Proceso 1 Escribiendo: tres en pag: 3
+[INFO] 11:27:36:145 Memoria/(3978:3978): Conectado al CPU, urra!
+[INFO] 11:27:36:145 Memoria/(3978:3978): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 11:27:36:146 Memoria/(3978:3978): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 11:27:41:148 Memoria/(3978:3978): Conectado al CPU, urra!
+[INFO] 11:27:41:150 Memoria/(3978:3978): No esta en TLB
+[INFO] 11:27:41:152 Memoria/(3978:3978): mProc: 1, Pag: 1. No esta en memoria principal. Marco asignado: 2
+[INFO] 11:27:41:154 Memoria/(3978:3978): Solicitando mProc: 1 Pag: 1 a SWAP
+[INFO] 11:27:43:156 Memoria/(3978:3978): Proceso 1 Escribiendo: uno en pag: 1
+[INFO] 11:27:48:158 Memoria/(3978:3978): Conectado al CPU, urra!
+[INFO] 11:27:48:159 Memoria/(3978:3978): Proc: 1, Pag: 1. Esta en TLB
+[INFO] 11:27:48:161 Memoria/(3978:3978): Proceso 1 leyendo pag: 1. Contenido: uno
+[INFO] 11:27:53:162 Memoria/(3978:3978): Conectado al CPU, urra!
+[INFO] 11:27:53:258 Memoria/(3978:3978): No esta en TLB
+[INFO] 11:27:53:262 Memoria/(3978:3978): CLOCK MEJORADO
+[INFO] 11:31:59:876 Memoria/(4107:4107): Conectado a Swap
+[INFO] 11:32:05:574 Memoria/(4107:4107): Conectado al CPU, urra!
+[INFO] 11:32:05:596 Memoria/(4107:4107): Proceso 1 iniciado de 6 pags
+[INFO] 11:32:10:616 Memoria/(4107:4107): Conectado al CPU, urra!
+[INFO] 11:32:10:618 Memoria/(4107:4107): No esta en TLB
+[INFO] 11:32:10:653 Memoria/(4107:4107): mProc: 1, Pag: 2. No esta en memoria principal. Marco asignado: 0
+[INFO] 11:32:10:660 Memoria/(4107:4107): Solicitando mProc: 1 Pag: 2 a SWAP
+[INFO] 11:32:12:676 Memoria/(4107:4107): Proceso 1 Escribiendo: dos en pag: 2
+[INFO] 11:32:17:680 Memoria/(4107:4107): Conectado al CPU, urra!
+[INFO] 11:32:17:682 Memoria/(4107:4107): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 11:32:17:703 Memoria/(4107:4107): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 11:32:22:709 Memoria/(4107:4107): Conectado al CPU, urra!
+[INFO] 11:32:22:711 Memoria/(4107:4107): No esta en TLB
+[INFO] 11:32:22:717 Memoria/(4107:4107): mProc: 1, Pag: 3. No esta en memoria principal. Marco asignado: 1
+[INFO] 11:32:22:718 Memoria/(4107:4107): Solicitando mProc: 1 Pag: 3 a SWAP
+[INFO] 11:32:24:722 Memoria/(4107:4107): Proceso 1 Escribiendo: tres en pag: 3
+[INFO] 11:32:29:723 Memoria/(4107:4107): Conectado al CPU, urra!
+[INFO] 11:32:29:724 Memoria/(4107:4107): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 11:32:29:726 Memoria/(4107:4107): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 11:32:34:727 Memoria/(4107:4107): Conectado al CPU, urra!
+[INFO] 11:32:34:728 Memoria/(4107:4107): No esta en TLB
+[INFO] 11:32:34:731 Memoria/(4107:4107): mProc: 1, Pag: 1. No esta en memoria principal. Marco asignado: 2
+[INFO] 11:32:34:733 Memoria/(4107:4107): Solicitando mProc: 1 Pag: 1 a SWAP
+[INFO] 11:32:36:736 Memoria/(4107:4107): Proceso 1 Escribiendo: uno en pag: 1
+[INFO] 11:32:41:738 Memoria/(4107:4107): Conectado al CPU, urra!
+[INFO] 11:32:41:739 Memoria/(4107:4107): Proc: 1, Pag: 1. Esta en TLB
+[INFO] 11:32:41:740 Memoria/(4107:4107): Proceso 1 leyendo pag: 1. Contenido: uno
+[INFO] 11:32:46:745 Memoria/(4107:4107): Conectado al CPU, urra!
+[INFO] 11:32:46:746 Memoria/(4107:4107): No esta en TLB
+[INFO] 11:32:46:750 Memoria/(4107:4107): CLOCK MEJORADO
+[INFO] 11:45:25:859 Memoria/(2300:2300): Conectado a Swap
+[INFO] 11:45:30:3 Memoria/(2300:2300): Conectado al CPU, urra!
+[INFO] 11:45:30:3 Memoria/(2300:2300): Proceso 1 iniciado de 6 pags
+[INFO] 11:45:35:4 Memoria/(2300:2300): Conectado al CPU, urra!
+[INFO] 11:45:35:4 Memoria/(2300:2300): No esta en TLB
+[INFO] 11:45:35:4 Memoria/(2300:2300): mProc: 1, Pag: 2. No esta en memoria principal. Marco asignado: 0
+[INFO] 11:45:35:4 Memoria/(2300:2300): Solicitando mProc: 1 Pag: 2 a SWAP
+[INFO] 11:45:37:5 Memoria/(2300:2300): Proceso 1 Escribiendo: dos en pag: 2
+[INFO] 11:45:42:6 Memoria/(2300:2300): Conectado al CPU, urra!
+[INFO] 11:45:42:6 Memoria/(2300:2300): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 11:45:42:7 Memoria/(2300:2300): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 11:45:47:7 Memoria/(2300:2300): Conectado al CPU, urra!
+[INFO] 11:45:47:8 Memoria/(2300:2300): No esta en TLB
+[INFO] 11:45:47:8 Memoria/(2300:2300): mProc: 1, Pag: 3. No esta en memoria principal. Marco asignado: 1
+[INFO] 11:45:47:8 Memoria/(2300:2300): Solicitando mProc: 1 Pag: 3 a SWAP
+[INFO] 11:45:49:10 Memoria/(2300:2300): Proceso 1 Escribiendo: tres en pag: 3
+[INFO] 11:45:54:11 Memoria/(2300:2300): Conectado al CPU, urra!
+[INFO] 11:45:54:11 Memoria/(2300:2300): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 11:45:54:11 Memoria/(2300:2300): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 11:45:59:12 Memoria/(2300:2300): Conectado al CPU, urra!
+[INFO] 11:45:59:12 Memoria/(2300:2300): No esta en TLB
+[INFO] 11:45:59:12 Memoria/(2300:2300): mProc: 1, Pag: 1. No esta en memoria principal. Marco asignado: 2
+[INFO] 11:45:59:12 Memoria/(2300:2300): Solicitando mProc: 1 Pag: 1 a SWAP
+[INFO] 11:46:01:15 Memoria/(2300:2300): Proceso 1 Escribiendo: uno en pag: 1
+[INFO] 11:46:06:15 Memoria/(2300:2300): Conectado al CPU, urra!
+[INFO] 11:46:06:16 Memoria/(2300:2300): Proc: 1, Pag: 1. Esta en TLB
+[INFO] 11:46:06:16 Memoria/(2300:2300): Proceso 1 leyendo pag: 1. Contenido: uno
+[INFO] 11:46:11:17 Memoria/(2300:2300): Conectado al CPU, urra!
+[INFO] 11:46:11:17 Memoria/(2300:2300): No esta en TLB
+[INFO] 11:46:11:17 Memoria/(2300:2300): CLOCK MEJORADO
+[INFO] 11:53:35:558 Memoria/(2584:2584): Conectado a Swap
+[INFO] 11:53:41:24 Memoria/(2584:2584): Conectado al CPU, urra!
+[INFO] 11:53:41:24 Memoria/(2584:2584): Proceso 1 iniciado de 6 pags
+[INFO] 11:53:46:26 Memoria/(2584:2584): Conectado al CPU, urra!
+[INFO] 11:53:46:26 Memoria/(2584:2584): No esta en TLB
+[INFO] 11:53:46:26 Memoria/(2584:2584): mProc: 1, Pag: 2. No esta en memoria principal. Marco asignado: 0
+[INFO] 11:53:46:26 Memoria/(2584:2584): Solicitando mProc: 1 Pag: 2 a SWAP
+[INFO] 11:53:48:28 Memoria/(2584:2584): Proceso 1 Escribiendo: dos en pag: 2
+[INFO] 11:53:53:29 Memoria/(2584:2584): Conectado al CPU, urra!
+[INFO] 11:53:53:29 Memoria/(2584:2584): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 11:53:53:29 Memoria/(2584:2584): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 11:53:58:30 Memoria/(2584:2584): Conectado al CPU, urra!
+[INFO] 11:53:58:30 Memoria/(2584:2584): No esta en TLB
+[INFO] 11:53:58:31 Memoria/(2584:2584): mProc: 1, Pag: 3. No esta en memoria principal. Marco asignado: 1
+[INFO] 11:53:58:31 Memoria/(2584:2584): Solicitando mProc: 1 Pag: 3 a SWAP
+[INFO] 11:54:00:32 Memoria/(2584:2584): Proceso 1 Escribiendo: tres en pag: 3
+[INFO] 11:54:05:33 Memoria/(2584:2584): Conectado al CPU, urra!
+[INFO] 11:54:05:33 Memoria/(2584:2584): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 11:54:05:33 Memoria/(2584:2584): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 11:54:10:34 Memoria/(2584:2584): Conectado al CPU, urra!
+[INFO] 11:54:10:34 Memoria/(2584:2584): No esta en TLB
+[INFO] 11:54:10:34 Memoria/(2584:2584): mProc: 1, Pag: 1. No esta en memoria principal. Marco asignado: 2
+[INFO] 11:54:10:34 Memoria/(2584:2584): Solicitando mProc: 1 Pag: 1 a SWAP
+[INFO] 11:54:12:35 Memoria/(2584:2584): Proceso 1 Escribiendo: uno en pag: 1
+[INFO] 11:54:17:36 Memoria/(2584:2584): Conectado al CPU, urra!
+[INFO] 11:54:17:36 Memoria/(2584:2584): Proc: 1, Pag: 1. Esta en TLB
+[INFO] 11:54:17:36 Memoria/(2584:2584): Proceso 1 leyendo pag: 1. Contenido: uno
+[INFO] 11:54:22:38 Memoria/(2584:2584): Conectado al CPU, urra!
+[INFO] 11:54:22:39 Memoria/(2584:2584): No esta en TLB
+[INFO] 11:54:22:39 Memoria/(2584:2584): CLOCK MEJORADO
+[INFO] 11:55:50:305 Memoria/(2673:2673): Conectado a Swap
+[INFO] 11:55:55:391 Memoria/(2673:2673): Conectado al CPU, urra!
+[INFO] 11:55:55:391 Memoria/(2673:2673): Proceso 1 iniciado de 6 pags
+[INFO] 11:56:00:393 Memoria/(2673:2673): Conectado al CPU, urra!
+[INFO] 11:56:00:394 Memoria/(2673:2673): No esta en TLB
+[INFO] 11:56:00:394 Memoria/(2673:2673): mProc: 1, Pag: 2. No esta en memoria principal. Marco asignado: 0
+[INFO] 11:56:00:394 Memoria/(2673:2673): Solicitando mProc: 1 Pag: 2 a SWAP
+[INFO] 11:56:02:395 Memoria/(2673:2673): Proceso 1 Escribiendo: dos en pag: 2
+[INFO] 11:56:07:397 Memoria/(2673:2673): Conectado al CPU, urra!
+[INFO] 11:56:07:397 Memoria/(2673:2673): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 11:56:07:397 Memoria/(2673:2673): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 11:56:12:398 Memoria/(2673:2673): Conectado al CPU, urra!
+[INFO] 11:56:12:398 Memoria/(2673:2673): No esta en TLB
+[INFO] 11:56:12:398 Memoria/(2673:2673): mProc: 1, Pag: 3. No esta en memoria principal. Marco asignado: 1
+[INFO] 11:56:12:398 Memoria/(2673:2673): Solicitando mProc: 1 Pag: 3 a SWAP
+[INFO] 11:56:14:399 Memoria/(2673:2673): Proceso 1 Escribiendo: tres en pag: 3
+[INFO] 11:56:19:400 Memoria/(2673:2673): Conectado al CPU, urra!
+[INFO] 11:56:19:400 Memoria/(2673:2673): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 11:56:19:400 Memoria/(2673:2673): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 11:56:24:401 Memoria/(2673:2673): Conectado al CPU, urra!
+[INFO] 11:56:24:402 Memoria/(2673:2673): No esta en TLB
+[INFO] 11:56:24:402 Memoria/(2673:2673): mProc: 1, Pag: 1. No esta en memoria principal. Marco asignado: 2
+[INFO] 11:56:24:402 Memoria/(2673:2673): Solicitando mProc: 1 Pag: 1 a SWAP
+[INFO] 11:56:26:405 Memoria/(2673:2673): Proceso 1 Escribiendo: uno en pag: 1
+[INFO] 11:56:31:407 Memoria/(2673:2673): Conectado al CPU, urra!
+[INFO] 11:56:31:407 Memoria/(2673:2673): Proc: 1, Pag: 1. Esta en TLB
+[INFO] 11:56:31:407 Memoria/(2673:2673): Proceso 1 leyendo pag: 1. Contenido: uno
+[INFO] 11:56:36:408 Memoria/(2673:2673): Conectado al CPU, urra!
+[INFO] 11:56:36:409 Memoria/(2673:2673): No esta en TLB
+[INFO] 11:56:36:409 Memoria/(2673:2673): CLOCK MEJORADO
+[INFO] 11:57:32:308 Memoria/(2731:2731): Conectado a Swap
+[INFO] 11:58:00:966 Memoria/(2746:2746): Conectado a Swap
+[INFO] 11:58:06:86 Memoria/(2746:2746): Conectado al CPU, urra!
+[INFO] 11:58:06:87 Memoria/(2746:2746): Proceso 1 iniciado de 6 pags
+[INFO] 11:58:11:89 Memoria/(2746:2746): Conectado al CPU, urra!
+[INFO] 11:58:11:89 Memoria/(2746:2746): No esta en TLB
+[INFO] 11:58:11:89 Memoria/(2746:2746): mProc: 1, Pag: 2. No esta en memoria principal. Marco asignado: 0
+[INFO] 11:58:11:89 Memoria/(2746:2746): Solicitando mProc: 1 Pag: 2 a SWAP
+[INFO] 11:58:13:90 Memoria/(2746:2746): Proceso 1 Escribiendo: dos en pag: 2
+[INFO] 11:58:18:91 Memoria/(2746:2746): Conectado al CPU, urra!
+[INFO] 11:58:18:91 Memoria/(2746:2746): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 11:58:18:91 Memoria/(2746:2746): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 11:58:23:93 Memoria/(2746:2746): Conectado al CPU, urra!
+[INFO] 11:58:23:94 Memoria/(2746:2746): No esta en TLB
+[INFO] 11:58:23:94 Memoria/(2746:2746): mProc: 1, Pag: 3. No esta en memoria principal. Marco asignado: 1
+[INFO] 11:58:23:94 Memoria/(2746:2746): Solicitando mProc: 1 Pag: 3 a SWAP
+[INFO] 11:58:25:96 Memoria/(2746:2746): Proceso 1 Escribiendo: tres en pag: 3
+[INFO] 11:58:30:97 Memoria/(2746:2746): Conectado al CPU, urra!
+[INFO] 11:58:30:97 Memoria/(2746:2746): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 11:58:30:97 Memoria/(2746:2746): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 11:58:35:98 Memoria/(2746:2746): Conectado al CPU, urra!
+[INFO] 11:58:35:99 Memoria/(2746:2746): No esta en TLB
+[INFO] 11:58:35:99 Memoria/(2746:2746): mProc: 1, Pag: 1. No esta en memoria principal. Marco asignado: 2
+[INFO] 11:58:35:99 Memoria/(2746:2746): Solicitando mProc: 1 Pag: 1 a SWAP
+[INFO] 11:58:37:100 Memoria/(2746:2746): Proceso 1 Escribiendo: uno en pag: 1
+[INFO] 11:58:42:100 Memoria/(2746:2746): Conectado al CPU, urra!
+[INFO] 11:58:42:101 Memoria/(2746:2746): Proc: 1, Pag: 1. Esta en TLB
+[INFO] 11:58:42:101 Memoria/(2746:2746): Proceso 1 leyendo pag: 1. Contenido: uno
+[INFO] 11:58:47:103 Memoria/(2746:2746): Conectado al CPU, urra!
+[INFO] 11:58:47:103 Memoria/(2746:2746): No esta en TLB
+[INFO] 11:58:47:103 Memoria/(2746:2746): CLOCK MEJORADO
+[INFO] 12:00:27:444 Memoria/(2860:2860): Conectado a Swap
+[INFO] 12:00:33:714 Memoria/(2860:2860): Conectado al CPU, urra!
+[INFO] 12:00:33:714 Memoria/(2860:2860): Proceso 1 iniciado de 6 pags
+[INFO] 12:00:38:717 Memoria/(2860:2860): Conectado al CPU, urra!
+[INFO] 12:00:38:717 Memoria/(2860:2860): No esta en TLB
+[INFO] 12:00:38:717 Memoria/(2860:2860): mProc: 1, Pag: 2. No esta en memoria principal. Marco asignado: 0
+[INFO] 12:00:38:718 Memoria/(2860:2860): Solicitando mProc: 1 Pag: 2 a SWAP
+[INFO] 12:00:40:720 Memoria/(2860:2860): Proceso 1 Escribiendo: dos en pag: 2
+[INFO] 12:00:45:722 Memoria/(2860:2860): Conectado al CPU, urra!
+[INFO] 12:00:45:723 Memoria/(2860:2860): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 12:00:45:723 Memoria/(2860:2860): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 12:00:50:723 Memoria/(2860:2860): Conectado al CPU, urra!
+[INFO] 12:00:50:725 Memoria/(2860:2860): No esta en TLB
+[INFO] 12:00:50:725 Memoria/(2860:2860): mProc: 1, Pag: 3. No esta en memoria principal. Marco asignado: 1
+[INFO] 12:00:50:725 Memoria/(2860:2860): Solicitando mProc: 1 Pag: 3 a SWAP
+[INFO] 12:00:52:726 Memoria/(2860:2860): Proceso 1 Escribiendo: tres en pag: 3
+[INFO] 12:00:57:726 Memoria/(2860:2860): Conectado al CPU, urra!
+[INFO] 12:00:57:727 Memoria/(2860:2860): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 12:00:57:727 Memoria/(2860:2860): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 12:01:02:729 Memoria/(2860:2860): Conectado al CPU, urra!
+[INFO] 12:01:02:729 Memoria/(2860:2860): No esta en TLB
+[INFO] 12:01:02:729 Memoria/(2860:2860): mProc: 1, Pag: 1. No esta en memoria principal. Marco asignado: 2
+[INFO] 12:01:02:729 Memoria/(2860:2860): Solicitando mProc: 1 Pag: 1 a SWAP
+[INFO] 12:01:04:730 Memoria/(2860:2860): Proceso 1 Escribiendo: uno en pag: 1
+[INFO] 12:01:09:732 Memoria/(2860:2860): Conectado al CPU, urra!
+[INFO] 12:01:09:732 Memoria/(2860:2860): Proc: 1, Pag: 1. Esta en TLB
+[INFO] 12:01:09:732 Memoria/(2860:2860): Proceso 1 leyendo pag: 1. Contenido: uno
+[INFO] 12:01:14:734 Memoria/(2860:2860): Conectado al CPU, urra!
+[INFO] 12:01:14:735 Memoria/(2860:2860): No esta en TLB
+[INFO] 12:01:14:735 Memoria/(2860:2860): CLOCK MEJORADO
+[INFO] 12:06:37:446 Memoria/(2986:2986): Conectado a Swap
+[INFO] 12:06:42:274 Memoria/(2986:2986): Conectado al CPU, urra!
+[INFO] 12:06:42:274 Memoria/(2986:2986): Proceso 1 iniciado de 6 pags
+[INFO] 12:06:47:276 Memoria/(2986:2986): Conectado al CPU, urra!
+[INFO] 12:06:47:277 Memoria/(2986:2986): No esta en TLB
+[INFO] 12:06:47:277 Memoria/(2986:2986): mProc: 1, Pag: 2. No esta en memoria principal. Marco asignado: 0
+[INFO] 12:06:47:277 Memoria/(2986:2986): Solicitando mProc: 1 Pag: 2 a SWAP
+[INFO] 12:06:49:278 Memoria/(2986:2986): Proceso 1 Escribiendo: dos en pag: 2
+[INFO] 12:06:54:279 Memoria/(2986:2986): Conectado al CPU, urra!
+[INFO] 12:06:54:280 Memoria/(2986:2986): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 12:06:54:280 Memoria/(2986:2986): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 12:06:59:281 Memoria/(2986:2986): Conectado al CPU, urra!
+[INFO] 12:06:59:281 Memoria/(2986:2986): No esta en TLB
+[INFO] 12:06:59:281 Memoria/(2986:2986): mProc: 1, Pag: 3. No esta en memoria principal. Marco asignado: 1
+[INFO] 12:06:59:281 Memoria/(2986:2986): Solicitando mProc: 1 Pag: 3 a SWAP
+[INFO] 12:07:01:283 Memoria/(2986:2986): Proceso 1 Escribiendo: tres en pag: 3
+[INFO] 12:07:06:285 Memoria/(2986:2986): Conectado al CPU, urra!
+[INFO] 12:07:06:285 Memoria/(2986:2986): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 12:07:06:285 Memoria/(2986:2986): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 12:07:11:286 Memoria/(2986:2986): Conectado al CPU, urra!
+[INFO] 12:07:11:286 Memoria/(2986:2986): No esta en TLB
+[INFO] 12:07:11:286 Memoria/(2986:2986): mProc: 1, Pag: 1. No esta en memoria principal. Marco asignado: 2
+[INFO] 12:07:11:286 Memoria/(2986:2986): Solicitando mProc: 1 Pag: 1 a SWAP
+[INFO] 12:07:13:287 Memoria/(2986:2986): Proceso 1 Escribiendo: uno en pag: 1
+[INFO] 12:07:18:288 Memoria/(2986:2986): Conectado al CPU, urra!
+[INFO] 12:07:18:288 Memoria/(2986:2986): Proc: 1, Pag: 1. Esta en TLB
+[INFO] 12:07:18:288 Memoria/(2986:2986): Proceso 1 leyendo pag: 1. Contenido: uno
+[INFO] 12:07:23:290 Memoria/(2986:2986): Conectado al CPU, urra!
+[INFO] 12:07:23:290 Memoria/(2986:2986): No esta en TLB
+[INFO] 12:07:23:291 Memoria/(2986:2986): CLOCK MEJORADO
+[INFO] 12:18:02:83 Memoria/(3298:3298): Conectado a Swap
+[INFO] 12:18:07:975 Memoria/(3298:3298): Conectado al CPU, urra!
+[INFO] 12:18:07:975 Memoria/(3298:3298): Proceso 1 iniciado de 6 pags
+[INFO] 12:18:12:977 Memoria/(3298:3298): Conectado al CPU, urra!
+[INFO] 12:18:12:978 Memoria/(3298:3298): No esta en TLB
+[INFO] 12:18:12:978 Memoria/(3298:3298): mProc: 1, Pag: 2. No esta en memoria principal. Marco asignado: 0
+[INFO] 12:18:12:978 Memoria/(3298:3298): Solicitando mProc: 1 Pag: 2 a SWAP
+[INFO] 12:18:14:980 Memoria/(3298:3298): Proceso 1 Escribiendo: dos en pag: 2
+[INFO] 12:18:19:982 Memoria/(3298:3298): Conectado al CPU, urra!
+[INFO] 12:18:19:982 Memoria/(3298:3298): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 12:18:19:982 Memoria/(3298:3298): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 12:18:24:985 Memoria/(3298:3298): Conectado al CPU, urra!
+[INFO] 12:18:24:985 Memoria/(3298:3298): No esta en TLB
+[INFO] 12:18:24:985 Memoria/(3298:3298): mProc: 1, Pag: 3. No esta en memoria principal. Marco asignado: 1
+[INFO] 12:18:24:986 Memoria/(3298:3298): Solicitando mProc: 1 Pag: 3 a SWAP
+[INFO] 12:18:26:986 Memoria/(3298:3298): Proceso 1 Escribiendo: tres en pag: 3
+[INFO] 12:18:31:987 Memoria/(3298:3298): Conectado al CPU, urra!
+[INFO] 12:18:31:988 Memoria/(3298:3298): Proc: 1, Pag: 2. Esta en TLB
+[INFO] 12:18:31:988 Memoria/(3298:3298): Proceso 1 leyendo pag: 2. Contenido: dos
+[INFO] 12:18:36:988 Memoria/(3298:3298): Conectado al CPU, urra!
+[INFO] 12:18:36:989 Memoria/(3298:3298): No esta en TLB
+[INFO] 12:18:36:989 Memoria/(3298:3298): mProc: 1, Pag: 1. No esta en memoria principal. Marco asignado: 2
+[INFO] 12:18:36:989 Memoria/(3298:3298): Solicitando mProc: 1 Pag: 1 a SWAP
+[INFO] 12:18:38:990 Memoria/(3298:3298): Proceso 1 Escribiendo: uno en pag: 1
+[INFO] 12:18:43:992 Memoria/(3298:3298): Conectado al CPU, urra!
+[INFO] 12:18:43:992 Memoria/(3298:3298): Proc: 1, Pag: 1. Esta en TLB
+[INFO] 12:18:43:992 Memoria/(3298:3298): Proceso 1 leyendo pag: 1. Contenido: uno
+[INFO] 12:18:48:994 Memoria/(3298:3298): Conectado al CPU, urra!
+[INFO] 12:18:48:994 Memoria/(3298:3298): No esta en TLB
+[INFO] 12:18:48:994 Memoria/(3298:3298): CLOCK MEJORADO

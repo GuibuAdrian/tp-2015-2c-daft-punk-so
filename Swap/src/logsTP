@@ -1595,3 +1595,128 @@
 [INFO] 16:53:19:607 Swap/(6645:6645): Leyendo mProc: 1. Pagina 5: pR·¿ğI 
 [INFO] 16:53:46:694 Swap/(6645:6645): Finalizando proceso 1. Total Paginas leidas: 3, escritas 6
 [INFO] 16:53:46:694 Swap/(6645:6645): Finalizando mProc: 1
+[INFO] 09:47:43:582 Swap/(2714:2714): Memoria conectado
+[INFO] 09:47:54:448 Swap/(2714:2714): Iniciando mProc: 1 de 6 paginas
+[INFO] 09:48:00:450 Swap/(2714:2714): Escribiendo mProc: 1. Pagina: 2. Contenido: à°ù¿@ª¶¿ªGs·ğ©¶¿ôşn·ø©¶¿”Êt· 
+[INFO] 09:48:12:456 Swap/(2714:2714): Escribiendo mProc: 1. Pagina: 3. Contenido: à°ù¿`ª¶¿ªGs·ğ©¶¿ôşn·ø©¶¿”Êt· 
+[INFO] 09:48:24:462 Swap/(2714:2714): Escribiendo mProc: 1. Pagina: 1. Contenido: à°ù¿`ª¶¿ªGs·ğ©¶¿ôşn·ø©¶¿”Êt· 
+[INFO] 09:48:36:466 Swap/(2714:2714): Escribiendo mProc: 1. Pagina: 5. Contenido: à°ù¿`¨¶¿ªGs·ğ©¶¿ôşn·ø©¶¿”Êt· 
+[INFO] 09:48:43:471 Swap/(2714:2714): Leyendo mProc: 1. Pagina 2: à°ù¿ 
+[INFO] 09:48:50:474 Swap/(2714:2714): Escribiendo mProc: 1. Pagina: 4. Contenido: à°ù¿`¨ù¿ªGs·ğ©¶¿ôşn·ø©¶¿”Êt· 
+[INFO] 09:49:02:480 Swap/(2714:2714): Leyendo mProc: 1. Pagina 3: à°ù¿` 
+[INFO] 09:49:09:484 Swap/(2714:2714): Escribiendo mProc: 1. Pagina: 2. Contenido: ä°ù¿`¨ù¿ªGs·ğ©¶¿ôşn·ø©¶¿”Êt· 
+[INFO] 09:49:14:487 Swap/(2714:2714): Leyendo mProc: 1. Pagina 5: à°ù¿`¨ 
+[INFO] 09:49:21:491 Swap/(2714:2714): Leyendo mProc: 1. Pagina 2: ä°ù¿ 
+[INFO] 09:49:52:535 Swap/(2714:2714): Finalizando proceso 1. Total Paginas leidas: 4, escritas 6
+[INFO] 09:49:52:535 Swap/(2714:2714): Finalizando mProc: 1
+[INFO] 09:50:19:379 Swap/(2714:2714): ---------------------FIN---------------------
+[INFO] 09:58:49:402 Swap/(2765:2765): Memoria conectado
+[INFO] 09:58:57:371 Swap/(2765:2765): Iniciando mProc: 1 de 6 paginas
+[INFO] 09:59:03:374 Swap/(2765:2765): Escribiendo mProc: 1. Pagina: 2. Contenido: `yœ¿ÀõÔ¿ªww·põÔ¿ô.s·xõÔ¿”úx· 
+[INFO] 09:59:15:379 Swap/(2765:2765): Escribiendo mProc: 1. Pagina: 3. Contenido: `yœ¿àõÔ¿ªww·põÔ¿ô.s·xõÔ¿”úx· 
+[INFO] 09:59:27:384 Swap/(2765:2765): Escribiendo mProc: 1. Pagina: 1. Contenido: `yœ¿àõÔ¿ªww·põÔ¿ô.s·xõÔ¿”úx· 
+[INFO] 09:59:39:391 Swap/(2765:2765): Escribiendo mProc: 1. Pagina: 5. Contenido: `yœ¿àpÔ¿ªww·põÔ¿ô.s·xõÔ¿”úx· 
+[INFO] 09:59:46:395 Swap/(2765:2765): Leyendo mProc: 1. Pagina 2: `yœ¿ 
+[INFO] 09:59:53:400 Swap/(2765:2765): Escribiendo mProc: 1. Pagina: 4. Contenido: `yœ¿àpœ¿ªww·põÔ¿ô.s·xõÔ¿”úx· 
+[INFO] 10:00:05:407 Swap/(2765:2765): Leyendo mProc: 1. Pagina 3: `yœ¿à 
+[INFO] 10:00:12:409 Swap/(2765:2765): Escribiendo mProc: 1. Pagina: 2. Contenido: dyœ¿àpœ¿ªww·põÔ¿ô.s·xõÔ¿”úx· 
+[INFO] 10:00:17:411 Swap/(2765:2765): Leyendo mProc: 1. Pagina 5: `yœ¿àp 
+[INFO] 10:00:53:457 Swap/(2765:2765): Finalizando proceso 1. Total Paginas leidas: 3, escritas 6
+[INFO] 10:00:53:457 Swap/(2765:2765): Finalizando mProc: 1
+[INFO] 10:12:45:10 Swap/(2210:2210): Memoria conectado
+[INFO] 10:12:52:222 Swap/(2210:2210): Iniciando mProc: 1 de 6 paginas
+[INFO] 10:12:58:224 Swap/(2210:2210): Escribiendo mProc: 1. Pagina: 2. Contenido: éÃ¿ÀÚ¿ªgx·pÚ¿ôt·xÚ¿”êy· 
+[INFO] 10:13:10:232 Swap/(2210:2210): Escribiendo mProc: 1. Pagina: 3. Contenido: éÃ¿Ú¿ªgx·pÚ¿ôt·xÚ¿”êy· 
+[INFO] 10:13:22:238 Swap/(2210:2210): Escribiendo mProc: 1. Pagina: 1. Contenido: éÃ¿Ú¿ªgx·pÚ¿ôt·xÚ¿”êy· 
+[INFO] 10:13:34:249 Swap/(2210:2210): Escribiendo mProc: 1. Pagina: 5. Contenido: éÃ¿á¿ªgx·pÚ¿ôt·xÚ¿”êy· 
+[INFO] 10:13:41:252 Swap/(2210:2210): Leyendo mProc: 1. Pagina 2: éÃ¿ 
+[INFO] 10:13:48:256 Swap/(2210:2210): Escribiendo mProc: 1. Pagina: 4. Contenido: éÃ¿áÃ¿ªgx·pÚ¿ôt·xÚ¿”êy· 
+[INFO] 10:14:00:265 Swap/(2210:2210): Leyendo mProc: 1. Pagina 3: éÃ¿ 
+[INFO] 10:14:07:267 Swap/(2210:2210): Escribiendo mProc: 1. Pagina: 2. Contenido: ”éÃ¿áÃ¿ªgx·pÚ¿ôt·xÚ¿”êy· 
+[INFO] 10:14:12:269 Swap/(2210:2210): Leyendo mProc: 1. Pagina 5: éÃ¿á 
+[INFO] 10:14:48:319 Swap/(2210:2210): Finalizando proceso 1. Total Paginas leidas: 3, escritas 6
+[INFO] 10:14:48:319 Swap/(2210:2210): Finalizando mProc: 1
+[INFO] 10:18:21:328 Swap/(2210:2210): ---------------------FIN---------------------
+[INFO] 10:58:15:105 Swap/(3131:3131): Memoria conectado
+[INFO] 10:58:20:449 Swap/(3131:3131): Iniciando mProc: 1 de 6 paginas
+[INFO] 10:58:26:453 Swap/(3131:3131): Escribiendo mProc: 1. Pagina: 2. Contenido:  
+[INFO] 10:58:38:459 Swap/(3131:3131): Escribiendo mProc: 1. Pagina: 3. Contenido:  
+[INFO] 10:58:50:464 Swap/(3131:3131): Escribiendo mProc: 1. Pagina: 1. Contenido:  
+[INFO] 10:59:04:196 Swap/(3131:3131): ---------------------FIN---------------------
+[INFO] 11:01:08:611 Swap/(3299:3299): Memoria conectado
+[INFO] 11:01:26:886 Swap/(3299:3299): Iniciando mProc: 1 de 6 paginas
+[INFO] 11:01:32:936 Swap/(3299:3299): Escribiendo mProc: 1. Pagina: 2. Contenido: `Æ¾Ş¿ªGu·@Ş¿ôşp·HŞ¿”Êv· 
+[INFO] 11:01:44:1 Swap/(3299:3299): Escribiendo mProc: 1. Pagina: 3. Contenido: `Æ¾àŞ¿ªGu·@Ş¿ôşp·HŞ¿”Êv· 
+[INFO] 11:01:57:16 Swap/(3299:3299): Escribiendo mProc: 1. Pagina: 1. Contenido: `Æ¾àŞ¿ªGu·@Ş¿ôşp·HŞ¿”Êv· 
+[INFO] 11:02:08:169 Swap/(3299:3299): ---------------------FIN---------------------
+[INFO] 11:06:16:686 Swap/(3429:3429): Memoria conectado
+[INFO] 11:06:21:492 Swap/(3429:3429): Iniciando mProc: 1 de 6 paginas
+[INFO] 11:06:27:494 Swap/(3429:3429): Escribiendo mProc: 1. Pagina: 2. Contenido: €¬†¿µ¾¿ª§y·À´¾¿ô^u·È´¾¿”*{· 
+[INFO] 11:06:39:547 Swap/(3429:3429): Escribiendo mProc: 1. Pagina: 3. Contenido: €¬†¿ 
+[INFO] 11:06:51:552 Swap/(3429:3429): Escribiendo mProc: 1. Pagina: 1. Contenido: €¬†¿ 
+[INFO] 11:07:02:765 Swap/(3429:3429): ---------------------FIN---------------------
+[INFO] 11:18:33:208 Swap/(3732:3732): Memoria conectado
+[INFO] 11:18:37:483 Swap/(3732:3732): Iniciando mProc: 1 de 6 paginas
+[INFO] 11:18:43:527 Swap/(3732:3732): Escribiendo mProc: 1. Pagina: 2. Contenido: `¦É¾Ğàê¿ªG~·€àê¿ôşy·ˆàê¿”Ê· 
+[INFO] 11:18:55:565 Swap/(3732:3732): Escribiendo mProc: 1. Pagina: 3. Contenido: `¦É¾ààê¿ªG~·€àê¿ôşy·ˆàê¿”Ê· 
+[INFO] 11:19:07:583 Swap/(3732:3732): Escribiendo mProc: 1. Pagina: 1. Contenido: `¦É¾ààê¿ªG~·€àê¿ôşy·ˆàê¿”Ê· 
+[INFO] 11:19:18:751 Swap/(3732:3732): ---------------------FIN---------------------
+[INFO] 11:22:27:846 Swap/(3837:3837): Memoria conectado
+[INFO] 11:24:05:926 Swap/(3882:3882): Memoria conectado
+[INFO] 11:24:24:882 Swap/(3882:3882): ---------------------FIN---------------------
+[INFO] 11:27:06:854 Swap/(3973:3973): Memoria conectado
+[INFO] 11:27:12:27 Swap/(3973:3973): Iniciando mProc: 1 de 6 paginas
+[INFO] 11:27:18:87 Swap/(3973:3973): Escribiendo mProc: 1. Pagina: 2. Contenido: `Öİ¾P²¡¿ªçv· 
+[INFO] 11:27:30:140 Swap/(3973:3973): Escribiendo mProc: 1. Pagina: 3. Contenido: `Öİ¾à²¡¿ªçv· 
+[INFO] 11:27:42:155 Swap/(3973:3973): Escribiendo mProc: 1. Pagina: 1. Contenido: `Öİ¾à²¡¿ªçv· 
+[INFO] 11:27:53:371 Swap/(3973:3973): ---------------------FIN---------------------
+[INFO] 11:31:59:798 Swap/(4102:4102): Memoria conectado
+[INFO] 11:32:05:608 Swap/(4102:4102): Iniciando mProc: 1 de 6 paginas
+[INFO] 11:32:11:663 Swap/(4102:4102): Escribiendo mProc: 1. Pagina: 2. Contenido: `fì¾âú¿ª{·Àáú¿ôÎv·Èáú¿”š|· 
+[INFO] 11:32:23:720 Swap/(4102:4102): Escribiendo mProc: 1. Pagina: 3. Contenido: `fì¾àâú¿ª{·Àáú¿ôÎv·Èáú¿”š|· 
+[INFO] 11:32:35:735 Swap/(4102:4102): Escribiendo mProc: 1. Pagina: 1. Contenido: `fì¾àâú¿ª{·Àáú¿ôÎv·Èáú¿”š|· 
+[INFO] 11:32:46:882 Swap/(4102:4102): ---------------------FIN---------------------
+[INFO] 11:45:25:859 Swap/(2278:2278): Memoria conectado
+[INFO] 11:45:30:3 Swap/(2278:2278): Iniciando mProc: 1 de 6 paginas
+[INFO] 11:45:36:5 Swap/(2278:2278): Escribiendo mProc: 1. Pagina: 2. Contenido: @Ÿè¿ğ‰ù¿ªÇy· ‰ù¿ô~u·¨‰ù¿”J{· 
+[INFO] 11:45:48:8 Swap/(2278:2278): Escribiendo mProc: 1. Pagina: 3. Contenido: @Ÿè¿À‰ù¿ªÇy· ‰ù¿ô~u·¨‰ù¿”J{· 
+[INFO] 11:46:00:14 Swap/(2278:2278): Escribiendo mProc: 1. Pagina: 1. Contenido: @Ÿè¿À‰ù¿ªÇy· ‰ù¿ô~u·¨‰ù¿”J{· 
+[INFO] 11:46:11:356 Swap/(2278:2278): ---------------------FIN---------------------
+[INFO] 11:53:35:558 Swap/(2563:2563): Memoria conectado
+[INFO] 11:53:41:24 Swap/(2563:2563): Iniciando mProc: 1 de 6 paginas
+[INFO] 11:53:47:27 Swap/(2563:2563): Escribiendo mProc: 1. Pagina: 2. Contenido: ƒâ¿€	¥¿ªGu·0	¥¿ôşp·8	¥¿”Êv· 
+[INFO] 11:53:59:31 Swap/(2563:2563): Escribiendo mProc: 1. Pagina: 3. Contenido: ƒâ¿	¥¿ªGu·0	¥¿ôşp·8	¥¿”Êv· 
+[INFO] 11:54:11:35 Swap/(2563:2563): Escribiendo mProc: 1. Pagina: 1. Contenido: ƒâ¿	¥¿ªGu·0	¥¿ôşp·8	¥¿”Êv· 
+[INFO] 11:54:22:202 Swap/(2563:2563): ---------------------FIN---------------------
+[INFO] 11:55:50:305 Swap/(2652:2652): Memoria conectado
+[INFO] 11:55:55:391 Swap/(2652:2652): Iniciando mProc: 1 de 6 paginas
+[INFO] 11:56:01:394 Swap/(2652:2652): Escribiendo mProc: 1. Pagina: 2. Contenido: à‘¿ pë¿ª7z·Ppë¿ôîu·Xpë¿”º{· 
+[INFO] 11:56:13:399 Swap/(2652:2652): Escribiendo mProc: 1. Pagina: 3. Contenido: à‘¿`pë¿ª7z·Ppë¿ôîu·Xpë¿”º{· 
+[INFO] 11:56:25:404 Swap/(2652:2652): Escribiendo mProc: 1. Pagina: 1. Contenido: à‘¿`pë¿ª7z·Ppë¿ôîu·Xpë¿”º{· 
+[INFO] 11:56:36:577 Swap/(2652:2652): ---------------------FIN---------------------
+[INFO] 11:57:32:308 Swap/(2710:2710): Memoria conectado
+[INFO] 11:57:47:249 Swap/(2710:2710): ---------------------FIN---------------------
+[INFO] 11:58:00:966 Swap/(2743:2743): Memoria conectado
+[INFO] 11:58:06:87 Swap/(2743:2743): Iniciando mProc: 1 de 6 paginas
+[INFO] 11:58:12:90 Swap/(2743:2743): Escribiendo mProc: 1. Pagina: 2. Contenido: Pà£¿ğaÌ¿ª's· aÌ¿ôŞn·¨aÌ¿”ªt· 
+[INFO] 11:58:24:94 Swap/(2743:2743): Escribiendo mProc: 1. Pagina: 3. Contenido: Pà£¿ĞaÌ¿ª's· aÌ¿ôŞn·¨aÌ¿”ªt· 
+[INFO] 11:58:36:99 Swap/(2743:2743): Escribiendo mProc: 1. Pagina: 1. Contenido: Pà£¿ĞaÌ¿ª's· aÌ¿ôŞn·¨aÌ¿”ªt· 
+[INFO] 11:58:47:266 Swap/(2743:2743): ---------------------FIN---------------------
+[INFO] 12:00:27:444 Swap/(2857:2857): Memoria conectado
+[INFO] 12:00:33:714 Swap/(2857:2857): Iniciando mProc: 1 de 6 paginas
+[INFO] 12:00:39:719 Swap/(2857:2857): Escribiendo mProc: 1. Pagina: 2. Contenido: à<Ô¿@ç¿ª×v·ğ 
+[INFO] 12:00:51:725 Swap/(2857:2857): Escribiendo mProc: 1. Pagina: 3. Contenido: à<Ô¿`ç¿ª×v·ğ 
+[INFO] 12:01:03:730 Swap/(2857:2857): Escribiendo mProc: 1. Pagina: 1. Contenido: à<Ô¿`ç¿ª×v·ğ 
+[INFO] 12:01:14:912 Swap/(2857:2857): ---------------------FIN---------------------
+[INFO] 12:06:37:446 Swap/(2965:2965): Memoria conectado
+[INFO] 12:06:42:274 Swap/(2965:2965): Iniciando mProc: 1 de 6 paginas
+[INFO] 12:06:48:277 Swap/(2965:2965): Escribiendo mProc: 1. Pagina: 2. Contenido: €¬¯¿ æ”¿ªÇn·Ğå”¿ô~j·Øå”¿”Jp· 
+[INFO] 12:07:00:283 Swap/(2965:2965): Escribiendo mProc: 1. Pagina: 3. Contenido: €¬¯¿ 
+[INFO] 12:07:12:287 Swap/(2965:2965): Escribiendo mProc: 1. Pagina: 1. Contenido: €¬¯¿ 
+[INFO] 12:07:23:458 Swap/(2965:2965): ---------------------FIN---------------------
+[INFO] 12:18:02:82 Swap/(3295:3295): Memoria conectado
+[INFO] 12:18:07:975 Swap/(3295:3295): Iniciando mProc: 1 de 6 paginas
+[INFO] 12:18:13:979 Swap/(3295:3295): Escribiendo mProc: 1. Pagina: 2. Contenido:  O˜¿pZ“¿ª—u· Z“¿ôNq·(Z“¿”w· 
+[INFO] 12:18:25:986 Swap/(3295:3295): Escribiendo mProc: 1. Pagina: 3. Contenido:  O˜¿ Z“¿ª—u· Z“¿ôNq·(Z“¿”w· 
+[INFO] 12:18:37:990 Swap/(3295:3295): Escribiendo mProc: 1. Pagina: 1. Contenido:  O˜¿ Z“¿ª—u· Z“¿ôNq·(Z“¿”w· 
+[INFO] 12:18:49:160 Swap/(3295:3295): ---------------------FIN---------------------

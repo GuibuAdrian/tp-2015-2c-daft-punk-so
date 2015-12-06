@@ -7858,3 +7858,382 @@
 [INFO] 16:53:46:693 CPU/(6650:6651): Recibido mProc: 1, path: mem.cod, puntero: 18
 [INFO] 16:53:46:694 CPU/(6650:6651): ID CPU: 1 conectado a Memoria
 [INFO] 16:53:48:696 CPU/(6650:6651): Rafaga concluida. PID 1.
+[INFO] 09:47:49:178 CPU/(2719:2721): Conectado CPU 4!!
+[INFO] 09:47:49:178 CPU/(2719:2720): Planificador: 5 conectado, viva!!
+[INFO] 09:47:54:448 CPU/(2719:2720): Recibido mProc: 1, path: mem.cod, puntero: 2
+[INFO] 09:47:54:448 CPU/(2719:2720): ID CPU: 1 conectado a Memoria
+[INFO] 09:47:59:449 CPU/(2719:2720): Recibido mProc: 1, path: mem.cod, puntero: 3
+[INFO] 09:47:59:450 CPU/(2719:2720): ID CPU: 1 conectado a Memoria
+[INFO] 09:48:06:452 CPU/(2719:2720): Recibido mProc: 1, path: mem.cod, puntero: 4
+[INFO] 09:48:06:452 CPU/(2719:2720): ID CPU: 1 conectado a Memoria
+[INFO] 09:48:11:454 CPU/(2719:2720): Recibido mProc: 1, path: mem.cod, puntero: 5
+[INFO] 09:48:11:455 CPU/(2719:2720): ID CPU: 1 conectado a Memoria
+[INFO] 09:48:18:457 CPU/(2719:2720): Recibido mProc: 1, path: mem.cod, puntero: 6
+[INFO] 09:48:18:458 CPU/(2719:2720): ID CPU: 1 conectado a Memoria
+[INFO] 09:48:23:459 CPU/(2719:2720): Recibido mProc: 1, path: mem.cod, puntero: 7
+[INFO] 09:48:23:461 CPU/(2719:2720): ID CPU: 1 conectado a Memoria
+[INFO] 09:48:30:463 CPU/(2719:2720): Recibido mProc: 1, path: mem.cod, puntero: 8
+[INFO] 09:48:30:463 CPU/(2719:2720): ID CPU: 1 conectado a Memoria
+[INFO] 09:48:35:464 CPU/(2719:2720): Recibido mProc: 1, path: mem.cod, puntero: 9
+[INFO] 09:48:35:465 CPU/(2719:2720): ID CPU: 1 conectado a Memoria
+[INFO] 09:48:42:469 CPU/(2719:2720): Recibido mProc: 1, path: mem.cod, puntero: 10
+[INFO] 09:48:42:469 CPU/(2719:2720): ID CPU: 1 conectado a Memoria
+[INFO] 09:48:49:472 CPU/(2719:2720): Recibido mProc: 1, path: mem.cod, puntero: 11
+[INFO] 09:48:49:473 CPU/(2719:2720): ID CPU: 1 conectado a Memoria
+[INFO] 09:48:56:477 CPU/(2719:2720): Recibido mProc: 1, path: mem.cod, puntero: 12
+[INFO] 09:48:56:477 CPU/(2719:2720): ID CPU: 1 conectado a Memoria
+[INFO] 09:49:01:478 CPU/(2719:2720): Recibido mProc: 1, path: mem.cod, puntero: 13
+[INFO] 09:49:01:478 CPU/(2719:2720): ID CPU: 1 conectado a Memoria
+[INFO] 09:49:08:482 CPU/(2719:2720): Recibido mProc: 1, path: mem.cod, puntero: 14
+[INFO] 09:49:08:483 CPU/(2719:2720): ID CPU: 1 conectado a Memoria
+[INFO] 09:49:13:484 CPU/(2719:2720): Recibido mProc: 1, path: mem.cod, puntero: 15
+[INFO] 09:49:13:484 CPU/(2719:2720): ID CPU: 1 conectado a Memoria
+[INFO] 09:49:20:490 CPU/(2719:2720): Recibido mProc: 1, path: mem.cod, puntero: 16
+[INFO] 09:49:20:490 CPU/(2719:2720): ID CPU: 1 conectado a Memoria
+[INFO] 09:49:27:493 CPU/(2719:2720): Recibido mProc: 1, path: mem.cod, puntero: 17
+[INFO] 09:49:32:494 CPU/(2719:2720): Rafaga concluida. PID 1.
+[INFO] 09:49:52:534 CPU/(2719:2720): Recibido mProc: 1, path: mem.cod, puntero: 18
+[INFO] 09:49:52:534 CPU/(2719:2720): ID CPU: 1 conectado a Memoria
+[INFO] 09:49:57:536 CPU/(2719:2720): Rafaga concluida. PID 1.
+[INFO] 09:50:19:378 CPU/(2719:2721): Rafaga concluida. PID 4
+[INFO] 09:50:19:378 CPU/(2719:2719): ---------------------FIN---------------------
+[INFO] 09:58:46:597 CPU/(2768:2770): Conectado CPU 4!!
+[INFO] 09:58:46:597 CPU/(2768:2769): Planificador: 5 conectado, viva!!
+[INFO] 09:58:57:370 CPU/(2768:2769): Recibido mProc: 1, path: mem.cod, puntero: 2
+[INFO] 09:58:57:371 CPU/(2768:2769): ID CPU: 1 conectado a Memoria
+[INFO] 09:59:02:373 CPU/(2768:2769): Recibido mProc: 1, path: mem.cod, puntero: 3
+[INFO] 09:59:02:373 CPU/(2768:2769): ID CPU: 1 conectado a Memoria
+[INFO] 09:59:09:375 CPU/(2768:2769): Recibido mProc: 1, path: mem.cod, puntero: 4
+[INFO] 09:59:09:376 CPU/(2768:2769): ID CPU: 1 conectado a Memoria
+[INFO] 09:59:14:378 CPU/(2768:2769): Recibido mProc: 1, path: mem.cod, puntero: 5
+[INFO] 09:59:14:379 CPU/(2768:2769): ID CPU: 1 conectado a Memoria
+[INFO] 09:59:21:381 CPU/(2768:2769): Recibido mProc: 1, path: mem.cod, puntero: 6
+[INFO] 09:59:21:381 CPU/(2768:2769): ID CPU: 1 conectado a Memoria
+[INFO] 09:59:26:383 CPU/(2768:2769): Recibido mProc: 1, path: mem.cod, puntero: 7
+[INFO] 09:59:26:383 CPU/(2768:2769): ID CPU: 1 conectado a Memoria
+[INFO] 09:59:33:387 CPU/(2768:2769): Recibido mProc: 1, path: mem.cod, puntero: 8
+[INFO] 09:59:33:388 CPU/(2768:2769): ID CPU: 1 conectado a Memoria
+[INFO] 09:59:38:389 CPU/(2768:2769): Recibido mProc: 1, path: mem.cod, puntero: 9
+[INFO] 09:59:38:389 CPU/(2768:2769): ID CPU: 1 conectado a Memoria
+[INFO] 09:59:45:392 CPU/(2768:2769): Recibido mProc: 1, path: mem.cod, puntero: 10
+[INFO] 09:59:45:393 CPU/(2768:2769): ID CPU: 1 conectado a Memoria
+[INFO] 09:59:52:398 CPU/(2768:2769): Recibido mProc: 1, path: mem.cod, puntero: 11
+[INFO] 09:59:52:398 CPU/(2768:2769): ID CPU: 1 conectado a Memoria
+[INFO] 09:59:59:403 CPU/(2768:2769): Recibido mProc: 1, path: mem.cod, puntero: 12
+[INFO] 09:59:59:404 CPU/(2768:2769): ID CPU: 1 conectado a Memoria
+[INFO] 10:00:04:405 CPU/(2768:2769): Recibido mProc: 1, path: mem.cod, puntero: 13
+[INFO] 10:00:04:406 CPU/(2768:2769): ID CPU: 1 conectado a Memoria
+[INFO] 10:00:11:408 CPU/(2768:2769): Recibido mProc: 1, path: mem.cod, puntero: 14
+[INFO] 10:00:11:408 CPU/(2768:2769): ID CPU: 1 conectado a Memoria
+[INFO] 10:00:16:409 CPU/(2768:2769): Recibido mProc: 1, path: mem.cod, puntero: 15
+[INFO] 10:00:16:410 CPU/(2768:2769): ID CPU: 1 conectado a Memoria
+[INFO] 10:00:23:412 CPU/(2768:2769): Recibido mProc: 1, path: mem.cod, puntero: 16
+[INFO] 10:00:23:413 CPU/(2768:2769): ID CPU: 1 conectado a Memoria
+[INFO] 10:00:28:415 CPU/(2768:2769): Recibido mProc: 1, path: mem.cod, puntero: 17
+[INFO] 10:00:33:417 CPU/(2768:2769): Rafaga concluida. PID 1.
+[INFO] 10:00:53:457 CPU/(2768:2769): Recibido mProc: 1, path: mem.cod, puntero: 18
+[INFO] 10:00:53:457 CPU/(2768:2769): ID CPU: 1 conectado a Memoria
+[INFO] 10:00:58:458 CPU/(2768:2769): Rafaga concluida. PID 1.
+[INFO] 10:12:10:898 CPU/(2183:2185): Conectado CPU 4!!
+[INFO] 10:12:10:898 CPU/(2183:2184): Planificador: 5 conectado, viva!!
+[INFO] 10:12:52:221 CPU/(2183:2184): Recibido mProc: 1, path: mem.cod, puntero: 2
+[INFO] 10:12:52:222 CPU/(2183:2184): ID CPU: 1 conectado a Memoria
+[INFO] 10:12:57:223 CPU/(2183:2184): Recibido mProc: 1, path: mem.cod, puntero: 3
+[INFO] 10:12:57:224 CPU/(2183:2184): ID CPU: 1 conectado a Memoria
+[INFO] 10:13:04:229 CPU/(2183:2184): Recibido mProc: 1, path: mem.cod, puntero: 4
+[INFO] 10:13:04:229 CPU/(2183:2184): ID CPU: 1 conectado a Memoria
+[INFO] 10:13:09:231 CPU/(2183:2184): Recibido mProc: 1, path: mem.cod, puntero: 5
+[INFO] 10:13:09:231 CPU/(2183:2184): ID CPU: 1 conectado a Memoria
+[INFO] 10:13:16:233 CPU/(2183:2184): Recibido mProc: 1, path: mem.cod, puntero: 6
+[INFO] 10:13:16:234 CPU/(2183:2184): ID CPU: 1 conectado a Memoria
+[INFO] 10:13:21:236 CPU/(2183:2184): Recibido mProc: 1, path: mem.cod, puntero: 7
+[INFO] 10:13:21:237 CPU/(2183:2184): ID CPU: 1 conectado a Memoria
+[INFO] 10:13:28:243 CPU/(2183:2184): Recibido mProc: 1, path: mem.cod, puntero: 8
+[INFO] 10:13:28:243 CPU/(2183:2184): ID CPU: 1 conectado a Memoria
+[INFO] 10:13:33:247 CPU/(2183:2184): Recibido mProc: 1, path: mem.cod, puntero: 9
+[INFO] 10:13:33:247 CPU/(2183:2184): ID CPU: 1 conectado a Memoria
+[INFO] 10:13:40:250 CPU/(2183:2184): Recibido mProc: 1, path: mem.cod, puntero: 10
+[INFO] 10:13:40:251 CPU/(2183:2184): ID CPU: 1 conectado a Memoria
+[INFO] 10:13:47:255 CPU/(2183:2184): Recibido mProc: 1, path: mem.cod, puntero: 11
+[INFO] 10:13:47:255 CPU/(2183:2184): ID CPU: 1 conectado a Memoria
+[INFO] 10:13:54:259 CPU/(2183:2184): Recibido mProc: 1, path: mem.cod, puntero: 12
+[INFO] 10:13:54:259 CPU/(2183:2184): ID CPU: 1 conectado a Memoria
+[INFO] 10:13:59:261 CPU/(2183:2184): Recibido mProc: 1, path: mem.cod, puntero: 13
+[INFO] 10:13:59:262 CPU/(2183:2184): ID CPU: 1 conectado a Memoria
+[INFO] 10:14:06:266 CPU/(2183:2184): Recibido mProc: 1, path: mem.cod, puntero: 14
+[INFO] 10:14:06:266 CPU/(2183:2184): ID CPU: 1 conectado a Memoria
+[INFO] 10:14:11:267 CPU/(2183:2184): Recibido mProc: 1, path: mem.cod, puntero: 15
+[INFO] 10:14:11:268 CPU/(2183:2184): ID CPU: 1 conectado a Memoria
+[INFO] 10:14:18:271 CPU/(2183:2184): Recibido mProc: 1, path: mem.cod, puntero: 16
+[INFO] 10:14:18:271 CPU/(2183:2184): ID CPU: 1 conectado a Memoria
+[INFO] 10:14:23:272 CPU/(2183:2184): Recibido mProc: 1, path: mem.cod, puntero: 17
+[INFO] 10:14:28:273 CPU/(2183:2184): Rafaga concluida. PID 1.
+[INFO] 10:14:48:318 CPU/(2183:2184): Recibido mProc: 1, path: mem.cod, puntero: 18
+[INFO] 10:14:48:319 CPU/(2183:2184): ID CPU: 1 conectado a Memoria
+[INFO] 10:14:53:320 CPU/(2183:2184): Rafaga concluida. PID 1.
+[INFO] 10:18:21:327 CPU/(2183:2185): Rafaga concluida. PID 4
+[INFO] 10:18:21:327 CPU/(2183:2183): ---------------------FIN---------------------
+[INFO] 10:56:26:751 CPU/(3100:3102): Conectado CPU 4!!
+[INFO] 10:56:26:751 CPU/(3100:3101): Planificador: 5 conectado, viva!!
+[INFO] 10:58:20:449 CPU/(3100:3101): Recibido mProc: 1, path: mem.cod, puntero: 2
+[INFO] 10:58:20:449 CPU/(3100:3101): ID CPU: 1 conectado a Memoria
+[INFO] 10:58:25:450 CPU/(3100:3101): Recibido mProc: 1, path: mem.cod, puntero: 3
+[INFO] 10:58:25:451 CPU/(3100:3101): ID CPU: 1 conectado a Memoria
+[INFO] 10:58:32:456 CPU/(3100:3101): Recibido mProc: 1, path: mem.cod, puntero: 4
+[INFO] 10:58:32:457 CPU/(3100:3101): ID CPU: 1 conectado a Memoria
+[INFO] 10:58:37:458 CPU/(3100:3101): Recibido mProc: 1, path: mem.cod, puntero: 5
+[INFO] 10:58:37:458 CPU/(3100:3101): ID CPU: 1 conectado a Memoria
+[INFO] 10:58:44:460 CPU/(3100:3101): Recibido mProc: 1, path: mem.cod, puntero: 6
+[INFO] 10:58:44:461 CPU/(3100:3101): ID CPU: 1 conectado a Memoria
+[INFO] 10:58:49:462 CPU/(3100:3101): Recibido mProc: 1, path: mem.cod, puntero: 7
+[INFO] 10:58:49:464 CPU/(3100:3101): ID CPU: 1 conectado a Memoria
+[INFO] 10:58:56:468 CPU/(3100:3101): Recibido mProc: 1, path: mem.cod, puntero: 8
+[INFO] 10:58:56:468 CPU/(3100:3101): ID CPU: 1 conectado a Memoria
+[INFO] 10:59:01:469 CPU/(3100:3101): Recibido mProc: 1, path: mem.cod, puntero: 9
+[INFO] 10:59:01:470 CPU/(3100:3101): ID CPU: 1 conectado a Memoria
+[INFO] 10:59:47:216 CPU/(3100:3102): Rafaga concluida. PID 4
+[INFO] 10:59:47:217 CPU/(3100:3100): ---------------------FIN---------------------
+[INFO] 10:59:54:389 CPU/(3272:3274): Conectado CPU 4!!
+[INFO] 10:59:54:389 CPU/(3272:3274): Rafaga concluida. PID 4
+[INFO] 11:00:35:953 CPU/(3283:3285): Conectado CPU 4!!
+[INFO] 11:00:35:953 CPU/(3283:3285): Rafaga concluida. PID 4
+[INFO] 11:00:43:647 CPU/(3288:3290): Conectado CPU 4!!
+[INFO] 11:00:43:647 CPU/(3288:3290): Rafaga concluida. PID 4
+[INFO] 11:01:14:705 CPU/(3310:3312): Conectado CPU 4!!
+[INFO] 11:01:14:706 CPU/(3310:3311): Planificador: 5 conectado, viva!!
+[INFO] 11:01:26:856 CPU/(3310:3311): Recibido mProc: 1, path: mem.cod, puntero: 2
+[INFO] 11:01:26:860 CPU/(3310:3311): ID CPU: 1 conectado a Memoria
+[INFO] 11:01:31:895 CPU/(3310:3311): Recibido mProc: 1, path: mem.cod, puntero: 3
+[INFO] 11:01:31:896 CPU/(3310:3311): ID CPU: 1 conectado a Memoria
+[INFO] 11:01:38:953 CPU/(3310:3311): Recibido mProc: 1, path: mem.cod, puntero: 4
+[INFO] 11:01:38:954 CPU/(3310:3311): ID CPU: 1 conectado a Memoria
+[INFO] 11:01:43:989 CPU/(3310:3311): Recibido mProc: 1, path: mem.cod, puntero: 5
+[INFO] 11:01:43:991 CPU/(3310:3311): ID CPU: 1 conectado a Memoria
+[INFO] 11:01:51:4 CPU/(3310:3311): Recibido mProc: 1, path: mem.cod, puntero: 6
+[INFO] 11:01:51:6 CPU/(3310:3311): ID CPU: 1 conectado a Memoria
+[INFO] 11:01:56:9 CPU/(3310:3311): Recibido mProc: 1, path: mem.cod, puntero: 7
+[INFO] 11:01:56:10 CPU/(3310:3311): ID CPU: 1 conectado a Memoria
+[INFO] 11:02:03:18 CPU/(3310:3311): Recibido mProc: 1, path: mem.cod, puntero: 8
+[INFO] 11:02:03:19 CPU/(3310:3311): ID CPU: 1 conectado a Memoria
+[INFO] 11:02:08:24 CPU/(3310:3311): Recibido mProc: 1, path: mem.cod, puntero: 9
+[INFO] 11:02:08:25 CPU/(3310:3311): ID CPU: 1 conectado a Memoria
+[INFO] 11:06:05:979 CPU/(3423:3425): Conectado CPU 4!!
+[INFO] 11:06:05:979 CPU/(3423:3424): Planificador: 5 conectado, viva!!
+[INFO] 11:06:21:492 CPU/(3423:3424): Recibido mProc: 1, path: mem.cod, puntero: 2
+[INFO] 11:06:21:492 CPU/(3423:3424): ID CPU: 1 conectado a Memoria
+[INFO] 11:06:26:493 CPU/(3423:3424): Recibido mProc: 1, path: mem.cod, puntero: 3
+[INFO] 11:06:26:493 CPU/(3423:3424): ID CPU: 1 conectado a Memoria
+[INFO] 11:06:33:498 CPU/(3423:3424): Recibido mProc: 1, path: mem.cod, puntero: 4
+[INFO] 11:06:33:498 CPU/(3423:3424): ID CPU: 1 conectado a Memoria
+[INFO] 11:06:38:545 CPU/(3423:3424): Recibido mProc: 1, path: mem.cod, puntero: 5
+[INFO] 11:06:38:545 CPU/(3423:3424): ID CPU: 1 conectado a Memoria
+[INFO] 11:06:45:548 CPU/(3423:3424): Recibido mProc: 1, path: mem.cod, puntero: 6
+[INFO] 11:06:45:550 CPU/(3423:3424): ID CPU: 1 conectado a Memoria
+[INFO] 11:06:50:551 CPU/(3423:3424): Recibido mProc: 1, path: mem.cod, puntero: 7
+[INFO] 11:06:50:551 CPU/(3423:3424): ID CPU: 1 conectado a Memoria
+[INFO] 11:06:57:553 CPU/(3423:3424): Recibido mProc: 1, path: mem.cod, puntero: 8
+[INFO] 11:06:57:554 CPU/(3423:3424): ID CPU: 1 conectado a Memoria
+[INFO] 11:07:02:556 CPU/(3423:3424): Recibido mProc: 1, path: mem.cod, puntero: 9
+[INFO] 11:07:02:556 CPU/(3423:3424): ID CPU: 1 conectado a Memoria
+[INFO] 11:17:19:684 CPU/(3726:3728): Conectado CPU 4!!
+[INFO] 11:17:19:685 CPU/(3726:3727): Planificador: 5 conectado, viva!!
+[INFO] 11:18:37:456 CPU/(3726:3727): Recibido mProc: 1, path: mem.cod, puntero: 2
+[INFO] 11:18:37:457 CPU/(3726:3727): ID CPU: 1 conectado a Memoria
+[INFO] 11:18:42:489 CPU/(3726:3727): Recibido mProc: 1, path: mem.cod, puntero: 3
+[INFO] 11:18:42:490 CPU/(3726:3727): ID CPU: 1 conectado a Memoria
+[INFO] 11:18:49:544 CPU/(3726:3727): Recibido mProc: 1, path: mem.cod, puntero: 4
+[INFO] 11:18:49:545 CPU/(3726:3727): ID CPU: 1 conectado a Memoria
+[INFO] 11:18:54:554 CPU/(3726:3727): Recibido mProc: 1, path: mem.cod, puntero: 5
+[INFO] 11:18:54:555 CPU/(3726:3727): ID CPU: 1 conectado a Memoria
+[INFO] 11:19:01:568 CPU/(3726:3727): Recibido mProc: 1, path: mem.cod, puntero: 6
+[INFO] 11:19:01:571 CPU/(3726:3727): ID CPU: 1 conectado a Memoria
+[INFO] 11:19:06:575 CPU/(3726:3727): Recibido mProc: 1, path: mem.cod, puntero: 7
+[INFO] 11:19:06:577 CPU/(3726:3727): ID CPU: 1 conectado a Memoria
+[INFO] 11:19:13:585 CPU/(3726:3727): Recibido mProc: 1, path: mem.cod, puntero: 8
+[INFO] 11:19:13:586 CPU/(3726:3727): ID CPU: 1 conectado a Memoria
+[INFO] 11:19:18:590 CPU/(3726:3727): Recibido mProc: 1, path: mem.cod, puntero: 9
+[INFO] 11:19:18:591 CPU/(3726:3727): ID CPU: 1 conectado a Memoria
+[INFO] 11:23:09:79 CPU/(3855:3857): Conectado CPU 4!!
+[INFO] 11:23:09:80 CPU/(3855:3856): Planificador: 5 conectado, viva!!
+[INFO] 11:23:30:629 CPU/(3855:3856): Recibido mProc: 1, path: mem.cod, puntero: 2
+[INFO] 11:23:30:633 CPU/(3855:3856): ID CPU: 1 conectado a Memoria
+[INFO] 11:23:34:770 CPU/(3855:3857): Rafaga concluida. PID 4
+[INFO] 11:23:35:802 CPU/(3855:3855): ---------------------FIN---------------------
+[INFO] 11:23:58:511 CPU/(3876:3878): Conectado CPU 4!!
+[INFO] 11:23:58:511 CPU/(3876:3877): Planificador: 5 conectado, viva!!
+[INFO] 11:24:12:603 CPU/(3876:3877): Recibido mProc: 1, path: mem.cod, puntero: 2
+[INFO] 11:24:12:603 CPU/(3876:3877): ID CPU: 1 conectado a Memoria
+[INFO] 11:27:00:183 CPU/(3967:3969): Conectado CPU 4!!
+[INFO] 11:27:00:183 CPU/(3967:3968): Planificador: 5 conectado, viva!!
+[INFO] 11:27:11:864 CPU/(3967:3968): Recibido mProc: 1, path: mem.cod, puntero: 2
+[INFO] 11:27:11:868 CPU/(3967:3968): ID CPU: 1 conectado a Memoria
+[INFO] 11:27:17:43 CPU/(3967:3968): Recibido mProc: 1, path: mem.cod, puntero: 3
+[INFO] 11:27:17:44 CPU/(3967:3968): ID CPU: 1 conectado a Memoria
+[INFO] 11:27:24:102 CPU/(3967:3968): Recibido mProc: 1, path: mem.cod, puntero: 4
+[INFO] 11:27:24:103 CPU/(3967:3968): ID CPU: 1 conectado a Memoria
+[INFO] 11:27:29:128 CPU/(3967:3968): Recibido mProc: 1, path: mem.cod, puntero: 5
+[INFO] 11:27:29:129 CPU/(3967:3968): ID CPU: 1 conectado a Memoria
+[INFO] 11:27:36:144 CPU/(3967:3968): Recibido mProc: 1, path: mem.cod, puntero: 6
+[INFO] 11:27:36:145 CPU/(3967:3968): ID CPU: 1 conectado a Memoria
+[INFO] 11:27:41:147 CPU/(3967:3968): Recibido mProc: 1, path: mem.cod, puntero: 7
+[INFO] 11:27:41:149 CPU/(3967:3968): ID CPU: 1 conectado a Memoria
+[INFO] 11:27:48:158 CPU/(3967:3968): Recibido mProc: 1, path: mem.cod, puntero: 8
+[INFO] 11:27:48:159 CPU/(3967:3968): ID CPU: 1 conectado a Memoria
+[INFO] 11:27:53:162 CPU/(3967:3968): Recibido mProc: 1, path: mem.cod, puntero: 9
+[INFO] 11:27:53:163 CPU/(3967:3968): ID CPU: 1 conectado a Memoria
+[INFO] 11:31:54:343 CPU/(4096:4098): Conectado CPU 4!!
+[INFO] 11:31:54:344 CPU/(4096:4097): Planificador: 5 conectado, viva!!
+[INFO] 11:32:05:569 CPU/(4096:4097): Recibido mProc: 1, path: mem.cod, puntero: 2
+[INFO] 11:32:05:573 CPU/(4096:4097): ID CPU: 1 conectado a Memoria
+[INFO] 11:32:10:615 CPU/(4096:4097): Recibido mProc: 1, path: mem.cod, puntero: 3
+[INFO] 11:32:10:616 CPU/(4096:4097): ID CPU: 1 conectado a Memoria
+[INFO] 11:32:17:680 CPU/(4096:4097): Recibido mProc: 1, path: mem.cod, puntero: 4
+[INFO] 11:32:17:681 CPU/(4096:4097): ID CPU: 1 conectado a Memoria
+[INFO] 11:32:22:708 CPU/(4096:4097): Recibido mProc: 1, path: mem.cod, puntero: 5
+[INFO] 11:32:22:709 CPU/(4096:4097): ID CPU: 1 conectado a Memoria
+[INFO] 11:32:29:723 CPU/(4096:4097): Recibido mProc: 1, path: mem.cod, puntero: 6
+[INFO] 11:32:29:724 CPU/(4096:4097): ID CPU: 1 conectado a Memoria
+[INFO] 11:32:34:727 CPU/(4096:4097): Recibido mProc: 1, path: mem.cod, puntero: 7
+[INFO] 11:32:34:728 CPU/(4096:4097): ID CPU: 1 conectado a Memoria
+[INFO] 11:32:41:737 CPU/(4096:4097): Recibido mProc: 1, path: mem.cod, puntero: 8
+[INFO] 11:32:41:738 CPU/(4096:4097): ID CPU: 1 conectado a Memoria
+[INFO] 11:32:46:744 CPU/(4096:4097): Recibido mProc: 1, path: mem.cod, puntero: 9
+[INFO] 11:32:46:745 CPU/(4096:4097): ID CPU: 1 conectado a Memoria
+[INFO] 11:44:43:9 CPU/(2247:2249): Conectado CPU 4!!
+[INFO] 11:44:43:9 CPU/(2247:2248): Planificador: 5 conectado, viva!!
+[INFO] 11:45:30:3 CPU/(2247:2248): Recibido mProc: 1, path: mem.cod, puntero: 2
+[INFO] 11:45:30:3 CPU/(2247:2248): ID CPU: 1 conectado a Memoria
+[INFO] 11:45:35:4 CPU/(2247:2248): Recibido mProc: 1, path: mem.cod, puntero: 3
+[INFO] 11:45:35:4 CPU/(2247:2248): ID CPU: 1 conectado a Memoria
+[INFO] 11:45:42:6 CPU/(2247:2248): Recibido mProc: 1, path: mem.cod, puntero: 4
+[INFO] 11:45:42:6 CPU/(2247:2248): ID CPU: 1 conectado a Memoria
+[INFO] 11:45:47:7 CPU/(2247:2248): Recibido mProc: 1, path: mem.cod, puntero: 5
+[INFO] 11:45:47:7 CPU/(2247:2248): ID CPU: 1 conectado a Memoria
+[INFO] 11:45:54:10 CPU/(2247:2248): Recibido mProc: 1, path: mem.cod, puntero: 6
+[INFO] 11:45:54:11 CPU/(2247:2248): ID CPU: 1 conectado a Memoria
+[INFO] 11:45:59:11 CPU/(2247:2248): Recibido mProc: 1, path: mem.cod, puntero: 7
+[INFO] 11:45:59:12 CPU/(2247:2248): ID CPU: 1 conectado a Memoria
+[INFO] 11:46:06:15 CPU/(2247:2248): Recibido mProc: 1, path: mem.cod, puntero: 8
+[INFO] 11:46:06:16 CPU/(2247:2248): ID CPU: 1 conectado a Memoria
+[INFO] 11:46:11:16 CPU/(2247:2248): Recibido mProc: 1, path: mem.cod, puntero: 9
+[INFO] 11:46:11:17 CPU/(2247:2248): ID CPU: 1 conectado a Memoria
+[INFO] 11:53:21:452 CPU/(2557:2559): Conectado CPU 4!!
+[INFO] 11:53:21:452 CPU/(2557:2558): Planificador: 5 conectado, viva!!
+[INFO] 11:53:41:24 CPU/(2557:2558): Recibido mProc: 1, path: mem.cod, puntero: 2
+[INFO] 11:53:41:24 CPU/(2557:2558): ID CPU: 1 conectado a Memoria
+[INFO] 11:53:46:26 CPU/(2557:2558): Recibido mProc: 1, path: mem.cod, puntero: 3
+[INFO] 11:53:46:26 CPU/(2557:2558): ID CPU: 1 conectado a Memoria
+[INFO] 11:53:53:28 CPU/(2557:2558): Recibido mProc: 1, path: mem.cod, puntero: 4
+[INFO] 11:53:53:29 CPU/(2557:2558): ID CPU: 1 conectado a Memoria
+[INFO] 11:53:58:29 CPU/(2557:2558): Recibido mProc: 1, path: mem.cod, puntero: 5
+[INFO] 11:53:58:30 CPU/(2557:2558): ID CPU: 1 conectado a Memoria
+[INFO] 11:54:05:33 CPU/(2557:2558): Recibido mProc: 1, path: mem.cod, puntero: 6
+[INFO] 11:54:05:33 CPU/(2557:2558): ID CPU: 1 conectado a Memoria
+[INFO] 11:54:10:34 CPU/(2557:2558): Recibido mProc: 1, path: mem.cod, puntero: 7
+[INFO] 11:54:10:34 CPU/(2557:2558): ID CPU: 1 conectado a Memoria
+[INFO] 11:54:17:36 CPU/(2557:2558): Recibido mProc: 1, path: mem.cod, puntero: 8
+[INFO] 11:54:17:36 CPU/(2557:2558): ID CPU: 1 conectado a Memoria
+[INFO] 11:54:22:38 CPU/(2557:2558): Recibido mProc: 1, path: mem.cod, puntero: 9
+[INFO] 11:54:22:39 CPU/(2557:2558): ID CPU: 1 conectado a Memoria
+[INFO] 11:55:37:729 CPU/(2646:2648): Conectado CPU 4!!
+[INFO] 11:55:37:730 CPU/(2646:2647): Planificador: 5 conectado, viva!!
+[INFO] 11:55:55:391 CPU/(2646:2647): Recibido mProc: 1, path: mem.cod, puntero: 2
+[INFO] 11:55:55:391 CPU/(2646:2647): ID CPU: 1 conectado a Memoria
+[INFO] 11:56:00:393 CPU/(2646:2647): Recibido mProc: 1, path: mem.cod, puntero: 3
+[INFO] 11:56:00:393 CPU/(2646:2647): ID CPU: 1 conectado a Memoria
+[INFO] 11:56:07:396 CPU/(2646:2647): Recibido mProc: 1, path: mem.cod, puntero: 4
+[INFO] 11:56:07:397 CPU/(2646:2647): ID CPU: 1 conectado a Memoria
+[INFO] 11:56:12:397 CPU/(2646:2647): Recibido mProc: 1, path: mem.cod, puntero: 5
+[INFO] 11:56:12:398 CPU/(2646:2647): ID CPU: 1 conectado a Memoria
+[INFO] 11:56:19:400 CPU/(2646:2647): Recibido mProc: 1, path: mem.cod, puntero: 6
+[INFO] 11:56:19:400 CPU/(2646:2647): ID CPU: 1 conectado a Memoria
+[INFO] 11:56:24:401 CPU/(2646:2647): Recibido mProc: 1, path: mem.cod, puntero: 7
+[INFO] 11:56:24:401 CPU/(2646:2647): ID CPU: 1 conectado a Memoria
+[INFO] 11:56:31:407 CPU/(2646:2647): Recibido mProc: 1, path: mem.cod, puntero: 8
+[INFO] 11:56:31:407 CPU/(2646:2647): ID CPU: 1 conectado a Memoria
+[INFO] 11:56:36:408 CPU/(2646:2647): Recibido mProc: 1, path: mem.cod, puntero: 9
+[INFO] 11:56:36:408 CPU/(2646:2647): ID CPU: 1 conectado a Memoria
+[INFO] 11:57:21:296 CPU/(2704:2706): Conectado CPU 4!!
+[INFO] 11:57:21:296 CPU/(2704:2705): Planificador: 5 conectado, viva!!
+[INFO] 11:57:36:746 CPU/(2704:2705): Recibido mProc: 1, path: mem.cod, puntero: 2
+[INFO] 11:57:36:746 CPU/(2704:2705): ID CPU: 1 conectado a Memoria
+[INFO] 11:57:55:654 CPU/(2737:2739): Conectado CPU 4!!
+[INFO] 11:57:55:655 CPU/(2737:2738): Planificador: 5 conectado, viva!!
+[INFO] 11:58:06:86 CPU/(2737:2738): Recibido mProc: 1, path: mem.cod, puntero: 2
+[INFO] 11:58:06:86 CPU/(2737:2738): ID CPU: 1 conectado a Memoria
+[INFO] 11:58:11:88 CPU/(2737:2738): Recibido mProc: 1, path: mem.cod, puntero: 3
+[INFO] 11:58:11:89 CPU/(2737:2738): ID CPU: 1 conectado a Memoria
+[INFO] 11:58:18:91 CPU/(2737:2738): Recibido mProc: 1, path: mem.cod, puntero: 4
+[INFO] 11:58:18:91 CPU/(2737:2738): ID CPU: 1 conectado a Memoria
+[INFO] 11:58:23:93 CPU/(2737:2738): Recibido mProc: 1, path: mem.cod, puntero: 5
+[INFO] 11:58:23:93 CPU/(2737:2738): ID CPU: 1 conectado a Memoria
+[INFO] 11:58:30:96 CPU/(2737:2738): Recibido mProc: 1, path: mem.cod, puntero: 6
+[INFO] 11:58:30:97 CPU/(2737:2738): ID CPU: 1 conectado a Memoria
+[INFO] 11:58:35:98 CPU/(2737:2738): Recibido mProc: 1, path: mem.cod, puntero: 7
+[INFO] 11:58:35:98 CPU/(2737:2738): ID CPU: 1 conectado a Memoria
+[INFO] 11:58:42:100 CPU/(2737:2738): Recibido mProc: 1, path: mem.cod, puntero: 8
+[INFO] 11:58:42:101 CPU/(2737:2738): ID CPU: 1 conectado a Memoria
+[INFO] 11:58:47:102 CPU/(2737:2738): Recibido mProc: 1, path: mem.cod, puntero: 9
+[INFO] 11:58:47:103 CPU/(2737:2738): ID CPU: 1 conectado a Memoria
+[INFO] 12:00:21:188 CPU/(2851:2853): Conectado CPU 4!!
+[INFO] 12:00:21:188 CPU/(2851:2852): Planificador: 5 conectado, viva!!
+[INFO] 12:00:33:714 CPU/(2851:2852): Recibido mProc: 1, path: mem.cod, puntero: 2
+[INFO] 12:00:33:714 CPU/(2851:2852): ID CPU: 1 conectado a Memoria
+[INFO] 12:00:38:716 CPU/(2851:2852): Recibido mProc: 1, path: mem.cod, puntero: 3
+[INFO] 12:00:38:717 CPU/(2851:2852): ID CPU: 1 conectado a Memoria
+[INFO] 12:00:45:722 CPU/(2851:2852): Recibido mProc: 1, path: mem.cod, puntero: 4
+[INFO] 12:00:45:722 CPU/(2851:2852): ID CPU: 1 conectado a Memoria
+[INFO] 12:00:50:723 CPU/(2851:2852): Recibido mProc: 1, path: mem.cod, puntero: 5
+[INFO] 12:00:50:724 CPU/(2851:2852): ID CPU: 1 conectado a Memoria
+[INFO] 12:00:57:726 CPU/(2851:2852): Recibido mProc: 1, path: mem.cod, puntero: 6
+[INFO] 12:00:57:727 CPU/(2851:2852): ID CPU: 1 conectado a Memoria
+[INFO] 12:01:02:728 CPU/(2851:2852): Recibido mProc: 1, path: mem.cod, puntero: 7
+[INFO] 12:01:02:729 CPU/(2851:2852): ID CPU: 1 conectado a Memoria
+[INFO] 12:01:09:732 CPU/(2851:2852): Recibido mProc: 1, path: mem.cod, puntero: 8
+[INFO] 12:01:09:732 CPU/(2851:2852): ID CPU: 1 conectado a Memoria
+[INFO] 12:01:14:734 CPU/(2851:2852): Recibido mProc: 1, path: mem.cod, puntero: 9
+[INFO] 12:01:14:734 CPU/(2851:2852): ID CPU: 1 conectado a Memoria
+[INFO] 12:06:25:351 CPU/(2959:2961): Conectado CPU 4!!
+[INFO] 12:06:25:351 CPU/(2959:2960): Planificador: 5 conectado, viva!!
+[INFO] 12:06:42:274 CPU/(2959:2960): Recibido mProc: 1, path: mem.cod, puntero: 2
+[INFO] 12:06:42:274 CPU/(2959:2960): ID CPU: 1 conectado a Memoria
+[INFO] 12:06:47:276 CPU/(2959:2960): Recibido mProc: 1, path: mem.cod, puntero: 3
+[INFO] 12:06:47:276 CPU/(2959:2960): ID CPU: 1 conectado a Memoria
+[INFO] 12:06:54:279 CPU/(2959:2960): Recibido mProc: 1, path: mem.cod, puntero: 4
+[INFO] 12:06:54:279 CPU/(2959:2960): ID CPU: 1 conectado a Memoria
+[INFO] 12:06:59:280 CPU/(2959:2960): Recibido mProc: 1, path: mem.cod, puntero: 5
+[INFO] 12:06:59:281 CPU/(2959:2960): ID CPU: 1 conectado a Memoria
+[INFO] 12:07:06:285 CPU/(2959:2960): Recibido mProc: 1, path: mem.cod, puntero: 6
+[INFO] 12:07:06:285 CPU/(2959:2960): ID CPU: 1 conectado a Memoria
+[INFO] 12:07:11:286 CPU/(2959:2960): Recibido mProc: 1, path: mem.cod, puntero: 7
+[INFO] 12:07:11:286 CPU/(2959:2960): ID CPU: 1 conectado a Memoria
+[INFO] 12:07:18:288 CPU/(2959:2960): Recibido mProc: 1, path: mem.cod, puntero: 8
+[INFO] 12:07:18:288 CPU/(2959:2960): ID CPU: 1 conectado a Memoria
+[INFO] 12:07:23:290 CPU/(2959:2960): Recibido mProc: 1, path: mem.cod, puntero: 9
+[INFO] 12:07:23:290 CPU/(2959:2960): ID CPU: 1 conectado a Memoria
+[INFO] 12:09:35:251 CPU/(3061:3063): Conectado CPU 4!!
+[INFO] 12:09:35:251 CPU/(3061:3062): Planificador: 5 conectado, viva!!
+[INFO] 12:16:16:812 CPU/(3061:3063): Rafaga concluida. PID 4
+[INFO] 12:16:16:812 CPU/(3061:3061): ---------------------FIN---------------------
+[INFO] 12:16:27:313 CPU/(3256:3258): Conectado CPU 4!!
+[INFO] 12:16:27:313 CPU/(3256:3258): Rafaga concluida. PID 4
+[INFO] 12:16:50:835 CPU/(3279:3281): Conectado CPU 4!!
+[INFO] 12:16:50:835 CPU/(3279:3281): Rafaga concluida. PID 4
+[INFO] 12:17:57:32 CPU/(3289:3291): Conectado CPU 4!!
+[INFO] 12:17:57:32 CPU/(3289:3290): Planificador: 5 conectado, viva!!
+[INFO] 12:18:07:975 CPU/(3289:3290): Recibido mProc: 1, path: mem.cod, puntero: 2
+[INFO] 12:18:07:975 CPU/(3289:3290): ID CPU: 1 conectado a Memoria
+[INFO] 12:18:12:977 CPU/(3289:3290): Recibido mProc: 1, path: mem.cod, puntero: 3
+[INFO] 12:18:12:978 CPU/(3289:3290): ID CPU: 1 conectado a Memoria
+[INFO] 12:18:19:982 CPU/(3289:3290): Recibido mProc: 1, path: mem.cod, puntero: 4
+[INFO] 12:18:19:982 CPU/(3289:3290): ID CPU: 1 conectado a Memoria
+[INFO] 12:18:24:984 CPU/(3289:3290): Recibido mProc: 1, path: mem.cod, puntero: 5
+[INFO] 12:18:24:985 CPU/(3289:3290): ID CPU: 1 conectado a Memoria
+[INFO] 12:18:31:987 CPU/(3289:3290): Recibido mProc: 1, path: mem.cod, puntero: 6
+[INFO] 12:18:31:987 CPU/(3289:3290): ID CPU: 1 conectado a Memoria
+[INFO] 12:18:36:988 CPU/(3289:3290): Recibido mProc: 1, path: mem.cod, puntero: 7
+[INFO] 12:18:36:989 CPU/(3289:3290): ID CPU: 1 conectado a Memoria
+[INFO] 12:18:43:992 CPU/(3289:3290): Recibido mProc: 1, path: mem.cod, puntero: 8
+[INFO] 12:18:43:992 CPU/(3289:3290): ID CPU: 1 conectado a Memoria
+[INFO] 12:18:48:994 CPU/(3289:3290): Recibido mProc: 1, path: mem.cod, puntero: 9
+[INFO] 12:18:48:994 CPU/(3289:3290): ID CPU: 1 conectado a Memoria
