@@ -320,23 +320,15 @@ void actualizarTLB(int pid, int pag, int marco)
 
 t_tablaPags* clockMejorado(t_list* listaTablaPags, int pag, int pid, int orden)
 {
-	t_tablaPags* new2, *new3;
-	int posEncontrado;
+	t_tablaPags* new2/*, *new3*/;
+	int posEncontrado = -1;
 
-	posEncontrado = encontrarPosUsoYModificado_cero(listaTablaPags);
-
-	if(posEncontrado == -1)
-	{
-		posEncontrado = encontrarPosUso_cero_YModificado_uno(listaTablaPags);
+	while(posEncontrado == -1){
+		posEncontrado = encontrarPosUsoYModificado_cero(listaTablaPags);
 
 		if(posEncontrado == -1)
 		{
-			posEncontrado = encontrarPosUsoYModificado_cero(listaTablaPags);
-
-			if(posEncontrado == -1)
-			{
-				posEncontrado = encontrarPosUso_cero_YModificado_uno(listaTablaPags);
-			}
+			posEncontrado = encontrarPosUso_cero_YModificado_uno(listaTablaPags);
 		}
 	}
 
