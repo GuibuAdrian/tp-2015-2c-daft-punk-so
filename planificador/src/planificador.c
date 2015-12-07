@@ -508,10 +508,6 @@ void ROUND_ROBIN(void* args)
 	log_info(logger, "Correr %s, mProc: %d, en %d", pcbReady->path, pidReady, idHiloCPU);
 
 	time(&tiempoAhora);
-/*	struct tm* tm_info;
-	tm_info = localtime(&tiempoAhora);
-*/
-//	printf("Correr %s, mProc: %d, en %d %d:%d\n", path, pidReady, idHiloCPU, tm_info->tm_min, tm_info->tm_sec);
 
 	espe = espe + difftime(tiempoAhora, espeI);
 
@@ -615,10 +611,6 @@ void FIFO(void *args)
 	log_info(logger, "Correr %s, mProc: %d, en %d", pcbReady->path, pidReady, idHiloCPU);
 
 	time(&tiempoAhora);
-/*	struct tm* tm_info;
-	tm_info = localtime(&tiempoAhora);
-*/
-//	printf("Correr %s, mProc: %d, en %d %d:%d\n", path, pidReady, idHiloCPU, tm_info->tm_min, tm_info->tm_sec);
 
 	espe = espe + difftime(tiempoAhora, espeI);
 
@@ -924,11 +916,17 @@ void consola()
 	{
 		printf("Ingresar comando: ");
 		fgets(comando, PACKAGESIZE, stdin);
-		printf("\n");
 
-		char * pch;
-
+		char *pch;
 		pch = strtok(comando," \n");
+		while(pch==NULL){
+			printf("Ingrese un comando valido \n");
+			printf("Para consultas utilice el comando man \n");
+			printf("Ingresar comando: ");
+			fgets(comando, PACKAGESIZE, stdin);
+			pch = strtok(comando,"\n");
+			if(pch!=NULL)break;
+		}
 
 		if (strncmp(pch,"cr", 2) == 0) //Correr PATH
 		{
@@ -943,7 +941,22 @@ void consola()
 			if (strncmp(pch, "fz", 2) == 0) //Finalizar PID
 			{
 				pch = strtok(NULL," \n");
-				int ret = strtol(pch, NULL, 10);
+				int ret = -1;
+				char pid[PACKAGESIZE];
+				if(pch==NULL){
+					printf("Pos te has olviao el PID tio, vuelve a ingresar el PID por favor \n");
+					printf("PID: ");
+					fgets(pid, PACKAGESIZE, stdin);
+					pch=strtok(pid,"\n");
+					while(pch==NULL){
+						printf("Pos te has olviao el PID tio, vuelve a ingresar el PID por favor \n");
+						printf("PID: ");
+						fgets(pid, PACKAGESIZE, stdin);
+						pch=strtok(pid,"\n");
+						if(pch!=NULL)break;
+					}
+				}
+				ret= strtol(pch, NULL, 10);
 
 				finalizarPID(ret);
 

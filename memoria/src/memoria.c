@@ -1339,7 +1339,7 @@ int encontrarPosUso_cero_YModificado_uno(t_list *listaTablaPags)
 		if( (uso == 0) && (mod == 1) )
 		{
 			encontrado = posPuntero;
-			log_info(logger, "Encontrado");
+			log_info(logger, "Encontrado \n");
 
 		}
 		else
