@@ -431,7 +431,7 @@ t_tablaPags* aplicarAlgoritmo(t_tablaDeProcesos* new, int pag, int pid, int orde
 
 int reemplazarPagina(t_tablaDeProcesos* new, int pag, int orden)
 {
-	int marco;
+	int marco, pagina;
 
 	t_tablaPags* new2;
 
@@ -449,10 +449,11 @@ int reemplazarPagina(t_tablaDeProcesos* new, int pag, int orden)
 	}
 
 	marco = new2->marco;
+	pagina = new2->pagina;
 
 	if(new2->bitModificado==1)
 	{
-		enviarOrdenASwap(new->pid, orden, new2->pagina, memoriaPrincipal+marco*tamMarcos);
+		enviarOrdenASwap(new->pid, ESCRIBIR, pagina, memoriaPrincipal+marco*tamMarcos);
 		aumentarFallos_Swap(new->pid, 0, 1);
 	}
 

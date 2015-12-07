@@ -13,5 +13,5 @@ leer 3;
 escribir 2 "dos";
 leer 5;
 leer 2;
-entrada-salida 20;
+entrada-salida 5;
 finalizar;
