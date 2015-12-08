@@ -120,7 +120,7 @@ void dumpMemoriaPrincipal();
 void borrarPIDEnTLB(int pid);
 void aumentarBitReferencia(t_list* new);
 void cambiarBitReferencia(int pid, int pagina);
-void cambiarBitUsoYModificado(int pid, int pagina, int orden, int marco);
+void cambiarBitUsoYModificado(int pid, int pagina, int marco, int uso, int mod);
 void mostrarTablaDePags(int pid);
 void mostrarTLB();
 void mostrarMemoriaPpal();
@@ -148,8 +148,7 @@ int main() {
 	entradasTLB = config_get_int_value(config, "ENTRADAS_TLB");
 	retardoMem = config_get_int_value(config, "RETARDO_MEMORIA");
 	TLBHabil = config_get_string_value(config, "TLB_HABILITADA");
-	politicaDeReemplazo = config_get_string_value(config,
-			"POLITICA_DE_REEMPLAZO");
+	politicaDeReemplazo = config_get_string_value(config, "POLITICA_DE_REEMPLAZO");
 
 
 	pthread_mutex_init(&mutexTLB, NULL);
@@ -205,9 +204,7 @@ void recibirConexiones1(char * PUERTO_CPU) {
 		memcpy(&tempset, &readset, sizeof(tempset));
 		result = select(maxfd + 1, &tempset, NULL, NULL, NULL);
 
-		if (result == 0) {
-			log_error(logger, "select() timed out!\n");
-		} else if (result < 0 && errno != EINTR) {
+		if (result < 0 && errno != EINTR) {
 			log_error(logger, "Error in select(): %s\n", strerror(errno));
 		} else if (result > 0) {
 			if (FD_ISSET(listenningSocket, &tempset)) {
@@ -280,8 +277,6 @@ void recibirConexiones1(char * PUERTO_CPU) {
 
 							if ( (new != NULL) && (mensaje.orden != 0) && (mensaje.orden != 3) )  //Esta en la TLB
 							{
-								log_info(logger, "Proc: %d, Pag: %d. Esta en TLB", pid, mensaje.pagina);
-
 								totalTLBHits++;
 								totalAccesos++;
 
@@ -293,8 +288,8 @@ void recibirConexiones1(char * PUERTO_CPU) {
 								procesarOrden(mensaje, socketCPU);
 							}
 						}
+						mostrarTablaDePags(mensaje.pid);
 
-						mostrarTablaDePags(pid);
 
 						free(package2);
 					} else if (result == 0) {
@@ -336,6 +331,7 @@ t_tablaPags* clockMejorado(t_list* listaTablaPags, int pag, int pid, int orden)
 	int posEncontrado = -1;
 	int modificado = 0;
 	int uso = 1;
+	int marco;
 
 	while(posEncontrado == -1)
 	{
@@ -348,13 +344,14 @@ t_tablaPags* clockMejorado(t_list* listaTablaPags, int pag, int pid, int orden)
 	}
 
 	new2 = list_remove(listaTablaPags, posEncontrado);
+	marco = new2->marco;
 
 	if(orden==ESCRIBIR)
 	{
 		modificado = 1;
 	}
 
-	list_add(listaTablaPags, tablaPag_create(pag, new2->marco, uso, modificado, 0));
+	list_add_in_index(listaTablaPags, posEncontrado, tablaPag_create(pag, marco, uso, modificado, 0));
 
 	return new2;
 }
@@ -431,7 +428,9 @@ t_tablaPags* aplicarAlgoritmo(t_tablaDeProcesos* new, int pag, int pid, int orde
 
 int reemplazarPagina(t_tablaDeProcesos* new, int pag, int orden)
 {
-	int marco, pagina;
+	int marco, pagina, pid;
+
+	pid = new->pid;
 
 	t_tablaPags* new2;
 
@@ -453,6 +452,8 @@ int reemplazarPagina(t_tablaDeProcesos* new, int pag, int orden)
 
 	if(new2->bitModificado==1)
 	{
+		log_info(logger, "Solicitando a SWAP mProc: %d Pag: %d", pid, pagina);
+
 		enviarOrdenASwap(new->pid, ESCRIBIR, pagina, memoriaPrincipal+marco*tamMarcos);
 		aumentarFallos_Swap(new->pid, 0, 1);
 	}
@@ -515,7 +516,12 @@ int actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag, int orden)
 
 	if (totalPag == maxMarcos) //Si la cantidad de marcos ocupados es MAX entonces empiezo a reemplazar
 	{
+		log_info(logger, "Inicial");
+		mostrarTablaDePags(new->pid);
+
 		marco = reemplazarPagina(new, pag, orden);
+
+		log_info(logger, "Final");
 		mostrarTablaDePags(new->pid);
 	}
 	else
@@ -526,7 +532,12 @@ int actualizarMemoriaPpal(t_tablaDeProcesos* new, int pag, int orden)
 		{
 			if(!list_is_empty(new->tablaDePaginas)) // Si tiene al menos 1 una pag en memoria la reemplazo
 			{
+				log_info(logger, "Inicial");
+				mostrarTablaDePags(new->pid);
+
 				marco = reemplazarPagina(new, pag, orden);
+
+				log_info(logger, "Final");
 				mostrarTablaDePags(new->pid);
 			}
 			else
@@ -589,6 +600,8 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 
 		respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content);
 
+		log_info(logger, "Proceso %d iniciado de %d pags", mensaje.pid, mensaje.pagina);
+
 		enviarRespuestaCPU(respuestaSwap, socketCPU);
 	}
 	else
@@ -622,21 +635,21 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 				{
 					cambiarBitReferencia(mensaje.pid, mensaje.pagina);
 				}
-				else
-				{
-					if(strncmp(politicaDeReemplazo, "CLOCK",5)==0)
-					{
-						cambiarBitUsoYModificado(mensaje.pid, mensaje.pagina, mensaje.orden, marco);
-					}
-				}
 
 				totalAccesos++;
 
 				if (mensaje.orden == LEER)	// leer pagina de un proceso
 				{
+					if(strncmp(politicaDeReemplazo, "CLOCK",5)==0)
+					{
+						cambiarBitUsoYModificado(mensaje.pid, mensaje.pagina, marco, 1, -1);
+					}
+
 					respuestaSwap.pid = mensaje.pid;
 					respuestaSwap.pagina = mensaje.pagina;
 					respuestaSwap.orden = 2;
+
+					log_info(logger, "Proceso %d Leyendo pag: %d.", respuestaSwap.pid, respuestaSwap.pagina);
 
 					pthread_mutex_lock(&mutexMemoFlush);
 
@@ -648,24 +661,29 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 
 					respuestaSwap.contentSize = strlen(respuestaSwap.content) + 1;
 
-					log_info(logger, "Proceso %d leyendo pag: %d. Contenido: %s",
-							respuestaSwap.pid, respuestaSwap.pagina,
-							respuestaSwap.content);
-
 					enviarRespuestaCPU(mensaje, socketCPU);
 				}
 				else
 					if (mensaje.orden == ESCRIBIR)	// escribe pagina de un proceso
 					{
+						log_info(logger, "Proceso %d Escribiendo en pag: %d", mensaje.pid, mensaje.pagina);
+
+						if(strncmp(politicaDeReemplazo, "CLOCK",3)==0)
+						{
+							cambiarBitUsoYModificado(mensaje.pid, mensaje.pagina, marco, 1, 1);
+						}
+						else
+						{
+							cambiarBitUsoYModificado(mensaje.pid, mensaje.pagina, marco, -1, 1);
+						}
+
 						pthread_mutex_unlock(&mutexMemoFlush);
 
 						escribirPagina(marco, mensaje.content, mensaje.contentSize);
 
 						pthread_mutex_unlock(&mutexMemoFlush);
 
-						 usleep(retardoMem*1000000);
-
-						log_info(logger, "Proceso %d Escribiendo: %s en pag: %d", mensaje.pid, memoriaPrincipal + marco * tamMarcos, mensaje.pagina);
+						usleep(retardoMem*1000000);
 
 						enviarRespuestaCPU(mensaje, socketCPU); //Le devuelvo el contenido del marco al CPU
 					}
@@ -695,15 +713,15 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 				}
 				else
 				{
-					log_info(logger, "mProc: %d, Pag: %d. No esta en memoria principal. Marco asignado: %d", mensaje.pid, mensaje.pagina, marco);
-
 					aumentarFallos_Swap(mensaje.pid, 1, 1);
 
 					totalAccesos++;
 
 					if (mensaje.orden == LEER)	// leer pagina de un proceso
 					{
-						log_info(logger, "Solicitando mProc: %d Pag: %d a SWAP", mensaje.pid, mensaje.pagina);
+						log_info(logger, "Proceso %d Leyendo pag: %d", mensaje.pid, mensaje.pagina);
+
+						log_info(logger, "Solicitando a SWAP mProc: %d Pag: %d", mensaje.pid, mensaje.pagina);
 
 						respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content);
 
@@ -717,22 +735,22 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 
 						 usleep(retardoMem*1000000);
 
-						log_info(logger, "Proceso %d leyendo pag: %d, contenido: %s", mensaje.pid, mensaje.pagina, respuestaSwap.content);
-
 						enviarRespuestaCPU(respuestaSwap, socketCPU);
 					}
 					else
 					{
 						if (mensaje.orden == ESCRIBIR)  // escribe pagina de un proceso
 						{
+							log_info(logger, "Proceso %d Escribiendo en pag: %d", mensaje.pid, mensaje.pagina);
+
 							if(mensaje.contentSize > tamMarcos) {
 								log_error(logger, "Recibí un mensaje para escribir en %d que tiene %d bytes y el tamanio de marco es %d", mensaje.pid, mensaje.contentSize, tamMarcos);
 								return;
 							}
 
-							log_info(logger, "Solicitando mProc: %d Pag: %d a SWAP", mensaje.pid, mensaje.pagina);
+							log_info(logger, "Solicitando a SWAP mProc: %d Pag: %d", mensaje.pid, mensaje.pagina);
 
-							respuestaSwap = enviarOrdenASwap(mensaje.pid, mensaje.orden, mensaje.pagina, mensaje.content); //Le aviso al SWAP del nuevo contenido
+							respuestaSwap = enviarOrdenASwap(mensaje.pid, LEER, mensaje.pagina, mensaje.content); //Le aviso al SWAP del nuevo contenido
 
 							pthread_mutex_lock(&mutexMemoFlush);
 
@@ -741,8 +759,6 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 							pthread_mutex_unlock(&mutexMemoFlush);
 
 							usleep(retardoMem*1000000);
-
-							log_info(logger, "Proceso %d Escribiendo: %s en pag: %d", mensaje.pid, mensaje.content, mensaje.pagina);
 
 							strncpy(respuestaSwap.content, mensaje.content, strlen(mensaje.content));
 
@@ -756,58 +772,62 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 
 void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU)
 {
+
 	t_orden_CPU respuestaSwap;
+
+	respuestaSwap.pid = entradaTLB->pid;
+	respuestaSwap.pagina = entradaTLB->pagina;
+	int marco = entradaTLB->marco;
+
+	log_info(logger, "Esta en TLB. Proc: %d, Pag: %d, Marco: %d", respuestaSwap.pid, mensaje.pagina, marco);
 
 	if(strncmp(politicaDeReemplazo, "LRU",3)==0)
 	{
 		cambiarBitReferencia(mensaje.pid, mensaje.pagina);
 	}
-	else
-	{
-		if(strncmp(politicaDeReemplazo, "CLOCK",3)==0)
-		{
-			cambiarBitUsoYModificado(mensaje.pid, mensaje.pagina, mensaje.orden, entradaTLB->marco);
-		}
-	}
 
 	if (mensaje.orden == LEER)// leer pagina de un proceso
 	{
-		respuestaSwap.pid = entradaTLB->pid;
-		respuestaSwap.pagina = entradaTLB->pagina;
 		respuestaSwap.orden = 2;
+
+		log_info(logger, "Proceso %d Leyendo pag: %d.", mensaje.pid, mensaje.pagina);
 
 		pthread_mutex_lock(&mutexMemoFlush);
 
-		strncpy(respuestaSwap.content, memoriaPrincipal + entradaTLB->marco * tamMarcos, strlen(memoriaPrincipal + entradaTLB->marco * tamMarcos)+1);
+		strncpy(respuestaSwap.content, memoriaPrincipal + marco * tamMarcos, strlen(memoriaPrincipal + marco * tamMarcos)+1);
 
 		pthread_mutex_unlock(&mutexMemoFlush);
 
 		respuestaSwap.contentSize = strlen(respuestaSwap.content) + 1;
 
-		log_info(logger, "Proceso %d leyendo pag: %d. Contenido: %s", entradaTLB->pid, entradaTLB->pagina, respuestaSwap.content);
-
 		enviarRespuestaCPU(respuestaSwap, socketCPU);//Le devuelvo el contenido del marco al CPU
 	}
 	else if (mensaje.orden == ESCRIBIR)// escribe pagina de un proceso
 	{
-		respuestaSwap.pid = entradaTLB->pid;
-		respuestaSwap.pagina = entradaTLB->pagina;
+		if(strncmp(politicaDeReemplazo, "CLOCK",3)==0)
+		{
+			cambiarBitUsoYModificado(mensaje.pid, mensaje.pagina, marco, 1, 1);
+		}
+		else
+		{
+			cambiarBitUsoYModificado(mensaje.pid, mensaje.pagina, marco, -1, 1);
+		}
+
+		log_info(logger, "Proceso %d Escribiendo en pag: %d", respuestaSwap.pid, respuestaSwap.pagina);
+
 		respuestaSwap.orden = 4;
 
 		pthread_mutex_lock(&mutexMemoFlush);
 
-		escribirPagina(entradaTLB->marco, mensaje.content, mensaje.contentSize);
+		escribirPagina(marco, mensaje.content, mensaje.contentSize);
 
 		respuestaSwap.contentSize = strlen(mensaje.content);
 		strncpy(respuestaSwap.content, mensaje.content, respuestaSwap.contentSize);
 
-		log_info(logger, "Proceso %d Escribiendo: %s en pag: %d", entradaTLB->pid, memoriaPrincipal + entradaTLB->marco * tamMarcos, entradaTLB->pagina);
 
 		pthread_mutex_unlock(&mutexMemoFlush);
 
 		enviarRespuestaCPU(respuestaSwap, socketCPU); //Le devuelvo el contenido del marco al CPU
-
-		respuestaSwap = enviarOrdenASwap(entradaTLB->pid, mensaje.orden, entradaTLB->pagina, mensaje.content); //Le aviso al SWAP del nuevo contenido
 	}
 }
 
@@ -815,8 +835,6 @@ void iniciarProceso(int pid, int paginas)
 {
 	list_add(tablaDeProcesos, tablaProc_create(pid, paginas));
 	list_add(fallosPid, fallos_create(pid, 0, 0));
-
-	log_info(logger, "Proceso %d iniciado de %d pags", pid, paginas);
 }
 
 void finalizarProceso(int pid)
@@ -871,7 +889,7 @@ void escribirPagina(int marco, char* content, int contentSize)
 	strncpy(memoriaPrincipal + marco * tamMarcos, content, contentSize); //Actualizo la memo ppal
 }
 
-void cambiarBitUsoYModificado(int pid, int pagina, int orden, int marco)
+void cambiarBitUsoYModificado(int pid, int pagina, int marco, int uso, int mod)
 {
 	t_tablaDeProcesos* new;
 	t_tablaPags* new2;
@@ -879,15 +897,27 @@ void cambiarBitUsoYModificado(int pid, int pagina, int orden, int marco)
 	new = buscarPID(pid);
 	new2 = buscarPagEnTablaDePags(pagina, new);
 
+	int puntero = new2->puntero;
+	int modificado = new2->bitModificado;
+	int usado = new2->bitReferencia;
+
 	int posPag = encontrarPosicionEnTablaDePags(pagina, new->tablaDePaginas);
 
-	if(orden == 1)
+	if(uso == -1)
 	{
-		list_replace_and_destroy_element(new->tablaDePaginas, posPag, tablaPag_create(pagina, marco, 1, new2->bitModificado, new2->puntero), (void*) tablaPag_destroy);
+		list_replace_and_destroy_element(new->tablaDePaginas, posPag, tablaPag_create(pagina, marco, usado, mod, puntero), (void*) tablaPag_destroy);
 	}
 	else
 	{
-		list_replace_and_destroy_element(new->tablaDePaginas, posPag, tablaPag_create(pagina, marco, 1, 1, new2->puntero), (void*) tablaPag_destroy);
+		if(mod == -1)
+		{
+			list_replace_and_destroy_element(new->tablaDePaginas, posPag, tablaPag_create(pagina, marco, uso, modificado, puntero), (void*) tablaPag_destroy);
+
+		}
+		else
+		{
+			list_replace_and_destroy_element(new->tablaDePaginas, posPag, tablaPag_create(pagina, marco, uso, mod, puntero), (void*) tablaPag_destroy);
+		}
 	}
 }
 
@@ -900,7 +930,7 @@ void aumentarBitReferencia(t_list* new)
 	{
 		new2 = list_get(new, i);
 
-		list_replace_and_destroy_element(new, i, tablaPag_create(new2->pagina, new2->marco, new2->bitReferencia+1, new2->bitReferencia, -1), (void*) tablaPag_destroy);
+		list_replace_and_destroy_element(new, i, tablaPag_create(new2->pagina, new2->marco, new2->bitReferencia+1, new2->bitModificado, -1), (void*) tablaPag_destroy);
 	}
 }
 
@@ -910,7 +940,6 @@ void cambiarBitReferencia(int pid, int pagina)
 	t_tablaPags* new2;
 
 	aumentarBitReferencia(new->tablaDePaginas);
-
 
 	int posPag = encontrarPosicionEnTablaDePags(pagina, new->tablaDePaginas);
 	new2 = list_get(new->tablaDePaginas, posPag);
@@ -1339,8 +1368,6 @@ int encontrarPosUso_cero_YModificado_uno(t_list *listaTablaPags)
 		if( (uso == 0) && (mod == 1) )
 		{
 			encontrado = posPuntero;
-			log_info(logger, "Encontrado \n");
-
 		}
 		else
 		{
@@ -1515,17 +1542,31 @@ void mostrarTablaDePags(int pid) {
 		else
 		{
 			log_info(logger, "mProc: %d", pid);
-			log_info(logger, "Pag  Marco  Posicion  Referencia  Modificado	Puntero");
 
-			for (i = 0; i < list_size(new->tablaDePaginas); i++)
+			if(strncmp(politicaDeReemplazo, "CLOCK", 5)==0)
 			{
-				new2 = list_get(new->tablaDePaginas, i);
+				log_info(logger, "Pag  Marco  Posicion  Referencia  Modificado	Puntero");
 
-				log_info(logger, "%4d%12d%16d%22d%25d%27d", new2->pagina, new2->marco,	i + 1, new2->bitReferencia, new2->bitModificado, new2->puntero);
+				for (i = 0; i < list_size(new->tablaDePaginas); i++)
+				{
+					new2 = list_get(new->tablaDePaginas, i);
+
+					log_info(logger, "%4d%12d%16d%22d%25d%27d", new2->pagina, new2->marco,	i + 1, new2->bitReferencia, new2->bitModificado, new2->puntero);
+				}
+			}
+			else
+			{
+				log_info(logger, "Pag  Marco  Modificado");
+
+				for (i = 0; i < list_size(new->tablaDePaginas); i++)
+				{
+					new2 = list_get(new->tablaDePaginas, i);
+
+					log_info(logger, "%4d%12d%16d", new2->pagina, new2->marco, new2->bitModificado);
+				}
 			}
 		}
 	}
-
 }
 
 void mostrarTLB()
