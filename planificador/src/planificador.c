@@ -1017,61 +1017,7 @@ void consola()
 		{
 			if (strncmp(pch, "fin", 3) ==0)
 			{
-				printf("Chau! (al estilo Nivel X)\n");
-				printf("\n");
-				printf("                tCfi.                                                                                                        \n");
-				printf("                  t88800000000GCf1:                                                                                          \n");
-				printf("                  88880GGGGGGGG000000000GGGL1:                                                                               \n");
-				printf("                 f@8800GCCCCCCCCCCCGGGGGGG000000000GC                                                                        \n");
-				printf("                 @@8800GGCCCCCCCCCCCCCCCCCCCCCGGGGGGCf                                                                       \n");
-				printf("                L@@@80000GGCCCCCCCCCCCCCCCCCCCCCCCCCCLt                                                                      \n");
-				printf("               .@@@@@80000GGCCCCCCCCCCCCCCCCCCCCCCCCCCLt:                      f00GLt:.                                      \n");
-				printf("                .8@@@@80000GGCCCCCCCCCCCCCCCCCCCCCCCCCCCfi                   ;8888000000000GCLt:                             \n");
-				printf("                  t@@@@80000GGCCCCCCCCCCCCCCCCCCCCCCCCCCCL1                 088800GGGGGGGGGG0000000000Cf1.                   \n");
-				printf("                    8@@@88000GGCCCCCCCCCCCCCCCCCCCCCCCCCCCCt.             C88800GGCCCCCCCCCCCCGGGGGGGG00008L                 \n");
-				printf("                     i@@@@80000GGCCCCCCCCCCCCCCCCCCCCCCCCCCCf:          t88880GGCCCCCCCCCCCCCCCCCCCCCCCGG8L                  \n");
-				printf("                       G@@@80000GGGCCCCCCCCCCCCCCCCCCCCCCCCCCf1       ,08880GGCCCCCCCCCCCCCCCCCCCCCCCCC08                    \n");
-				printf("                        i@@0G00000GGCCCCCCCCCCCCCCCCCCCCCCCCCCL1     G88800GGCCCCCCCCCCCCCCCCCCCCCCCCG8t                     \n");
-				printf("                   i8000G00GG080000GGCCCCCGf1fCCCCCCCCCCCCCCCCCCt  f88880GGCCCCCCCCCCCCCCCCCCCCCCCCG00                       \n");
-				printf("                  C@0GCfttf88@880000GGCCC8Gt1CCCCCCCCCCCCCCCCCCCCCG0000GGGCCCCCCCCCCCCCCCCCCCCCCCGG81                        \n");
-				printf("                 1@8GLi:,,:  1@@@8000GGC08f1iCCCCCCCCCCCCCCCCCCCCCGGGGGGCCCCCCCCCCCCCCCCCCCCCCCGG0G                          \n");
-				printf("                 880Ct;,,,:    8@@800000@f1iiCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCGG8;                           \n");
-				printf("                L@0Gfi:,,,:     1@@80008@fi;tCCCCCCCCCCGGCCGGGGCCCCCCCCCCCCCCCCCCCCCCCCCCGCCGG0C                             \n");
-				printf("               ;@0GL1:,,,,.;     :G@@8088t;:LCCCCCCCCCGttt11GGGGGGGCCCCCCCCCCCCCCCCCCCCGGGCGG8:            i000G             \n");
-				printf("               880Ct;:::,,,,      .i@@8801;:CCCCCCCCG@8t11iiGGGGGGGGGGGGCCCCCCCCCCGGGGGGGGG0L            .880GCf.            \n");
-				printf("              C80Gfi1@@@f,,,:       .C@@0t;iCCCCCCGGG8@8GffCGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG0.            .@80Cfi:             \n");
-				printf("             i@0GL1;C8@@@1,,.:        0@0fiLGCCCGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG0t             .880Cfi,,             \n");
-				printf("             @80Ct;   C@@@1:,,        8@0L1C0GCCGGGGGGf1iCGGGGGGGGGGGGGGGGGGGGGGGGGGGG00               080GCG1,i             \n");
-				printf("            080Gfi.    G@@8i:.;      i@8Gff@8tCGGGGG00f1iCGGGGGGGGGGGGGGGGGGGGGGGGGGG01               f@0GLGL;:              \n");
-				printf("           f@0GL1,     ,8@@C;,.,     080CtifCG00GGGGLt1i;GGGGGGGGGGGGLLGGGGGGGGCtCGGG     f001        @80CfL;,:              \n");
-				printf("          :@80Ct.       1@@@f:,,    t@0GLtGG0000GGft11i::GGGGGGGGGG0C1tGGGGGGG8@tLGC;, ,CG00GCC.     G@0Gft:,i               \n");
-				printf("          880Cf,         C@@@t:,:  .880Ct0GGGG0Gfttt1i;::GGGGGGGGG0Ct11GGGGGGG8G1fGGCfCCG088Gi;.    i@@0L1:,;                \n");
-				printf("         L@0GL:           0@@81:.; L00GfGGGG08Lffff1i;::;GGGGGGGG8Lft1iGGGGGG08ftGGG00fffG0Cti;     f@@Gfi:;                 \n");
-				printf("        :@80C,            :8@@G1;:;tLGLG0GGG0@@0008@@i;::LGGGGGGffft1i;GGGGG08ffGGG08ft1i;;181      L@@Gfit                  \n");
-				printf("        0@0G,              1@@@C1iiitttGGGGGGGGGGGG0@@Li;;;i1tffL8@@L;;GGGG08fLGGG08Lft11C0i,       L@8Gf1                   \n");
-				printf("       t@80,                L@@@L11111GGGGGGGGGGGGGG00@8t111tG80GG08@i;CGG08LfGGG0ffLftiLGCf ..     080Gf;.                  \n");
-				printf("       8@G                  ,08@@@880GGGGGGGGGGGGGGGGG00880000GGGGG0@G1ii1fLLfGGf08@@@f1;;LCLt:,iG0@@@@@8i,i       :         \n");
-				printf("       :                   C888800GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG08@@LGG0088800GGG08@@0fttffLC88GLC0@@@@Gi;tC00000         \n");
-				printf("                         :8888800GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG00000GGGGGGGGGGGGGG000000000Li:.  :8@8@@@@@@@@@:         \n");
-				printf("                        t888800GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG0000GGGGGGGGGGGGGGGGGGGGGGGGGGGCt;,    .fG80GGt11           \n");
-				printf("                       0888800GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG08880GGGGGGGGGGGGGGGGGGGGGGGGGGGGGf,                         \n");
-				printf("                     L8888000GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG088888800GGGGGGGGGGGGGGGGGGGGGGGGGGGGL;                        \n");
-				printf("                   18888800GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG0f@@8888800GGGGGGGGGGGGGGGGGGGGGGGGGGGGGf                       \n");
-				printf("                 ,88888000GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG0G  i@@@888800GGGGGGGGGGGGGGGGGGGGGGGGGGGGGCi                     \n");
-				printf("                088880000GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG0t    i@@@8888000GGGGGGGGGGGGGGGGGGGGGGGGGGGGGf                    \n");
-				printf("              C88888000GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG00:      1@@@88888000GGGGGGGGGGGGGGGGGGGGGGGGGGGGLi                  \n");
-				printf("            t888880000GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG0C         i@@@888880000GGGGGGGGGGGGGGGGGGGGGGGGGGGCt                 \n");
-				printf("          ;888880000GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG0G0001           i@@@888880000GGGGGGGGGGGGGGGGGGGGGGGGGGGGL;               \n");
-				printf("        .08888000000GGGGGGGGGGGGGGGGGGGGGGGGGGGG0GGG00.             i@@@888888000GG0GGGGGGGGGGGGGGGGGG000GGGGCt              \n");
-				printf("       G88880000000GGGGGGGGGGGGGGGGGGGGGGGGGG0000000L                1@@@8888880000G0GGGGGGGGGGGGGGGGG000GGGGGGL;            \n");
-				printf("     C88888000000000GGGGGGGGGGGGGGGGGGGGGGGGG000000i                  1@@@8888880000000000GGGGGGGGGGGGGGG000000GCt           \n");
-				printf("   1888880000000000000000000000000000000000000000G                     1@@@@8888800000000000000000000000000000000GL;         \n");
-				printf(" ,@@@@@88888888888800000000000000000000000000000L                        @@@@8888880000000000000000000000000000000GCt        \n");
-				printf("8@@@@888888888888888888888888888888888888888888;                         1@@@@88888800000000000000000000000000000000Gf;      \n");
-				printf("0@@@@@@@@@@@88888888888888888888888888888888888G                            1@@@@88888800000000000000000000000000000000GCt   \n");
-				printf("G@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@f                              1@@@@888888888888888888888888888888888880000GL;\n");
-				printf("  ...;i11tffLCCG08888@@@@@@@@@@@@@@@@@@@@@8,                                1@@@@8888888888888888888888888888888888888880    \n");
-				printf("                                                                             1@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@8L     \n");
+				printf("Apangado Daft Punk SO \n");
 
 				cerrarConexiones();
 
