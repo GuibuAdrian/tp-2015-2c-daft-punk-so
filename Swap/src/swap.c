@@ -72,6 +72,7 @@ typedef struct
 {
 	char* inicioHueco;
 	int cantPag;
+	int nroPag;
 }t_espacioLibre;
 
 typedef struct
@@ -79,6 +80,7 @@ typedef struct
 	int pid;
 	char* inicioSwap;
 	int cantPag;
+	int nroPag;
 }t_espacioOcupado;
 
 typedef struct
@@ -105,9 +107,9 @@ char* mapeo; // El mapeo en memoria del swap
 int recvall(int s, void *toReceive, int size, int flags); // Función segura para recibir datos, se asegura de que recvall() reciba (hay casos en los que, por detalles de bajo nivel, recvall() no recibe  lo que debía recibir, es por eso que devuelve la cantidad de bytes recibidos)
 void parseConsoleCommand(char *commandLine,char *command,char *arguments);
 void simularPedidoMemoria(char * arguments);
-static t_espacioLibre *libre_create(char* inicioHueco, int cantPag);
+static t_espacioLibre *libre_create(char* inicioHueco, int cantPag, int nroPag);
 static void libre_destroy(t_espacioLibre *self);
-static t_espacioOcupado *ocupado_create(int pid, char* inicioSwap, int cantPag);
+static t_espacioOcupado *ocupado_create(int pid, char* inicioSwap, int cantPag, int nroPag);
 static void ocupado_destroy(t_espacioOcupado *self);
 static t_proceso *proceso_create(int pid, int cantPagLeidas, int cantPagEscritas);
 static void proceso_destroy(t_proceso *self);
@@ -162,7 +164,7 @@ int main()
 	mapeo = mapearArchivo(nombreSwap);
 
 
-	list_add(listaLibres, libre_create(mapeo, cantPagSwap));
+	list_add(listaLibres, libre_create(mapeo, cantPagSwap, 0));
 
 
 	if(consoleMode == 0) {	// Recibo comandos desde Memoria desde la red
@@ -199,7 +201,7 @@ int main()
 
 			recvall(socket_memoria,(void*) package2, ordenMemoria.contentSize, 0); //campo longitud(NO SIZEOF DE LONGITUD)
 			memcpy(&ordenMemoria.content, package2, ordenMemoria.contentSize);
-			printf("%d,%d,%d,%d,%s",ordenMemoria.pid,ordenMemoria.paginas,ordenMemoria.orden,ordenMemoria.contentSize,ordenMemoria.content);
+
 			procesarOrden(ordenMemoria, NETWORKMODE);
 
 			free(package);
@@ -392,7 +394,6 @@ void respuestaMemoria(int pid, int paginas, int mensaje, char pagContent[PACKAGE
 
 void finalizarProceso(int pid, int pag)
 {
-	log_info(logger, "Finalizando mProc: %d", pid);
 
 	respuestaMemoria(pid, pag, 3, "/");
 
@@ -424,8 +425,13 @@ void finalizarProceso(int pid, int pag)
 				espacioLibreAdelante->inicioHueco = ocupadoAux->inicioSwap;
 				espacioLibreAdelante->cantPag = espacioLibreAdelante->cantPag + ocupadoAux->cantPag;
 		} else { //No enconrtó lugares contiguos libres (ni atrás ni adelante) :'(
-			list_add(listaLibres, libre_create(ocupadoAux->inicioSwap, ocupadoAux->cantPag));
+			list_add(listaLibres, libre_create(ocupadoAux->inicioSwap, ocupadoAux->cantPag, ocupadoAux->nroPag));
 		}
+
+
+		log_info(logger, "Liberado mProc: %d, byte inicial %d, de %d", ocupadoAux->pid, ocupadoAux->nroPag, ocupadoAux->cantPag*tamanioPagSwap);
+
+		ocupado_destroy(ocupadoAux);
 	}
 
 }
@@ -470,11 +476,13 @@ int reservarEspacio(int pid, int paginas)	// 0=Exito  1=Fracaso
 	{
 		int posLibre = encontrarPosicionEspacioLibre(libreAux->inicioHueco);
 
-		t_espacioLibre* espLibreViejo = list_replace(listaLibres, posLibre, libre_create(libreAux->inicioHueco+(paginas*tamanioPagSwap), libreAux->cantPag-paginas));
+		t_espacioLibre* espLibreViejo = list_replace(listaLibres, posLibre, libre_create(libreAux->inicioHueco+(paginas*tamanioPagSwap), libreAux->cantPag-paginas, libreAux->nroPag+paginas));
 
-		list_add(listaOcupados, ocupado_create(pid, libreAux->inicioHueco, paginas));
+		list_add(listaOcupados, ocupado_create(pid, libreAux->inicioHueco, paginas, libreAux->nroPag));
 
 		memset(libreAux->inicioHueco, 0, libreAux->cantPag * tamanioPagSwap);
+
+		log_info(logger, "Asignado mProc: %d, byte inicial %d de %d bytes", pid, libreAux->nroPag, paginas*tamanioPagSwap);
 		libre_destroy(espLibreViejo);
 
 		return 0;
@@ -491,8 +499,6 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 
 	if (ordenMemoria.orden == INICIAR)  // 0=Iniciar
 	{
-		log_info(logger, "Iniciando mProc: %d de %d paginas", ordenMemoria.pid, ordenMemoria.paginas);
-
 		respuesta = reservarEspacio(ordenMemoria.pid, ordenMemoria.paginas);
 
 		list_add(listaProcesos, proceso_create(ordenMemoria.pid, 0, 0));
@@ -544,10 +550,6 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 		{
 			if (ordenMemoria.orden == FINALIZAR) // 3=Finalizar
 			{
-				t_proceso* new = buscarPID(ordenMemoria.pid);
-
-				log_info(logger, "Finalizando proceso %d. Total Paginas leidas: %d, escritas %d", new->pid, new->cantPagLeidas, new->cantPagEscritas);
-
 				int posProc = encontrarPosicionProceso(ordenMemoria.pid);
 
 				list_remove_and_destroy_element(listaProcesos, posProc, (void*) proceso_destroy);
@@ -627,11 +629,12 @@ void crearArchivoSwap(char * nombreDelArchivo, int tamanioPagina, int cantidadDe
   system(buffer);
 }
 
-static t_espacioLibre *libre_create(char* inicioHueco, int cantPag)
+static t_espacioLibre *libre_create(char* inicioHueco, int cantPag, int nroPag)
 {
 	t_espacioLibre *new = malloc(sizeof(t_espacioLibre));
 	new->inicioHueco = inicioHueco;
 	new->cantPag = cantPag;
+	new->nroPag = nroPag;
 
 	return new;
 }
@@ -639,12 +642,13 @@ static void libre_destroy(t_espacioLibre *self)
 {
     free(self);
 }
-static t_espacioOcupado *ocupado_create(int pid, char* inicioSwap, int cantPag)
+static t_espacioOcupado *ocupado_create(int pid, char* inicioSwap, int cantPag, int nroPag)
 {
 	t_espacioOcupado *new = malloc(sizeof(t_espacioOcupado));
 	new->pid = pid;
 	new->inicioSwap = inicioSwap;
 	new->cantPag = cantPag;
+	new->nroPag = nroPag;
 
 	return new;
 }

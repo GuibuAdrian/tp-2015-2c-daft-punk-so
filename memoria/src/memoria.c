@@ -134,7 +134,7 @@ int main() {
 	signal(SIGUSR2, rutinaLimpiarMemoriaPrincipal);
 	signal(SIGPOLL, dumpMemoriaPrincipal);
 
-	logger = log_create("logsTP", "Memoria", 1, LOG_LEVEL_INFO);
+	logger = log_create("logsTP", "Memoria", 0, LOG_LEVEL_INFO);
 
 	t_config* config;
 
@@ -1458,7 +1458,7 @@ void ordenarPorMarco(t_list *listaTablaPags)
 
 void rutinaFlushTLB()
 {
-	printf("Flush de TLB \n");
+	log_info(logger,"Flush de TLB");
 
 	pthread_mutex_lock(&mutexTLB);
 	list_clean_and_destroy_elements(listaTLB, (void*) TLB_destroy);
@@ -1490,7 +1490,7 @@ void rutinaLimpiarMemoriaPrincipal()
 
 void dumpMemoriaPrincipal()
 {
-	printf("Dump de la memoria principal \n");
+	log_info(logger,"Dump de la memoria principal");
 
 	pid_t childPID;
 	int status;

@@ -217,7 +217,6 @@ int cargaListaCPU(int socketCliente)
 };
 void recibirConexiones(char * PUERTO)
 {
-
 	int i=0;
 	int socketCliente, listenningSocket, result, maxfd;
 
@@ -225,7 +224,6 @@ void recibirConexiones(char * PUERTO)
 	socketCPUCarga= aceptarLlamada(listenningSocket);
 
 	fd_set readset;
-
 
 	FD_ZERO(&readset);
 	FD_SET(listenningSocket, &readset);
@@ -254,7 +252,6 @@ void recibirConexiones(char * PUERTO)
 				cantHilos = cargaListaCPU(socketCliente); //Identifico el Nodo
 
 				i++;
-
 			}
 		} //Fin else if  (result > 0)
 	} while (i!=cantHilos);
@@ -265,6 +262,9 @@ void recibirConexiones(char * PUERTO)
 
 void recibirCjtoRespuestas(int pid1, int socketCliente)
 {
+	pthread_mutex_lock(&mutexPCB);
+	log_info(logger,"----Fin rafaga CPU, mProc: %d----", pid1);
+
 	t_respuesta respuesta;
 
 	void* package = malloc(tamanioRespuesta(respuesta));
@@ -313,14 +313,12 @@ void recibirCjtoRespuestas(int pid1, int socketCliente)
 				{
 					log_info(logger, "mProc %d - Pagina %d escrita: %s", respuesta.pid, respuesta.paginas, respuesta.content);
 				}
-
 			}
-
 		}
 
 		free(package2);
 	}
-
+	pthread_mutex_unlock(&mutexPCB);
 	pthread_mutex_lock(&mutexPCB);
 
 	PCB *pcb = buscarReadyEnPCB(pid1);
@@ -381,10 +379,6 @@ int recibirRespuesta(int socketCliente)
 
 		return -1;
 	}
-	if( (respuesta.mensajeSize)==0 )
-	{
-
-	}
 	else
 	{
 		if( (respuesta.mensajeSize)==1 )
@@ -397,83 +391,72 @@ int recibirRespuesta(int socketCliente)
 		}
 		else
 		{
-			if( (respuesta.mensajeSize)==2 )
+			if( (respuesta.mensajeSize)==3 )
 			{
+				recibirCjtoRespuestas(respuesta.pid, socketCliente);
 
+				log_info(logger, "mProc %d finalizado", respuesta.pid);
+
+				pthread_mutex_lock(&mutexPCB);
+				pcb = buscarReadyEnPCB(respuesta.pid);
+				int posPCB =  encontrarPosicionEnPCB(pcb->pid);	//Encontrar pos en listaPCB
+
+				time_t ejecF;
+				//time_t ejecI;
+
+				//ejecI = pcb->tiempoEjecI;
+
+				time(&ejecF);
+/*					struct tm * timeinfo;
+				timeinfo = localtime( &ejecI );
+				printf("\nInicio mProc:%d %d:%d\n", respuesta.pid, timeinfo->tm_min, timeinfo->tm_sec);
+				timeinfo = localtime( &ejecF );
+				printf("\nFIN mProc:%d %d:%d\n", respuesta.pid, timeinfo->tm_min, timeinfo->tm_sec);
+*/
+				double tiempoEjec = difftime(ejecF, pcb->tiempoEjecI);
+
+				printf("\nmProc:%d. Ejec :%.2f. Espera: %.2f. Resp: %.2f\n", respuesta.pid, tiempoEjec, pcb->tiempoEspe, pcb->tiempoResp);
+
+				list_remove_and_destroy_element(listaPCB, posPCB, (void*) PCB_destroy);
+				pthread_mutex_unlock(&mutexPCB);
+
+				free(package);
+				free(package2);
+
+				return -1;
 			}
 			else
 			{
-				if( (respuesta.mensajeSize)==3 )
+				if( (respuesta.mensajeSize)==5 )
 				{
+					int IO = respuesta.paginas;
+
 					recibirCjtoRespuestas(respuesta.pid, socketCliente);
 
-					log_info(logger, "mProc %d finalizado", respuesta.pid);
+					log_info(logger, "mProc %d en entrada-salida de tiempo %d", respuesta.pid, IO);
 
 					pthread_mutex_lock(&mutexPCB);
+
 					pcb = buscarReadyEnPCB(respuesta.pid);
 					int posPCB =  encontrarPosicionEnPCB(pcb->pid);	//Encontrar pos en listaPCB
 
-					time_t ejecF;
-					//time_t ejecI;
-
-					//ejecI = pcb->tiempoEjecI;
-
-					time(&ejecF);
-/*					struct tm * timeinfo;
-					timeinfo = localtime( &ejecI );
-					printf("\nInicio mProc:%d %d:%d\n", respuesta.pid, timeinfo->tm_min, timeinfo->tm_sec);
-					timeinfo = localtime( &ejecF );
-					printf("\nFIN mProc:%d %d:%d\n", respuesta.pid, timeinfo->tm_min, timeinfo->tm_sec);
-*/
-					double tiempoEjec = difftime(ejecF, pcb->tiempoEjecI);
-
-					printf("\nmProc:%d. Ejec :%.2f. Espera: %.2f. Resp: %.2f\n", respuesta.pid, tiempoEjec, pcb->tiempoEspe, pcb->tiempoResp);
-
-					list_remove_and_destroy_element(listaPCB, posPCB, (void*) PCB_destroy);
+					//Pongo al mProc en bloqueado
+					list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcb->pid, pcb->path, pcb->puntero, 2,
+							pcb->tiempoEjecI, pcb->tiempoEspeI, pcb->tiempoEspe, pcb->tiempoRespI, pcb->tiempoResp), (void*)PCB_destroy);
 					pthread_mutex_unlock(&mutexPCB);
+
+
+					pthread_mutex_lock(&mutexIO);
+					list_add(listaIO, IO_create(respuesta.pid, IO)); //Agrego el proceso NUEVO a Ready
+
+					pthread_mutex_unlock(&mutexIO);;
+
+					sem_post(&semIO);
 
 					free(package);
 					free(package2);
 
-					return -1;
-				}
-				else
-				{
-					if( (respuesta.mensajeSize)==4 )
-					{
-
-					}
-					else
-					{
-						int IO = respuesta.paginas;
-
-						recibirCjtoRespuestas(respuesta.pid, socketCliente);
-
-						log_info(logger, "mProc %d en entrada-salida de tiempo %d", respuesta.pid, IO);
-
-						pthread_mutex_lock(&mutexPCB);
-
-						pcb = buscarReadyEnPCB(respuesta.pid);
-						int posPCB =  encontrarPosicionEnPCB(pcb->pid);	//Encontrar pos en listaPCB
-
-						//Pongo al mProc en bloqueado
-						list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pcb->pid, pcb->path, pcb->puntero, 2,
-								pcb->tiempoEjecI, pcb->tiempoEspeI, pcb->tiempoEspe, pcb->tiempoRespI, pcb->tiempoResp), (void*)PCB_destroy);
-						pthread_mutex_unlock(&mutexPCB);
-
-
-						pthread_mutex_lock(&mutexIO);
-						list_add(listaIO, IO_create(respuesta.pid, IO)); //Agrego el proceso NUEVO a Ready
-
-						pthread_mutex_unlock(&mutexIO);;
-
-						sem_post(&semIO);
-
-						free(package);
-						free(package2);
-
-						return IO;
-					}
+					return IO;
 				}
 			}
 		}
@@ -490,6 +473,7 @@ void ROUND_ROBIN(void* args)
 	time_t tiempoAhora;
 	t_enviarProceso *mensaje = args;
 
+	char path[PACKAGESIZE];
 	int pidReady = mensaje->pcbReady;
 
 	PCB* pcbReady = buscarReadyEnPCB(pidReady);	//Busco al ready en el PCB
@@ -503,6 +487,7 @@ void ROUND_ROBIN(void* args)
 	time_t respI = pcbReady->tiempoRespI;
 	double espe = pcbReady->tiempoEspe;
 	double resp = pcbReady->tiempoResp;
+	strncpy(path, pcbReady->path, strlen(pcbReady->path));
 
 	pthread_mutex_lock(&mutexPCB);
 	log_info(logger, "Correr %s, mProc: %d, en %d", pcbReady->path, pidReady, idHiloCPU);
@@ -539,7 +524,6 @@ void ROUND_ROBIN(void* args)
 
 		puntero = pcbReady->puntero+1;
 
-
 		sem_wait(&semFZ);
 
 		pthread_mutex_lock(&mutexPCB);
@@ -562,8 +546,6 @@ void ROUND_ROBIN(void* args)
 
 	if(Q>=QUANTUM)
 	{
-		log_info(logger,"FIN Q: %d", pidReady);
-
 		int message = 2;
 		send(socketCPUCarga, &message, sizeof(int), 0);
 		send(socketCPUCarga, &pidReady, sizeof(int), 0);
@@ -585,6 +567,8 @@ void ROUND_ROBIN(void* args)
 		sem_post(&semPlani);
 	}
 
+	log_info(logger, "Fin %s, mProc: %d", pcbReady->path, pidReady);
+
 	free(mensaje);
 }
 
@@ -593,6 +577,7 @@ void FIFO(void *args)
 	time_t tiempoAhora;
 	t_enviarProceso *mensaje = args;
 
+	char path[PACKAGESIZE];
 	int pidReady = mensaje->pcbReady;
 
 	PCB* pcbReady = buscarReadyEnPCB(pidReady);	//Busco al ready en el PCB
@@ -606,9 +591,10 @@ void FIFO(void *args)
 	time_t respI = pcbReady->tiempoRespI;
 	double espe = pcbReady->tiempoEspe;
 	double resp = pcbReady->tiempoResp;
+	strncpy(path, pcbReady->path, strlen(pcbReady->path));
 
 	pthread_mutex_lock(&mutexPCB);
-	log_info(logger, "Correr %s, mProc: %d, en %d", pcbReady->path, pidReady, idHiloCPU);
+	log_info(logger, "Correr mProc: %d: %s, en %d", pidReady, pcbReady->path, idHiloCPU);
 
 	time(&tiempoAhora);
 
@@ -658,6 +644,8 @@ void FIFO(void *args)
 	pthread_mutex_unlock(&mutexCPU);
 	sem_post(&semCPU);
 
+	log_info(logger, "Fin %s, mProc: %d", path, pidReady);
+
 	free(mensaje);
 }
 
@@ -697,6 +685,7 @@ void planificador()
 		unaPersona->idHilo = idHiloCPU;
 		unaPersona->socketCliente = socketCliente;
 
+		log_info(logger, "Algoritmo: %s, seleccionado mProc: %d", ALGORITMO_PLANIFICACION, pidReady);
 
 		if (strncmp(ALGORITMO_PLANIFICACION,"FIFO", 4) == 0)
 		{
@@ -807,9 +796,13 @@ void PS()
 		{
 			printf("Ejecutando\n");
 		}
-		else
+		else if(new->estado==2)
 		{
 			printf("Bloqueado\n");
+		}
+		else
+		{
+			printf("Finalizando\n");
 		}
 	};
 	printf("\n");
@@ -854,7 +847,7 @@ void finalizarPID(int pidF)
 		if(unPCB->estado!=2)
 		{
 			sem_post(&semFZ);
-			list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(unPCB->pid,unPCB->path, -2, 1,
+			list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(unPCB->pid,unPCB->path, -2, 3,
 					unPCB->tiempoEjecI, unPCB->tiempoEspeI, unPCB->tiempoEspe, unPCB->tiempoRespI, unPCB->tiempoResp), (void*) PCB_destroy);
 			sem_wait(&semFZ);
 		}
