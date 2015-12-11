@@ -567,7 +567,7 @@ void ROUND_ROBIN(void* args)
 		sem_post(&semPlani);
 	}
 
-	log_info(logger, "Fin %s, mProc: %d", pcbReady->path, pidReady);
+	log_info(logger, "Fin %s, mProc: %d", path, pidReady);
 
 	free(mensaje);
 }

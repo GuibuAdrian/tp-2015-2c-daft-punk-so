@@ -116,7 +116,7 @@ int main()
 	listaCPUs = list_create();
 	listaRespuestas = list_create();
 
-	logger = log_create("logsTP", "CPU", 1, LOG_LEVEL_INFO);
+	logger = log_create("logsTP", "CPU", 0, LOG_LEVEL_INFO);
 
 	t_config* config;
 
@@ -428,6 +428,7 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, 
 					pch = strtok(NULL, " \n;\"“”");
 					pagina = strtol(pch, NULL, 10);
 					mensaje = enviarOrdenAMemoria(pid, 1, pagina, "/", idNodo);
+					mensaje.orden=2;
 
 				}
 				else
@@ -437,6 +438,8 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, 
 					pch = strtok(NULL, " \n;\"“”");
 
 					mensaje = enviarOrdenAMemoria(pid, 2, pagina, pch, idNodo);
+					mensaje.orden=4;
+					strcpy(mensaje.content,pch);
 				}//else escritura
 			}//else escritura/lectura
 

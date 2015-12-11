@@ -948,7 +948,6 @@ void cambiarBitReferencia(int pid, int pagina)
 
 void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU) {
 	t_orden_CPU mensajeSwap;
-	//printf("%s\n", respuestaMemoria.content);
 
 	mensajeSwap.pid = respuestaMemoria.pid;
 	mensajeSwap.orden = respuestaMemoria.orden;
@@ -1027,8 +1026,9 @@ t_orden_CPU enviarOrdenASwap(int pid, int orden, int paginas, char *content) {
 	mensajeSwap.orden = orden;
 	mensajeSwap.pagina = paginas;
 	mensajeSwap.contentSize = strlen(content)+1;
-	strncpy(mensajeSwap.content, content,mensajeSwap.contentSize);
 
+	strcpy(mensajeSwap.content, " ");
+	strncpy(mensajeSwap.content, content,mensajeSwap.contentSize);
 	void* mensajeSwapPackage = malloc(
 			tamanioOrdenCPU(mensajeSwap) + mensajeSwap.contentSize);
 
@@ -1043,12 +1043,10 @@ t_orden_CPU enviarOrdenASwap(int pid, int orden, int paginas, char *content) {
 			mensajeSwapPackage + sizeof(mensajeSwap.pid)
 					+ sizeof(mensajeSwap.orden) + sizeof(mensajeSwap.pagina),
 					&mensajeSwap.contentSize, sizeof(mensajeSwap.contentSize));
-	memcpy(
-			mensajeSwapPackage + sizeof(mensajeSwap.pid)
-					+ sizeof(mensajeSwap.orden) + sizeof(mensajeSwap.pagina)
-					+ sizeof(mensajeSwap.contentSize), &content,
-			mensajeSwap.contentSize);
+	memcpy(mensajeSwapPackage + sizeof(mensajeSwap.pid)	+ sizeof(mensajeSwap.orden) + sizeof(mensajeSwap.pagina) + sizeof(mensajeSwap.contentSize), content, mensajeSwap.contentSize);
+
 	send(socketSwap, mensajeSwapPackage, tamanioOrdenCPU(mensajeSwap), 0);
+
 	free(mensajeSwapPackage);
 
 	return recibirRespuestaSwap(socketSwap);

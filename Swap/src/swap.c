@@ -152,7 +152,7 @@ int main()
 	debugMode = config_get_int_value(config, "DEBUG_MODE");
 
 
-	logger = log_create("logsTP", "Swap", 1, LOG_LEVEL_INFO);  //si debugMode = 1 muestra los logs por pantalla
+	logger = log_create("logsTP", "Swap", 0, LOG_LEVEL_INFO);  //si debugMode = 1 muestra los logs por pantalla
 
 	listaLibres = list_create();
 	listaOcupados = list_create();
@@ -495,7 +495,7 @@ int reservarEspacio(int pid, int paginas)	// 0=Exito  1=Fracaso
 
 void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 {
-	int respuesta;
+	int respuesta, nroPag;
 
 	if (ordenMemoria.orden == INICIAR)  // 0=Iniciar
 	{
@@ -506,7 +506,11 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 		if (respuesta == 1){   // 0 = Exito, 1 = Fallo
 			int totalEspacioLibre = cuantasPaginasLibresTengo();
 			if (totalEspacioLibre >= ordenMemoria.paginas ){
+
+				log_info(logger, "Compactacion Iniciada....");
 				defrag();
+				log_info(logger, "....Compactacion Finalizada");
+
 				respuesta = reservarEspacio(ordenMemoria.pid, ordenMemoria.paginas);
 			}
 			else {
@@ -534,15 +538,33 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 			list_replace_and_destroy_element(listaProcesos, posProc, proceso_create(new->pid, new->cantPagLeidas+1, new->cantPagEscritas), (void*) proceso_destroy);
 
 			t_espacioOcupado* pidOcup = buscarPIDEnOcupados(ordenMemoria.pid);
+			nroPag = pidOcup->nroPag;
+
 			char * pagContent = malloc(tamanioPagSwap);
 
 			strncpy(pagContent,pidOcup->inicioSwap+(ordenMemoria.paginas*tamanioPagSwap), strlen(pidOcup->inicioSwap+(ordenMemoria.paginas*tamanioPagSwap))+1);
 
 			usleep(retardoSwap*1000000);
+/*
+			if(strncmp(ordenMemoria.content, "/", 2))
+			{
+				log_info(logger, "Acceso a Swap mProc: %d. byte inicial %d de %d.", ordenMemoria.pid, nroPag, tamanioPagSwap);
+			}
+			else
+			{
+				log_info(logger, "Leyendo mProc: %d. byte inicial %d de %d. Contenido: %s", ordenMemoria.pid, nroPag, tamanioPagSwap, pagContent);
+			}
+*/
+			if(strncmp(ordenMemoria.content, "/", 2))
+			{
+				log_info(logger, "Acceso a Swap mProc: %d. byte inicial %d de %d.", ordenMemoria.pid, nroPag, tamanioPagSwap);
+			}
+			else
+			{
+				log_info(logger, "Leyendo mProc: %d. byte inicial %d de %d. Contenido: %s", ordenMemoria.pid, nroPag, tamanioPagSwap, pagContent);
+			}
 
 			respuestaMemoria(ordenMemoria.pid, ordenMemoria.paginas, 2, pagContent);
-
-			log_info(logger, "Leyendo mProc: %d. Pagina %d: %s ", ordenMemoria.pid, ordenMemoria.paginas, pagContent);
 
 			free(pagContent);
 		}
@@ -577,13 +599,14 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 					list_replace_and_destroy_element(listaProcesos, posProc, proceso_create(new->pid, new->cantPagLeidas, new->cantPagEscritas+1), (void*) proceso_destroy);
 
 					t_espacioOcupado* pidOcup = buscarPIDEnOcupados(ordenMemoria.pid);
+					nroPag = pidOcup->nroPag;
 
 					memset(pidOcup->inicioSwap + ordenMemoria.paginas*tamanioPagSwap, 0, tamanioPagSwap); // Borro el contenido viejo de esa pagina (lo lleno con 0x00)
 					memcpy(pidOcup->inicioSwap + ordenMemoria.paginas*tamanioPagSwap , ordenMemoria.content, ordenMemoria.contentSize); // Pongo el contenido nuevo que viene de memoria (puede ser de menor tamaño que tamanioPagSwap!!)
 
 					usleep(retardoSwap*1000000);
 
-					log_info(logger, "Escribiendo mProc: %d. Pagina: %d. Contenido: %s ", ordenMemoria.pid, ordenMemoria.paginas, ordenMemoria.content);
+					log_info(logger, "Escribiendo mProc: %d. byte inicial %d de %d. Contenido: %s", ordenMemoria.pid, nroPag, tamanioPagSwap, ordenMemoria.content);
 
 					respuestaMemoria(ordenMemoria.pid, ordenMemoria.paginas, 4, ordenMemoria.content);
 
@@ -936,7 +959,7 @@ void defrag() {
 	free(copiaSwapViejo);
 
 	usleep(retardoCompactacion*1000000); //Retardo compactación
-	printf("Swap compactado\n");
+	//printf("Swap compactado\n");
 
 }
 
