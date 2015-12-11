@@ -772,7 +772,6 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 
 void operarConTLB( t_TLB* entradaTLB, t_orden_CPU mensaje, int socketCPU)
 {
-
 	t_orden_CPU respuestaSwap;
 
 	respuestaSwap.pid = entradaTLB->pid;
@@ -949,6 +948,7 @@ void cambiarBitReferencia(int pid, int pagina)
 
 void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU) {
 	t_orden_CPU mensajeSwap;
+	//printf("%s\n", respuestaMemoria.content);
 
 	mensajeSwap.pid = respuestaMemoria.pid;
 	mensajeSwap.orden = respuestaMemoria.orden;
@@ -1026,8 +1026,8 @@ t_orden_CPU enviarOrdenASwap(int pid, int orden, int paginas, char *content) {
 	mensajeSwap.pid = pid;
 	mensajeSwap.orden = orden;
 	mensajeSwap.pagina = paginas;
-	mensajeSwap.contentSize = strlen(content) + 1;
-	strcpy(mensajeSwap.content, content);
+	mensajeSwap.contentSize = strlen(content)+1;
+	strncpy(mensajeSwap.content, content,mensajeSwap.contentSize);
 
 	void* mensajeSwapPackage = malloc(
 			tamanioOrdenCPU(mensajeSwap) + mensajeSwap.contentSize);
@@ -1493,7 +1493,7 @@ void dumpMemoriaPrincipal()
 	log_info(logger,"Dump de la memoria principal");
 
 	pid_t childPID;
-	int status;
+	int status, statusExit = 0;
 	childPID = fork();
 
 	if(childPID >= 0) // fork was successful
@@ -1501,10 +1501,11 @@ void dumpMemoriaPrincipal()
 		if(childPID == 0) // child process
 		{
 			mostrarMemoriaPpal();
+			_Exit(statusExit);
 		}
 		else
 		{
-			waitpid(childPID, &status, WUNTRACED | WCONTINUED);
+			waitpid(childPID, &status, WUNTRACED);
 		}
 	}
 	else // fork failed
