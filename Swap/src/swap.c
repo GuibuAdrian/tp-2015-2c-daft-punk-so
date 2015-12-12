@@ -152,7 +152,7 @@ int main()
 	debugMode = config_get_int_value(config, "DEBUG_MODE");
 
 
-	logger = log_create("logsTP", "Swap", 1, LOG_LEVEL_INFO);  //si debugMode = 1 muestra los logs por pantalla
+	logger = log_create("logsTP", "Swap", 0, LOG_LEVEL_INFO);  //si debugMode = 1 muestra los logs por pantalla
 
 	listaLibres = list_create();
 	listaOcupados = list_create();
@@ -921,7 +921,7 @@ void defrag() {
 	t_espacioOcupado* ocupadoAux;
 	char * copiaSwapViejo = (char *) malloc(tamanioPagSwap * cantPagSwap);
 	t_espacioLibre *nuevoEspacioLibre = malloc(sizeof(t_espacioLibre));
-	int i;
+	int i, offsetPag;
 	char * posicionActualEnMapeo = mapeo;
 
 	nuevoEspacioLibre->cantPag = cuantasPaginasLibresTengo();
@@ -931,7 +931,10 @@ void defrag() {
 	for(i=0; i<list_size(listaOcupados);i++){
 		ocupadoAux = list_get(listaOcupados,i);
 		offset = (ocupadoAux->inicioSwap - mapeo);
+		offsetPag = offset/tamanioPagSwap;
+		printf("%d,%d\n",offset,offsetPag);
 		ocupadoAux->inicioSwap = copiaSwapViejo + offset;
+		ocupadoAux->nroPag = ocupadoAux->nroPag-offsetPag;
 	}
 
 	for(i=0; i<list_size(listaOcupados);i++)
