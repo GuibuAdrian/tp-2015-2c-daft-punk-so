@@ -132,7 +132,7 @@ int encontrarPosicionProceso(int pid);
 void defrag();
 void dumpSwap();
 int cuantasPaginasLibresTengo();
-
+void ordenarPorPagInicial(t_list *listaOcupados);
 
 int main()
 {
@@ -152,7 +152,7 @@ int main()
 	debugMode = config_get_int_value(config, "DEBUG_MODE");
 
 
-	logger = log_create("logsTP", "Swap", 0, LOG_LEVEL_INFO);  //si debugMode = 1 muestra los logs por pantalla
+	logger = log_create("logsTP", "Swap", 1, LOG_LEVEL_INFO);  //si debugMode = 1 muestra los logs por pantalla
 
 	listaLibres = list_create();
 	listaOcupados = list_create();
@@ -495,7 +495,7 @@ int reservarEspacio(int pid, int paginas)	// 0=Exito  1=Fracaso
 
 void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 {
-	int respuesta, nroPag;
+	int respuesta, nroPag=ordenMemoria.paginas;
 
 	if (ordenMemoria.orden == INICIAR)  // 0=Iniciar
 	{
@@ -538,8 +538,7 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 			list_replace_and_destroy_element(listaProcesos, posProc, proceso_create(new->pid, new->cantPagLeidas+1, new->cantPagEscritas), (void*) proceso_destroy);
 
 			t_espacioOcupado* pidOcup = buscarPIDEnOcupados(ordenMemoria.pid);
-			nroPag = pidOcup->nroPag;
-
+			int nroPagInicial = pidOcup->nroPag;
 			char * pagContent = malloc(tamanioPagSwap);
 
 			strncpy(pagContent,pidOcup->inicioSwap+(ordenMemoria.paginas*tamanioPagSwap), strlen(pidOcup->inicioSwap+(ordenMemoria.paginas*tamanioPagSwap))+1);
@@ -557,11 +556,11 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 */
 			if(strncmp(ordenMemoria.content, "/", 2))
 			{
-				log_info(logger, "Acceso a Swap mProc: %d. byte inicial %d de %d.", ordenMemoria.pid, nroPag, tamanioPagSwap);
+				log_info(logger, "Acceso a Swap mProc: %d. byte inicial %d de %d.", ordenMemoria.pid, nroPagInicial+nroPag, tamanioPagSwap);
 			}
 			else
 			{
-				log_info(logger, "Leyendo mProc: %d. byte inicial %d de %d. Contenido: %s", ordenMemoria.pid, nroPag, tamanioPagSwap, pagContent);
+				log_info(logger, "Leyendo mProc: %d. byte inicial %d de %d. Contenido: %s", ordenMemoria.pid, nroPagInicial+nroPag, tamanioPagSwap, pagContent);
 			}
 
 			respuestaMemoria(ordenMemoria.pid, ordenMemoria.paginas, 2, pagContent);
@@ -599,14 +598,14 @@ void procesarOrden(t_orden_memoria ordenMemoria, int mode )
 					list_replace_and_destroy_element(listaProcesos, posProc, proceso_create(new->pid, new->cantPagLeidas, new->cantPagEscritas+1), (void*) proceso_destroy);
 
 					t_espacioOcupado* pidOcup = buscarPIDEnOcupados(ordenMemoria.pid);
-					nroPag = pidOcup->nroPag;
-
+					int nroPagInicial = pidOcup->nroPag;
 					memset(pidOcup->inicioSwap + ordenMemoria.paginas*tamanioPagSwap, 0, tamanioPagSwap); // Borro el contenido viejo de esa pagina (lo lleno con 0x00)
 					memcpy(pidOcup->inicioSwap + ordenMemoria.paginas*tamanioPagSwap , ordenMemoria.content, ordenMemoria.contentSize); // Pongo el contenido nuevo que viene de memoria (puede ser de menor tamaño que tamanioPagSwap!!)
 
+
 					usleep(retardoSwap*1000000);
 
-					log_info(logger, "Escribiendo mProc: %d. byte inicial %d de %d. Contenido: %s", ordenMemoria.pid, nroPag, tamanioPagSwap, ordenMemoria.content);
+					log_info(logger, "Escribiendo mProc: %d. byte inicial %d de %d. Contenido: %s", ordenMemoria.pid, nroPagInicial+nroPag, tamanioPagSwap, ordenMemoria.content);
 
 					respuestaMemoria(ordenMemoria.pid, ordenMemoria.paginas, 4, ordenMemoria.content);
 
@@ -933,7 +932,6 @@ void defrag() {
 		ocupadoAux = list_get(listaOcupados,i);
 		offset = (ocupadoAux->inicioSwap - mapeo);
 		ocupadoAux->inicioSwap = copiaSwapViejo + offset;
-
 	}
 
 	for(i=0; i<list_size(listaOcupados);i++)
@@ -952,7 +950,13 @@ void defrag() {
 		posicionActualEnMapeo += ocupadoAux->cantPag*tamanioPagSwap;
 
 	}
+
+	ordenarPorPagInicial(listaOcupados);
+
+	ocupadoAux = list_get(listaOcupados,list_size(listaOcupados)-1);
+
 	nuevoEspacioLibre->inicioHueco = posicionActualEnMapeo;
+	nuevoEspacioLibre->nroPag = ocupadoAux->nroPag+ocupadoAux->cantPag;
 
 	list_clean(listaLibres);
 	list_add(listaLibres, nuevoEspacioLibre);
@@ -1020,4 +1024,13 @@ void hexdump(void *mem, unsigned int len, int arrayPIDs[])
                         putchar('\n');
                 }
         }
+}
+
+void ordenarPorPagInicial(t_list *listaOcupados)
+{
+	bool _ayudantes_menor(t_espacioOcupado *joven, t_espacioOcupado *menos_joven) {
+	return joven->nroPag < menos_joven->nroPag;
+	}
+
+	list_sort(listaOcupados, (void*) _ayudantes_menor);
 }

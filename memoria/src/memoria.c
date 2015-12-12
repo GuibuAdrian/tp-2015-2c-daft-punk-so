@@ -744,7 +744,8 @@ void procesarOrden(t_orden_CPU mensaje, int socketCPU) {
 							log_info(logger, "Proceso %d Escribiendo en pag: %d", mensaje.pid, mensaje.pagina);
 
 							if(mensaje.contentSize > tamMarcos) {
-								log_error(logger, "Recibí un mensaje para escribir en %d que tiene %d bytes y el tamanio de marco es %d", mensaje.pid, mensaje.contentSize, tamMarcos);
+								log_error(logger, "Recibí un mensaje para escribir en %d que tiene %d bytes y el tamanio de marco es %d", mensaje.pid,
+										mensaje.contentSize, tamMarcos);
 								return;
 							}
 
@@ -929,7 +930,8 @@ void aumentarBitReferencia(t_list* new)
 	{
 		new2 = list_get(new, i);
 
-		list_replace_and_destroy_element(new, i, tablaPag_create(new2->pagina, new2->marco, new2->bitReferencia+1, new2->bitModificado, -1), (void*) tablaPag_destroy);
+		list_replace_and_destroy_element(new, i, tablaPag_create(new2->pagina, new2->marco, new2->bitReferencia+1, new2->bitModificado, -1),
+				(void*) tablaPag_destroy);
 	}
 }
 
@@ -943,7 +945,8 @@ void cambiarBitReferencia(int pid, int pagina)
 	int posPag = encontrarPosicionEnTablaDePags(pagina, new->tablaDePaginas);
 	new2 = list_get(new->tablaDePaginas, posPag);
 
-	list_replace_and_destroy_element(new->tablaDePaginas, posPag, tablaPag_create(new2->pagina, new2->marco, 0, new2->bitModificado, -1), (void*) tablaPag_destroy);
+	list_replace_and_destroy_element(new->tablaDePaginas, posPag, tablaPag_create(new2->pagina, new2->marco, 0, new2->bitModificado, -1),
+			(void*) tablaPag_destroy);
 }
 
 void enviarRespuestaCPU(t_orden_CPU respuestaMemoria, int socketCPU) {
@@ -1043,7 +1046,8 @@ t_orden_CPU enviarOrdenASwap(int pid, int orden, int paginas, char *content) {
 			mensajeSwapPackage + sizeof(mensajeSwap.pid)
 					+ sizeof(mensajeSwap.orden) + sizeof(mensajeSwap.pagina),
 					&mensajeSwap.contentSize, sizeof(mensajeSwap.contentSize));
-	memcpy(mensajeSwapPackage + sizeof(mensajeSwap.pid)	+ sizeof(mensajeSwap.orden) + sizeof(mensajeSwap.pagina) + sizeof(mensajeSwap.contentSize), content, mensajeSwap.contentSize);
+	memcpy(mensajeSwapPackage + sizeof(mensajeSwap.pid)	+ sizeof(mensajeSwap.orden) + sizeof(mensajeSwap.pagina) + sizeof(mensajeSwap.contentSize), content,
+			mensajeSwap.contentSize);
 
 	send(socketSwap, mensajeSwapPackage, tamanioOrdenCPU(mensajeSwap), 0);
 

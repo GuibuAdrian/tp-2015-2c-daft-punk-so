@@ -100,7 +100,8 @@ int tamanioMensaje1(t_mensaje1 mensaje);
 int tamanioHiloCPU(t_hiloCPU mensaje);
 static t_hiloCPU *hiloCPU_create(int idNodo, int socket, int disponible);
 static void hiloCPU_destroy(t_hiloCPU *self);
-static PCB *PCB_create(int pid, char * path, int puntero, int estado, time_t tiempoEjecI, time_t tiempoEspeI, double tiempoEspe, time_t tiempoRespI, double tiempoResp);
+static PCB *PCB_create(int pid, char * path, int puntero, int estado, time_t tiempoEjecI, time_t tiempoEspeI, double tiempoEspe, time_t tiempoRespI,
+		double tiempoResp);
 static void PCB_destroy(PCB *self);
 int tamanioPCB(PCB mensaje);
 static t_ready *ready_create(int pid);
@@ -280,7 +281,8 @@ void recibirCjtoRespuestas(int pid1, int socketCliente)
 		memcpy(&respuesta.mensajeSize, package+sizeof(respuesta.pid),sizeof(respuesta.mensajeSize));
 		recv(socketCliente,(void*) (package+sizeof(respuesta.pid)+sizeof(respuesta.mensajeSize)), sizeof(respuesta.paginas), 0);
 		memcpy(&respuesta.paginas, package+sizeof(respuesta.pid)+sizeof(respuesta.mensajeSize),sizeof(respuesta.paginas));
-		recv(socketCliente,(void*) (package+sizeof(respuesta.pid)+sizeof(respuesta.mensajeSize)+sizeof(respuesta.paginas)), sizeof(respuesta.contentSize), 0);
+		recv(socketCliente,(void*) (package+sizeof(respuesta.pid)+sizeof(respuesta.mensajeSize)+sizeof(respuesta.paginas)),
+				sizeof(respuesta.contentSize), 0);
 		memcpy(&respuesta.contentSize, package+sizeof(respuesta.pid)+sizeof(respuesta.mensajeSize)+sizeof(respuesta.paginas), sizeof(respuesta.contentSize));
 
 		if(respuesta.pid==-1)
@@ -493,7 +495,13 @@ void ROUND_ROBIN(void* args)
 	log_info(logger, "Correr %s, mProc: %d, en %d", pcbReady->path, pidReady, idHiloCPU);
 
 	time(&tiempoAhora);
-
+/*
+	struct tm *mytime = localtime(&espeI);
+	printf("mProc: %d\n", pidReady);
+	printf("inicio Esp: %d:%d ", mytime->tm_min, mytime->tm_sec);
+	mytime = localtime(&tiempoAhora);
+	printf("ahora : %d:%d \n", mytime->tm_min, mytime->tm_sec);
+*/
 	espe = espe + difftime(tiempoAhora, espeI);
 
 	int posPCB =  encontrarPosicionEnPCB(pidReady);	//Encontrar pos en listaPCB
@@ -530,7 +538,8 @@ void ROUND_ROBIN(void* args)
 		posPCB =  encontrarPosicionEnPCB(pidReady);	//Encontrar pos en listaPCB
 
 		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, pcbReady->path, puntero, 1,
-						pcbReady->tiempoEjecI, pcbReady->tiempoEspeI, pcbReady->tiempoEspe, pcbReady->tiempoRespI, pcbReady->tiempoResp), (void*)PCB_destroy);
+						pcbReady->tiempoEjecI, pcbReady->tiempoEspeI, pcbReady->tiempoEspe, pcbReady->tiempoRespI, pcbReady->tiempoResp),
+				(void*)PCB_destroy);
 		pthread_mutex_unlock(&mutexPCB);
 
 		sem_post(&semFZ);
@@ -540,7 +549,8 @@ void ROUND_ROBIN(void* args)
 
 	pthread_mutex_lock(&mutexCPU);
 	int posCPU = encontrarPosicionHiloCPU(idHiloCPU); //Busco posicion del CPU
-	list_replace_and_destroy_element(listaCPUs, posCPU, hiloCPU_create(idHiloCPU, socketCliente, 1), (void*) hiloCPU_destroy);	//Pongo en Disponible al CPU q usaba
+	//Pongo en Disponible al CPU q usaba
+	list_replace_and_destroy_element(listaCPUs, posCPU, hiloCPU_create(idHiloCPU, socketCliente, 1), (void*) hiloCPU_destroy);
 	pthread_mutex_unlock(&mutexCPU);
 	sem_post(&semCPU);
 
@@ -560,7 +570,8 @@ void ROUND_ROBIN(void* args)
 		posPCB =  encontrarPosicionEnPCB(pidReady);	//Encontrar pos en listaPCB
 
 		list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, pcbReady->path, puntero, 0,
-				pcbReady->tiempoEjecI, time(&pcbReady->tiempoEspeI), pcbReady->tiempoEspe, pcbReady->tiempoRespI, pcbReady->tiempoResp), (void*)PCB_destroy);
+				pcbReady->tiempoEjecI, time(&pcbReady->tiempoEspeI), pcbReady->tiempoEspe, pcbReady->tiempoRespI, pcbReady->tiempoResp),
+				(void*)PCB_destroy);
 
 		pthread_mutex_unlock(&mutexPCB);
 
@@ -599,9 +610,15 @@ void FIFO(void *args)
 	time(&tiempoAhora);
 
 	espe = espe + difftime(tiempoAhora, espeI);
-
+/*
+	struct tm *mytime = localtime(&espeI);
+	printf("inicio Esp: %d:%d ", mytime->tm_min, mytime->tm_sec);
+	mytime = localtime(&tiempoAhora);
+	printf("ahora : %d:%d \n", mytime->tm_min, mytime->tm_sec);
+*/
 	int posPCB =  encontrarPosicionEnPCB(pidReady);	//Encontrar pos en listaPCB
-	list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, pcbReady->path, puntero, 1, ejecI, espeI ,espe, time(&respI), resp), (void*)PCB_destroy);
+	list_replace_and_destroy_element(listaPCB, posPCB, PCB_create(pidReady, pcbReady->path, puntero, 1, ejecI, espeI ,espe, time(&respI), resp),
+			(void*)PCB_destroy);
 
 	pthread_mutex_unlock(&mutexPCB);
 
@@ -1062,7 +1079,8 @@ static void hiloCPU_destroy(t_hiloCPU *self)
 {
     free(self);
 }
-static PCB *PCB_create(int pid, char * path, int puntero, int estado, time_t tiempoEjecI, time_t tiempoEspeI, double tiempoEspe, time_t tiempoRespI, double tiempoResp)
+static PCB *PCB_create(int pid, char * path, int puntero, int estado, time_t tiempoEjecI, time_t tiempoEspeI, double tiempoEspe, time_t tiempoRespI,
+		double tiempoResp)
 {
 	 PCB *new = malloc(sizeof(PCB));
 	 new->path = strdup(path);

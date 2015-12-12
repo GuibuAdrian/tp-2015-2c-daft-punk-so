@@ -395,7 +395,6 @@ void interpretarLinea(int socketPlanificador, char* linea, int pid, int idNodo, 
 	int pagina = 0;
 	t_orden_CPU mensaje;
 
-
 	if (strncmp(pch, "finalizar", 9) == 0)
 	{
 		mensaje = enviarOrdenAMemoria(pid, 3, 0, "/", idNodo);
@@ -498,8 +497,10 @@ t_orden_CPU recibirRespuestaSwap(int socketMemoria)
 	memcpy(&mensajeSwap.orden, package + sizeof(mensajeSwap.pid), sizeof(mensajeSwap.orden));	//--
 	recv(socketMemoria, (void*) (package + sizeof(mensajeSwap.pid) + sizeof(mensajeSwap.orden)), sizeof(mensajeSwap.pagina), 0);
 	memcpy(&mensajeSwap.pagina, package + sizeof(mensajeSwap.pid) + sizeof(mensajeSwap.orden), sizeof(mensajeSwap.pagina));	//--
-	recv(socketMemoria,(void*) (package + sizeof(mensajeSwap.pid) + sizeof(mensajeSwap.orden) + sizeof(mensajeSwap.pagina)), sizeof(mensajeSwap.contentSize), 0);//--
-	memcpy(&mensajeSwap.contentSize,(void*) package + sizeof(mensajeSwap.pid) + sizeof(mensajeSwap.orden) + sizeof(mensajeSwap.pagina), sizeof(mensajeSwap.contentSize));
+	recv(socketMemoria,(void*) (package + sizeof(mensajeSwap.pid) + sizeof(mensajeSwap.orden) + sizeof(mensajeSwap.pagina)),
+			sizeof(mensajeSwap.contentSize), 0);//--
+	memcpy(&mensajeSwap.contentSize,(void*) package + sizeof(mensajeSwap.pid) + sizeof(mensajeSwap.orden) + sizeof(mensajeSwap.pagina),
+			sizeof(mensajeSwap.contentSize));
 
 	void* package2=malloc(mensajeSwap.contentSize);
 
@@ -525,8 +526,10 @@ void enviarRespuestaPlanificador(int socketPlanificador, int pid, int orden, int
 	memcpy(respuestaPackage, &respuestaPlan.pid, sizeof(respuestaPlan.pid));
 	memcpy(respuestaPackage+sizeof(respuestaPlan.pid), &respuestaPlan.orden, sizeof(respuestaPlan.orden));
 	memcpy(respuestaPackage+sizeof(respuestaPlan.pid)+sizeof(respuestaPlan.orden), &respuestaPlan.pagina, sizeof(respuestaPlan.pagina));
-	memcpy(respuestaPackage+sizeof(respuestaPlan.pid)+sizeof(respuestaPlan.orden)+sizeof(respuestaPlan.pagina), &respuestaPlan.contentSize, sizeof(respuestaPlan.contentSize));
-	memcpy(respuestaPackage+sizeof(respuestaPlan.pid)+sizeof(respuestaPlan.orden)+sizeof(respuestaPlan.pagina)+sizeof(respuestaPlan.contentSize), content, respuestaPlan.contentSize);
+	memcpy(respuestaPackage+sizeof(respuestaPlan.pid)+sizeof(respuestaPlan.orden)+sizeof(respuestaPlan.pagina), &respuestaPlan.contentSize,
+			sizeof(respuestaPlan.contentSize));
+	memcpy(respuestaPackage+sizeof(respuestaPlan.pid)+sizeof(respuestaPlan.orden)+sizeof(respuestaPlan.pagina)+sizeof(respuestaPlan.contentSize), content,
+			respuestaPlan.contentSize);
 
 	send(socketPlanificador, respuestaPackage, tamanioMensajeMemo(respuestaPlan), 0);
 
@@ -550,8 +553,10 @@ t_orden_CPU enviarOrdenAMemoria(int pid, int orden, int paginas, char *content, 
 	memcpy(mensajeMemoPackage, &mensajeMemoria.pid, sizeof(mensajeMemoria.pid));
 	memcpy(mensajeMemoPackage+sizeof(mensajeMemoria.pid), &mensajeMemoria.orden, sizeof(mensajeMemoria.orden));
 	memcpy(mensajeMemoPackage+sizeof(mensajeMemoria.pid)+sizeof(mensajeMemoria.orden), &mensajeMemoria.pagina, sizeof(mensajeMemoria.pagina));
-	memcpy(mensajeMemoPackage+sizeof(mensajeMemoria.pid)+sizeof(mensajeMemoria.orden)+sizeof(mensajeMemoria.pagina), &mensajeMemoria.contentSize, sizeof(mensajeMemoria.contentSize));
-	memcpy(mensajeMemoPackage+sizeof(mensajeMemoria.pid)+sizeof(mensajeMemoria.orden)+sizeof(mensajeMemoria.pagina)+sizeof(mensajeMemoria.contentSize), &mensajeMemoria.content, mensajeMemoria.contentSize);
+	memcpy(mensajeMemoPackage+sizeof(mensajeMemoria.pid)+sizeof(mensajeMemoria.orden)+sizeof(mensajeMemoria.pagina), &mensajeMemoria.contentSize,
+			sizeof(mensajeMemoria.contentSize));
+	memcpy(mensajeMemoPackage+sizeof(mensajeMemoria.pid)+sizeof(mensajeMemoria.orden)+sizeof(mensajeMemoria.pagina)+sizeof(mensajeMemoria.contentSize),
+			&mensajeMemoria.content, mensajeMemoria.contentSize);
 
 	log_info(logger, "ID CPU: %d conectado a Memoria", idNodo);
 
